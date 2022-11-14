@@ -24,8 +24,12 @@ class _Text {
   late final TextStyle title2 = copy(titleFont, sizePx: 14, heightPx: 16.38);
 
   late final TextStyle body = copy(titleFont, sizePx: 16, heightPx: 27);
-  late final TextStyle bodyBold =
-      copy(titleFont, sizePx: 16, heightPx: 26, weight: FontWeight.w600);
+  late final TextStyle bodyBold = copy(
+    titleFont,
+    sizePx: 16,
+    heightPx: 26,
+    weight: FontWeight.w600,
+  );
   late final TextStyle bodySmall = copy(titleFont, sizePx: 14, heightPx: 23);
   late final TextStyle bodySmallBold =
       copy(titleFont, sizePx: 14, heightPx: 23, weight: FontWeight.w600);
