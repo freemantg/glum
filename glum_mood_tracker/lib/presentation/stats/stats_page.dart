@@ -201,7 +201,7 @@ class TopTagsCard extends StatelessWidget {
           Row(
             children: [
               Text(
-                'TOP TAGS',
+                'TRENDING TAGS',
                 style: $styles.text.caption.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -234,33 +234,44 @@ class TagsDistributionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StyledCard(
-      child: Column(children: [
-        Row(
-          children: [
-            Text(
-              'MOODS',
-              style: $styles.text.caption.copyWith(
-                fontWeight: FontWeight.bold,
+      child: Column(
+        children: [
+          Row(
+            children: const [
+              ToggleTagsFilterButton(title: 'MOODS'),
+              SizedBox(
+                height: 12,
+                child: VerticalDivider(thickness: 1.5),
               ),
-            ),
-            const SizedBox(
-              height: 12,
-              child: VerticalDivider(thickness: 1.5),
-            ),
-            Text(
-              'GLUMS',
-              style: $styles.text.caption.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-        Wrap(
-          children: const [
-            TagChip(),
-          ],
-        )
-      ]),
+              ToggleTagsFilterButton(title: 'GLUMS'),
+            ],
+          ),
+          Wrap(
+            children: const [
+              TagChip(),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class ToggleTagsFilterButton extends StatelessWidget {
+  const ToggleTagsFilterButton({
+    super.key,
+    required this.title,
+  });
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      title,
+      style: $styles.text.caption.copyWith(
+        fontWeight: FontWeight.bold,
+      ),
     );
   }
 }
@@ -278,9 +289,21 @@ class TagChip extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const Icon(Icons.tag, size: 16.0),
-          Text('Food', style: $styles.text.bodySmall.copyWith(height: 0)),
+          Text(
+            'Food',
+            style: $styles.text.bodySmall.copyWith(
+              height: 0,
+              fontSize: 12.0,
+            ),
+          ),
           SizedBox(width: $styles.insets.xs),
-          Text('3', style: $styles.text.bodySmall.copyWith(height: 0)),
+          Text(
+            '3',
+            style: $styles.text.bodySmall.copyWith(
+              height: 0,
+              fontSize: 12.0,
+            ),
+          ),
         ],
       ),
     );
@@ -312,7 +335,7 @@ class StoryCountCard extends StatelessWidget {
             ],
           ),
           const SizedBox(
-            height: 54,
+            height: 24,
             child: VerticalDivider(),
           ),
           Column(
