@@ -1,6 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:glum_mood_tracker/presentation/routes/app_router.gr.dart';
 import 'package:glum_mood_tracker/shared/extensions.dart';
+import 'package:intl/intl.dart';
 
 import '../../styles/styles.dart';
 
@@ -81,62 +84,83 @@ class CardCarousel extends HookWidget {
 
     return PageView.builder(
       controller: pageController,
-      itemBuilder: (context, index) {
-        return Card(
-          margin: EdgeInsets.all($styles.insets.sm),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular($styles.corners.md)),
+      itemCount: 12,
+      itemBuilder: (context, index) => MonthCard(index + 1),
+    );
+  }
+}
+
+class MonthCard extends StatelessWidget {
+  const MonthCard(
+    this.month, {
+    super.key,
+  });
+
+  final int month;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => context.pushRoute(const MonthPageRoute()),
+      child: Card(
+        margin: EdgeInsets.all($styles.insets.sm),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular($styles.corners.md)),
+        ),
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(
+            $styles.insets.sm,
+            $styles.insets.md,
+            $styles.insets.sm,
+            $styles.insets.sm,
           ),
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(
-              $styles.insets.sm,
-              $styles.insets.md,
-              $styles.insets.sm,
-              $styles.insets.sm,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '11',
-                  style: $styles.text.h1,
-                ),
-                Text(
-                  '  NOV',
-                  style: $styles.text.h3.copyWith(fontWeight: FontWeight.w400),
-                ),
-                const Spacer(),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width / 4,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular($styles.corners.sm),
-                        child: const LinearProgressIndicator(
-                          value: 1 / 30,
-                        ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                children: [
+                  Text(
+                    month.toString(),
+                    style: $styles.text.h1,
+                  ),
+                  Text(
+                    '  ${DateFormat.MMM().format(DateTime(0, month)).toUpperCase()}',
+                    style:
+                        $styles.text.h3.copyWith(fontWeight: FontWeight.w400),
+                  ),
+                ],
+              ),
+              const Spacer(),
+              Row(
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 4,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular($styles.corners.sm),
+                      child: const LinearProgressIndicator(
+                        value: 1 / 30,
                       ),
                     ),
-                    SizedBox(width: $styles.insets.xs),
-                    Text(
-                      '1',
-                      style: $styles.text.caption
-                          .copyWith(fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      '/30',
-                      style: $styles.text.caption
-                          .copyWith(fontWeight: FontWeight.w300),
-                    ),
-                    const Spacer(),
-                    const Icon(Icons.more_horiz),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                  SizedBox(width: $styles.insets.xs),
+                  Text(
+                    '1',
+                    style: $styles.text.caption
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    '/30',
+                    style: $styles.text.caption
+                        .copyWith(fontWeight: FontWeight.w300),
+                  ),
+                  const Spacer(),
+                  const Icon(Icons.more_horiz),
+                ],
+              ),
+            ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

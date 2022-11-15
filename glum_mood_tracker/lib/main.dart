@@ -36,8 +36,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
       routes: const [
-        CardsPageRoute(),
-        StatsPageRoute(),
+        CardsRouter(),
+        StatsRouter(),
       ],
       bottomNavigationBuilder: (context, tabsRouter) {
         return BottomNavigationBar(
