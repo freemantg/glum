@@ -206,7 +206,7 @@ class StyledMonthCalendar extends StatelessWidget {
               return Text(
                 ((index + 1) - firstDayOfMonthOffset).toString(),
                 textAlign: TextAlign.center,
-                style: $styles.text.bodyBold,
+                style: $styles.text.bodySmall,
               );
             } else {
               return const SizedBox.shrink();

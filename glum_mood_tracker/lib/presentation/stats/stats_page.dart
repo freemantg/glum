@@ -7,6 +7,21 @@ class StatsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final monthInitials = [
+      'J',
+      'F',
+      'M',
+      'A',
+      'M',
+      'J',
+      'J',
+      'A',
+      'S',
+      'O',
+      'N',
+      'D'
+    ];
+
     return Scaffold(
       appBar: _buildAppBar(),
       body: ListView(
@@ -19,6 +34,75 @@ class StatsPage extends StatelessWidget {
           const GlumDistributionCard(),
           SizedBox(height: $styles.insets.xs),
           const WeekDistributionCard(),
+          SizedBox(height: $styles.insets.xs),
+          StyledCard(
+            customPadding: true,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all($styles.insets.sm),
+                  child: Text(
+                    'YEAR IN GLUMS',
+                    style: $styles.text.caption.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Table(
+                  children: [
+                    //MONTH LABELS
+                    TableRow(
+                      children: [
+                        const Text(''),
+                        ...monthInitials
+                            .map(
+                              (e) => TableCell(
+                                verticalAlignment:
+                                    TableCellVerticalAlignment.middle,
+                                child: Text(
+                                  e,
+                                  textAlign: TextAlign.center,
+                                  style: $styles.text.caption,
+                                ),
+                              ),
+                            )
+                            .toList()
+                      ],
+                    ),
+                    for (int i = 1; i <= 31; i++)
+                      TableRow(
+                        children: [
+                          TableCell(
+                            verticalAlignment:
+                                TableCellVerticalAlignment.middle,
+                            child: Text(
+                              i.toString(),
+                              textAlign: TextAlign.center,
+                              style: $styles.text.caption,
+                            ),
+                          ),
+                          for (int j = 1; j <= 12; j++)
+                            AspectRatio(
+                              aspectRatio: 1,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 0.1,
+                                    color: const Color(0xFFC45654),
+                                  ),
+                                  // borderRadius: BorderRadius.all(
+                                  //     Radius.circular($styles.corners.sm)),
+                                ),
+                              ),
+                            )
+                        ],
+                      )
+                  ],
+                )
+              ],
+            ),
+          ),
           SizedBox(height: $styles.insets.xs),
           const SeasonalMoodCard(),
           SizedBox(height: $styles.insets.xs),
