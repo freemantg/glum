@@ -138,6 +138,16 @@ class WeekDistributionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dayInitials = [
+      'MON',
+      'TUE',
+      'WED',
+      'THU',
+      'FRI',
+      'SAT',
+      'SUN',
+    ];
+
     return StyledCard(
       customPadding: true,
       child: Column(
@@ -155,19 +165,20 @@ class WeekDistributionCard extends StatelessWidget {
           Row(
             children: [
               ...List.generate(
-                7,
+                dayInitials.length,
                 (index) => Expanded(
-                  child: Container(
-                    height: 48,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFCF2D4A),
-                      border: Border.all(width: 0.1),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'MON',
-                        style: $styles.text.caption
-                            .copyWith(fontWeight: FontWeight.bold),
+                  child: AspectRatio(
+                    aspectRatio: 1,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: Color(0xFFCF2D4A),
+                      ),
+                      child: Center(
+                        child: Text(
+                          dayInitials[index],
+                          style: $styles.text.caption
+                              .copyWith(fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                   ),
