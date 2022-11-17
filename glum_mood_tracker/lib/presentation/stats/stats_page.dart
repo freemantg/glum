@@ -161,7 +161,7 @@ class GlumDistributionCard extends StatelessWidget {
           Row(
             children: [
               ...List.generate(
-                6,
+                5,
                 (index) => Expanded(
                   child: Container(
                     height: 48,

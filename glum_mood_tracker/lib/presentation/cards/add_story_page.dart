@@ -42,9 +42,7 @@ class AddStoryPage extends StatelessWidget {
                 SizedBox(height: $styles.insets.xs),
                 Row(
                   children: [
-                    const Spacer(flex: 2),
-                    Text('5', style: $styles.text.body.copyWith(height: 0)),
-                    const Spacer(),
+                    const Spacer(flex: 3),
                     RatingBar(
                       minRating: 1,
                       itemSize: 24.0,
@@ -140,9 +138,10 @@ class AddStoryPage extends StatelessWidget {
                 ),
                 const Divider(),
                 SizedBox(height: $styles.insets.xs),
-                const TextField(
+                TextField(
+                  style: $styles.text.body,
                   maxLines: null,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Write about your glum...',
                   ),
