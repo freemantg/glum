@@ -27,6 +27,45 @@ Widget _buildScaffoldBody(BuildContext context) {
 
   void toggleCalendar() => showCalendar.value = !showCalendar.value;
 
+  void _pickYear(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        final Size size = MediaQuery.of(context).size;
+        return AlertDialog(
+          title: const Text('Select a Year'),
+          contentPadding: const EdgeInsets.all(10),
+          content: SizedBox(
+            height: size.height / 3,
+            width: size.width,
+            child: GridView.count(
+              crossAxisCount: 3,
+              children: [
+                ...List.generate(
+                  22,
+                  (index) => InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Chip(
+                        label: Container(
+                          padding: const EdgeInsets.all(5),
+                          child: Text((2022 - index).toString()),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   return SafeArea(
     child: Column(
       children: [
@@ -34,7 +73,10 @@ Widget _buildScaffoldBody(BuildContext context) {
         Stack(
           alignment: Alignment.center,
           children: [
-            Text('2022', style: $styles.text.h3),
+            GestureDetector(
+              child: Text('2022', style: $styles.text.h3),
+              onTap: () => _pickYear(context),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
@@ -268,7 +310,7 @@ class MonthProgressBar extends StatelessWidget {
               return Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: $styles.insets.md,
-                  vertical: $styles.insets.sm,
+                  vertical: $styles.insets.xs,
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
