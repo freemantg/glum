@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:glum_mood_tracker/presentation/routes/app_router.gr.dart';
 import 'package:glum_mood_tracker/presentation/stats/stats_page.dart';
 import 'package:glum_mood_tracker/styles/styles.dart';
 
@@ -14,44 +16,47 @@ class MonthPage extends StatelessWidget {
         child: ListView.builder(
           itemCount: 5,
           itemBuilder: (context, index) {
-            return StyledCard(
-              customPadding: true,
-              child: Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all($styles.insets.lg),
-                    child: Column(
-                      children: [
-                        Text('14', style: $styles.text.h3),
-                        Text('Mon',
-                            style: $styles.text.h4.copyWith(
-                              fontWeight: FontWeight.normal,
-                              height: 0,
-                            )),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border(
-                          left: BorderSide(
-                            color: Colors.grey.withOpacity(0.5),
-                            width: 0.5,
-                          ),
-                        ),
-                      ),
+            return GestureDetector(
+              onTap: () => context.router.push(const StoryPageRoute()),
+              child: StyledCard(
+                customPadding: true,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all($styles.insets.lg),
                       child: Column(
-                        children: const [
-                          Placeholder(
-                            fallbackHeight: 148.0,
-                            strokeWidth: 0,
-                          )
+                        children: [
+                          Text('14', style: $styles.text.h3),
+                          Text('Mon',
+                              style: $styles.text.h4.copyWith(
+                                fontWeight: FontWeight.normal,
+                                height: 0,
+                              )),
                         ],
                       ),
                     ),
-                  ),
-                ],
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            left: BorderSide(
+                              color: Colors.grey.withOpacity(0.5),
+                              width: 0.5,
+                            ),
+                          ),
+                        ),
+                        child: Column(
+                          children: const [
+                            Placeholder(
+                              fallbackHeight: 148.0,
+                              strokeWidth: 0,
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           },

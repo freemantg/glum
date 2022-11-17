@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'presentation/routes/app_router.gr.dart';
 
@@ -14,17 +15,19 @@ class AppWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(
-        appBarTheme: const AppBarTheme(
-          iconTheme: IconThemeData(),
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
+    return ProviderScope(
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData.dark().copyWith(
+          appBarTheme: const AppBarTheme(
+            iconTheme: IconThemeData(),
+            backgroundColor: Colors.transparent,
+            elevation: 0.0,
+          ),
         ),
+        routerDelegate: appRouter.delegate(),
+        routeInformationParser: appRouter.defaultRouteParser(),
       ),
-      routerDelegate: appRouter.delegate(),
-      routeInformationParser: appRouter.defaultRouteParser(),
     );
   }
 }

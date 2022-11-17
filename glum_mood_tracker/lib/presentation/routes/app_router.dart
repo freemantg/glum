@@ -5,6 +5,8 @@ import 'package:glum_mood_tracker/presentation/cards/cards_page.dart';
 import 'package:glum_mood_tracker/presentation/cards/month_page.dart';
 import 'package:glum_mood_tracker/presentation/stats/stats_page.dart';
 
+import '../cards/story_page.dart';
+
 @MaterialAutoRouter(
   replaceInRouteName: 'Page',
   routes: [
@@ -24,7 +26,7 @@ import 'package:glum_mood_tracker/presentation/stats/stats_page.dart';
             AutoRoute(
               path: ':month',
               page: MonthPage,
-            )
+            ),
           ],
         ),
         AutoRoute(
@@ -40,6 +42,10 @@ import 'package:glum_mood_tracker/presentation/stats/stats_page.dart';
         ),
       ],
     ),
+    AutoRoute(
+      path: ':story',
+      page: StoryPage,
+    )
   ],
 )
 class $AppRouter {}
