@@ -12,7 +12,7 @@ class AppStyle {
 class _Text {
   TextStyle get titleFont => const TextStyle();
 
-  late final TextStyle h1 = copy(titleFont, sizePx: 64, heightPx: 62);
+  late final TextStyle h1 = copy(titleFont, sizePx: 64);
   late final TextStyle h2 = copy(titleFont, sizePx: 32, heightPx: 46);
   late final TextStyle h3 =
       copy(titleFont, sizePx: 24, heightPx: 36, weight: FontWeight.w600);
