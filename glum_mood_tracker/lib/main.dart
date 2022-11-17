@@ -61,7 +61,7 @@ class HomePage extends StatelessWidget {
         );
       },
       floatingActionButton: FloatingActionButton.small(
-        onPressed: () {},
+        onPressed: () => AutoRouter.of(context).push(const AddStoryPageRoute()),
         child: const Icon(Icons.edit),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
