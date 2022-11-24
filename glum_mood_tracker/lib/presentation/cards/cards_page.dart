@@ -4,102 +4,128 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:glum_mood_tracker/presentation/cards/providers/providers.dart';
 import 'package:glum_mood_tracker/shared/extensions.dart';
+import 'package:glum_mood_tracker/shared/providers.dart';
 import 'package:glum_mood_tracker/styles/colors.dart';
 import 'package:intl/intl.dart';
 
 import '../../styles/styles.dart';
 import '../routes/app_router.gr.dart';
 
-class CardsPage extends HookWidget {
+class CardsPage extends ConsumerStatefulWidget {
   const CardsPage({super.key});
+
+  @override
+  ConsumerState<CardsPage> createState() => _CardsPageState();
+}
+
+class _CardsPageState extends ConsumerState<CardsPage> {
+  @override
+  void initState() {
+    Future.microtask(
+        () => ref.read(storiesNotifierProvider.notifier).watchStoryStream());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildStyledAppBar(),
-      body: _buildScaffoldBody(context),
+      body: const CardPageBody(),
     );
   }
 }
 
-Widget _buildScaffoldBody(BuildContext context) {
-  var showCalendar = useState(false);
+class CardPageBody extends HookWidget {
+  const CardPageBody({Key? key}) : super(key: key);
 
-  void toggleCalendar() => showCalendar.value = !showCalendar.value;
+  @override
+  Widget build(BuildContext context) {
+    var showCalendar = useState(false);
 
-  void _pickYear(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        final Size size = MediaQuery.of(context).size;
-        return AlertDialog(
-          title: const Text('Select a Year'),
-          contentPadding: const EdgeInsets.all(10),
-          content: SizedBox(
-            height: size.height / 3,
-            width: size.width,
-            child: GridView.count(
-              crossAxisCount: 3,
-              children: [
-                ...List.generate(
-                  22,
-                  (index) => InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Chip(
-                        label: Container(
-                          padding: const EdgeInsets.all(5),
-                          child: Text((2022 - index).toString()),
-                        ),
-                      ),
+    void toggleCalendar() => showCalendar.value = !showCalendar.value;
+    void showPickYearDialog(BuildContext context) {
+      showDialog(
+          context: context,
+          builder: (context) => const StyledYearPickerAlertDialog());
+    }
+
+    return SafeArea(
+      child: Column(
+        children: [
+          const Spacer(),
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              GestureDetector(
+                onTap: () => showPickYearDialog(context),
+                child: Text('2022', style: $styles.text.h3),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  SizedBox(width: 82.0),
+                  Icon(Icons.keyboard_arrow_down),
+                ],
+              )
+            ],
+          ),
+          const Spacer(),
+          SizedBox(
+            height: MediaQuery.of(context).size.height / 1.7,
+            child: CardCarousel(showCalendar: showCalendar.value),
+          ),
+          const Spacer(),
+          CalendarToggleButton(
+            showCalendar: showCalendar.value,
+            toggleCalendar: toggleCalendar,
+          ),
+          const Spacer(flex: 3),
+        ],
+      ),
+    );
+  }
+}
+
+class StyledYearPickerAlertDialog extends StatelessWidget {
+  const StyledYearPickerAlertDialog({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+
+    return AlertDialog(
+      title: const Text('Select a Year'),
+      contentPadding: const EdgeInsets.all(10),
+      content: SizedBox(
+        height: size.height / 3,
+        width: size.width,
+        child: GridView.count(
+          crossAxisCount: 3,
+          children: [
+            ...List.generate(
+              22,
+              (index) => InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Chip(
+                    label: Container(
+                      padding: const EdgeInsets.all(5),
+                      child: Text((2022 - index).toString()),
                     ),
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
-        );
-      },
-    );
-  }
-
-  return SafeArea(
-    child: Column(
-      children: [
-        const Spacer(),
-        Stack(
-          alignment: Alignment.center,
-          children: [
-            GestureDetector(
-              child: Text('2022', style: $styles.text.h3),
-              onTap: () => _pickYear(context),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                SizedBox(width: 82.0),
-                Icon(Icons.keyboard_arrow_down),
-              ],
-            )
           ],
         ),
-        const Spacer(),
-        SizedBox(
-          height: MediaQuery.of(context).size.height / 1.7,
-          child: CardCarousel(showCalendar: showCalendar.value),
-        ),
-        const Spacer(),
-        CalendarToggleButton(
-          showCalendar: showCalendar.value,
-          toggleCalendar: toggleCalendar,
-        ),
-        const Spacer(flex: 3),
-      ],
-    ),
-  );
+      ),
+    );
+  }
 }
 
 AppBar _buildStyledAppBar() {

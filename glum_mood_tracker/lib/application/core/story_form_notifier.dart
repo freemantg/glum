@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:glum_mood_tracker/infrastructure/story_repository.dart';
 
 import '../../domain/story.dart';
 import '../../domain/story_failure.dart';
@@ -26,5 +27,27 @@ class StoryFormState with _$StoryFormState {
 }
 
 class StoryFormNotifier extends StateNotifier<StoryFormState> {
-  StoryFormNotifier(super.state);
+  final StoryRepository _repository;
+
+  StoryFormNotifier(this._repository) : super(StoryFormState.initial());
+
+  Future<void> save() async {
+    final successOrFailure = await _repository.createStory(state.story);
+    state = successOrFailure.fold(
+      (l) => state.copyWith(failureOrSuccess: optionOf(successOrFailure)),
+      (r) => state.copyWith(isSaving: false),
+    );
+  }
+
+  Future<void> titleChanged(String str) async =>
+      state = state.copyWith(story: state.story.copyWith(title: str));
+
+  Future<void> ratingChanged(int rating) async =>
+      state = state.copyWith(story: state.story.copyWith(glumRating: rating));
+
+  Future<void> descriptionChanged(String str) async =>
+      state = state.copyWith(story: state.story.copyWith(description: str));
+
+  Future<void> dateChanged(DateTime date) async =>
+      state = state.copyWith(story: state.story.copyWith(date: date));
 }
