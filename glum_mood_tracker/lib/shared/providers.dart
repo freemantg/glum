@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:glum_mood_tracker/application/core/date_time_notifier.dart';
 import 'package:glum_mood_tracker/application/core/stories_notifier.dart';
 import 'package:glum_mood_tracker/application/core/story_form_notifier.dart';
 import 'package:glum_mood_tracker/infrastructure/drift_database.dart';
@@ -17,3 +18,8 @@ final storyRepositoryProvider = Provider(
 );
 
 final glumDatabaseProvider = Provider((ref) => GlumDatabase());
+
+final dateTimeNotifierProvider =
+    StateNotifierProvider<DateTimeNotifier, AsyncValue<DateTime>>(
+  (ref) => DateTimeNotifier(),
+);

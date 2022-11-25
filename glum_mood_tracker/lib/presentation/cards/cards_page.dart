@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:glum_mood_tracker/presentation/cards/providers/providers.dart';
 import 'package:glum_mood_tracker/shared/extensions.dart';
 import 'package:glum_mood_tracker/shared/providers.dart';
 import 'package:glum_mood_tracker/styles/colors.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../styles/styles.dart';
@@ -35,18 +35,19 @@ class _CardsPageState extends ConsumerState<CardsPage> {
   }
 }
 
-class CardPageBody extends HookWidget {
+class CardPageBody extends HookConsumerWidget {
   const CardPageBody({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     var showCalendar = useState(false);
 
     void toggleCalendar() => showCalendar.value = !showCalendar.value;
     void showPickYearDialog(BuildContext context) {
       showDialog(
-          context: context,
-          builder: (context) => const StyledYearPickerAlertDialog());
+        context: context,
+        builder: (context) => const StyledYearPickerAlertDialog(),
+      );
     }
 
     return SafeArea(
@@ -58,7 +59,13 @@ class CardPageBody extends HookWidget {
             children: [
               GestureDetector(
                 onTap: () => showPickYearDialog(context),
-                child: Text('2022', style: $styles.text.h3),
+                child: Text(
+                    ref.watch(dateTimeNotifierProvider).maybeMap(
+                          data: (selectedDate) =>
+                              selectedDate.value.year.toString(),
+                          orElse: () => 'No',
+                        ),
+                    style: $styles.text.h3),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -86,14 +93,15 @@ class CardPageBody extends HookWidget {
   }
 }
 
-class StyledYearPickerAlertDialog extends StatelessWidget {
+class StyledYearPickerAlertDialog extends ConsumerWidget {
   const StyledYearPickerAlertDialog({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final Size size = MediaQuery.of(context).size;
+    final currentYear = DateTime.now().year;
 
     return AlertDialog(
       title: const Text('Select a Year'),
@@ -105,17 +113,17 @@ class StyledYearPickerAlertDialog extends StatelessWidget {
           crossAxisCount: 3,
           children: [
             ...List.generate(
-              22,
+              currentYear - 2000,
               (index) => InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
+                onTap: () => ref
+                    .read(dateTimeNotifierProvider.notifier)
+                    .updateSelectedDateTime(DateTime(currentYear - index)),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Chip(
                     label: Container(
                       padding: const EdgeInsets.all(5),
-                      child: Text((2022 - index).toString()),
+                      child: Text((currentYear - index).toString()),
                     ),
                   ),
                 ),
@@ -183,7 +191,7 @@ class CardCarousel extends ConsumerWidget {
   }
 }
 
-class MonthCard extends StatelessWidget {
+class MonthCard extends ConsumerWidget {
   const MonthCard(
     this.month, {
     super.key,
@@ -196,7 +204,7 @@ class MonthCard extends StatelessWidget {
   final DateTime monthYear;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: () => context.pushRoute(const MonthPageRoute()),
       child: Card(
