@@ -115,9 +115,12 @@ class StyledYearPickerAlertDialog extends ConsumerWidget {
             ...List.generate(
               currentYear - 2000,
               (index) => InkWell(
-                onTap: () => ref
-                    .read(dateTimeNotifierProvider.notifier)
-                    .updateSelectedDateTime(DateTime(currentYear - index)),
+                onTap: () {
+                  ref
+                      .read(dateTimeNotifierProvider.notifier)
+                      .updateSelectedDateTime(DateTime(currentYear - index));
+                  context.popRoute();
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Chip(
@@ -157,11 +160,16 @@ AppBar _buildStyledAppBar() {
                 ),
               ),
             ),
-            onTap: () => ref.read(pageViewControllerProvider).animateToPage(
-                  today.month - 1,
-                  duration: kThemeAnimationDuration,
-                  curve: Curves.easeIn,
-                ),
+            onTap: () {
+              ref
+                  .read(dateTimeNotifierProvider.notifier)
+                  .updateSelectedDateTime(today);
+              ref.read(pageViewControllerProvider).animateToPage(
+                    today.month - 1,
+                    duration: kThemeAnimationDuration,
+                    curve: Curves.easeIn,
+                  );
+            },
           );
         },
       ),
@@ -279,10 +287,13 @@ class StyledMonthCalendar extends StatelessWidget {
           ),
           itemBuilder: (context, index) {
             if (index + 1 > firstDayOfMonthOffset) {
-              return Text(
-                ((index + 1) - firstDayOfMonthOffset).toString(),
-                textAlign: TextAlign.center,
-                style: $styles.text.bodySmall,
+              return GestureDetector(
+                onTap: () => context.router.push(const StoryPageRoute()),
+                child: Text(
+                  ((index + 1) - firstDayOfMonthOffset).toString(),
+                  textAlign: TextAlign.center,
+                  style: $styles.text.bodySmall,
+                ),
               );
             } else {
               return const SizedBox.shrink();

@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:glum_mood_tracker/shared/extensions.dart';
 import 'package:glum_mood_tracker/shared/providers.dart';
 import 'package:glum_mood_tracker/styles/styles.dart';
 
@@ -43,9 +44,27 @@ class AddStoryPage extends StatelessWidget {
         onPressed: () => context.router.pop(),
         icon: const Icon(Icons.close),
       ),
-      title: Text(
-        'WED, AUGUST 31 2022',
-        style: $styles.text.bodySmall,
+      title: Consumer(
+        builder: (context, ref, child) {
+          return GestureDetector(
+            onTap: () {
+              showDatePicker(
+                context: context,
+                initialDate: ref.read(storyFormNotifierProvider).story.date,
+                firstDate: DateTime(2000),
+                lastDate: DateTime.now(),
+              ).then(
+                (selectedDate) => ref
+                    .read(storyFormNotifierProvider.notifier)
+                    .dateChanged(selectedDate ?? DateTime.now()),
+              );
+            },
+            child: Text(
+              ref.watch(storyFormNotifierProvider).story.date.dateTimeInString,
+              style: $styles.text.bodySmall,
+            ),
+          );
+        },
       ),
       centerTitle: true,
       actions: [
