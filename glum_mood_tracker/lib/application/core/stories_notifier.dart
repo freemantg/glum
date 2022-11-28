@@ -38,6 +38,4 @@ class StoriesNotifier extends StateNotifier<StoriesState> {
       },
     );
   }
-
-  Future<void> createStory(Story story) async {}
 }

@@ -232,6 +232,9 @@ class MonthCard extends ConsumerWidget {
                 ? CrossAxisAlignment.center
                 : CrossAxisAlignment.start,
             children: [
+              Text(
+                ref.watch(storiesNotifierProvider).stories.length.toString(),
+              ),
               Column(
                 children: [
                   Text(

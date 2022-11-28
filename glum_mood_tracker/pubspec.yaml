@@ -48,6 +48,8 @@ dependencies:
   path_provider: ^2.0.11
   riverpod: ^2.1.1
   rxdart: ^0.27.7
+  sqlite3: ^1.9.1
+  sqlite3_flutter_libs: ^0.5.12
 
 dev_dependencies:
   auto_route_generator: ^5.0.3

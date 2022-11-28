@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'presentation/routes/app_router.gr.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(AppWidget());
 }
 

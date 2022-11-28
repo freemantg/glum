@@ -8,7 +8,7 @@ part 'story.freezed.dart';
 class Story with _$Story {
   const Story._();
   const factory Story({
-    required int id,
+     int? id,
     required String title,
     required String description,
     required int glumRating,
@@ -17,7 +17,6 @@ class Story with _$Story {
   }) = _Story;
 
   factory Story.empty() => Story(
-        id: 0,
         title: '',
         description: '',
         glumRating: 3,

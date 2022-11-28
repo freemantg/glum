@@ -12,7 +12,7 @@ part 'drift_database.g.dart';
 
 @DataClassName('StoryData')
 class Stories extends Table {
-  IntColumn get id => integer().autoIncrement()();
+  IntColumn? get id => integer().autoIncrement()();
   TextColumn get title => text().withLength(min: 1)();
   TextColumn get description => text().withDefault(const Constant(''))();
   IntColumn get glumRating => integer()();
@@ -38,16 +38,16 @@ class GlumDatabase extends _$GlumDatabase {
   @override
   int get schemaVersion => 1;
 
-  @override
-  MigrationStrategy get migration =>
-      MigrationStrategy(onUpgrade: (m, from, to) async {
-        if (from == 1) {
-          await m.addColumn(tags, tags.title);
-          await m.createTable(tags);
-        }
-      }, beforeOpen: (details) async {
-        await customStatement('PRAGMA foreign_keys = ON');
-      });
+  // @override
+  // MigrationStrategy get migration =>
+  //     MigrationStrategy(onUpgrade: (m, from, to) async {
+  //       if (from == 1) {
+  //         await m.addColumn(tags, tags.title);
+  //         await m.createTable(tags);
+  //       }
+  //     }, beforeOpen: (details) async {
+  //       await customStatement('PRAGMA foreign_keys = ON');
+  //     });
 }
 
 LazyDatabase _openConnection() {

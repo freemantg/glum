@@ -6,7 +6,7 @@ import 'package:glum_mood_tracker/infrastructure/drift_database.dart';
 import 'package:glum_mood_tracker/infrastructure/story_repository.dart';
 
 final storiesNotifierProvider =
-    StateNotifierProvider.autoDispose<StoriesNotifier, StoriesState>(
+    StateNotifierProvider<StoriesNotifier, StoriesState>(
         (ref) => StoriesNotifier(ref.watch(storyRepositoryProvider)));
 
 final storyFormNotifierProvider =

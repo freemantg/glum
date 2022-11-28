@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Story {
-  int get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   int get glumRating => throw _privateConstructorUsedError;
@@ -33,7 +33,7 @@ abstract class $StoryCopyWith<$Res> {
       _$StoryCopyWithImpl<$Res, Story>;
   @useResult
   $Res call(
-      {int id,
+      {int? id,
       String title,
       String description,
       int glumRating,
@@ -54,7 +54,7 @@ class _$StoryCopyWithImpl<$Res, $Val extends Story>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? title = null,
     Object? description = null,
     Object? glumRating = null,
@@ -62,10 +62,10 @@ class _$StoryCopyWithImpl<$Res, $Val extends Story>
     Object? tags = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -97,7 +97,7 @@ abstract class _$$_StoryCopyWith<$Res> implements $StoryCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id,
+      {int? id,
       String title,
       String description,
       int glumRating,
@@ -114,7 +114,7 @@ class __$$_StoryCopyWithImpl<$Res> extends _$StoryCopyWithImpl<$Res, _$_Story>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? title = null,
     Object? description = null,
     Object? glumRating = null,
@@ -122,10 +122,10 @@ class __$$_StoryCopyWithImpl<$Res> extends _$StoryCopyWithImpl<$Res, _$_Story>
     Object? tags = null,
   }) {
     return _then(_$_Story(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -154,7 +154,7 @@ class __$$_StoryCopyWithImpl<$Res> extends _$StoryCopyWithImpl<$Res, _$_Story>
 
 class _$_Story extends _Story {
   const _$_Story(
-      {required this.id,
+      {this.id,
       required this.title,
       required this.description,
       required this.glumRating,
@@ -164,7 +164,7 @@ class _$_Story extends _Story {
         super._();
 
   @override
-  final int id;
+  final int? id;
   @override
   final String title;
   @override
@@ -213,7 +213,7 @@ class _$_Story extends _Story {
 
 abstract class _Story extends Story {
   const factory _Story(
-      {required final int id,
+      {final int? id,
       required final String title,
       required final String description,
       required final int glumRating,
@@ -222,7 +222,7 @@ abstract class _Story extends Story {
   const _Story._() : super._();
 
   @override
-  int get id;
+  int? get id;
   @override
   String get title;
   @override
