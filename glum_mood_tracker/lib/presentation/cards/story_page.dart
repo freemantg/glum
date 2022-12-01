@@ -3,9 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:glum_mood_tracker/presentation/stats/stats_page.dart';
 import 'package:glum_mood_tracker/styles/styles.dart';
 
-class StoryPage extends StatelessWidget {
-  const StoryPage({super.key});
+import '../../domain/story.dart';
 
+class StoryPage extends StatefulWidget {
+  const StoryPage({super.key, this.story});
+
+  final Story? story;
+
+  @override
+  State<StoryPage> createState() => _StoryPageState();
+}
+
+class _StoryPageState extends State<StoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

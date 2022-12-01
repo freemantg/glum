@@ -8,6 +8,7 @@ import 'package:glum_mood_tracker/styles/colors.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../domain/story.dart';
 import '../../styles/styles.dart';
 import '../routes/app_router.gr.dart';
 
@@ -156,7 +157,9 @@ AppBar _buildStyledAppBar() {
               child: Center(
                 child: Text(
                   today.dateTimeNowInString,
-                  style: $styles.text.bodySmallBold,
+                  style: $styles.text.bodySmallBold.copyWith(
+                    fontSize: 12.0,
+                  ),
                 ),
               ),
             ),
@@ -243,11 +246,11 @@ class MonthCard extends ConsumerWidget {
                 ? CrossAxisAlignment.center
                 : CrossAxisAlignment.start,
             children: [
-              ...ref.watch(storiesNotifierProvider).stories.map(
-                    (e) => Text(
-                      "${e.title} ${e.description}, rating: ${e.glumRating}, id: ${e.id}, ${e.date.dateTimeNowInString}",
-                    ),
-                  ),
+              // ...ref.watch(storiesNotifierProvider).stories.map(
+              //       (e) => Text(
+              //         "${e.title} ${e.description}, rating: ${e.glumRating}, id: ${e.id}, ${e.date.dateTimeNowInString}",
+              //       ),
+              //     ),
               Column(
                 children: [
                   Text(
@@ -263,7 +266,7 @@ class MonthCard extends ConsumerWidget {
               ),
               const Spacer(),
               showCalendar
-                  ? StyledMonthCalendar(monthYear: monthYear)
+                  ? StyledMonthViewCalendar(monthYear: monthYear)
                   : const MonthProgressBar(),
               showCalendar ? const Spacer() : const SizedBox.shrink(),
             ],
@@ -274,8 +277,8 @@ class MonthCard extends ConsumerWidget {
   }
 }
 
-class StyledMonthCalendar extends StatelessWidget {
-  const StyledMonthCalendar({
+class StyledMonthViewCalendar extends StatelessWidget {
+  const StyledMonthViewCalendar({
     super.key,
     required this.monthYear,
   });
@@ -296,20 +299,17 @@ class StyledMonthCalendar extends StatelessWidget {
     return Column(
       children: [
         GridView.builder(
-          itemCount: firstDayOfMonthOffset + daysInMonth,
           shrinkWrap: true,
+          itemCount: firstDayOfMonthOffset + daysInMonth,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 7,
           ),
           itemBuilder: (context, index) {
             if (index + 1 > firstDayOfMonthOffset) {
-              return GestureDetector(
-                onTap: () => context.router.push(const StoryPageRoute()),
-                child: Text(
-                  ((index + 1) - firstDayOfMonthOffset).toString(),
-                  textAlign: TextAlign.center,
-                  style: $styles.text.bodySmall,
-                ),
+              return DateButton(
+                firstDayOfMonthOffset: firstDayOfMonthOffset,
+                monthYear: monthYear,
+                dateIndex: index,
               );
             } else {
               return const SizedBox.shrink();
@@ -326,6 +326,55 @@ class StyledMonthCalendar extends StatelessWidget {
         ),
         SizedBox(height: $styles.insets.sm),
       ],
+    );
+  }
+}
+
+class DateButton extends ConsumerWidget {
+  const DateButton({
+    super.key,
+    required this.dateIndex,
+    required this.monthYear,
+    required this.firstDayOfMonthOffset,
+  });
+
+  final int dateIndex;
+  final DateTime monthYear;
+  final int firstDayOfMonthOffset;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final buttonDay = (dateIndex + 1) - firstDayOfMonthOffset;
+    final buttonDate = DateTime(monthYear.year, monthYear.month, buttonDay);
+
+    final story = ref.watch(storiesNotifierProvider).maybeWhen(
+          loadSuccess: (stories) {
+            return stories.firstWhere(
+              (story) => DateUtils.isSameDay(story.date, buttonDate),
+              orElse: () => Story.empty().copyWith(date: buttonDate),
+            );
+          },
+          orElse: () => null,
+        );
+
+    return GestureDetector(
+      onTap: () {
+        if (story?.id == null) {
+          context.router.push(AddStoryPageRoute(story: story));
+        } else {
+          context.router.push(StoryPageRoute(story: story));
+        }
+      },
+      child: Text(
+        buttonDay.toString(),
+        textAlign: TextAlign.center,
+        style: (story?.id == null)
+            ? $styles.text.bodySmall.copyWith(color: Colors.grey)
+            : $styles.text.bodySmall.copyWith(
+                color: Colors.pink,
+                fontWeight: FontWeight.bold,
+              ),
+      ),
     );
   }
 }

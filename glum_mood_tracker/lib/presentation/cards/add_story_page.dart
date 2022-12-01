@@ -6,8 +6,27 @@ import 'package:glum_mood_tracker/shared/extensions.dart';
 import 'package:glum_mood_tracker/shared/providers.dart';
 import 'package:glum_mood_tracker/styles/styles.dart';
 
-class AddStoryPage extends StatelessWidget {
-  const AddStoryPage({super.key});
+import '../../domain/story.dart';
+
+class AddStoryPage extends ConsumerStatefulWidget {
+  const AddStoryPage({super.key, this.story});
+
+  final Story? story;
+
+  @override
+  ConsumerState<AddStoryPage> createState() => _AddStoryPageState();
+}
+
+class _AddStoryPageState extends ConsumerState<AddStoryPage> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(
+      () => ref
+          .read(storyFormNotifierProvider.notifier)
+          .initialiseStory(widget.story),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

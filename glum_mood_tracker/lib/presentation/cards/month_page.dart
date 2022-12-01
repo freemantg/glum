@@ -25,7 +25,7 @@ class _MonthPageState extends ConsumerState<MonthPage> {
           itemCount: 3,
           itemBuilder: (context, index) {
             return GestureDetector(
-              onTap: () => context.router.push(const StoryPageRoute()),
+              onTap: () => context.router.push(StoryPageRoute()),
               child: StyledCard(
                 customPadding: true,
                 child: Row(

@@ -5,6 +5,7 @@ import 'package:glum_mood_tracker/infrastructure/story_repository.dart';
 
 import '../../domain/story.dart';
 import '../../domain/story_failure.dart';
+import '../../domain/tag.dart';
 
 part 'story_form_notifier.freezed.dart';
 
@@ -31,6 +32,14 @@ class StoryFormNotifier extends StateNotifier<StoryFormState> {
 
   StoryFormNotifier(this._repository) : super(StoryFormState.initial());
 
+  Future<void> initialiseStory(Story? story) async {
+    if (story == null) return;
+    state = state.copyWith(
+      isEditing: true,
+      story: story,
+    );
+  }
+
   Future<void> save() async {
     state = state.copyWith(isSaving: true);
     final failureOrSuccess = await _repository.createStory(state.story);
@@ -51,4 +60,6 @@ class StoryFormNotifier extends StateNotifier<StoryFormState> {
 
   Future<void> dateChanged(DateTime date) async =>
       state = state.copyWith(story: state.story.copyWith(date: date));
+
+  Future<void> tagsChanged(List<Tag> tags) async {}
 }
