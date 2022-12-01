@@ -12,7 +12,7 @@ part 'drift_database.g.dart';
 
 @DataClassName('StoryData')
 class Stories extends Table {
-  IntColumn? get id => integer().autoIncrement()();
+  IntColumn get id => integer().autoIncrement()();
   TextColumn get title => text().withLength(min: 1)();
   TextColumn get description => text().withDefault(const Constant(''))();
   IntColumn get glumRating => integer()();
@@ -38,16 +38,16 @@ class GlumDatabase extends _$GlumDatabase {
   @override
   int get schemaVersion => 1;
 
-  // @override
-  // MigrationStrategy get migration =>
-  //     MigrationStrategy(onUpgrade: (m, from, to) async {
-  //       if (from == 1) {
-  //         await m.addColumn(tags, tags.title);
-  //         await m.createTable(tags);
-  //       }
-  //     }, beforeOpen: (details) async {
-  //       await customStatement('PRAGMA foreign_keys = ON');
-  //     });
+  @override
+  MigrationStrategy get migration =>
+      MigrationStrategy(onUpgrade: (m, from, to) async {
+        if (from == 1) {
+          await m.addColumn(tags, tags.title);
+          await m.createTable(tags);
+        }
+      }, beforeOpen: (details) async {
+        await customStatement('PRAGMA foreign_keys = ON');
+      });
 }
 
 LazyDatabase _openConnection() {
@@ -68,18 +68,25 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
   Future<void> writeStoryWithTags(StoryDto entry) {
     return transaction(
       () async {
-        final story = entry.story;
+        final id = entry.story.id;
+
+        final story = StoriesCompanion.insert(
+          id: (id == 0) ? const Value.absent() : Value(id),
+          title: entry.story.title,
+          glumRating: entry.story.glumRating,
+          date: entry.story.date,
+        );
 
         //First, we write the story.
         await into(stories).insert(story, mode: InsertMode.replace);
 
         //We replace the entries of the story, so first delete the old ones.
-        (delete(storyEntries)..where((tbl) => tbl.story.equals(story.id))).go();
+        (delete(storyEntries)..where((tbl) => tbl.story.equals(id))).go();
 
         //and write the new ones.
         for (final tag in entry.tags) {
           await into(storyEntries).insert(
-            StoryEntry(story: story.id, tag: tag.id),
+            StoryEntry(story: id, tag: tag.id),
           );
         }
       },

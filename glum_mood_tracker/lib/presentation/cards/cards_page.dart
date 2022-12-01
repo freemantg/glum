@@ -191,30 +191,41 @@ class CardCarousel extends ConsumerWidget {
       controller: ref.watch(pageViewControllerProvider),
       itemCount: 12,
       itemBuilder: (context, index) => MonthCard(
-        index + 1,
         showCalendar: showCalendar,
-        monthYear: DateTime(2022, index + 1),
+        monthYear: ref.watch(dateTimeNotifierProvider).maybeMap(
+              data: (selectedDateTime) {
+                final selectedYear = selectedDateTime.value.year;
+                return DateTime(selectedYear, index + 1);
+              },
+              orElse: () => DateTime.now(),
+            ),
       ),
     );
   }
 }
 
 class MonthCard extends ConsumerWidget {
-  const MonthCard(
-    this.month, {
+  const MonthCard({
     super.key,
     required this.showCalendar,
     required this.monthYear,
   });
 
-  final int month;
   final bool showCalendar;
   final DateTime monthYear;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
-      onTap: () => context.pushRoute(const MonthPageRoute()),
+      onTap: () {
+        ref.read(dateTimeNotifierProvider.notifier).updateSelectedDateTime(
+              DateTime(
+                monthYear.year,
+                monthYear.month,
+              ),
+            );
+        context.pushRoute(const MonthPageRoute());
+      },
       child: Card(
         margin: EdgeInsets.all($styles.insets.sm),
         shape: RoundedRectangleBorder(
@@ -232,13 +243,15 @@ class MonthCard extends ConsumerWidget {
                 ? CrossAxisAlignment.center
                 : CrossAxisAlignment.start,
             children: [
-              Text(
-                ref.watch(storiesNotifierProvider).stories.length.toString(),
-              ),
+              ...ref.watch(storiesNotifierProvider).stories.map(
+                    (e) => Text(
+                      "${e.title} ${e.description}, rating: ${e.glumRating}, id: ${e.id}, ${e.date.dateTimeNowInString}",
+                    ),
+                  ),
               Column(
                 children: [
                   Text(
-                    month.toString(),
+                    monthYear.month.toString(),
                     style: $styles.text.h1,
                   ),
                   Text(
