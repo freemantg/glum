@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:glum_mood_tracker/presentation/routes/app_router.gr.dart';
 import 'package:glum_mood_tracker/presentation/stats/stats_page.dart';
+import 'package:glum_mood_tracker/shared/extensions.dart';
+import 'package:glum_mood_tracker/shared/providers.dart';
 import 'package:glum_mood_tracker/styles/styles.dart';
 
 class MonthPage extends ConsumerStatefulWidget {
@@ -15,13 +17,12 @@ class MonthPage extends ConsumerStatefulWidget {
 class _MonthPageState extends ConsumerState<MonthPage> {
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: _buildAppBar(),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm),
         child: ListView.builder(
-          itemCount: 5,
+          itemCount: 3,
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () => context.router.push(const StoryPageRoute()),
@@ -74,7 +75,10 @@ class _MonthPageState extends ConsumerState<MonthPage> {
 
   AppBar _buildAppBar() {
     return AppBar(
-      title: Text('NOVEMBER 2022', style: $styles.text.title2),
+      title: Text(
+        ref.watch(dateTimeNotifierProvider).value!.dateTimeInMonthYearString,
+        style: $styles.text.title2,
+      ),
       centerTitle: true,
       actions: [
         IconButton(

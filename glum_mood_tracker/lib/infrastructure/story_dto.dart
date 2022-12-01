@@ -15,8 +15,9 @@ class StoryDto with _$StoryDto {
   }) = _StoryDto;
 
   factory StoryDto.fromDomain(Story story) => StoryDto(
-        story: StoryData(
-          id: story.id,
+        story: 
+        StoryData(
+          id: story.id ?? 0,
           title: story.title,
           description: story.description,
           glumRating: story.glumRating,
@@ -38,7 +39,12 @@ class StoryDto with _$StoryDto {
         glumRating: story.glumRating,
         date: story.date,
         tags: tags
-            .map((tagData) => Tag(id: tagData.id, title: tagData.title))
+            .map(
+              (tagData) => Tag(
+                id: tagData.id,
+                title: tagData.title,
+              ),
+            )
             .toList(),
       );
 }

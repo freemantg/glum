@@ -70,8 +70,10 @@ class AddStoryPage extends StatelessWidget {
       actions: [
         Consumer(
           builder: (context, ref, child) => IconButton(
-            onPressed: () =>
-                ref.read(storyFormNotifierProvider.notifier).save(),
+            onPressed: () => ref
+                .read(storyFormNotifierProvider.notifier)
+                .save()
+                .then((_) => context.router.pop()),
             icon: const Icon(Icons.check),
           ),
         ),
