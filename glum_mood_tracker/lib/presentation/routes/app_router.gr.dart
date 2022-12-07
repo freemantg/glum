@@ -37,8 +37,7 @@ class AppRouter extends _i8.RootStackRouter {
       );
     },
     StoryPageRoute.name: (routeData) {
-      final args = routeData.argsAs<StoryPageRouteArgs>(
-          orElse: () => const StoryPageRouteArgs());
+      final args = routeData.argsAs<StoryPageRouteArgs>();
       return _i8.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i2.StoryPage(
@@ -77,9 +76,13 @@ class AppRouter extends _i8.RootStackRouter {
       );
     },
     MonthPageRoute.name: (routeData) {
+      final args = routeData.argsAs<MonthPageRouteArgs>();
       return _i8.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i6.MonthPage(),
+        child: _i6.MonthPage(
+          key: args.key,
+          monthYear: args.monthYear,
+        ),
       );
     },
     StatsPageRoute.name: (routeData) {
@@ -156,7 +159,7 @@ class HomePageRoute extends _i8.PageRouteInfo<void> {
 class StoryPageRoute extends _i8.PageRouteInfo<StoryPageRouteArgs> {
   StoryPageRoute({
     _i10.Key? key,
-    _i11.Story? story,
+    required _i11.Story story,
   }) : super(
           StoryPageRoute.name,
           path: ':story',
@@ -172,12 +175,12 @@ class StoryPageRoute extends _i8.PageRouteInfo<StoryPageRouteArgs> {
 class StoryPageRouteArgs {
   const StoryPageRouteArgs({
     this.key,
-    this.story,
+    required this.story,
   });
 
   final _i10.Key? key;
 
-  final _i11.Story? story;
+  final _i11.Story story;
 
   @override
   String toString() {
@@ -259,14 +262,36 @@ class CardsPageRoute extends _i8.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i6.MonthPage]
-class MonthPageRoute extends _i8.PageRouteInfo<void> {
-  const MonthPageRoute()
-      : super(
+class MonthPageRoute extends _i8.PageRouteInfo<MonthPageRouteArgs> {
+  MonthPageRoute({
+    _i10.Key? key,
+    required DateTime monthYear,
+  }) : super(
           MonthPageRoute.name,
           path: ':month',
+          args: MonthPageRouteArgs(
+            key: key,
+            monthYear: monthYear,
+          ),
         );
 
   static const String name = 'MonthPageRoute';
+}
+
+class MonthPageRouteArgs {
+  const MonthPageRouteArgs({
+    this.key,
+    required this.monthYear,
+  });
+
+  final _i10.Key? key;
+
+  final DateTime monthYear;
+
+  @override
+  String toString() {
+    return 'MonthPageRouteArgs{key: $key, monthYear: $monthYear}';
+  }
 }
 
 /// generated route for

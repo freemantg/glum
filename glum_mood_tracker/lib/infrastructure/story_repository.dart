@@ -1,7 +1,7 @@
 import 'package:glum_mood_tracker/domain/story_failure.dart';
 import 'package:glum_mood_tracker/domain/story.dart';
 import 'package:dartz/dartz.dart';
-import 'package:glum_mood_tracker/domain/story_interface.dart';
+import 'package:glum_mood_tracker/domain/interfaces.dart';
 import 'package:glum_mood_tracker/infrastructure/drift_database.dart';
 import 'package:glum_mood_tracker/infrastructure/story_dto.dart';
 import 'package:rxdart/rxdart.dart';

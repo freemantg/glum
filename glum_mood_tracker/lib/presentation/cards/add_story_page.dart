@@ -1,10 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:glum_mood_tracker/shared/extensions.dart';
 import 'package:glum_mood_tracker/shared/providers.dart';
 import 'package:glum_mood_tracker/styles/styles.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../domain/story.dart';
 
@@ -112,6 +113,7 @@ class RatingBarWidget extends ConsumerWidget {
       children: [
         const Spacer(flex: 3),
         RatingBar(
+          glow: false,
           minRating: 1,
           initialRating:
               ref.watch(storyFormNotifierProvider).story.glumRating.toDouble(),
@@ -122,19 +124,13 @@ class RatingBarWidget extends ConsumerWidget {
               .ratingChanged(rating.toInt()),
           ratingWidget: RatingWidget(
             full: Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFFE35062),
-                borderRadius: BorderRadius.circular(2.0),
-              ),
+              color: const Color(0xFFE35062),
               height: 16.0,
               width: 16.0,
             ),
             half: const SizedBox.shrink(),
             empty: Container(
-              decoration: BoxDecoration(
-                color: const Color(0XFFC17D35).withOpacity(0.25),
-                borderRadius: BorderRadius.circular(2.0),
-              ),
+              color: const Color(0XFFC17D35).withOpacity(0.25),
               height: 16.0,
               width: 16.0,
             ),
@@ -180,7 +176,10 @@ class AddTagWidget extends StatelessWidget {
               ),
               actions: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () => showDialog(
+                    context: context,
+                    builder: (context) => const TagActionAlertDialog(),
+                  ),
                   icon: const Icon(Icons.add),
                 ),
                 IconButton(
@@ -189,32 +188,64 @@ class AddTagWidget extends StatelessWidget {
                 ),
               ],
             ),
-            body: ListView.builder(
+            body: ListView.separated(
+              separatorBuilder: (context, index) => const Divider(),
               itemCount: 5,
+              shrinkWrap: true,
               itemBuilder: (context, index) {
-                return ListTile(
-                  onTap: () {},
-                  leading: Checkbox(
-                    value: true,
-                    onChanged: (value) {},
-                  ),
+                return CheckboxListTile(
+                  checkboxShape: const CircleBorder(),
+                  controlAffinity: ListTileControlAffinity.leading,
+                  onChanged: (value) {},
+                  value: false,
                   title: Row(
                     children: [
-                      Text('Tag', style: $styles.text.bodyBold),
+                      const Text('Tag'),
                       const Spacer(),
                       Text(
                         '5',
                         style: $styles.text.bodyBold.copyWith(height: 0),
-                      )
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.more_vert),
+                        onPressed: () {},
+                      ),
                     ],
                   ),
-                  trailing: const Icon(Icons.more_vert),
                 );
               },
             ),
           );
         },
       ),
+    );
+  }
+}
+
+class TagActionAlertDialog extends HookConsumerWidget {
+  const TagActionAlertDialog({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final tagController = useTextEditingController();
+
+    return AlertDialog(
+      title: Center(
+        child: Text('New Tag', style: $styles.text.title1),
+      ),
+      content: TextField(
+        controller: tagController,
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => context.router.pop(),
+          child: const Text('CANCEL'),
+        ),
+        TextButton(
+          onPressed: () {},
+          child: const Text('DONE'),
+        ),
+      ],
     );
   }
 }

@@ -1,14 +1,21 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:glum_mood_tracker/presentation/routes/app_router.gr.dart';
-import 'package:glum_mood_tracker/presentation/stats/stats_page.dart';
 import 'package:glum_mood_tracker/shared/extensions.dart';
 import 'package:glum_mood_tracker/shared/providers.dart';
 import 'package:glum_mood_tracker/styles/styles.dart';
 
+import '../../domain/story.dart';
+import '../routes/app_router.gr.dart';
+import '../stats/stats_page.dart';
+
 class MonthPage extends ConsumerStatefulWidget {
-  const MonthPage({super.key});
+  const MonthPage({
+    super.key,
+    required this.monthYear,
+  });
+
+  final DateTime monthYear;
 
   @override
   ConsumerState<MonthPage> createState() => _MonthPageState();
@@ -21,54 +28,64 @@ class _MonthPageState extends ConsumerState<MonthPage> {
       appBar: _buildAppBar(),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm),
-        child: ListView.builder(
-          itemCount: 3,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () => context.router.push(StoryPageRoute()),
-              child: StyledCard(
-                customPadding: true,
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all($styles.insets.lg),
-                      child: Column(
+        child: ref.watch(storiesNotifierProvider).maybeWhen(
+              loadSuccess: (stories) => ListView.builder(
+                itemCount: stories.length,
+                itemBuilder: (context, index) {
+                  final story = stories[index];
+
+                  return GestureDetector(
+                    onTap: () => context.router.push(
+                      StoryPageRoute(story: Story.empty()),
+                    ),
+                    child: StyledCard(
+                      customPadding: true,
+                      child: Row(
                         children: [
-                          Text('14', style: $styles.text.h3),
-                          Text('Mon',
-                              style: $styles.text.h4.copyWith(
-                                fontWeight: FontWeight.normal,
-                                height: 0,
-                              )),
+                          Padding(
+                            padding: EdgeInsets.all($styles.insets.lg),
+                            child: Column(
+                              children: [
+                                Text(
+                                  story.date.day.toString(),
+                                  style: $styles.text.h3,
+                                ),
+                                Text(story.date.dateTimeInDayFormat,
+                                    style: $styles.text.h4.copyWith(
+                                      fontWeight: FontWeight.normal,
+                                      height: 0,
+                                    )),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  left: BorderSide(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    width: 0.5,
+                                  ),
+                                ),
+                              ),
+                              child: Column(
+                                children: const [
+                                  Placeholder(
+                                    fallbackHeight: 148.0,
+                                    strokeWidth: 0,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                            left: BorderSide(
-                              color: Colors.grey.withOpacity(0.5),
-                              width: 0.5,
-                            ),
-                          ),
-                        ),
-                        child: Column(
-                          children: const [
-                            Placeholder(
-                              fallbackHeight: 148.0,
-                              strokeWidth: 0,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  );
+                },
               ),
-            );
-          },
-        ),
+              orElse: () => null,
+            ),
       ),
     );
   }
@@ -76,7 +93,10 @@ class _MonthPageState extends ConsumerState<MonthPage> {
   AppBar _buildAppBar() {
     return AppBar(
       title: Text(
-        ref.watch(dateTimeNotifierProvider).value!.dateTimeInMonthYearString,
+        DateTime(
+          widget.monthYear.year,
+          widget.monthYear.month,
+        ).dateTimeInMonthYearString,
         style: $styles.text.title2,
       ),
       centerTitle: true,

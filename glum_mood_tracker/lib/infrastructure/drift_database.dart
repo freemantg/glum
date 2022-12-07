@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:glum_mood_tracker/infrastructure/tag_dto.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:rxdart/rxdart.dart';
@@ -73,6 +74,7 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
         final story = StoriesCompanion.insert(
           id: (id == 0) ? const Value.absent() : Value(id),
           title: entry.story.title,
+          description: Value(entry.story.description),
           glumRating: entry.story.glumRating,
           date: entry.story.date,
         );
@@ -168,5 +170,9 @@ class TagDao extends DatabaseAccessor<GlumDatabase> with _$TagDaoMixin {
   final GlumDatabase db;
 
   Stream<List<TagData>> watchTags() => select(tags).watch();
-  Future<void> insertTag(Insertable<TagData> tag) => into(tags).insert(tag);
+
+  Future<void> insertTag(TagDto tag) async {
+    final tagCompanion = TagsCompanion.insert(title: tag.title);
+    await into(tags).insert(tagCompanion);
+  }
 }

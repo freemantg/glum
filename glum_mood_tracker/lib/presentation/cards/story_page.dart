@@ -1,20 +1,16 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:glum_mood_tracker/presentation/stats/stats_page.dart';
+import 'package:glum_mood_tracker/shared/extensions.dart';
 import 'package:glum_mood_tracker/styles/styles.dart';
 
 import '../../domain/story.dart';
+import '../stats/stats_page.dart';
 
-class StoryPage extends StatefulWidget {
-  const StoryPage({super.key, this.story});
+class StoryPage extends StatelessWidget {
+  const StoryPage({super.key, required this.story});
 
-  final Story? story;
+  final Story story;
 
-  @override
-  State<StoryPage> createState() => _StoryPageState();
-}
-
-class _StoryPageState extends State<StoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,20 +23,26 @@ class _StoryPageState extends State<StoryPage> {
               child: Column(
                 children: [
                   SizedBox(height: $styles.insets.sm),
-                  Text('Hello', style: $styles.text.h3),
-                  SizedBox(height: $styles.insets.xxs),
+                  Text(story.title, style: $styles.text.h3),
+                  SizedBox(height: $styles.insets.xs),
                   Text(
-                    'SUN, NOV 13 / 2022',
+                    story.date.dateTimeInStoryPageFormat,
                     style: $styles.text.caption.copyWith(color: Colors.grey),
                   ),
                   SizedBox(height: $styles.insets.sm),
-                  Text('🐍', style: $styles.text.h3),
-                  SizedBox(height: $styles.insets.md),
                   Text(
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-                    textAlign: TextAlign.left,
-                    style: $styles.text.bodySmall.copyWith(
-                      color: Colors.grey.withOpacity(0.95),
+                    story.glumRating.toString(),
+                    style: $styles.text.h3,
+                  ),
+                  SizedBox(height: $styles.insets.md),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      story.description,
+                      textAlign: TextAlign.left,
+                      style: $styles.text.bodySmall.copyWith(
+                        color: Colors.grey.withOpacity(0.95),
+                      ),
                     ),
                   ),
                 ],

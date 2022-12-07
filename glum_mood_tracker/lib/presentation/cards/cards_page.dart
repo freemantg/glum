@@ -220,16 +220,9 @@ class MonthCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
-      onTap: () {
-        ref.read(dateTimeNotifierProvider.notifier).updateSelectedDateTime(
-              DateTime(
-                monthYear.year,
-                monthYear.month,
-              ),
-            );
-        context.pushRoute(const MonthPageRoute());
-      },
+      onTap: () => context.pushRoute(MonthPageRoute(monthYear: monthYear)),
       child: Card(
+        elevation: 8.0,
         margin: EdgeInsets.all($styles.insets.sm),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular($styles.corners.md)),
@@ -246,11 +239,6 @@ class MonthCard extends ConsumerWidget {
                 ? CrossAxisAlignment.center
                 : CrossAxisAlignment.start,
             children: [
-              // ...ref.watch(storiesNotifierProvider).stories.map(
-              //       (e) => Text(
-              //         "${e.title} ${e.description}, rating: ${e.glumRating}, id: ${e.id}, ${e.date.dateTimeNowInString}",
-              //       ),
-              //     ),
               Column(
                 children: [
                   Text(
@@ -259,8 +247,10 @@ class MonthCard extends ConsumerWidget {
                   ),
                   Text(
                     '  ${DateFormat.MMM().format(DateTime(monthYear.year, monthYear.month)).toUpperCase()}',
-                    style:
-                        $styles.text.h3.copyWith(fontWeight: FontWeight.w400),
+                    style: $styles.text.h3.copyWith(
+                      fontWeight: FontWeight.w400,
+                      height: 0,
+                    ),
                   ),
                 ],
               ),
@@ -354,12 +344,12 @@ class DateButton extends ConsumerWidget {
               orElse: () => Story.empty().copyWith(date: buttonDate),
             );
           },
-          orElse: () => null,
+          orElse: () => Story.empty(),
         );
 
     return GestureDetector(
       onTap: () {
-        if (story?.id == null) {
+        if (story.id == null) {
           context.router.push(AddStoryPageRoute(story: story));
         } else {
           context.router.push(StoryPageRoute(story: story));
@@ -368,7 +358,7 @@ class DateButton extends ConsumerWidget {
       child: Text(
         buttonDay.toString(),
         textAlign: TextAlign.center,
-        style: (story?.id == null)
+        style: (story.id == null)
             ? $styles.text.bodySmall.copyWith(color: Colors.grey)
             : $styles.text.bodySmall.copyWith(
                 color: Colors.pink,
