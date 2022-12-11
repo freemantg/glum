@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:glum_mood_tracker/domain/interfaces.dart';
 import 'package:glum_mood_tracker/domain/tag_failure.dart';
 import 'package:glum_mood_tracker/domain/tag.dart';
@@ -35,15 +36,16 @@ class TagRepository implements ITagRepository {
 
   @override
   Stream<Either<TagFailure, List<Tag>>> watchAllTags() async* {
-    final stream = _db.tagDao.watchTags();
-    yield* stream
-        .map(
-          (tagsData) => right<TagFailure, List<Tag>>(
-            tagsData
-                .map((e) => TagDto.FromJson(e.toJson()).toDomain())
-                .toList(),
-          ),
-        )
-        .onErrorReturn(left(const TagFailure.unexpected()));
+    final tagStream = _db.tagDao.watchTags();
+    yield* tagStream
+        .map((dtos) => right<TagFailure, List<Tag>>(
+              dtos.map((e) => e.toDomain()).toList(),
+            ))
+        .onErrorReturnWith(
+      (error, stackTrace) {
+        debugPrint('ERROR');
+        return left(const TagFailure.unexpected());
+      },
+    );
   }
 }

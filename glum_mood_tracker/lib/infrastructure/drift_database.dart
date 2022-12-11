@@ -61,7 +61,7 @@ LazyDatabase _openConnection() {
   );
 }
 
-@DriftAccessor(tables: [Stories, Tags, StoryEntries])
+@DriftAccessor(tables: [Stories, StoryEntries])
 class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
   StoryDao(this.db) : super(db);
   final GlumDatabase db;
@@ -169,10 +169,22 @@ class TagDao extends DatabaseAccessor<GlumDatabase> with _$TagDaoMixin {
 
   final GlumDatabase db;
 
-  Stream<List<TagData>> watchTags() => select(tags).watch();
+  Stream<List<TagDto>> watchTags() => select(tags).watch().map(
+        (data) => data
+            .map((e) => TagDto(
+                  title: e.title,
+                  id: e.id,
+                ))
+            .toList(),
+      );
 
   Future<void> insertTag(TagDto tag) async {
     final tagCompanion = TagsCompanion.insert(title: tag.title);
     await into(tags).insert(tagCompanion);
+  }
+
+  Future<void> deleteTag(TagDto tag) async {
+    final tagToDelete = TagData(id: tag.id!, title: tag.title);
+    await delete(tags).delete(tagToDelete);
   }
 }

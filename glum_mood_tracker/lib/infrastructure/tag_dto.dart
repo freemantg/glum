@@ -9,7 +9,10 @@ part 'tag_dto.g.dart';
 @JsonSerializable()
 class TagDto with _$TagDto {
   const TagDto._();
-  const factory TagDto({int? id, required String title}) = _TagDto;
+  const factory TagDto({
+    int? id,
+    required String title,
+  }) = _TagDto;
 
   factory TagDto.fromDomain(Tag tag) => TagDto(title: tag.title);
 

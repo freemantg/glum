@@ -37,19 +37,11 @@ class StoryRepository implements IStoryRepository {
   Stream<Either<StoryFailure, List<Story>>> watchAllStories() async* {
     final storyStream = _db.storyDao.watchAllStories();
     yield* storyStream
-        .map(
-          (dtos) => right<StoryFailure, List<Story>>(
-            dtos.map((e) => e.toDomain()).toList(),
-          ),
-        )
+        .map((dtos) => right<StoryFailure, List<Story>>(
+              dtos.map((e) => e.toDomain()).toList(),
+            ))
         .onErrorReturnWith(
           (error, stackTrace) => left(const StoryFailure.unexpected()),
         );
-  }
-
-  @override
-  Stream<Either<StoryFailure, Story>> watchStory() {
-    // TODO: implement watchStory
-    throw UnimplementedError();
   }
 }

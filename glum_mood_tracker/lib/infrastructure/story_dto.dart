@@ -15,8 +15,7 @@ class StoryDto with _$StoryDto {
   }) = _StoryDto;
 
   factory StoryDto.fromDomain(Story story) => StoryDto(
-        story: 
-        StoryData(
+        story: StoryData(
           id: story.id ?? 0,
           title: story.title,
           description: story.description,
@@ -26,7 +25,7 @@ class StoryDto with _$StoryDto {
         tags: [
           for (var tag in story.tags)
             TagData(
-              id: tag.id,
+              id: tag.id!,
               title: tag.title,
             )
         ],

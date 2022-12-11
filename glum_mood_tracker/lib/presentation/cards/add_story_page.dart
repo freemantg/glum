@@ -145,9 +145,7 @@ class RatingBarWidget extends ConsumerWidget {
 }
 
 class AddTagWidget extends StatelessWidget {
-  const AddTagWidget({
-    super.key,
-  });
+  const AddTagWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -167,32 +165,62 @@ class AddTagWidget extends StatelessWidget {
         ),
         context: context,
         builder: (context) {
-          return Scaffold(
-            appBar: AppBar(
-              centerTitle: true,
-              title: Text(
-                'Tags',
-                style: $styles.text.bodyBold.copyWith(height: 0),
-              ),
-              actions: [
-                IconButton(
-                  onPressed: () => showDialog(
-                    context: context,
-                    builder: (context) => const TagActionAlertDialog(),
-                  ),
-                  icon: const Icon(Icons.add),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.sort),
-                ),
-              ],
+          return const TagModalBottomSheet();
+        },
+      ),
+    );
+  }
+}
+
+class TagModalBottomSheet extends ConsumerStatefulWidget {
+  const TagModalBottomSheet({
+    super.key,
+  });
+
+  @override
+  ConsumerState<TagModalBottomSheet> createState() =>
+      _TagModalBottomSheetState();
+}
+
+class _TagModalBottomSheetState extends ConsumerState<TagModalBottomSheet> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(
+        () => ref.read(tagFormNotifierProvider.notifier).watchTags());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          'Tags',
+          style: $styles.text.bodyBold.copyWith(height: 0),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () => showDialog(
+              context: context,
+              builder: (context) => const TagActionAlertDialog(),
             ),
-            body: ListView.separated(
+            icon: const Icon(Icons.add),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.sort),
+          ),
+        ],
+      ),
+      body: ref.watch(tagFormNotifierProvider).maybeWhen(
+            loadInProgress: (tags) => const CircularProgressIndicator(),
+            loadSuccess: (tags) => ListView.separated(
               separatorBuilder: (context, index) => const Divider(),
-              itemCount: 5,
+              itemCount: tags.length,
               shrinkWrap: true,
               itemBuilder: (context, index) {
+                final tag = tags[index];
                 return CheckboxListTile(
                   checkboxShape: const CircleBorder(),
                   controlAffinity: ListTileControlAffinity.leading,
@@ -200,7 +228,7 @@ class AddTagWidget extends StatelessWidget {
                   value: false,
                   title: Row(
                     children: [
-                      const Text('Tag'),
+                      Text(tag.title),
                       const Spacer(),
                       Text(
                         '5',
@@ -215,9 +243,8 @@ class AddTagWidget extends StatelessWidget {
                 );
               },
             ),
-          );
-        },
-      ),
+            orElse: () => const SizedBox.shrink(),
+          ),
     );
   }
 }
@@ -227,22 +254,25 @@ class TagActionAlertDialog extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final tagController = useTextEditingController();
+    final controller = useTextEditingController();
 
     return AlertDialog(
       title: Center(
         child: Text('New Tag', style: $styles.text.title1),
       ),
-      content: TextField(
-        controller: tagController,
-      ),
+      content: TextField(controller: controller),
       actions: [
         TextButton(
           onPressed: () => context.router.pop(),
           child: const Text('CANCEL'),
         ),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            ref
+                .read(tagFormNotifierProvider.notifier)
+                .addTag(controller.value.text);
+            context.router.pop();
+          },
           child: const Text('DONE'),
         ),
       ],

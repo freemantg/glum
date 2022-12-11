@@ -2,8 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:glum_mood_tracker/application/core/date_time_notifier.dart';
 import 'package:glum_mood_tracker/application/core/stories_notifier.dart';
 import 'package:glum_mood_tracker/application/core/story_form_notifier.dart';
+import 'package:glum_mood_tracker/application/core/tags_notifier.dart';
 import 'package:glum_mood_tracker/infrastructure/drift_database.dart';
 import 'package:glum_mood_tracker/infrastructure/story_repository.dart';
+import 'package:glum_mood_tracker/infrastructure/tag_repository.dart';
 
 final storiesNotifierProvider =
     StateNotifierProvider<StoriesNotifier, StoriesState>(
@@ -13,8 +15,17 @@ final storyFormNotifierProvider =
     StateNotifierProvider.autoDispose<StoryFormNotifier, StoryFormState>(
         (ref) => StoryFormNotifier(ref.watch(storyRepositoryProvider)));
 
+final tagFormNotifierProvider =
+    StateNotifierProvider.autoDispose<TagNotifier, TagsState>(
+  (ref) => TagNotifier(ref.watch(tagRepositoryProvider)),
+);
+
 final storyRepositoryProvider = Provider(
   (ref) => StoryRepository(ref.watch(glumDatabaseProvider)),
+);
+
+final tagRepositoryProvider = Provider(
+  (ref) => TagRepository(ref.watch(glumDatabaseProvider)),
 );
 
 final glumDatabaseProvider = Provider((ref) => GlumDatabase());

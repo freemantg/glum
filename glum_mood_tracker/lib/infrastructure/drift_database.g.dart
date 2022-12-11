@@ -2,10 +2,6 @@
 
 part of 'drift_database.dart';
 
-// **************************************************************************
-// DriftDatabaseGenerator
-// **************************************************************************
-
 // ignore_for_file: type=lint
 class StoryData extends DataClass implements Insertable<StoryData> {
   final int id;
@@ -193,14 +189,16 @@ class $StoriesTable extends Stories with TableInfo<$StoriesTable, StoryData> {
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $StoriesTable(this.attachedDatabase, [this._alias]);
-  final VerificationMeta _idMeta = const VerificationMeta('id');
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
+      hasAutoIncrement: true,
       type: DriftSqlType.int,
       requiredDuringInsert: false,
-      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
-  final VerificationMeta _titleMeta = const VerificationMeta('title');
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
   @override
   late final GeneratedColumn<String> title =
       GeneratedColumn<String>('title', aliasedName, false,
@@ -209,7 +207,7 @@ class $StoriesTable extends Stories with TableInfo<$StoriesTable, StoryData> {
           ),
           type: DriftSqlType.string,
           requiredDuringInsert: true);
-  final VerificationMeta _descriptionMeta =
+  static const VerificationMeta _descriptionMeta =
       const VerificationMeta('description');
   @override
   late final GeneratedColumn<String> description = GeneratedColumn<String>(
@@ -217,12 +215,13 @@ class $StoriesTable extends Stories with TableInfo<$StoriesTable, StoryData> {
       type: DriftSqlType.string,
       requiredDuringInsert: false,
       defaultValue: const Constant(''));
-  final VerificationMeta _glumRatingMeta = const VerificationMeta('glumRating');
+  static const VerificationMeta _glumRatingMeta =
+      const VerificationMeta('glumRating');
   @override
   late final GeneratedColumn<int> glumRating = GeneratedColumn<int>(
       'glum_rating', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: true);
-  final VerificationMeta _dateMeta = const VerificationMeta('date');
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
   @override
   late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
       'date', aliasedName, false,
@@ -277,15 +276,15 @@ class $StoriesTable extends Stories with TableInfo<$StoriesTable, StoryData> {
   StoryData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return StoryData(
-      id: attachedDatabase.options.types
+      id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      title: attachedDatabase.options.types
+      title: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
-      description: attachedDatabase.options.types
+      description: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}description'])!,
-      glumRating: attachedDatabase.options.types
+      glumRating: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}glum_rating'])!,
-      date: attachedDatabase.options.types
+      date: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}date'])!,
     );
   }
@@ -408,14 +407,16 @@ class $TagsTable extends Tags with TableInfo<$TagsTable, TagData> {
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $TagsTable(this.attachedDatabase, [this._alias]);
-  final VerificationMeta _idMeta = const VerificationMeta('id');
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
+      hasAutoIncrement: true,
       type: DriftSqlType.int,
       requiredDuringInsert: false,
-      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
-  final VerificationMeta _titleMeta = const VerificationMeta('title');
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
   @override
   late final GeneratedColumn<String> title =
       GeneratedColumn<String>('title', aliasedName, false,
@@ -453,9 +454,9 @@ class $TagsTable extends Tags with TableInfo<$TagsTable, TagData> {
   TagData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return TagData(
-      id: attachedDatabase.options.types
+      id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      title: attachedDatabase.options.types
+      title: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
     );
   }
@@ -582,20 +583,22 @@ class $StoryEntriesTable extends StoryEntries
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $StoryEntriesTable(this.attachedDatabase, [this._alias]);
-  final VerificationMeta _storyMeta = const VerificationMeta('story');
+  static const VerificationMeta _storyMeta = const VerificationMeta('story');
   @override
   late final GeneratedColumn<int> story = GeneratedColumn<int>(
       'story', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: true,
-      defaultConstraints: 'REFERENCES "stories" ("id")');
-  final VerificationMeta _tagMeta = const VerificationMeta('tag');
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES stories (id)'));
+  static const VerificationMeta _tagMeta = const VerificationMeta('tag');
   @override
   late final GeneratedColumn<int> tag = GeneratedColumn<int>(
       'tag', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: true,
-      defaultConstraints: 'REFERENCES "tags" ("id")');
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES tags (id)'));
   @override
   List<GeneratedColumn> get $columns => [story, tag];
   @override
@@ -623,14 +626,14 @@ class $StoryEntriesTable extends StoryEntries
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
+  Set<GeneratedColumn> get $primaryKey => const {};
   @override
   StoryEntry map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return StoryEntry(
-      story: attachedDatabase.options.types
+      story: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}story'])!,
-      tag: attachedDatabase.options.types
+      tag: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}tag'])!,
     );
   }
@@ -649,16 +652,12 @@ abstract class _$GlumDatabase extends GeneratedDatabase {
   late final StoryDao storyDao = StoryDao(this as GlumDatabase);
   late final TagDao tagDao = TagDao(this as GlumDatabase);
   @override
-  Iterable<TableInfo<Table, dynamic>> get allTables =>
+  Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
       [stories, tags, storyEntries];
 }
-
-// **************************************************************************
-// DaoGenerator
-// **************************************************************************
 
 mixin _$StoryDaoMixin on DatabaseAccessor<GlumDatabase> {
   $StoriesTable get stories => attachedDatabase.stories;

@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'story_dto.dart';
 
@@ -45,11 +45,11 @@ class _$StoryDtoCopyWithImpl<$Res, $Val extends StoryDto>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? story = null,
+    Object? story = freezed,
     Object? tags = null,
   }) {
     return _then(_value.copyWith(
-      story: null == story
+      story: freezed == story
           ? _value.story
           : story // ignore: cast_nullable_to_non_nullable
               as StoryData,
@@ -82,11 +82,11 @@ class __$$_StoryDtoCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? story = null,
+    Object? story = freezed,
     Object? tags = null,
   }) {
     return _then(_$_StoryDto(
-      story: null == story
+      story: freezed == story
           ? _value.story
           : story // ignore: cast_nullable_to_non_nullable
               as StoryData,
@@ -110,6 +110,7 @@ class _$_StoryDto extends _StoryDto {
   final List<TagData> _tags;
   @override
   List<TagData> get tags {
+    if (_tags is EqualUnmodifiableListView) return _tags;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_tags);
   }
