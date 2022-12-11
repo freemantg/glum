@@ -69,10 +69,7 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
   Future<void> writeStoryWithTags(StoryDto entry) {
     return transaction(
       () async {
-        final id = entry.story.id;
-
         final story = StoriesCompanion.insert(
-          id: (id == 0) ? const Value.absent() : Value(id),
           title: entry.story.title,
           description: Value(entry.story.description),
           glumRating: entry.story.glumRating,
@@ -80,15 +77,17 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
         );
 
         //First, we write the story.
-        await into(stories).insert(story, mode: InsertMode.replace);
+        final storyId =
+            await into(stories).insert(story, mode: InsertMode.replace);
 
         //We replace the entries of the story, so first delete the old ones.
-        await (delete(storyEntries)..where((tbl) => tbl.story.equals(id))).go();
+        await (delete(storyEntries)..where((tbl) => tbl.story.equals(storyId)))
+            .go();
 
         //and write the new ones.
         for (final tag in entry.tags) {
           await into(storyEntries).insert(
-            StoryEntry(story: id, tag: tag.id),
+            StoryEntry(story: storyId, tag: tag.id),
           );
         }
       },

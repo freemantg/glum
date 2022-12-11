@@ -234,7 +234,7 @@ class _TagModalBottomSheetState extends ConsumerState<TagModalBottomSheet> {
                       Text(tag.title),
                       const Spacer(),
                       Text(
-                        '5',
+                        tag.id.toString(),
                         style: $styles.text.bodyBold.copyWith(height: 0),
                       ),
                       IconButton(
