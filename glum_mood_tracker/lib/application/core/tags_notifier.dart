@@ -41,4 +41,6 @@ class TagNotifier extends StateNotifier<TagsState> {
       },
     );
   }
+
+  Future<void> deleteTag(tag) async => await _repository.deleteTag(tag);
 }

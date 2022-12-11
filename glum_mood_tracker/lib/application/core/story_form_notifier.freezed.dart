@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$StoryFormState {
   Story get story => throw _privateConstructorUsedError;
+  List<Tag> get selectedTags => throw _privateConstructorUsedError;
   bool get isEditing => throw _privateConstructorUsedError;
   bool get isSaving => throw _privateConstructorUsedError;
   Option<Either<StoryFailure, Unit>> get failureOrSuccess =>
@@ -35,6 +36,7 @@ abstract class $StoryFormStateCopyWith<$Res> {
   @useResult
   $Res call(
       {Story story,
+      List<Tag> selectedTags,
       bool isEditing,
       bool isSaving,
       Option<Either<StoryFailure, Unit>> failureOrSuccess});
@@ -56,6 +58,7 @@ class _$StoryFormStateCopyWithImpl<$Res, $Val extends StoryFormState>
   @override
   $Res call({
     Object? story = null,
+    Object? selectedTags = null,
     Object? isEditing = null,
     Object? isSaving = null,
     Object? failureOrSuccess = null,
@@ -65,6 +68,10 @@ class _$StoryFormStateCopyWithImpl<$Res, $Val extends StoryFormState>
           ? _value.story
           : story // ignore: cast_nullable_to_non_nullable
               as Story,
+      selectedTags: null == selectedTags
+          ? _value.selectedTags
+          : selectedTags // ignore: cast_nullable_to_non_nullable
+              as List<Tag>,
       isEditing: null == isEditing
           ? _value.isEditing
           : isEditing // ignore: cast_nullable_to_non_nullable
@@ -99,6 +106,7 @@ abstract class _$$_StoryFormStateCopyWith<$Res>
   @useResult
   $Res call(
       {Story story,
+      List<Tag> selectedTags,
       bool isEditing,
       bool isSaving,
       Option<Either<StoryFailure, Unit>> failureOrSuccess});
@@ -119,6 +127,7 @@ class __$$_StoryFormStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? story = null,
+    Object? selectedTags = null,
     Object? isEditing = null,
     Object? isSaving = null,
     Object? failureOrSuccess = null,
@@ -128,6 +137,10 @@ class __$$_StoryFormStateCopyWithImpl<$Res>
           ? _value.story
           : story // ignore: cast_nullable_to_non_nullable
               as Story,
+      selectedTags: null == selectedTags
+          ? _value._selectedTags
+          : selectedTags // ignore: cast_nullable_to_non_nullable
+              as List<Tag>,
       isEditing: null == isEditing
           ? _value.isEditing
           : isEditing // ignore: cast_nullable_to_non_nullable
@@ -149,13 +162,23 @@ class __$$_StoryFormStateCopyWithImpl<$Res>
 class _$_StoryFormState extends _StoryFormState {
   const _$_StoryFormState(
       {required this.story,
+      required final List<Tag> selectedTags,
       required this.isEditing,
       required this.isSaving,
       required this.failureOrSuccess})
-      : super._();
+      : _selectedTags = selectedTags,
+        super._();
 
   @override
   final Story story;
+  final List<Tag> _selectedTags;
+  @override
+  List<Tag> get selectedTags {
+    if (_selectedTags is EqualUnmodifiableListView) return _selectedTags;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_selectedTags);
+  }
+
   @override
   final bool isEditing;
   @override
@@ -165,7 +188,7 @@ class _$_StoryFormState extends _StoryFormState {
 
   @override
   String toString() {
-    return 'StoryFormState(story: $story, isEditing: $isEditing, isSaving: $isSaving, failureOrSuccess: $failureOrSuccess)';
+    return 'StoryFormState(story: $story, selectedTags: $selectedTags, isEditing: $isEditing, isSaving: $isSaving, failureOrSuccess: $failureOrSuccess)';
   }
 
   @override
@@ -174,6 +197,8 @@ class _$_StoryFormState extends _StoryFormState {
         (other.runtimeType == runtimeType &&
             other is _$_StoryFormState &&
             (identical(other.story, story) || other.story == story) &&
+            const DeepCollectionEquality()
+                .equals(other._selectedTags, _selectedTags) &&
             (identical(other.isEditing, isEditing) ||
                 other.isEditing == isEditing) &&
             (identical(other.isSaving, isSaving) ||
@@ -183,8 +208,13 @@ class _$_StoryFormState extends _StoryFormState {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, story, isEditing, isSaving, failureOrSuccess);
+  int get hashCode => Object.hash(
+      runtimeType,
+      story,
+      const DeepCollectionEquality().hash(_selectedTags),
+      isEditing,
+      isSaving,
+      failureOrSuccess);
 
   @JsonKey(ignore: true)
   @override
@@ -196,6 +226,7 @@ class _$_StoryFormState extends _StoryFormState {
 abstract class _StoryFormState extends StoryFormState {
   const factory _StoryFormState(
           {required final Story story,
+          required final List<Tag> selectedTags,
           required final bool isEditing,
           required final bool isSaving,
           required final Option<Either<StoryFailure, Unit>> failureOrSuccess}) =
@@ -204,6 +235,8 @@ abstract class _StoryFormState extends StoryFormState {
 
   @override
   Story get story;
+  @override
+  List<Tag> get selectedTags;
   @override
   bool get isEditing;
   @override

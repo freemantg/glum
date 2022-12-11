@@ -14,7 +14,10 @@ class TagDto with _$TagDto {
     required String title,
   }) = _TagDto;
 
-  factory TagDto.fromDomain(Tag tag) => TagDto(title: tag.title);
+  factory TagDto.fromDomain(Tag tag) => TagDto(
+        id: tag.id,
+        title: tag.title,
+      );
 
   Tag toDomain() => Tag(
         id: id ?? 0,

@@ -83,7 +83,7 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
         await into(stories).insert(story, mode: InsertMode.replace);
 
         //We replace the entries of the story, so first delete the old ones.
-        (delete(storyEntries)..where((tbl) => tbl.story.equals(id))).go();
+        await (delete(storyEntries)..where((tbl) => tbl.story.equals(id))).go();
 
         //and write the new ones.
         for (final tag in entry.tags) {
@@ -184,7 +184,7 @@ class TagDao extends DatabaseAccessor<GlumDatabase> with _$TagDaoMixin {
   }
 
   Future<void> deleteTag(TagDto tag) async {
-    final tagToDelete = TagData(id: tag.id!, title: tag.title);
-    await delete(tags).delete(tagToDelete);
+    if (tag.id == null) return;
+    delete(tags).where((tbl) => tbl.id.equals(tag.id!));
   }
 }

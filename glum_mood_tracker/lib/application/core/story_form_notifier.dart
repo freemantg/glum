@@ -14,6 +14,7 @@ class StoryFormState with _$StoryFormState {
   const StoryFormState._();
   const factory StoryFormState({
     required Story story,
+    required List<Tag> selectedTags,
     required bool isEditing,
     required bool isSaving,
     required Option<Either<StoryFailure, Unit>> failureOrSuccess,
@@ -21,6 +22,7 @@ class StoryFormState with _$StoryFormState {
 
   factory StoryFormState.initial() => StoryFormState(
         story: Story.empty(),
+        selectedTags: [],
         isEditing: false,
         isSaving: false,
         failureOrSuccess: none(),
@@ -42,7 +44,9 @@ class StoryFormNotifier extends StateNotifier<StoryFormState> {
 
   Future<void> save() async {
     state = state.copyWith(isSaving: true);
-    final failureOrSuccess = await _repository.createStory(state.story);
+    final failureOrSuccess = await _repository.createStory(
+      state.story.copyWith(tags: state.selectedTags),
+    );
     state = state.copyWith(
       isSaving: false,
       failureOrSuccess: optionOf(failureOrSuccess),
@@ -61,5 +65,13 @@ class StoryFormNotifier extends StateNotifier<StoryFormState> {
   Future<void> dateChanged(DateTime date) async =>
       state = state.copyWith(story: state.story.copyWith(date: date));
 
-  Future<void> tagsChanged(List<Tag> tags) async {}
+  Future<void> toggleTag(Tag tag) async {
+    List<Tag> updatedTags = List.empty();
+    if (state.selectedTags.contains(tag)) {
+      updatedTags = List.from(state.selectedTags)..remove(tag);
+    } else {
+      updatedTags = List.from(state.selectedTags)..add(tag);
+    }
+    state = state.copyWith(selectedTags: updatedTags);
+  }
 }

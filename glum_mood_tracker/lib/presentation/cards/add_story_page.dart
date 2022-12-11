@@ -220,12 +220,15 @@ class _TagModalBottomSheetState extends ConsumerState<TagModalBottomSheet> {
               itemCount: tags.length,
               shrinkWrap: true,
               itemBuilder: (context, index) {
+                final storyFormState = ref.watch(storyFormNotifierProvider);
                 final tag = tags[index];
                 return CheckboxListTile(
                   checkboxShape: const CircleBorder(),
                   controlAffinity: ListTileControlAffinity.leading,
-                  onChanged: (value) {},
-                  value: false,
+                  onChanged: (_) {
+                    ref.read(storyFormNotifierProvider.notifier).toggleTag(tag);
+                  },
+                  value: storyFormState.selectedTags.contains(tag),
                   title: Row(
                     children: [
                       Text(tag.title),
@@ -236,7 +239,9 @@ class _TagModalBottomSheetState extends ConsumerState<TagModalBottomSheet> {
                       ),
                       IconButton(
                         icon: const Icon(Icons.more_vert),
-                        onPressed: () {},
+                        onPressed: () => ref
+                            .read(tagFormNotifierProvider.notifier)
+                            .deleteTag(tag),
                       ),
                     ],
                   ),

@@ -15,8 +15,7 @@ final storyFormNotifierProvider =
     StateNotifierProvider.autoDispose<StoryFormNotifier, StoryFormState>(
         (ref) => StoryFormNotifier(ref.watch(storyRepositoryProvider)));
 
-final tagFormNotifierProvider =
-    StateNotifierProvider.autoDispose<TagNotifier, TagsState>(
+final tagFormNotifierProvider = StateNotifierProvider<TagNotifier, TagsState>(
   (ref) => TagNotifier(ref.watch(tagRepositoryProvider)),
 );
 

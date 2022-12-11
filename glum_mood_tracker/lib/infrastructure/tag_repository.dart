@@ -15,7 +15,7 @@ class TagRepository implements ITagRepository {
   @override
   Future<Either<TagFailure, Unit>> addTag(Tag tag) async {
     try {
-      await _db.tagDao.insertTag(TagDto(title: tag.title));
+      await _db.tagDao.insertTag(TagDto.fromDomain(tag));
       return right(unit);
     } catch (e) {
       return left(const TagFailure.unableToUpdate());
@@ -23,9 +23,13 @@ class TagRepository implements ITagRepository {
   }
 
   @override
-  Future<Either<TagFailure, Unit>> deleteTag(Tag tag) {
-    // TODO: implement deleteTag
-    throw UnimplementedError();
+  Future<Either<TagFailure, Unit>> deleteTag(Tag tag) async {
+    try {
+      await _db.tagDao.deleteTag(TagDto.fromDomain(tag));
+      return right(unit);
+    } catch (e) {
+      return left(const TagFailure.unexpected());
+    }
   }
 
   @override
