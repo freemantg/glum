@@ -48,6 +48,9 @@ class _MonthPageState extends ConsumerState<MonthPage> {
                               children: [
                                 Text(
                                     'ID: ${story.id} TAGS: ${story.tags.length}'),
+                                ...story.tags
+                                    .map((e) => Text(e.title))
+                                    .toList(),
                                 Text(
                                   story.date.day.toString(),
                                   style: $styles.text.h3,

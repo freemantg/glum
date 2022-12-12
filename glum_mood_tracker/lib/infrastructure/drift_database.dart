@@ -87,7 +87,10 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
         //and write the new ones.
         for (final tag in entry.tags) {
           await into(storyEntries).insert(
-            StoryEntry(story: storyId, tag: tag.id),
+            StoryEntry(
+              story: storyId,
+              tag: tag.id,
+            ),
           );
         }
       },
@@ -132,14 +135,14 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
               tags.id.equalsExp(storyEntries.tag),
             ),
           ],
-        )..where(storyEntries.tag.isIn(ids));
+        )..where(storyEntries.story.isIn(ids));
 
         return tagQuery.watch().map(
           (rows) {
             final idToTags = <int, List<TagData>>{};
             for (final row in rows) {
               final tag = row.readTable(tags);
-              final id = row.readTable(storyEntries).tag;
+              final id = row.readTable(storyEntries).story;
 
               idToTags.putIfAbsent(id, () => []).add(tag);
             }
@@ -183,7 +186,6 @@ class TagDao extends DatabaseAccessor<GlumDatabase> with _$TagDaoMixin {
   }
 
   Future<void> deleteTag(TagDto tag) async {
-    if (tag.id == null) return;
-    delete(tags).where((tbl) => tbl.id.equals(tag.id!));
+    (delete(tags)..where((tbl) => tbl.id.equalsNullable(tag.id))).go();
   }
 }

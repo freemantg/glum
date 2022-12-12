@@ -47,6 +47,7 @@ class StoryFormNotifier extends StateNotifier<StoryFormState> {
     final failureOrSuccess = await _repository.createStory(
       state.story.copyWith(tags: state.selectedTags),
     );
+    print(state.selectedTags);
     state = state.copyWith(
       isSaving: false,
       failureOrSuccess: optionOf(failureOrSuccess),
