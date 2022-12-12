@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:glum_mood_tracker/styles/styles.dart';
 
+import '../../domain/tag.dart';
+
 class StatsPage extends StatelessWidget {
   const StatsPage({super.key});
 
@@ -312,7 +314,9 @@ class TopTagsCard extends StatelessWidget {
           const Divider(),
           Wrap(
             children: const [
-              TagChip(),
+              TagChip(
+                tag: Tag(title: 'ge'),
+              ),
             ],
           )
         ],
@@ -343,7 +347,9 @@ class TagsDistributionCard extends StatelessWidget {
           ),
           Wrap(
             children: const [
-              TagChip(),
+              TagChip(
+                tag: Tag(title: 'f'),
+              ),
             ],
           )
         ],
@@ -374,7 +380,10 @@ class ToggleTagsFilterButton extends StatelessWidget {
 class TagChip extends StatelessWidget {
   const TagChip({
     super.key,
+    required this.tag,
   });
+
+  final Tag tag;
 
   @override
   Widget build(BuildContext context) {
@@ -385,7 +394,7 @@ class TagChip extends StatelessWidget {
         children: [
           const Icon(Icons.tag, size: 16.0),
           Text(
-            'Food',
+            tag.title,
             style: $styles.text.bodySmall.copyWith(
               height: 0,
               fontSize: 12.0,

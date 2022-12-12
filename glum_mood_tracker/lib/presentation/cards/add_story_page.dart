@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:glum_mood_tracker/presentation/stats/stats_page.dart';
 import 'package:glum_mood_tracker/shared/extensions.dart';
 import 'package:glum_mood_tracker/shared/providers.dart';
 import 'package:glum_mood_tracker/styles/styles.dart';
@@ -42,6 +43,7 @@ class _AddStoryPageState extends ConsumerState<AddStoryPage> {
               horizontal: $styles.insets.lg,
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const TitleTextField(),
                 const Divider(height: 0),
@@ -49,7 +51,8 @@ class _AddStoryPageState extends ConsumerState<AddStoryPage> {
                 const RatingBarWidget(),
                 const Divider(),
                 SizedBox(height: $styles.insets.xs),
-                const DescriptionTextField()
+                const DescriptionTextField(),
+                TagBar(ref: ref),
               ],
             ),
           )
@@ -102,6 +105,31 @@ class _AddStoryPageState extends ConsumerState<AddStoryPage> {
   }
 }
 
+class TagBar extends ConsumerWidget {
+  const TagBar({
+    super.key,
+    required this.ref,
+  });
+
+  final WidgetRef ref;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Wrap(
+      crossAxisAlignment: WrapCrossAlignment.center,
+      spacing: $styles.insets.xs,
+      children: [
+        const AddTagWidget(),
+        ...ref
+            .watch(storyFormNotifierProvider)
+            .selectedTags
+            .map((e) => TagChip(tag: e))
+            .toList()
+      ],
+    );
+  }
+}
+
 class RatingBarWidget extends ConsumerWidget {
   const RatingBarWidget({
     super.key,
@@ -109,37 +137,40 @@ class RatingBarWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Row(
-      children: [
-        const Spacer(flex: 3),
-        RatingBar(
-          glow: false,
-          minRating: 1,
-          initialRating:
-              ref.watch(storyFormNotifierProvider).story.glumRating.toDouble(),
-          itemSize: 24.0,
-          itemPadding: EdgeInsets.symmetric(horizontal: $styles.insets.xxs),
-          onRatingUpdate: (rating) => ref
-              .read(storyFormNotifierProvider.notifier)
-              .ratingChanged(rating.toInt()),
-          ratingWidget: RatingWidget(
-            full: Container(
-              color: const Color(0xFFE35062),
-              height: 16.0,
-              width: 16.0,
-            ),
-            half: const SizedBox.shrink(),
-            empty: Container(
-              color: const Color(0XFFC17D35).withOpacity(0.25),
-              height: 16.0,
-              width: 16.0,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          RatingBar(
+            glow: false,
+            minRating: 1,
+            initialRating: ref
+                .watch(storyFormNotifierProvider)
+                .story
+                .glumRating
+                .toDouble(),
+            itemSize: 24.0,
+            itemPadding: EdgeInsets.symmetric(horizontal: $styles.insets.xxs),
+            onRatingUpdate: (rating) => ref
+                .read(storyFormNotifierProvider.notifier)
+                .ratingChanged(rating.toInt()),
+            ratingWidget: RatingWidget(
+              full: Container(
+                color: const Color(0xFFE35062),
+                height: 16.0,
+                width: 16.0,
+              ),
+              half: const SizedBox.shrink(),
+              empty: Container(
+                color: const Color(0XFFC17D35).withOpacity(0.25),
+                height: 16.0,
+                width: 16.0,
+              ),
             ),
           ),
-        ),
-        const Spacer(),
-        const AddTagWidget(),
-        const Spacer(),
-      ],
+        ],
+      ),
     );
   }
 }

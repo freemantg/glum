@@ -34,8 +34,9 @@ class StoryRepository implements IStoryRepository {
   }
 
   @override
-  Stream<Either<StoryFailure, List<Story>>> watchAllStories() async* {
-    final storyStream = _db.storyDao.watchAllStories();
+  Stream<Either<StoryFailure, List<Story>>> watchStoriesByMonthYear(
+      DateTime monthYear) async* {
+    final storyStream = _db.storyDao.watchStoriesByMonthYear(monthYear);
     yield* storyStream
         .map((dtos) => right<StoryFailure, List<Story>>(
               dtos.map((e) => e.toDomain()).toList(),

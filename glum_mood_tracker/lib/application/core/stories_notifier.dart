@@ -25,9 +25,9 @@ class StoriesNotifier extends StateNotifier<StoriesState> {
 
   final StoryRepository _repository;
 
-  Future<void> watchStoryStream() async {
+  Future<void> watchStoriesByMonthYear(DateTime monthYear) async {
     state = StoriesState.loadInProgress(stories: state.stories);
-    final storyStream = _repository.watchAllStories();
+    final storyStream = _repository.watchStoriesByMonthYear(monthYear);
     storyStream.listen(
       (successOrFailure) {
         successOrFailure.fold(

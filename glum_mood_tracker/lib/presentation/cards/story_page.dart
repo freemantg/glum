@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:glum_mood_tracker/presentation/routes/app_router.gr.dart';
 import 'package:glum_mood_tracker/shared/extensions.dart';
 import 'package:glum_mood_tracker/styles/styles.dart';
 
@@ -48,15 +49,10 @@ class StoryPage extends StatelessWidget {
                 ],
               ),
             ),
-            const Divider(height: 0),
-            Padding(
-              padding: EdgeInsets.all($styles.insets.sm),
-              child: Wrap(children: const [TagChip()]),
-            ),
           ],
         ),
       ),
-      bottomNavigationBar: const StyledBottomBar(),
+      bottomNavigationBar: StyledBottomBar(story: story),
     );
   }
 }
@@ -64,23 +60,42 @@ class StoryPage extends StatelessWidget {
 class StyledBottomBar extends StatelessWidget {
   const StyledBottomBar({
     super.key,
+    required this.story,
   });
+
+  final Story story;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Divider(height: 0),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: $styles.insets.xs),
-          child: Row(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz)),
-              const Spacer(),
-              IconButton(
-                onPressed: () => context.router.pop(),
-                icon: const Icon(Icons.close),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: $styles.insets.sm),
+                child: Wrap(
+                  spacing: $styles.insets.xs,
+                  children: story.tags.map((e) => TagChip(tag: e)).toList(),
+                ),
+              ),
+              const Divider(height: 0),
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () =>
+                        context.router.push(AddStoryPageRoute(story: story)),
+                    icon: const Icon(Icons.more_horiz),
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () => context.router.pop(),
+                    icon: const Icon(Icons.close),
+                  ),
+                ],
               ),
             ],
           ),

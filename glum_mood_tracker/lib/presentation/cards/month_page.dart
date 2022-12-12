@@ -5,7 +5,6 @@ import 'package:glum_mood_tracker/shared/extensions.dart';
 import 'package:glum_mood_tracker/shared/providers.dart';
 import 'package:glum_mood_tracker/styles/styles.dart';
 
-import '../../domain/story.dart';
 import '../routes/app_router.gr.dart';
 import '../stats/stats_page.dart';
 
@@ -35,9 +34,8 @@ class _MonthPageState extends ConsumerState<MonthPage> {
                   final story = stories[index];
 
                   return GestureDetector(
-                    onTap: () => context.router.push(
-                      StoryPageRoute(story: Story.empty()),
-                    ),
+                    onTap: () =>
+                        context.router.push(StoryPageRoute(story: story)),
                     child: StyledCard(
                       customPadding: true,
                       child: Row(
@@ -46,11 +44,6 @@ class _MonthPageState extends ConsumerState<MonthPage> {
                             padding: EdgeInsets.all($styles.insets.lg),
                             child: Column(
                               children: [
-                                Text(
-                                    'ID: ${story.id} TAGS: ${story.tags.length}'),
-                                ...story.tags
-                                    .map((e) => Text(e.title))
-                                    .toList(),
                                 Text(
                                   story.date.day.toString(),
                                   style: $styles.text.h3,

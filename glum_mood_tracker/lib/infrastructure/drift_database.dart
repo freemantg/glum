@@ -120,8 +120,16 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
     );
   }
 
-  Stream<List<StoryDto>> watchAllStories() {
-    final storyStream = select(stories).watch();
+  Stream<List<StoryDto>> watchStoriesByMonthYear(DateTime monthYear) {
+    final storyStream = (select(stories)
+          ..where(
+            (tbl) {
+              final date = tbl.date;
+              return date.year.equals(monthYear.year) &
+                  date.month.equals(monthYear.month);
+            },
+          ))
+        .watch();
 
     return storyStream.switchMap(
       (stories) {

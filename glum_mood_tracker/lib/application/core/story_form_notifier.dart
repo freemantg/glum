@@ -39,6 +39,7 @@ class StoryFormNotifier extends StateNotifier<StoryFormState> {
     state = state.copyWith(
       isEditing: true,
       story: story,
+      selectedTags: story.tags,
     );
   }
 
