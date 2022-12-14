@@ -11,21 +11,10 @@ import 'package:intl/intl.dart';
 import '../../domain/story.dart';
 import '../../styles/styles.dart';
 import '../routes/app_router.gr.dart';
+import 'widgets/year_selector_button.dart';
 
-class CardsPage extends ConsumerStatefulWidget {
+class CardsPage extends StatelessWidget {
   const CardsPage({super.key});
-
-  @override
-  ConsumerState<CardsPage> createState() => _CardsPageState();
-}
-
-class _CardsPageState extends ConsumerState<CardsPage> {
-  @override
-  void initState() {
-    Future.microtask(
-        () => ref.read(storiesNotifierProvider.notifier).watchStoryStream());
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,39 +33,12 @@ class CardPageBody extends HookConsumerWidget {
     var showCalendar = useState(false);
 
     void toggleCalendar() => showCalendar.value = !showCalendar.value;
-    void showPickYearDialog(BuildContext context) {
-      showDialog(
-        context: context,
-        builder: (context) => const StyledYearPickerAlertDialog(),
-      );
-    }
 
     return SafeArea(
       child: Column(
         children: [
           const Spacer(),
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              GestureDetector(
-                onTap: () => showPickYearDialog(context),
-                child: Text(
-                    ref.watch(dateTimeNotifierProvider).maybeMap(
-                          data: (selectedDate) =>
-                              selectedDate.value.year.toString(),
-                          orElse: () => 'No',
-                        ),
-                    style: $styles.text.h3),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  SizedBox(width: 82.0),
-                  Icon(Icons.keyboard_arrow_down),
-                ],
-              )
-            ],
-          ),
+          const YearSelectorButton(),
           const Spacer(),
           SizedBox(
             height: MediaQuery.of(context).size.height / 1.7,
@@ -89,52 +51,6 @@ class CardPageBody extends HookConsumerWidget {
           ),
           const Spacer(flex: 3),
         ],
-      ),
-    );
-  }
-}
-
-class StyledYearPickerAlertDialog extends ConsumerWidget {
-  const StyledYearPickerAlertDialog({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final Size size = MediaQuery.of(context).size;
-    final currentYear = DateTime.now().year;
-
-    return AlertDialog(
-      title: const Text('Select a Year'),
-      contentPadding: const EdgeInsets.all(10),
-      content: SizedBox(
-        height: size.height / 3,
-        width: size.width,
-        child: GridView.count(
-          crossAxisCount: 3,
-          children: [
-            ...List.generate(
-              currentYear - 2000,
-              (index) => InkWell(
-                onTap: () {
-                  ref
-                      .read(dateTimeNotifierProvider.notifier)
-                      .updateSelectedDateTime(DateTime(currentYear - index));
-                  context.popRoute();
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Chip(
-                    label: Container(
-                      padding: const EdgeInsets.all(5),
-                      child: Text((currentYear - index).toString()),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -168,6 +84,7 @@ AppBar _buildStyledAppBar() {
                   .read(dateTimeNotifierProvider.notifier)
                   .updateSelectedDateTime(today);
               ref.read(pageViewControllerProvider).animateToPage(
+                    //PageView index starts at 0. Months start at 1.
                     today.month - 1,
                     duration: kThemeAnimationDuration,
                     curve: Curves.easeIn,
@@ -191,23 +108,38 @@ class CardCarousel extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return PageView.builder(
-      controller: ref.watch(pageViewControllerProvider),
-      itemCount: 12,
-      itemBuilder: (context, index) => MonthCard(
-        showCalendar: showCalendar,
-        monthYear: ref.watch(dateTimeNotifierProvider).maybeMap(
+      onPageChanged: (index) {
+        final monthYear = ref.watch(dateTimeNotifierProvider).maybeMap(
               data: (selectedDateTime) {
                 final selectedYear = selectedDateTime.value.year;
                 return DateTime(selectedYear, index + 1);
               },
               orElse: () => DateTime.now(),
-            ),
-      ),
+            );
+        ref
+            .read(storiesNotifierProvider.notifier)
+            .watchStoriesByMonthYear(monthYear);
+      },
+      controller: ref.watch(pageViewControllerProvider),
+      itemCount: 12,
+      itemBuilder: (context, index) {
+        final monthYear = ref.watch(dateTimeNotifierProvider).maybeMap(
+              data: (selectedDateTime) {
+                final selectedYear = selectedDateTime.value.year;
+                return DateTime(selectedYear, index + 1);
+              },
+              orElse: () => DateTime.now(),
+            );
+        return MonthCard(
+          showCalendar: showCalendar,
+          monthYear: monthYear,
+        );
+      },
     );
   }
 }
 
-class MonthCard extends ConsumerWidget {
+class MonthCard extends StatelessWidget {
   const MonthCard({
     super.key,
     required this.showCalendar,
@@ -218,7 +150,7 @@ class MonthCard extends ConsumerWidget {
   final DateTime monthYear;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => context.pushRoute(MonthPageRoute(monthYear: monthYear)),
       child: Card(
