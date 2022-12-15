@@ -500,8 +500,8 @@ class StoryTitleWidget extends StatelessWidget {
             ),
             color: const Color(0xFFD76A66),
             child: Padding(
-              padding: EdgeInsets.all($styles.insets.sm),
-              child: const Icon(Icons.book),
+              padding: EdgeInsets.all($styles.insets.xs),
+              child: Text('🐍', style: $styles.text.h3),
             ),
           ),
         ),
