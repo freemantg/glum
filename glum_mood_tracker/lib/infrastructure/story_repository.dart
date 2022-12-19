@@ -45,4 +45,17 @@ class StoryRepository implements IStoryRepository {
           (error, stackTrace) => left(const StoryFailure.unexpected()),
         );
   }
+
+  Future<Either<StoryFailure, int>> countStories() async {
+    try {
+      final storiesCount = await _db.storyDao.countStories();
+      if (storiesCount != null) {
+        return right(storiesCount);
+      } else {
+        return left(const StoryFailure.unexpected());
+      }
+    } catch (e) {
+      return left(const StoryFailure.unexpected());
+    }
+  }
 }

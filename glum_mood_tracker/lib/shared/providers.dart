@@ -7,6 +7,9 @@ import 'package:glum_mood_tracker/infrastructure/drift_database.dart';
 import 'package:glum_mood_tracker/infrastructure/story_repository.dart';
 import 'package:glum_mood_tracker/infrastructure/tag_repository.dart';
 
+import '../application/stats/stats_notifier.dart';
+import '../infrastructure/stats_repository.dart';
+
 final storiesNotifierProvider =
     StateNotifierProvider<StoriesNotifier, StoriesState>(
         (ref) => StoriesNotifier(ref.watch(storyRepositoryProvider)));
@@ -33,3 +36,9 @@ final dateTimeNotifierProvider =
     StateNotifierProvider<DateTimeNotifier, AsyncValue<DateTime>>(
   (ref) => DateTimeNotifier(),
 );
+
+final statsRepositoryProvider = Provider(
+    (ref) => StatsRepository(database: ref.watch(glumDatabaseProvider)));
+
+final statsNotifierProvider = StateNotifierProvider<StatsNotifier, StatsState>(
+    (ref) => StatsNotifier(repository: ref.watch(statsRepositoryProvider)));

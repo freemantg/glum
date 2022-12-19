@@ -1,11 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:glum_mood_tracker/styles/styles.dart';
 
 import '../../domain/tag.dart';
+import '../../shared/providers.dart';
 
-class StatsPage extends StatelessWidget {
+class StatsPage extends ConsumerStatefulWidget {
   const StatsPage({super.key});
+
+  @override
+  ConsumerState<StatsPage> createState() => _StatsPageState();
+}
+
+class _StatsPageState extends ConsumerState<StatsPage> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(
+      () => ref.read(statsNotifierProvider.notifier).fetchStats(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -158,7 +173,7 @@ class WeekDistributionCard extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all($styles.insets.sm),
             child: Text(
-              'WEEKLY GLUM',
+              'YOUR AVERAGE WEEK',
               style: $styles.text.caption.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -234,13 +249,15 @@ class SeasonalMoodCard extends StatelessWidget {
   }
 }
 
-class GlumDistributionCard extends StatelessWidget {
+class GlumDistributionCard extends ConsumerWidget {
   const GlumDistributionCard({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final glumDistribution = ref.watch(statsNotifierProvider).glumDistribution;
+
     return StyledCard(
       customPadding: true,
       child: Column(
@@ -258,19 +275,27 @@ class GlumDistributionCard extends StatelessWidget {
           Row(
             children: [
               ...List.generate(
-                5,
+                glumDistribution.keys.length,
                 (index) => Expanded(
+                  flex: (glumDistribution[index + 1]! * 100).toInt(),
                   child: Container(
                     height: 48,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFD76A66),
+                      color: const Color(0xFFD76A66)
+                          .withOpacity(glumDistribution[index + 1] ?? 0),
                       border: Border.all(width: 0.1),
                     ),
                     child: Center(
-                      child: Text(
-                        '20%',
-                        style: $styles.text.caption
-                            .copyWith(fontWeight: FontWeight.bold),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text((index + 1).toString()),
+                          Text(
+                            '${(glumDistribution[index + 1]! * 100).toStringAsFixed(0)}%',
+                            style: $styles.text.caption
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -414,13 +439,13 @@ class TagChip extends StatelessWidget {
   }
 }
 
-class StoryCountCard extends StatelessWidget {
+class StoryCountCard extends ConsumerWidget {
   const StoryCountCard({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return StyledCard(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -428,14 +453,14 @@ class StoryCountCard extends StatelessWidget {
           Column(
             children: [
               Text(
-                '5',
+                ref.watch(statsNotifierProvider).allStoriesCount.toString(),
                 style: $styles.text.bodyBold.copyWith(height: 0),
               ),
               SizedBox(height: $styles.insets.xxs),
               Text(
                 'All Stories',
                 style: $styles.text.caption,
-              )
+              ),
             ],
           ),
           const SizedBox(
@@ -445,7 +470,7 @@ class StoryCountCard extends StatelessWidget {
           Column(
             children: [
               Text(
-                '5',
+                ref.watch(statsNotifierProvider).glumAverage.toStringAsFixed(2),
                 style: $styles.text.bodyBold.copyWith(height: 0),
               ),
               SizedBox(height: $styles.insets.xxs),

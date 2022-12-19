@@ -167,10 +167,60 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
     );
   }
 
+  Future<int?> countStories() async {
+    final storiesCount = stories.id.count();
+    final query = selectOnly(stories)..addColumns([storiesCount]);
+    final row = await query.getSingle();
+    return row.read(storiesCount);
+  }
+
+  Future<double?> glumAverage() async {
+    final avgGlum = stories.glumRating.avg();
+    final query = selectOnly(stories)..addColumns([avgGlum]);
+    final row = await query.getSingle();
+    return row.read(avgGlum);
+  }
+
   Future<void> updateStory(Insertable<StoryData> story) =>
       update(stories).replace(story);
   Future<void> deleteStory(Insertable<StoryData> story) =>
       delete(stories).delete(story);
+
+  Future<Map<int, double>> glumDistribution() async {
+    final glumDistribution = <int, double>{};
+    final storyCount = await countStories();
+    if (storyCount != null) {
+      for (var i = 1; i <= 5; i++) {
+        final glumRatingCount =
+            stories.id.count(filter: stories.glumRating.equals(i));
+        final query = selectOnly(stories)..addColumns([glumRatingCount]);
+        final row = await query.getSingle();
+        final count = row.read(glumRatingCount);
+        if (count != null) {
+          glumDistribution[i] = count / storyCount;
+        } else {
+          glumDistribution[i] = 0;
+        }
+      }
+    }
+    return glumDistribution;
+  }
+
+  Future<Map<DateTime, int>> averageWeek() async {
+    final averageWeek = <DateTime, int>{};
+
+    final query = selectOnly(stories, distinct: true)
+      ..addColumns([stories.date])
+      ..addColumns([stories.glumRating])
+      ..orderBy([OrderingTerm.desc(stories.date)])
+      ..limit(7);
+
+    final result = await query.get();
+    for (var row in result) {
+      averageWeek[row.read(stories.date)!] = row.read(stories.glumRating) ?? 0;
+    }
+    return averageWeek;
+  }
 }
 
 @DriftAccessor(tables: [Tags])

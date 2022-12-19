@@ -19,3 +19,12 @@ abstract class ITagRepository {
   Future<Either<TagFailure, Unit>> updateTag(Tag tag);
   Future<Either<TagFailure, Unit>> deleteTag(Tag tag);
 }
+
+abstract class IStatsRepository {
+  Stream<Either<StoryFailure, List<Story>>> watchAllStories();
+  Future<Either<StoryFailure, int>> countAllStories();
+  Future<Either<StoryFailure, double>> glumAverage();
+  Future<Either<StoryFailure, Map<DateTime, int>>> averageWeek();
+  Future<Either<StoryFailure, Map<int, double>>> glumDistribution();
+  Future<Either<StoryFailure, Unit>> fetchStats();
+}
