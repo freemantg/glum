@@ -2,7 +2,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:glum_mood_tracker/infrastructure/stats_repository.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../domain/story.dart';
 import '../../domain/tag.dart';
 
 part 'stats_notifier.freezed.dart';
@@ -17,7 +16,7 @@ class StatsState with _$StatsState {
     required Map<DateTime, int> weeklyGlum,
     required List<Tag> trendingTags,
     required List<Tag> trendingMoodsOrGlums,
-    required List<Story> stories,
+    required Map<DateTime, int> yearInGlums,
     required bool isLoading,
     required bool showErrorMessage,
   }) = _StatsState;
@@ -29,7 +28,7 @@ class StatsState with _$StatsState {
         weeklyGlum: {},
         trendingTags: [],
         trendingMoodsOrGlums: [],
-        stories: [],
+        yearInGlums: {},
         isLoading: false,
         showErrorMessage: false,
       );
@@ -46,6 +45,7 @@ class StatsNotifier extends StateNotifier<StatsState> {
     await glumAverage();
     await glumDistribution();
     await averageWeek();
+    await yearInGlums();
   }
 
   Future<void> trendingTagsByCategoryToggle() async {}
@@ -86,6 +86,16 @@ class StatsNotifier extends StateNotifier<StatsState> {
     state = failureOrAverageWeek.fold(
       (failure) => state.copyWith(showErrorMessage: true),
       (averageWeek) => state.copyWith(weeklyGlum: averageWeek),
+    );
+    state = state.copyWith(isLoading: false);
+  }
+
+  Future<void> yearInGlums() async {
+    state = state.copyWith(isLoading: true);
+    final failureOrAverageWeek = await _repository.yearInGlums();
+    state = failureOrAverageWeek.fold(
+      (failure) => state.copyWith(showErrorMessage: true),
+      (yearInGlums) => state.copyWith(yearInGlums: yearInGlums),
     );
     state = state.copyWith(isLoading: false);
   }

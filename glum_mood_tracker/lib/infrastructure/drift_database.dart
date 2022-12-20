@@ -221,6 +221,21 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
     }
     return averageWeek;
   }
+
+  Future<Map<DateTime, int>> yearInGlums() async {
+    final yearInGlums = <DateTime, int>{};
+    final query = selectOnly(stories)
+      ..addColumns([stories.date])
+      ..addColumns([stories.glumRating])
+      ..where(stories.date.year.equalsExp(currentDate.year))
+      ..orderBy([OrderingTerm.asc(stories.date)]);
+    final result = await query.get();
+    for (var row in result) {
+      yearInGlums[row.read(stories.date)!] = row.read(stories.glumRating) ?? 0;
+    }
+    print(yearInGlums);
+    return yearInGlums;
+  }
 }
 
 @DriftAccessor(tables: [Tags])

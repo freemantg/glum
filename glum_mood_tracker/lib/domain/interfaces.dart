@@ -27,4 +27,5 @@ abstract class IStatsRepository {
   Future<Either<StoryFailure, Map<DateTime, int>>> averageWeek();
   Future<Either<StoryFailure, Map<int, double>>> glumDistribution();
   Future<Either<StoryFailure, Unit>> fetchStats();
+  Future<Either<StoryFailure, Map<DateTime, int>>> yearInGlums();
 }

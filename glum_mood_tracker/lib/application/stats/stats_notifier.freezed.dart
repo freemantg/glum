@@ -22,7 +22,7 @@ mixin _$StatsState {
   Map<DateTime, int> get weeklyGlum => throw _privateConstructorUsedError;
   List<Tag> get trendingTags => throw _privateConstructorUsedError;
   List<Tag> get trendingMoodsOrGlums => throw _privateConstructorUsedError;
-  List<Story> get stories => throw _privateConstructorUsedError;
+  Map<DateTime, int> get yearInGlums => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   bool get showErrorMessage => throw _privateConstructorUsedError;
 
@@ -44,7 +44,7 @@ abstract class $StatsStateCopyWith<$Res> {
       Map<DateTime, int> weeklyGlum,
       List<Tag> trendingTags,
       List<Tag> trendingMoodsOrGlums,
-      List<Story> stories,
+      Map<DateTime, int> yearInGlums,
       bool isLoading,
       bool showErrorMessage});
 }
@@ -68,7 +68,7 @@ class _$StatsStateCopyWithImpl<$Res, $Val extends StatsState>
     Object? weeklyGlum = null,
     Object? trendingTags = null,
     Object? trendingMoodsOrGlums = null,
-    Object? stories = null,
+    Object? yearInGlums = null,
     Object? isLoading = null,
     Object? showErrorMessage = null,
   }) {
@@ -97,10 +97,10 @@ class _$StatsStateCopyWithImpl<$Res, $Val extends StatsState>
           ? _value.trendingMoodsOrGlums
           : trendingMoodsOrGlums // ignore: cast_nullable_to_non_nullable
               as List<Tag>,
-      stories: null == stories
-          ? _value.stories
-          : stories // ignore: cast_nullable_to_non_nullable
-              as List<Story>,
+      yearInGlums: null == yearInGlums
+          ? _value.yearInGlums
+          : yearInGlums // ignore: cast_nullable_to_non_nullable
+              as Map<DateTime, int>,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -128,7 +128,7 @@ abstract class _$$_StatsStateCopyWith<$Res>
       Map<DateTime, int> weeklyGlum,
       List<Tag> trendingTags,
       List<Tag> trendingMoodsOrGlums,
-      List<Story> stories,
+      Map<DateTime, int> yearInGlums,
       bool isLoading,
       bool showErrorMessage});
 }
@@ -150,7 +150,7 @@ class __$$_StatsStateCopyWithImpl<$Res>
     Object? weeklyGlum = null,
     Object? trendingTags = null,
     Object? trendingMoodsOrGlums = null,
-    Object? stories = null,
+    Object? yearInGlums = null,
     Object? isLoading = null,
     Object? showErrorMessage = null,
   }) {
@@ -179,10 +179,10 @@ class __$$_StatsStateCopyWithImpl<$Res>
           ? _value._trendingMoodsOrGlums
           : trendingMoodsOrGlums // ignore: cast_nullable_to_non_nullable
               as List<Tag>,
-      stories: null == stories
-          ? _value._stories
-          : stories // ignore: cast_nullable_to_non_nullable
-              as List<Story>,
+      yearInGlums: null == yearInGlums
+          ? _value._yearInGlums
+          : yearInGlums // ignore: cast_nullable_to_non_nullable
+              as Map<DateTime, int>,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -205,14 +205,14 @@ class _$_StatsState extends _StatsState {
       required final Map<DateTime, int> weeklyGlum,
       required final List<Tag> trendingTags,
       required final List<Tag> trendingMoodsOrGlums,
-      required final List<Story> stories,
+      required final Map<DateTime, int> yearInGlums,
       required this.isLoading,
       required this.showErrorMessage})
       : _glumDistribution = glumDistribution,
         _weeklyGlum = weeklyGlum,
         _trendingTags = trendingTags,
         _trendingMoodsOrGlums = trendingMoodsOrGlums,
-        _stories = stories,
+        _yearInGlums = yearInGlums,
         super._();
 
   @override
@@ -252,12 +252,12 @@ class _$_StatsState extends _StatsState {
     return EqualUnmodifiableListView(_trendingMoodsOrGlums);
   }
 
-  final List<Story> _stories;
+  final Map<DateTime, int> _yearInGlums;
   @override
-  List<Story> get stories {
-    if (_stories is EqualUnmodifiableListView) return _stories;
+  Map<DateTime, int> get yearInGlums {
+    if (_yearInGlums is EqualUnmodifiableMapView) return _yearInGlums;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_stories);
+    return EqualUnmodifiableMapView(_yearInGlums);
   }
 
   @override
@@ -267,7 +267,7 @@ class _$_StatsState extends _StatsState {
 
   @override
   String toString() {
-    return 'StatsState(allStoriesCount: $allStoriesCount, glumAverage: $glumAverage, glumDistribution: $glumDistribution, weeklyGlum: $weeklyGlum, trendingTags: $trendingTags, trendingMoodsOrGlums: $trendingMoodsOrGlums, stories: $stories, isLoading: $isLoading, showErrorMessage: $showErrorMessage)';
+    return 'StatsState(allStoriesCount: $allStoriesCount, glumAverage: $glumAverage, glumDistribution: $glumDistribution, weeklyGlum: $weeklyGlum, trendingTags: $trendingTags, trendingMoodsOrGlums: $trendingMoodsOrGlums, yearInGlums: $yearInGlums, isLoading: $isLoading, showErrorMessage: $showErrorMessage)';
   }
 
   @override
@@ -287,7 +287,8 @@ class _$_StatsState extends _StatsState {
                 .equals(other._trendingTags, _trendingTags) &&
             const DeepCollectionEquality()
                 .equals(other._trendingMoodsOrGlums, _trendingMoodsOrGlums) &&
-            const DeepCollectionEquality().equals(other._stories, _stories) &&
+            const DeepCollectionEquality()
+                .equals(other._yearInGlums, _yearInGlums) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.showErrorMessage, showErrorMessage) ||
@@ -303,7 +304,7 @@ class _$_StatsState extends _StatsState {
       const DeepCollectionEquality().hash(_weeklyGlum),
       const DeepCollectionEquality().hash(_trendingTags),
       const DeepCollectionEquality().hash(_trendingMoodsOrGlums),
-      const DeepCollectionEquality().hash(_stories),
+      const DeepCollectionEquality().hash(_yearInGlums),
       isLoading,
       showErrorMessage);
 
@@ -322,7 +323,7 @@ abstract class _StatsState extends StatsState {
       required final Map<DateTime, int> weeklyGlum,
       required final List<Tag> trendingTags,
       required final List<Tag> trendingMoodsOrGlums,
-      required final List<Story> stories,
+      required final Map<DateTime, int> yearInGlums,
       required final bool isLoading,
       required final bool showErrorMessage}) = _$_StatsState;
   const _StatsState._() : super._();
@@ -340,7 +341,7 @@ abstract class _StatsState extends StatsState {
   @override
   List<Tag> get trendingMoodsOrGlums;
   @override
-  List<Story> get stories;
+  Map<DateTime, int> get yearInGlums;
   @override
   bool get isLoading;
   @override

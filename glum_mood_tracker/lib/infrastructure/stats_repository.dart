@@ -67,4 +67,14 @@ class StatsRepository implements IStatsRepository {
       return left(const StoryFailure.unexpected());
     }
   }
+
+  @override
+  Future<Either<StoryFailure, Map<DateTime, int>>> yearInGlums() async {
+    try {
+      final yearInGlums = await _database.storyDao.yearInGlums();
+      return right(yearInGlums);
+    } catch (e) {
+      return left(const StoryFailure.unexpected());
+    }
+  }
 }

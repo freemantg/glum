@@ -104,8 +104,9 @@ class _StatsPageState extends ConsumerState<StatsPage> {
                               aspectRatio: 1,
                               child: Container(
                                 decoration: BoxDecoration(
+                                  color: Colors.pink,
                                   border: Border.all(
-                                    width: 0.1,
+                                    width: 0.5,
                                     color: const Color(0xFFC45654),
                                   ),
                                   // borderRadius: BorderRadius.all(
@@ -120,8 +121,6 @@ class _StatsPageState extends ConsumerState<StatsPage> {
               ],
             ),
           ),
-          SizedBox(height: $styles.insets.xs),
-          const SeasonalMoodCard(),
           SizedBox(height: $styles.insets.xs),
           const TagsDistributionCard(),
           SizedBox(height: $styles.insets.xs),
@@ -148,23 +147,13 @@ class _StatsPageState extends ConsumerState<StatsPage> {
   }
 }
 
-class WeekDistributionCard extends StatelessWidget {
+class WeekDistributionCard extends ConsumerWidget {
   const WeekDistributionCard({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
-    final dayInitials = [
-      'MON',
-      'TUE',
-      'WED',
-      'THU',
-      'FRI',
-      'SAT',
-      'SUN',
-    ];
-
+  Widget build(BuildContext context, WidgetRef ref) {
     return StyledCard(
       customPadding: true,
       child: Column(
@@ -173,7 +162,7 @@ class WeekDistributionCard extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all($styles.insets.sm),
             child: Text(
-              'YOUR AVERAGE WEEK',
+              'YOUR RECENT GLUMS',
               style: $styles.text.caption.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -182,8 +171,14 @@ class WeekDistributionCard extends StatelessWidget {
           Row(
             children: [
               ...List.generate(
-                dayInitials.length,
-                (index) => Expanded(
+                  ref.watch(statsNotifierProvider).weeklyGlum.keys.length,
+                  (index) {
+                final storyDate = ref
+                    .watch(statsNotifierProvider)
+                    .weeklyGlum
+                    .keys
+                    .toList()[index];
+                return Expanded(
                   child: AspectRatio(
                     aspectRatio: 1,
                     child: Container(
@@ -192,56 +187,19 @@ class WeekDistributionCard extends StatelessWidget {
                       ),
                       child: Center(
                         child: Text(
-                          dayInitials[index],
+                          ref
+                              .watch(statsNotifierProvider)
+                              .weeklyGlum[storyDate]
+                              .toString(),
                           style: $styles.text.caption
                               .copyWith(fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
                   ),
-                ),
-              )
+                );
+              })
             ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class SeasonalMoodCard extends StatelessWidget {
-  const SeasonalMoodCard({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return StyledCard(
-      customPadding: true,
-      child: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.all($styles.insets.sm),
-            child: Row(
-              children: [
-                Text(
-                  'SEASONAL MOOD',
-                  style: $styles.text.caption.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const Spacer(),
-                Text(
-                  '30 DAYS',
-                  style: $styles.text.caption.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const Placeholder(
-            fallbackHeight: 250,
           ),
         ],
       ),
