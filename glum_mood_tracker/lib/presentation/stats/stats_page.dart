@@ -24,21 +24,6 @@ class _StatsPageState extends ConsumerState<StatsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final monthInitials = [
-      'J',
-      'F',
-      'M',
-      'A',
-      'M',
-      'J',
-      'J',
-      'A',
-      'S',
-      'O',
-      'N',
-      'D'
-    ];
-
     return Scaffold(
       appBar: _buildAppBar(),
       body: ListView(
@@ -52,75 +37,7 @@ class _StatsPageState extends ConsumerState<StatsPage> {
           SizedBox(height: $styles.insets.xs),
           const WeekDistributionCard(),
           SizedBox(height: $styles.insets.xs),
-          StyledCard(
-            customPadding: true,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.all($styles.insets.sm),
-                  child: Text(
-                    'YEAR IN GLUMS',
-                    style: $styles.text.caption.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Table(
-                  children: [
-                    //MONTH LABELS
-                    TableRow(
-                      children: [
-                        const Text(''),
-                        ...monthInitials
-                            .map(
-                              (e) => TableCell(
-                                verticalAlignment:
-                                    TableCellVerticalAlignment.middle,
-                                child: Text(
-                                  e,
-                                  textAlign: TextAlign.center,
-                                  style: $styles.text.caption,
-                                ),
-                              ),
-                            )
-                            .toList()
-                      ],
-                    ),
-                    for (int i = 1; i <= 31; i++)
-                      TableRow(
-                        children: [
-                          TableCell(
-                            verticalAlignment:
-                                TableCellVerticalAlignment.middle,
-                            child: Text(
-                              i.toString(),
-                              textAlign: TextAlign.center,
-                              style: $styles.text.caption,
-                            ),
-                          ),
-                          for (int j = 1; j <= 12; j++)
-                            AspectRatio(
-                              aspectRatio: 1,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.pink,
-                                  border: Border.all(
-                                    width: 0.5,
-                                    color: const Color(0xFFC45654),
-                                  ),
-                                  // borderRadius: BorderRadius.all(
-                                  //     Radius.circular($styles.corners.sm)),
-                                ),
-                              ),
-                            )
-                        ],
-                      )
-                  ],
-                )
-              ],
-            ),
-          ),
+          const YearInGlumsCard(),
           SizedBox(height: $styles.insets.xs),
           const TagsDistributionCard(),
           SizedBox(height: $styles.insets.xs),
@@ -145,6 +62,115 @@ class _StatsPageState extends ConsumerState<StatsPage> {
       ],
     );
   }
+}
+
+class YearInGlumsCard extends StatelessWidget {
+  const YearInGlumsCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final monthInitials = [
+      'J',
+      'F',
+      'M',
+      'A',
+      'M',
+      'J',
+      'J',
+      'A',
+      'S',
+      'O',
+      'N',
+      'D'
+    ];
+
+    return StyledCard(
+      customPadding: true,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.all($styles.insets.sm),
+            child: Text(
+              'YEAR IN GLUMS',
+              style: $styles.text.caption.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Table(
+            children: [
+              TableRow(
+                children: [
+                  const Text(''),
+                  ...monthInitials
+                      .map(
+                        (e) => TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,
+                          child: Text(
+                            e,
+                            textAlign: TextAlign.center,
+                            style: $styles.text.caption,
+                          ),
+                        ),
+                      )
+                      .toList()
+                ],
+              ),
+              //MONTH COLUMNS 31st - 1st
+              for (int i = 1; i <= 31; i++)
+                TableRow(
+                  children: [
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: Text(
+                        i.toString(),
+                        textAlign: TextAlign.center,
+                        style: $styles.text.caption,
+                      ),
+                    ),
+                    for (int j = 1; j <= 12; j++)
+                      _buildYearIndividualGlum(day: i, month: j)
+                  ],
+                )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
+
+Widget _buildYearIndividualGlum({required int day, required int month}) {
+  return Consumer(
+    builder: (context, ref, child) {
+      final yearInGlumsMap = ref.watch(statsNotifierProvider).yearInGlums;
+      int? glumRating;
+
+      for (var key in yearInGlumsMap.keys) {
+        if (DateUtils.isSameDay(
+            key, DateTime(DateTime.now().year, month, day))) {
+          glumRating = yearInGlumsMap[key];
+        }
+      }
+      return AspectRatio(
+        aspectRatio: 1,
+        child: Container(
+          decoration: BoxDecoration(
+            color: (glumRating != null) ? Colors.pink : null,
+            border: Border.all(
+              width: 0.5,
+              color: const Color(0xFFC45654),
+            ),
+            borderRadius: const BorderRadius.all(Radius.circular(2.0)),
+          ),
+          child: (glumRating != null)
+              ? Center(child: Text(glumRating.toString()))
+              : const SizedBox.shrink(),
+        ),
+      );
+    },
+  );
 }
 
 class WeekDistributionCard extends ConsumerWidget {
