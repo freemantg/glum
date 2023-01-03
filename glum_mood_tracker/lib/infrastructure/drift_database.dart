@@ -244,14 +244,17 @@ class TagDao extends DatabaseAccessor<GlumDatabase> with _$TagDaoMixin {
 
   final GlumDatabase db;
 
-  Stream<List<TagDto>> watchTags() => select(tags).watch().map(
-        (data) => data
-            .map((e) => TagDto(
-                  title: e.title,
-                  id: e.id,
-                ))
-            .toList(),
-      );
+  // Stream<List<TagDto>> watchTags() {
+  //   final query = select(tags)..orderBy([(t)=> OrderingTerm(expression: t.)])
+  // } 
+  // select(tags)..orderBy([]).watch().map(
+  //       (data) => data
+  //           .map((e) => TagDto(
+  //                 title: e.title,
+  //                 id: e.id,
+  //               ))
+  //           .toList(),
+      
 
   Future<void> insertTag(TagDto tag) async {
     final tagCompanion = TagsCompanion.insert(title: tag.title);

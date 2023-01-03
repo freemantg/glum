@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:glum_mood_tracker/domain/interfaces.dart';
 import 'package:glum_mood_tracker/domain/story_failure.dart';
 import 'package:glum_mood_tracker/domain/story.dart';
+import 'package:glum_mood_tracker/domain/tag.dart';
 import 'package:glum_mood_tracker/infrastructure/drift_database.dart';
 
 class StatsRepository implements IStatsRepository {
@@ -76,5 +77,11 @@ class StatsRepository implements IStatsRepository {
     } catch (e) {
       return left(const StoryFailure.unexpected());
     }
+  }
+
+  @override
+  Future<Either<StoryFailure, List<Tag>>> trendingTags() {
+    // TODO: implement trendingTags
+    throw UnimplementedError();
   }
 }

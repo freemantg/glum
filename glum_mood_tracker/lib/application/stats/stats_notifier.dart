@@ -41,62 +41,57 @@ class StatsNotifier extends StateNotifier<StatsState> {
         super(StatsState.initial());
 
   Future<void> fetchStats() async {
+    state = state.copyWith(isLoading: true);
     await countAllStories();
     await glumAverage();
     await glumDistribution();
     await averageWeek();
     await yearInGlums();
+    await trendingTags();
+    state = state.copyWith(isLoading: false);
   }
 
   Future<void> trendingTagsByCategoryToggle() async {}
 
   Future<void> countAllStories() async {
-    state = state.copyWith(isLoading: true);
     final failureOrAllStoriesCount = await _repository.countAllStories();
     state = failureOrAllStoriesCount.fold(
       (failure) => state.copyWith(showErrorMessage: true),
       (count) => state.copyWith(allStoriesCount: count),
     );
-    state = state.copyWith(isLoading: false);
   }
 
   Future<void> glumAverage() async {
-    state = state.copyWith(isLoading: true);
     final failureOrGlumAverage = await _repository.glumAverage();
     state = failureOrGlumAverage.fold(
       (failure) => state.copyWith(showErrorMessage: true),
       (average) => state.copyWith(glumAverage: average),
     );
-    state = state.copyWith(isLoading: false);
   }
 
   Future<void> glumDistribution() async {
-    state = state.copyWith(isLoading: true);
     final failureOrGlumAverage = await _repository.glumDistribution();
     state = failureOrGlumAverage.fold(
       (failure) => state.copyWith(showErrorMessage: true),
       (distribution) => state.copyWith(glumDistribution: distribution),
     );
-    state = state.copyWith(isLoading: false);
   }
 
   Future<void> averageWeek() async {
-    state = state.copyWith(isLoading: true);
     final failureOrAverageWeek = await _repository.averageWeek();
     state = failureOrAverageWeek.fold(
       (failure) => state.copyWith(showErrorMessage: true),
       (averageWeek) => state.copyWith(weeklyGlum: averageWeek),
     );
-    state = state.copyWith(isLoading: false);
   }
 
   Future<void> yearInGlums() async {
-    state = state.copyWith(isLoading: true);
     final failureOrAverageWeek = await _repository.yearInGlums();
     state = failureOrAverageWeek.fold(
       (failure) => state.copyWith(showErrorMessage: true),
       (yearInGlums) => state.copyWith(yearInGlums: yearInGlums),
     );
-    state = state.copyWith(isLoading: false);
   }
+
+  Future<void> trendingTags() async {}
 }
