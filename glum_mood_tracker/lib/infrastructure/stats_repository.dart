@@ -80,8 +80,14 @@ class StatsRepository implements IStatsRepository {
   }
 
   @override
-  Future<Either<StoryFailure, List<Tag>>> trendingTags() {
-    // TODO: implement trendingTags
-    throw UnimplementedError();
+  Stream<Either<StoryFailure, Stream<List<Tag>>>> trendingTags() async {
+    try {
+      final trendingTags = _database.tagDao.watchTrendingTags();
+      return right(
+        trendingTags.map((dtos) => dtos.map((e) => e.toDomain()).toList()),
+      );
+    } catch (e) {
+      return left(StoryFailure.unexpected());
+    }
   }
 }

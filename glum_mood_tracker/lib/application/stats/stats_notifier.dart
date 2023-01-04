@@ -93,5 +93,13 @@ class StatsNotifier extends StateNotifier<StatsState> {
     );
   }
 
-  Future<void> trendingTags() async {}
+  Future<void> trendingTags() async {
+    final failureOrTrendingTagsStream = await _repository.trendingTags();
+    state = failureOrTrendingTagsStream.fold(
+        (failure) => state.copyWith(showErrorMessage: true),
+        (trendingTags) => state.copyWith(
+              trendingTags:
+                  trendingTags.listen((trendingTags) => trendingTags.toList()),
+            ));
+  }
 }

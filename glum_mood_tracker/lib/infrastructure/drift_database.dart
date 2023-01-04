@@ -261,7 +261,11 @@ class TagDao extends DatabaseAccessor<GlumDatabase> with _$TagDaoMixin {
       ..addColumns([tags.id])
       ..orderBy([OrderingTerm.desc(tagsCount)]);
 
-    return 
+    return query.watch().map(
+          (rows) => rows
+              .map((row) => TagDto.FromJson(row.readTable(tags).toJson()))
+              .toList(),
+        );
   }
 
   Future<void> insertTag(TagDto tag) async {
