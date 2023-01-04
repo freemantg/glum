@@ -238,23 +238,31 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
   }
 }
 
-@DriftAccessor(tables: [Tags])
+@DriftAccessor(tables: [Tags, StoryEntries])
 class TagDao extends DatabaseAccessor<GlumDatabase> with _$TagDaoMixin {
   TagDao(this.db) : super(db);
 
   final GlumDatabase db;
 
-  // Stream<List<TagDto>> watchTags() {
-  //   final query = select(tags)..orderBy([(t)=> OrderingTerm(expression: t.)])
-  // } 
-  // select(tags)..orderBy([]).watch().map(
-  //       (data) => data
-  //           .map((e) => TagDto(
-  //                 title: e.title,
-  //                 id: e.id,
-  //               ))
-  //           .toList(),
-      
+  Stream<List<TagDto>> watchTags() => select(tags).watch().map(
+        (data) => data.map((e) => TagDto.FromJson(e.toJson())).toList(),
+      );
+
+  Stream<List<TagDto>> watchTrendingTags() {
+    final tagsCount = tags.id.count();
+    final query = selectOnly(tags).join([
+      innerJoin(
+        storyEntries,
+        storyEntries.tag.equalsExp(tags.id),
+      ),
+    ]);
+    query
+      ..addColumns([tagsCount])
+      ..addColumns([tags.id])
+      ..orderBy([OrderingTerm.desc(tagsCount)]);
+
+    return 
+  }
 
   Future<void> insertTag(TagDto tag) async {
     final tagCompanion = TagsCompanion.insert(title: tag.title);

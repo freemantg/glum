@@ -666,4 +666,6 @@ mixin _$StoryDaoMixin on DatabaseAccessor<GlumDatabase> {
 }
 mixin _$TagDaoMixin on DatabaseAccessor<GlumDatabase> {
   $TagsTable get tags => attachedDatabase.tags;
+  $StoriesTable get stories => attachedDatabase.stories;
+  $StoryEntriesTable get storyEntries => attachedDatabase.storyEntries;
 }
