@@ -8,6 +8,8 @@ import 'package:glum_mood_tracker/shared/extensions.dart';
 import '../../domain/tag.dart';
 import '../../shared/providers.dart';
 import '../cards/widgets/tag_bottom_modal_sheet.dart';
+import '../cards/widgets/tag_chip.dart';
+import 'widgets/trending_tag_chip.dart';
 
 class StatsPage extends ConsumerStatefulWidget {
   const StatsPage({super.key});
@@ -272,7 +274,7 @@ class GlumDistributionCard extends ConsumerWidget {
                   final glumPercentage = glumDistribution[index + 1];
                   if (glumPercentage != 0) {
                     return Expanded(
-                      flex: (glumDistribution[index + 1] ?? 0).toInt(),
+                      flex: (glumDistribution[index + 1] ?? 0),
                       child: Container(
                         padding: EdgeInsets.all($styles.insets.sm),
                         decoration: BoxDecoration(
@@ -331,7 +333,10 @@ class TopTagsCard extends ConsumerWidget {
           Wrap(
             spacing: $styles.insets.xs,
             children: trendingTags.entries
-                .map((e) => TagChip(tag: e.key, count: e.value))
+                .map((e) => TrendingTagChip(
+                      tag: e.key,
+                      count: e.value,
+                    ))
                 .toList(),
           )
         ],
@@ -352,9 +357,9 @@ class TagsDistributionCard extends StatelessWidget {
         children: [
           const ToggleTagsFilterButton(),
           Wrap(
-            children: [
+            children: const [
               TagChip(
-                tag: const Tag(title: 'f'),
+                tag: Tag(title: 'tags'),
               ),
             ],
           )
@@ -393,46 +398,6 @@ class ToggleTagsFilterButton extends HookWidget {
               color: !isMoodsFilter.value ? const Color(0xFFD76A66) : null,
             ),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class TagChip extends StatelessWidget {
-  TagChip({
-    super.key,
-    required this.tag,
-    this.count,
-  });
-
-  final Tag tag;
-  int? count;
-
-  @override
-  Widget build(BuildContext context) {
-    return Chip(
-      visualDensity: VisualDensity.compact,
-      label: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            tag.title,
-            style: $styles.text.bodySmall.copyWith(
-              height: 0,
-              fontSize: 12.0,
-            ),
-          ),
-          SizedBox(width: $styles.insets.xs),
-          (count != null)
-              ? Text(
-                  count.toString(),
-                  style: $styles.text.bodySmall.copyWith(
-                    height: 0,
-                    fontSize: 12.0,
-                  ),
-                )
-              : const SizedBox.shrink(),
         ],
       ),
     );

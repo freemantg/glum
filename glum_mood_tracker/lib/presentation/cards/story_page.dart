@@ -5,7 +5,7 @@ import 'package:glum_mood_tracker/shared/extensions.dart';
 import 'package:glum_mood_tracker/styles/styles.dart';
 
 import '../../domain/story.dart';
-import '../stats/stats_page.dart';
+import 'widgets/tag_chip.dart';
 
 class StoryPage extends StatelessWidget {
   const StoryPage({super.key, required this.story});
@@ -79,8 +79,7 @@ class StyledBottomBar extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: $styles.insets.sm),
                 child: Wrap(
                   spacing: $styles.insets.xs,
-                  children:
-                      story.tags.map((e) => TagChip(tag: e, count: 0)).toList(),
+                  children: story.tags.map((e) => TagChip(tag: e)).toList(),
                 ),
               ),
               const Divider(height: 0),

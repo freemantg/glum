@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:glum_mood_tracker/presentation/stats/stats_page.dart';
 import 'package:glum_mood_tracker/shared/extensions.dart';
 import 'package:glum_mood_tracker/shared/providers.dart';
 import 'package:glum_mood_tracker/styles/styles.dart';
@@ -9,6 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../domain/story.dart';
 import 'widgets/tag_bottom_modal_sheet.dart';
+import 'widgets/tag_chip.dart';
 
 class AddStoryPage extends ConsumerStatefulWidget {
   const AddStoryPage({super.key, this.story});
@@ -123,7 +123,7 @@ class TagBar extends ConsumerWidget {
         ...ref
             .watch(storyFormNotifierProvider)
             .selectedTags
-            .map((e) => TagChip(tag: e, count: 0))
+            .map((e) => TagChip(tag: e))
             .toList()
       ],
     );
