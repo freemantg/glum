@@ -4,13 +4,14 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:glum_mood_tracker/presentation/cards/providers/providers.dart';
 import 'package:glum_mood_tracker/shared/extensions.dart';
 import 'package:glum_mood_tracker/shared/providers.dart';
-import 'package:glum_mood_tracker/styles/colors.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../domain/story.dart';
 import '../../styles/styles.dart';
 import '../routes/app_router.gr.dart';
+import 'widgets/calendar_toggle_button.dart';
+import 'widgets/cards_visual_options_button.dart';
 import 'widgets/year_selector_button.dart';
 
 class CardsPage extends StatelessWidget {
@@ -172,16 +173,16 @@ class MonthCard extends StatelessWidget {
                 : CrossAxisAlignment.start,
             children: [
               Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  Text(monthYear.month.toString(), style: $styles.text.h1),
                   Text(
-                    monthYear.month.toString(),
-                    style: $styles.text.h1,
-                  ),
-                  Text(
-                    '  ${DateFormat.MMM().format(DateTime(monthYear.year, monthYear.month)).toUpperCase()}',
+                    DateFormat.MMM()
+                        .format(DateTime(monthYear.year, monthYear.month))
+                        .toUpperCase(),
                     style: $styles.text.h3.copyWith(
-                      fontWeight: FontWeight.w400,
                       height: 0,
+                      fontWeight: FontWeight.normal,
                     ),
                   ),
                 ],
@@ -189,7 +190,7 @@ class MonthCard extends StatelessWidget {
               const Spacer(),
               showCalendar
                   ? StyledMonthViewCalendar(monthYear: monthYear)
-                  : const MonthProgressBar(),
+                  : MonthProgressBar(monthYear: monthYear),
               showCalendar ? const Spacer() : const SizedBox.shrink(),
             ],
           ),
@@ -301,131 +302,48 @@ class DateButton extends ConsumerWidget {
   }
 }
 
-class MonthProgressBar extends StatelessWidget {
+class MonthProgressBar extends ConsumerWidget {
+  final DateTime monthYear;
   const MonthProgressBar({
     super.key,
+    required this.monthYear,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final daysInMonth =
+        DateUtils.getDaysInMonth(monthYear.year, monthYear.month);
+
+    final stories = ref.watch(storiesNotifierProvider).maybeWhen(
+          loadSuccess: (stories) {
+            return stories
+                .where((story) => DateUtils.isSameMonth(story.date, monthYear))
+                .length;
+          },
+          orElse: () => 0,
+        );
+
     return Row(
       children: [
         SizedBox(
           width: MediaQuery.of(context).size.width / 4,
           child: ClipRRect(
             borderRadius: BorderRadius.circular($styles.corners.sm),
-            child: const LinearProgressIndicator(
-              value: 1 / 30,
-            ),
+            child: LinearProgressIndicator(value: stories / daysInMonth),
           ),
         ),
         SizedBox(width: $styles.insets.xs),
         Text(
-          '1',
+          '$stories',
           style: $styles.text.caption.copyWith(fontWeight: FontWeight.bold),
         ),
         Text(
-          '/30',
+          '/$daysInMonth',
           style: $styles.text.caption.copyWith(fontWeight: FontWeight.w300),
         ),
         const Spacer(),
-        GestureDetector(
-          child: const Icon(Icons.more_horiz),
-          onTap: () => showModalBottomSheet(
-            isScrollControlled: true,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(
-                  top: Radius.circular($styles.corners.md)),
-            ),
-            context: context,
-            builder: (context) {
-              return Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: $styles.insets.md,
-                  vertical: $styles.insets.xs,
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'PHOTO',
-                          style: $styles.text.bodySmallBold,
-                        ),
-                        const Spacer(),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.keyboard_arrow_right),
-                        )
-                      ],
-                    ),
-                    const Divider(),
-                    SizedBox(height: $styles.insets.xs),
-                    Text(
-                      'COLOUR',
-                      style: $styles.text.bodySmallBold,
-                    ),
-                    SizedBox(height: $styles.insets.md),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        ...List.generate(
-                          colors.length,
-                          (index) => Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: colors[index],
-                            ),
-                            height: 42.0,
-                            width: 42.0,
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(height: $styles.insets.xl),
-                  ],
-                ),
-              );
-            },
-          ),
-        ),
+        const CardVisualOptionsButton(),
       ],
-    );
-  }
-}
-
-class CalendarToggleButton extends HookWidget {
-  const CalendarToggleButton({
-    super.key,
-    required this.showCalendar,
-    required this.toggleCalendar,
-  });
-
-  final bool showCalendar;
-  final void Function() toggleCalendar;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: toggleCalendar,
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          vertical: $styles.insets.xs,
-          horizontal: $styles.insets.lg,
-        ),
-        decoration: BoxDecoration(
-          color: showCalendar
-              ? Theme.of(context).disabledColor
-              : Theme.of(context).cardColor,
-          borderRadius: BorderRadius.circular($styles.corners.lg),
-        ),
-        child: Text(
-          showCalendar ? 'MONTH' : 'CALENDAR',
-          style: $styles.text.caption.copyWith(height: 0),
-        ),
-      ),
     );
   }
 }
