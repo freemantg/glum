@@ -160,10 +160,10 @@ Widget _buildYearIndividualGlum({required int day, required int month}) {
         aspectRatio: 1,
         child: Container(
           decoration: BoxDecoration(
-            color: (glumRating != null) ? Colors.pink : null,
+            color: (glumRating != null) ? glumRating.ratingToColor() : null,
             border: Border.all(
               width: 0.5,
-              color: const Color(0xFFC45654),
+              color: const Color(0xFFDB6162).withOpacity(0.5),
             ),
             borderRadius: const BorderRadius.all(Radius.circular(2.0)),
           ),
@@ -185,58 +185,59 @@ class WeekDistributionCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return StyledCard(
       customPadding: true,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.all($styles.insets.sm),
-              child: Text(
-                'YOUR RECENT GLUMS',
-                style: $styles.text.caption.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.all($styles.insets.sm),
+            child: Text(
+              'YOUR RECENT GLUMS',
+              style: $styles.text.caption.copyWith(
+                fontWeight: FontWeight.bold,
               ),
             ),
-            Row(
-              children: [
-                ...List.generate(
-                    ref.watch(statsNotifierProvider).weeklyGlum.keys.length,
-                    (index) {
-                  final storyDate = ref
-                      .watch(statsNotifierProvider)
-                      .weeklyGlum
-                      .keys
-                      .toList()[index];
-                  return Expanded(
-                    child: Container(
-                      constraints: const BoxConstraints(
-                        maxHeight: 48,
-                      ),
-                      decoration: const BoxDecoration(
-                        color: Color(0xFFCF2D4A),
-                      ),
-                      child: AspectRatio(
-                        aspectRatio: 1,
-                        child: Center(
-                          child: Text(
-                            ref
-                                .watch(statsNotifierProvider)
-                                .weeklyGlum[storyDate]!
-                                .getDayString(),
+          ),
+          Row(
+            children: [
+              ...List.generate(
+                  ref.watch(statsNotifierProvider).weeklyGlum.keys.length,
+                  (index) {
+                final storyDate = ref
+                    .watch(statsNotifierProvider)
+                    .weeklyGlum
+                    .keys
+                    .toList()[index];
+                return Expanded(
+                  child: Container(
+                    constraints: const BoxConstraints(maxHeight: 48),
+                    decoration: BoxDecoration(
+                      color: (ref
+                              .watch(statsNotifierProvider)
+                              .weeklyGlum[storyDate])!
+                          .ratingToColor(),
+                    ),
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            storyDate.dateTimeInDayFormat,
                             style: $styles.text.caption
                                 .copyWith(fontWeight: FontWeight.bold),
                           ),
-                        ),
+                          SizedBox(height: $styles.insets.xxs),
+                          Text(storyDate.dateTimeInShortDayFormat,
+                              style: $styles.text.caption),
+                        ],
                       ),
                     ),
-                  );
-                })
-              ],
-            ),
-          ],
-        ),
+                  ),
+                );
+              })
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -273,23 +274,12 @@ class GlumDistributionCard extends ConsumerWidget {
                     return Expanded(
                       flex: (glumDistribution[index + 1] ?? 0).toInt(),
                       child: Container(
-                        height: 48,
+                        padding: EdgeInsets.all($styles.insets.sm),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFD76A66),
-                          border: Border.all(width: 0.1),
+                          color: (index + 1).ratingToColor(),
                         ),
                         child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text((index + 1).toString()),
-                              Text(
-                                '${(glumDistribution[index + 1]!).toStringAsFixed(0)}%',
-                                style: $styles.text.caption
-                                    .copyWith(fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
+                          child: Text((glumDistribution[index + 1]).toString()),
                         ),
                       ),
                     );
@@ -299,7 +289,6 @@ class GlumDistributionCard extends ConsumerWidget {
               )
             ],
           ),
-          SizedBox(height: $styles.insets.xs),
         ],
       ),
     );
@@ -465,7 +454,10 @@ class StoryCountCard extends ConsumerWidget {
             children: [
               Text(
                 ref.watch(statsNotifierProvider).allStoriesCount.toString(),
-                style: $styles.text.bodyBold.copyWith(height: 0),
+                style: $styles.text.bodyBold.copyWith(
+                  height: 0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               SizedBox(height: $styles.insets.xxs),
               Text(
@@ -482,7 +474,15 @@ class StoryCountCard extends ConsumerWidget {
             children: [
               Text(
                 ref.watch(statsNotifierProvider).glumAverage.toStringAsFixed(2),
-                style: $styles.text.bodyBold.copyWith(height: 0),
+                style: $styles.text.bodyBold.copyWith(
+                  height: 0,
+                  fontWeight: FontWeight.bold,
+                  color: ref
+                      .watch(statsNotifierProvider)
+                      .glumAverage
+                      .ceil()
+                      .ratingToColor(),
+                ),
               ),
               SizedBox(height: $styles.insets.xxs),
               Text(

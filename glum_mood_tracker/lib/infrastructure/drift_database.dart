@@ -198,7 +198,7 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
         final row = await query.getSingle();
         final count = row.read(glumRatingCount);
         if (count != null) {
-          glumDistribution[i] = ((count / storyCount) * 100).toInt();
+          glumDistribution[i] = count;
         }
       }
     }

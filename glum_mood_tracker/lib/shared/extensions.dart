@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 extension DateTimeX on DateTime {
@@ -9,6 +10,8 @@ extension DateTimeX on DateTime {
   String get dateTimeInStoryPageFormat =>
       DateFormat("EE, MMM dd / yyyy").format(this).toUpperCase();
   String get dateTimeInDayFormat => DateFormat("EE").format(this);
+  String get dateTimeInShortDayFormat =>
+      DateFormat("MMM d").format(this).toUpperCase();
 }
 
 extension DateTimeDayIndex on int {
@@ -30,6 +33,25 @@ extension DateTimeDayIndex on int {
         return 'SUN';
       default:
         return 'ERR';
+    }
+  }
+}
+
+extension ColorX on int {
+  Color ratingToColor() {
+    switch (this) {
+      case 1:
+        return const Color(0xFFD39E32);
+      case 2:
+        return const Color(0xFFCF6125);
+      case 3:
+        return const Color(0xFFDB6162);
+      case 4:
+        return const Color(0xFF96627F);
+      case 5:
+        return const Color(0xFF26A843);
+      default:
+        return Colors.black;
     }
   }
 }
