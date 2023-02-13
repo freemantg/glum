@@ -15,21 +15,21 @@ extension DateTimeDayIndex on int {
   String getDayString() {
     switch (this) {
       case 1:
-        return 'Mon';
+        return 'MON';
       case 2:
-        return 'Tue';
+        return 'TUE';
       case 3:
-        return 'Wed';
+        return 'WED';
       case 4:
-        return 'Thu';
+        return 'THU';
       case 5:
-        return 'Fri';
+        return 'FRI';
       case 6:
-        return 'Sat';
+        return 'SAT';
       case 7:
-        return 'Sun';
+        return 'SUN';
       default:
-        return 'Err';
+        return 'ERR';
     }
   }
 }

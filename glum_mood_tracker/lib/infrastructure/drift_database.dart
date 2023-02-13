@@ -187,6 +187,7 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
       delete(stories).delete(story);
 
   Future<Map<int, int>> glumDistribution() async {
+    //{Glum Rating: Percentage out of 100%}
     final glumDistribution = <int, int>{};
     final storyCount = await countStories();
     if (storyCount != null) {
@@ -197,11 +198,7 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
         final row = await query.getSingle();
         final count = row.read(glumRatingCount);
         if (count != null) {
-          final percentage =
-              (count / storyCount).isNaN ? 0 : count / storyCount;
-          glumDistribution[i] = percentage.toInt();
-        } else {
-          glumDistribution[i] = 0;
+          glumDistribution[i] = ((count / storyCount) * 100).toInt();
         }
       }
     }

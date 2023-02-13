@@ -185,56 +185,58 @@ class WeekDistributionCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return StyledCard(
       customPadding: true,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.all($styles.insets.sm),
-            child: Text(
-              'YOUR RECENT GLUMS',
-              style: $styles.text.caption.copyWith(
-                fontWeight: FontWeight.bold,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.all($styles.insets.sm),
+              child: Text(
+                'YOUR RECENT GLUMS',
+                style: $styles.text.caption.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-          ),
-          Row(
-            children: [
-              ...List.generate(
-                  ref.watch(statsNotifierProvider).weeklyGlum.keys.length,
-                  (index) {
-                final storyDate = ref
-                    .watch(statsNotifierProvider)
-                    .weeklyGlum
-                    .keys
-                    .toList()[index];
-                return Expanded(
-                  child: Container(
-                    constraints: const BoxConstraints(
-                      maxHeight: 48,
-                    ),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFCF2D4A),
-                      border: Border.all(color: Colors.white, width: 0.5),
-                    ),
-                    child: AspectRatio(
-                      aspectRatio: 1,
-                      child: Center(
-                        child: Text(
-                          ref
-                              .watch(statsNotifierProvider)
-                              .weeklyGlum[storyDate]!
-                              .getDayString(),
-                          style: $styles.text.caption
-                              .copyWith(fontWeight: FontWeight.bold),
+            Row(
+              children: [
+                ...List.generate(
+                    ref.watch(statsNotifierProvider).weeklyGlum.keys.length,
+                    (index) {
+                  final storyDate = ref
+                      .watch(statsNotifierProvider)
+                      .weeklyGlum
+                      .keys
+                      .toList()[index];
+                  return Expanded(
+                    child: Container(
+                      constraints: const BoxConstraints(
+                        maxHeight: 48,
+                      ),
+                      decoration: const BoxDecoration(
+                        color: Color(0xFFCF2D4A),
+                      ),
+                      child: AspectRatio(
+                        aspectRatio: 1,
+                        child: Center(
+                          child: Text(
+                            ref
+                                .watch(statsNotifierProvider)
+                                .weeklyGlum[storyDate]!
+                                .getDayString(),
+                            style: $styles.text.caption
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                );
-              })
-            ],
-          ),
-        ],
+                  );
+                })
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -269,7 +271,7 @@ class GlumDistributionCard extends ConsumerWidget {
                   final glumPercentage = glumDistribution[index + 1];
                   if (glumPercentage != 0) {
                     return Expanded(
-                      flex: (glumDistribution[index + 1] ?? 0 * 100).toInt(),
+                      flex: (glumDistribution[index + 1] ?? 0).toInt(),
                       child: Container(
                         height: 48,
                         decoration: BoxDecoration(
@@ -281,9 +283,8 @@ class GlumDistributionCard extends ConsumerWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text((index + 1).toString()),
-                              Text(glumDistribution[index + 1].toString()),
                               Text(
-                                '${(glumDistribution[index + 1]! * 100).toStringAsFixed(0)}%',
+                                '${(glumDistribution[index + 1]!).toStringAsFixed(0)}%',
                                 style: $styles.text.caption
                                     .copyWith(fontWeight: FontWeight.bold),
                               ),
