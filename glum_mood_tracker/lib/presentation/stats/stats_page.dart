@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:glum_mood_tracker/styles/styles.dart';
+import 'package:glum_mood_tracker/shared/extensions.dart';
 
 import '../../domain/tag.dart';
 import '../../shared/providers.dart';
+import '../cards/widgets/tag_bottom_modal_sheet.dart';
 
 class StatsPage extends ConsumerStatefulWidget {
   const StatsPage({super.key});
@@ -205,18 +208,22 @@ class WeekDistributionCard extends ConsumerWidget {
                     .keys
                     .toList()[index];
                 return Expanded(
-                  child: AspectRatio(
-                    aspectRatio: 1,
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: Color(0xFFCF2D4A),
-                      ),
+                  child: Container(
+                    constraints: const BoxConstraints(
+                      maxHeight: 48,
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFCF2D4A),
+                      border: Border.all(color: Colors.white, width: 0.5),
+                    ),
+                    child: AspectRatio(
+                      aspectRatio: 1,
                       child: Center(
                         child: Text(
                           ref
                               .watch(statsNotifierProvider)
-                              .weeklyGlum[storyDate]
-                              .toString(),
+                              .weeklyGlum[storyDate]!
+                              .getDayString(),
                           style: $styles.text.caption
                               .copyWith(fontWeight: FontWeight.bold),
                         ),
@@ -251,58 +258,65 @@ class GlumDistributionCard extends ConsumerWidget {
             padding: EdgeInsets.all($styles.insets.sm),
             child: Text(
               'GLUM DISTRIBUTION',
-              style: $styles.text.caption.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+              style: $styles.text.caption.copyWith(fontWeight: FontWeight.bold),
             ),
           ),
           Row(
             children: [
               ...List.generate(
                 glumDistribution.keys.length,
-                (index) => Expanded(
-                  flex: (glumDistribution[index + 1]! * 100).toInt(),
-                  child: Container(
-                    height: 48,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFD76A66)
-                          .withOpacity(glumDistribution[index + 1] ?? 0),
-                      border: Border.all(width: 0.1),
-                    ),
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text((index + 1).toString()),
-                          Text(
-                            '${(glumDistribution[index + 1]! * 100).toStringAsFixed(0)}%',
-                            style: $styles.text.caption
-                                .copyWith(fontWeight: FontWeight.bold),
+                (index) {
+                  final glumPercentage = glumDistribution[index + 1];
+                  if (glumPercentage != 0) {
+                    return Expanded(
+                      flex: (glumDistribution[index + 1] ?? 0 * 100).toInt(),
+                      child: Container(
+                        height: 48,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFD76A66),
+                          border: Border.all(width: 0.1),
+                        ),
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text((index + 1).toString()),
+                              Text(glumDistribution[index + 1].toString()),
+                              Text(
+                                '${(glumDistribution[index + 1]! * 100).toStringAsFixed(0)}%',
+                                style: $styles.text.caption
+                                    .copyWith(fontWeight: FontWeight.bold),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                ),
+                    );
+                  }
+                  return const SizedBox.shrink();
+                },
               )
             ],
           ),
-          // SizedBox(height: $styles.insets.xs),
+          SizedBox(height: $styles.insets.xs),
         ],
       ),
     );
   }
 }
 
-class TopTagsCard extends StatelessWidget {
+class TopTagsCard extends ConsumerWidget {
   const TopTagsCard({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final trendingTags = ref.watch(statsNotifierProvider).trendingTags;
+
     return StyledCard(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
@@ -314,19 +328,21 @@ class TopTagsCard extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                '5',
+                trendingTags.length.toString(),
                 style: $styles.text.bodySmallBold.copyWith(height: 0),
               ),
-              const Icon(Icons.keyboard_arrow_right)
+              GestureDetector(
+                child: const Icon(Icons.keyboard_arrow_right),
+                onTap: () => showTagModalBottomSheet(context),
+              )
             ],
           ),
           const Divider(),
           Wrap(
-            children: const [
-              TagChip(
-                tag: Tag(title: 'ge'),
-              ),
-            ],
+            spacing: $styles.insets.xs,
+            children: trendingTags.entries
+                .map((e) => TagChip(tag: e.key, count: e.value))
+                .toList(),
           )
         ],
       ),
@@ -344,20 +360,11 @@ class TagsDistributionCard extends StatelessWidget {
     return StyledCard(
       child: Column(
         children: [
-          Row(
-            children: const [
-              ToggleTagsFilterButton(title: 'MOODS'),
-              SizedBox(
-                height: 12,
-                child: VerticalDivider(thickness: 1.5),
-              ),
-              ToggleTagsFilterButton(title: 'GLUMS'),
-            ],
-          ),
+          const ToggleTagsFilterButton(),
           Wrap(
-            children: const [
+            children: [
               TagChip(
-                tag: Tag(title: 'f'),
+                tag: const Tag(title: 'f'),
               ),
             ],
           )
@@ -367,32 +374,50 @@ class TagsDistributionCard extends StatelessWidget {
   }
 }
 
-class ToggleTagsFilterButton extends StatelessWidget {
-  const ToggleTagsFilterButton({
-    super.key,
-    required this.title,
-  });
-
-  final String title;
+class ToggleTagsFilterButton extends HookWidget {
+  const ToggleTagsFilterButton({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      title,
-      style: $styles.text.caption.copyWith(
-        fontWeight: FontWeight.bold,
+    var isMoodsFilter = useState(true);
+
+    return GestureDetector(
+      onTap: () => isMoodsFilter.value = !isMoodsFilter.value,
+      child: Row(
+        children: [
+          Text(
+            'MOODS',
+            style: $styles.text.caption.copyWith(
+              fontWeight: FontWeight.bold,
+              color: isMoodsFilter.value ? const Color(0xFFD76A66) : null,
+            ),
+          ),
+          const SizedBox(
+            height: 12,
+            child: VerticalDivider(thickness: 1.5),
+          ),
+          Text(
+            'GLUMS',
+            style: $styles.text.caption.copyWith(
+              fontWeight: FontWeight.bold,
+              color: !isMoodsFilter.value ? const Color(0xFFD76A66) : null,
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
 class TagChip extends StatelessWidget {
-  const TagChip({
+  TagChip({
     super.key,
     required this.tag,
+    this.count,
   });
 
   final Tag tag;
+  int? count;
 
   @override
   Widget build(BuildContext context) {
@@ -401,7 +426,6 @@ class TagChip extends StatelessWidget {
       label: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.tag, size: 16.0),
           Text(
             tag.title,
             style: $styles.text.bodySmall.copyWith(
@@ -410,13 +434,15 @@ class TagChip extends StatelessWidget {
             ),
           ),
           SizedBox(width: $styles.insets.xs),
-          Text(
-            '3',
-            style: $styles.text.bodySmall.copyWith(
-              height: 0,
-              fontSize: 12.0,
-            ),
-          ),
+          (count != null)
+              ? Text(
+                  count.toString(),
+                  style: $styles.text.bodySmall.copyWith(
+                    height: 0,
+                    fontSize: 12.0,
+                  ),
+                )
+              : const SizedBox.shrink(),
         ],
       ),
     );

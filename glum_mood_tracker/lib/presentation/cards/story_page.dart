@@ -79,7 +79,8 @@ class StyledBottomBar extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: $styles.insets.sm),
                 child: Wrap(
                   spacing: $styles.insets.xs,
-                  children: story.tags.map((e) => TagChip(tag: e)).toList(),
+                  children:
+                      story.tags.map((e) => TagChip(tag: e, count: 0)).toList(),
                 ),
               ),
               const Divider(height: 0),

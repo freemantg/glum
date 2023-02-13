@@ -25,8 +25,8 @@ abstract class IStatsRepository {
   Future<Either<StoryFailure, int>> countAllStories();
   Future<Either<StoryFailure, double>> glumAverage();
   Future<Either<StoryFailure, Map<DateTime, int>>> averageWeek();
-  Future<Either<StoryFailure, Map<int, double>>> glumDistribution();
+  Future<Either<StoryFailure, Map<int, int>>> glumDistribution();
   Future<Either<StoryFailure, Unit>> fetchStats();
   Future<Either<StoryFailure, Map<DateTime, int>>> yearInGlums();
-  Stream<Either<StoryFailure, List<Tag>>> trendingTags();
+  Stream<Either<StoryFailure, Map<Tag, int>>> trendingTags();
 }

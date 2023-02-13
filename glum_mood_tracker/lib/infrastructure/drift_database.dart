@@ -186,8 +186,8 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
   Future<void> deleteStory(Insertable<StoryData> story) =>
       delete(stories).delete(story);
 
-  Future<Map<int, double>> glumDistribution() async {
-    final glumDistribution = <int, double>{};
+  Future<Map<int, int>> glumDistribution() async {
+    final glumDistribution = <int, int>{};
     final storyCount = await countStories();
     if (storyCount != null) {
       for (var i = 1; i <= 5; i++) {
@@ -197,7 +197,9 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
         final row = await query.getSingle();
         final count = row.read(glumRatingCount);
         if (count != null) {
-          glumDistribution[i] = count / storyCount;
+          final percentage =
+              (count / storyCount).isNaN ? 0 : count / storyCount;
+          glumDistribution[i] = percentage.toInt();
         } else {
           glumDistribution[i] = 0;
         }
@@ -233,7 +235,6 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
     for (var row in result) {
       yearInGlums[row.read(stories.date)!] = row.read(stories.glumRating) ?? 0;
     }
-    print(yearInGlums);
     return yearInGlums;
   }
 }
@@ -248,24 +249,32 @@ class TagDao extends DatabaseAccessor<GlumDatabase> with _$TagDaoMixin {
         (data) => data.map((e) => TagDto.FromJson(e.toJson())).toList(),
       );
 
-  Stream<List<TagDto>> watchTrendingTags() {
+  Stream<Map<TagDto, int>> watchTrendingTags() {
+    final tagsAndCount = <TagDto, int>{};
     final tagsCount = tags.id.count();
-    final query = selectOnly(tags).join([
+    final query = select(tags).join([
       innerJoin(
         storyEntries,
         storyEntries.tag.equalsExp(tags.id),
       ),
     ]);
+
     query
-      ..addColumns([tagsCount])
       ..addColumns([tags.id])
+      ..addColumns([tagsCount])
+      ..groupBy([tags.id])
       ..orderBy([OrderingTerm.desc(tagsCount)]);
 
     return query.watch().map(
-          (rows) => rows
-              .map((row) => TagDto.FromJson(row.readTable(tags).toJson()))
-              .toList(),
-        );
+      (rows) {
+        for (var row in rows) {
+          final tagDto = TagDto.FromJson(row.readTable(tags).toJson());
+          final count = row.read(tagsCount);
+          tagsAndCount[tagDto] = count ?? 0;
+        }
+        return tagsAndCount;
+      },
+    );
   }
 
   Future<void> insertTag(TagDto tag) async {

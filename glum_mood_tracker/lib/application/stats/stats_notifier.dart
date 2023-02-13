@@ -12,9 +12,9 @@ class StatsState with _$StatsState {
   const factory StatsState({
     required int allStoriesCount,
     required double glumAverage,
-    required Map<int, double> glumDistribution,
+    required Map<int, int> glumDistribution,
     required Map<DateTime, int> weeklyGlum,
-    required List<Tag> trendingTags,
+    required Map<Tag, int> trendingTags,
     required List<Tag> trendingMoodsOrGlums,
     required Map<DateTime, int> yearInGlums,
     required bool isLoading,
@@ -26,7 +26,7 @@ class StatsState with _$StatsState {
         glumAverage: 0.0,
         glumDistribution: {},
         weeklyGlum: {},
-        trendingTags: [],
+        trendingTags: {},
         trendingMoodsOrGlums: [],
         yearInGlums: {},
         isLoading: false,
@@ -94,12 +94,16 @@ class StatsNotifier extends StateNotifier<StatsState> {
   }
 
   Future<void> trendingTags() async {
-    final failureOrTrendingTagsStream = await _repository.trendingTags();
-    state = failureOrTrendingTagsStream.fold(
-        (failure) => state.copyWith(showErrorMessage: true),
-        (trendingTags) => state.copyWith(
-              trendingTags:
-                  trendingTags.listen((trendingTags) => trendingTags.toList()),
-            ));
+    final stream = _repository.trendingTags();
+    stream.listen(
+      (failureOrTrendingTags) {
+        failureOrTrendingTags.fold(
+          (failure) => state = state.copyWith(showErrorMessage: true),
+          (trendingTags) {
+            state = state.copyWith(trendingTags: trendingTags);
+          },
+        );
+      },
+    );
   }
 }
