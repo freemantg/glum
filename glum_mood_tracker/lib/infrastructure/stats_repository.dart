@@ -95,4 +95,22 @@ class StatsRepository implements IStatsRepository {
       },
     );
   }
+
+  @override
+  Stream<Either<StoryFailure, Map<Tag, int>>> tagsByMoodsOrGlums(
+      bool filterByMoods) async* {
+    final stream = _db.tagDao.watchingTagsByMoodsOrGlums(filterByMoods);
+    yield* stream.map((tagDtosAndCountMap) {
+      final tagsAndCountMap = <Tag, int>{};
+      tagDtosAndCountMap.forEach(
+        (dto, count) => tagsAndCountMap[dto.toDomain()] = count,
+      );
+      print(tagsAndCountMap);
+      return right<StoryFailure, Map<Tag, int>>(tagsAndCountMap);
+    }).onErrorReturnWith(
+      (error, stackTrace) {
+        return left(const StoryFailure.unexpected());
+      },
+    );
+  }
 }

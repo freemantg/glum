@@ -20,6 +20,13 @@ class Stories extends Table {
   DateTimeColumn get date => dateTime()();
 }
 
+@DataClassName('Photo')
+class Photos extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get fileName => text()();
+  TextColumn get filePath => text()();
+}
+
 @DataClassName('TagData')
 class Tags extends Table {
   IntColumn get id => integer().autoIncrement()();
@@ -29,6 +36,7 @@ class Tags extends Table {
 @DataClassName('StoryEntry')
 class StoryEntries extends Table {
   IntColumn get story => integer().references(Stories, #id)();
+  IntColumn get photo => integer().references(Photos, #id)();
   IntColumn get tag => integer().references(Tags, #id)();
 }
 
@@ -61,6 +69,35 @@ LazyDatabase _openConnection() {
   );
 }
 
+@DriftAccessor(tables: [Photos, StoryEntries])
+class PhotoDao extends DatabaseAccessor<GlumDatabase> with _$PhotoDaoMixin {
+  PhotoDao(this.db) : super(db);
+  final GlumDatabase db;
+
+  Future<List<Photo>> getAllPhotos() async {
+    final query = await select(photos).get();
+    final photosData = query
+        .map(
+          (row) => Photo(
+            id: row.id,
+            fileName: row.fileName,
+            filePath: row.filePath,
+          ),
+        )
+        .toList();
+    return photosData;
+  }
+
+  Future<int> insertPhoto(Photo photo) async {
+    return await into(photos).insert(
+      PhotosCompanion.insert(
+        fileName: photo.fileName,
+        filePath: photo.filePath,
+      ),
+    );
+  }
+}
+
 @DriftAccessor(tables: [Stories, StoryEntries])
 class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
   StoryDao(this.db) : super(db);
@@ -88,8 +125,7 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
         for (final tag in entry.tags) {
           await into(storyEntries).insert(
             StoryEntry(
-              story: storyId,
-              tag: tag.id,
+              story: storyId, tag: tag.id, photo: 1, //TODO: TAKE ID
             ),
           );
         }
@@ -259,6 +295,41 @@ class TagDao extends DatabaseAccessor<GlumDatabase> with _$TagDaoMixin {
     query
       ..addColumns([tags.id])
       ..addColumns([tagsCount])
+      ..groupBy([tags.id])
+      ..orderBy([OrderingTerm.desc(tagsCount)]);
+
+    return query.watch().map(
+      (rows) {
+        for (var row in rows) {
+          final tagDto = TagDto.FromJson(row.readTable(tags).toJson());
+          final count = row.read(tagsCount);
+          tagsAndCount[tagDto] = count ?? 0;
+        }
+        return tagsAndCount;
+      },
+    );
+  }
+
+  Stream<Map<TagDto, int>> watchingTagsByMoodsOrGlums(bool filterByMoods) {
+    final tagsAndCount = <TagDto, int>{};
+    final tagsCount = tags.id.count();
+    final query = select(tags).join([
+      innerJoin(
+        storyEntries,
+        storyEntries.tag.equalsExp(tags.id),
+      ),
+      innerJoin(
+        stories,
+        storyEntries.story.equalsExp(stories.id),
+      )
+    ]);
+    query
+      ..addColumns([tags.id, tagsCount, stories.glumRating])
+      ..where(
+        filterByMoods
+            ? stories.glumRating.isBetweenValues(3, 5)
+            : stories.glumRating.isBetweenValues(1, 2),
+      )
       ..groupBy([tags.id])
       ..orderBy([OrderingTerm.desc(tagsCount)]);
 

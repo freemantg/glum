@@ -15,7 +15,7 @@ class StatsState with _$StatsState {
     required Map<int, int> glumDistribution,
     required Map<DateTime, int> weeklyGlum,
     required Map<Tag, int> trendingTags,
-    required List<Tag> trendingMoodsOrGlums,
+    required Map<Tag, int> trendingMoodsOrGlums,
     required Map<DateTime, int> yearInGlums,
     required bool isLoading,
     required bool showErrorMessage,
@@ -27,7 +27,7 @@ class StatsState with _$StatsState {
         glumDistribution: {},
         weeklyGlum: {},
         trendingTags: {},
-        trendingMoodsOrGlums: [],
+        trendingMoodsOrGlums: {},
         yearInGlums: {},
         isLoading: false,
         showErrorMessage: false,
@@ -42,12 +42,15 @@ class StatsNotifier extends StateNotifier<StatsState> {
 
   Future<void> fetchStats() async {
     state = state.copyWith(isLoading: true);
-    await countAllStories();
-    await glumAverage();
-    await glumDistribution();
-    await averageWeek();
-    await yearInGlums();
-    await trendingTags();
+    Future.wait([
+      countAllStories(),
+      glumAverage(),
+      glumDistribution(),
+      averageWeek(),
+      yearInGlums(),
+      trendingTags(),
+      tagsByMoodsOrGlums(true),
+    ]);
     state = state.copyWith(isLoading: false);
   }
 
@@ -101,6 +104,20 @@ class StatsNotifier extends StateNotifier<StatsState> {
           (failure) => state = state.copyWith(showErrorMessage: true),
           (trendingTags) {
             state = state.copyWith(trendingTags: trendingTags);
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> tagsByMoodsOrGlums(bool filterByMoods) async {
+    final stream = _repository.tagsByMoodsOrGlums(filterByMoods);
+    stream.listen(
+      (failureOrTrendingTags) {
+        failureOrTrendingTags.fold(
+          (failure) => state = state.copyWith(showErrorMessage: true),
+          (trendingTags) {
+            state = state.copyWith(trendingMoodsOrGlums: trendingTags);
           },
         );
       },

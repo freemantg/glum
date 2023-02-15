@@ -42,7 +42,7 @@ class CardPageBody extends HookConsumerWidget {
           const YearSelectorButton(),
           const Spacer(),
           SizedBox(
-            height: MediaQuery.of(context).size.height / 1.7,
+            height: MediaQuery.of(context).size.height / 1.8,
             child: CardCarousel(showCalendar: showCalendar.value),
           ),
           const Spacer(),
@@ -222,6 +222,7 @@ class StyledMonthViewCalendar extends StatelessWidget {
     return Column(
       children: [
         GridView.builder(
+          physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemCount: firstDayOfMonthOffset + daysInMonth,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

@@ -28,5 +28,6 @@ abstract class IStatsRepository {
   Future<Either<StoryFailure, Map<int, int>>> glumDistribution();
   Future<Either<StoryFailure, Unit>> fetchStats();
   Future<Either<StoryFailure, Map<DateTime, int>>> yearInGlums();
+  Stream<Either<StoryFailure, Map<Tag, int>>> tagsByMoodsOrGlums(bool filterByMoods);
   Stream<Either<StoryFailure, Map<Tag, int>>> trendingTags();
 }

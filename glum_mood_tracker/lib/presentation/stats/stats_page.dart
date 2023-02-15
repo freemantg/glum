@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:glum_mood_tracker/styles/styles.dart';
 import 'package:glum_mood_tracker/shared/extensions.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../domain/tag.dart';
 import '../../shared/providers.dart';
 import '../cards/widgets/tag_bottom_modal_sheet.dart';
-import '../cards/widgets/tag_chip.dart';
 import 'widgets/trending_tag_chip.dart';
 
 class StatsPage extends ConsumerStatefulWidget {
@@ -276,12 +274,15 @@ class GlumDistributionCard extends ConsumerWidget {
                     return Expanded(
                       flex: (glumDistribution[index + 1] ?? 0),
                       child: Container(
-                        padding: EdgeInsets.all($styles.insets.sm),
+                        alignment: Alignment.center,
+                        padding:
+                            EdgeInsets.symmetric(vertical: $styles.insets.sm),
                         decoration: BoxDecoration(
                           color: (index + 1).ratingToColor(),
                         ),
-                        child: Center(
-                          child: Text((glumDistribution[index + 1]).toString()),
+                        child: Text(
+                          (glumDistribution[index + 1]).toString(),
+                          style: $styles.text.bodySmallBold,
                         ),
                       ),
                     );
@@ -331,6 +332,7 @@ class TopTagsCard extends ConsumerWidget {
           ),
           const Divider(),
           Wrap(
+            alignment: WrapAlignment.center,
             spacing: $styles.insets.xs,
             children: trendingTags.entries
                 .map((e) => TrendingTagChip(
@@ -345,23 +347,28 @@ class TopTagsCard extends ConsumerWidget {
   }
 }
 
-class TagsDistributionCard extends StatelessWidget {
+class TagsDistributionCard extends ConsumerWidget {
   const TagsDistributionCard({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final trendingTags = ref.watch(statsNotifierProvider).trendingMoodsOrGlums;
     return StyledCard(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const ToggleTagsFilterButton(),
+          const Divider(),
           Wrap(
-            children: const [
-              TagChip(
-                tag: Tag(title: 'tags'),
-              ),
-            ],
+            spacing: $styles.insets.xs,
+            children: trendingTags.entries
+                .map((e) => TrendingTagChip(
+                      tag: e.key,
+                      count: e.value,
+                    ))
+                .toList(),
           )
         ],
       ),
@@ -369,15 +376,20 @@ class TagsDistributionCard extends StatelessWidget {
   }
 }
 
-class ToggleTagsFilterButton extends HookWidget {
+class ToggleTagsFilterButton extends HookConsumerWidget {
   const ToggleTagsFilterButton({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     var isMoodsFilter = useState(true);
 
     return GestureDetector(
-      onTap: () => isMoodsFilter.value = !isMoodsFilter.value,
+      onTap: () {
+        isMoodsFilter.value = !isMoodsFilter.value;
+        ref
+            .read(statsNotifierProvider.notifier)
+            .tagsByMoodsOrGlums(isMoodsFilter.value);
+      },
       child: Row(
         children: [
           Text(
@@ -398,6 +410,20 @@ class ToggleTagsFilterButton extends HookWidget {
               color: !isMoodsFilter.value ? const Color(0xFFD76A66) : null,
             ),
           ),
+          const Spacer(),
+          Text(
+            ref
+                .watch(statsNotifierProvider)
+                .trendingMoodsOrGlums
+                .keys
+                .length
+                .toString(),
+            style: $styles.text.bodySmallBold.copyWith(height: 0),
+          ),
+          GestureDetector(
+            child: const Icon(Icons.keyboard_arrow_right),
+            onTap: () => showTagModalBottomSheet(context),
+          )
         ],
       ),
     );

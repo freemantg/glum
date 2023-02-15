@@ -21,7 +21,7 @@ mixin _$StatsState {
   Map<int, int> get glumDistribution => throw _privateConstructorUsedError;
   Map<DateTime, int> get weeklyGlum => throw _privateConstructorUsedError;
   Map<Tag, int> get trendingTags => throw _privateConstructorUsedError;
-  List<Tag> get trendingMoodsOrGlums => throw _privateConstructorUsedError;
+  Map<Tag, int> get trendingMoodsOrGlums => throw _privateConstructorUsedError;
   Map<DateTime, int> get yearInGlums => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   bool get showErrorMessage => throw _privateConstructorUsedError;
@@ -43,7 +43,7 @@ abstract class $StatsStateCopyWith<$Res> {
       Map<int, int> glumDistribution,
       Map<DateTime, int> weeklyGlum,
       Map<Tag, int> trendingTags,
-      List<Tag> trendingMoodsOrGlums,
+      Map<Tag, int> trendingMoodsOrGlums,
       Map<DateTime, int> yearInGlums,
       bool isLoading,
       bool showErrorMessage});
@@ -96,7 +96,7 @@ class _$StatsStateCopyWithImpl<$Res, $Val extends StatsState>
       trendingMoodsOrGlums: null == trendingMoodsOrGlums
           ? _value.trendingMoodsOrGlums
           : trendingMoodsOrGlums // ignore: cast_nullable_to_non_nullable
-              as List<Tag>,
+              as Map<Tag, int>,
       yearInGlums: null == yearInGlums
           ? _value.yearInGlums
           : yearInGlums // ignore: cast_nullable_to_non_nullable
@@ -127,7 +127,7 @@ abstract class _$$_StatsStateCopyWith<$Res>
       Map<int, int> glumDistribution,
       Map<DateTime, int> weeklyGlum,
       Map<Tag, int> trendingTags,
-      List<Tag> trendingMoodsOrGlums,
+      Map<Tag, int> trendingMoodsOrGlums,
       Map<DateTime, int> yearInGlums,
       bool isLoading,
       bool showErrorMessage});
@@ -178,7 +178,7 @@ class __$$_StatsStateCopyWithImpl<$Res>
       trendingMoodsOrGlums: null == trendingMoodsOrGlums
           ? _value._trendingMoodsOrGlums
           : trendingMoodsOrGlums // ignore: cast_nullable_to_non_nullable
-              as List<Tag>,
+              as Map<Tag, int>,
       yearInGlums: null == yearInGlums
           ? _value._yearInGlums
           : yearInGlums // ignore: cast_nullable_to_non_nullable
@@ -204,7 +204,7 @@ class _$_StatsState extends _StatsState {
       required final Map<int, int> glumDistribution,
       required final Map<DateTime, int> weeklyGlum,
       required final Map<Tag, int> trendingTags,
-      required final List<Tag> trendingMoodsOrGlums,
+      required final Map<Tag, int> trendingMoodsOrGlums,
       required final Map<DateTime, int> yearInGlums,
       required this.isLoading,
       required this.showErrorMessage})
@@ -243,13 +243,13 @@ class _$_StatsState extends _StatsState {
     return EqualUnmodifiableMapView(_trendingTags);
   }
 
-  final List<Tag> _trendingMoodsOrGlums;
+  final Map<Tag, int> _trendingMoodsOrGlums;
   @override
-  List<Tag> get trendingMoodsOrGlums {
-    if (_trendingMoodsOrGlums is EqualUnmodifiableListView)
+  Map<Tag, int> get trendingMoodsOrGlums {
+    if (_trendingMoodsOrGlums is EqualUnmodifiableMapView)
       return _trendingMoodsOrGlums;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_trendingMoodsOrGlums);
+    return EqualUnmodifiableMapView(_trendingMoodsOrGlums);
   }
 
   final Map<DateTime, int> _yearInGlums;
@@ -322,7 +322,7 @@ abstract class _StatsState extends StatsState {
       required final Map<int, int> glumDistribution,
       required final Map<DateTime, int> weeklyGlum,
       required final Map<Tag, int> trendingTags,
-      required final List<Tag> trendingMoodsOrGlums,
+      required final Map<Tag, int> trendingMoodsOrGlums,
       required final Map<DateTime, int> yearInGlums,
       required final bool isLoading,
       required final bool showErrorMessage}) = _$_StatsState;
@@ -339,7 +339,7 @@ abstract class _StatsState extends StatsState {
   @override
   Map<Tag, int> get trendingTags;
   @override
-  List<Tag> get trendingMoodsOrGlums;
+  Map<Tag, int> get trendingMoodsOrGlums;
   @override
   Map<DateTime, int> get yearInGlums;
   @override
