@@ -12,6 +12,7 @@ class StoryDto with _$StoryDto {
   const factory StoryDto({
     required StoryData story,
     required List<TagData> tags,
+    required List<PhotoData> photos,
   }) = _StoryDto;
 
   factory StoryDto.fromDomain(Story story) => StoryDto(
@@ -29,6 +30,7 @@ class StoryDto with _$StoryDto {
               title: tag.title,
             )
         ],
+        photos: [],
       );
 
   Story toDomain() => Story(
@@ -45,5 +47,6 @@ class StoryDto with _$StoryDto {
               ),
             )
             .toList(),
+        photos: [],
       );
 }

@@ -467,11 +467,11 @@ class $TagsTable extends Tags with TableInfo<$TagsTable, TagData> {
   }
 }
 
-class Photo extends DataClass implements Insertable<Photo> {
+class PhotoData extends DataClass implements Insertable<PhotoData> {
   final int id;
   final String fileName;
   final String filePath;
-  const Photo(
+  const PhotoData(
       {required this.id, required this.fileName, required this.filePath});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -490,10 +490,10 @@ class Photo extends DataClass implements Insertable<Photo> {
     );
   }
 
-  factory Photo.fromJson(Map<String, dynamic> json,
+  factory PhotoData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Photo(
+    return PhotoData(
       id: serializer.fromJson<int>(json['id']),
       fileName: serializer.fromJson<String>(json['fileName']),
       filePath: serializer.fromJson<String>(json['filePath']),
@@ -509,14 +509,15 @@ class Photo extends DataClass implements Insertable<Photo> {
     };
   }
 
-  Photo copyWith({int? id, String? fileName, String? filePath}) => Photo(
+  PhotoData copyWith({int? id, String? fileName, String? filePath}) =>
+      PhotoData(
         id: id ?? this.id,
         fileName: fileName ?? this.fileName,
         filePath: filePath ?? this.filePath,
       );
   @override
   String toString() {
-    return (StringBuffer('Photo(')
+    return (StringBuffer('PhotoData(')
           ..write('id: $id, ')
           ..write('fileName: $fileName, ')
           ..write('filePath: $filePath')
@@ -529,13 +530,13 @@ class Photo extends DataClass implements Insertable<Photo> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Photo &&
+      (other is PhotoData &&
           other.id == this.id &&
           other.fileName == this.fileName &&
           other.filePath == this.filePath);
 }
 
-class PhotosCompanion extends UpdateCompanion<Photo> {
+class PhotosCompanion extends UpdateCompanion<PhotoData> {
   final Value<int> id;
   final Value<String> fileName;
   final Value<String> filePath;
@@ -550,7 +551,7 @@ class PhotosCompanion extends UpdateCompanion<Photo> {
     required String filePath,
   })  : fileName = Value(fileName),
         filePath = Value(filePath);
-  static Insertable<Photo> custom({
+  static Insertable<PhotoData> custom({
     Expression<int>? id,
     Expression<String>? fileName,
     Expression<String>? filePath,
@@ -597,7 +598,7 @@ class PhotosCompanion extends UpdateCompanion<Photo> {
   }
 }
 
-class $PhotosTable extends Photos with TableInfo<$PhotosTable, Photo> {
+class $PhotosTable extends Photos with TableInfo<$PhotosTable, PhotoData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -630,7 +631,7 @@ class $PhotosTable extends Photos with TableInfo<$PhotosTable, Photo> {
   @override
   String get actualTableName => 'photos';
   @override
-  VerificationContext validateIntegrity(Insertable<Photo> instance,
+  VerificationContext validateIntegrity(Insertable<PhotoData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -655,9 +656,9 @@ class $PhotosTable extends Photos with TableInfo<$PhotosTable, Photo> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Photo map(Map<String, dynamic> data, {String? tablePrefix}) {
+  PhotoData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Photo(
+    return PhotoData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       fileName: attachedDatabase.typeMapping

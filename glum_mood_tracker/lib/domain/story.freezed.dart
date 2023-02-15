@@ -22,6 +22,7 @@ mixin _$Story {
   int get glumRating => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
   List<Tag> get tags => throw _privateConstructorUsedError;
+  List<Photo> get photos => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $StoryCopyWith<Story> get copyWith => throw _privateConstructorUsedError;
@@ -38,7 +39,8 @@ abstract class $StoryCopyWith<$Res> {
       String description,
       int glumRating,
       DateTime date,
-      List<Tag> tags});
+      List<Tag> tags,
+      List<Photo> photos});
 }
 
 /// @nodoc
@@ -60,6 +62,7 @@ class _$StoryCopyWithImpl<$Res, $Val extends Story>
     Object? glumRating = null,
     Object? date = null,
     Object? tags = null,
+    Object? photos = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -86,6 +89,10 @@ class _$StoryCopyWithImpl<$Res, $Val extends Story>
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
               as List<Tag>,
+      photos: null == photos
+          ? _value.photos
+          : photos // ignore: cast_nullable_to_non_nullable
+              as List<Photo>,
     ) as $Val);
   }
 }
@@ -102,7 +109,8 @@ abstract class _$$_StoryCopyWith<$Res> implements $StoryCopyWith<$Res> {
       String description,
       int glumRating,
       DateTime date,
-      List<Tag> tags});
+      List<Tag> tags,
+      List<Photo> photos});
 }
 
 /// @nodoc
@@ -120,6 +128,7 @@ class __$$_StoryCopyWithImpl<$Res> extends _$StoryCopyWithImpl<$Res, _$_Story>
     Object? glumRating = null,
     Object? date = null,
     Object? tags = null,
+    Object? photos = null,
   }) {
     return _then(_$_Story(
       id: freezed == id
@@ -146,6 +155,10 @@ class __$$_StoryCopyWithImpl<$Res> extends _$StoryCopyWithImpl<$Res, _$_Story>
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
               as List<Tag>,
+      photos: null == photos
+          ? _value._photos
+          : photos // ignore: cast_nullable_to_non_nullable
+              as List<Photo>,
     ));
   }
 }
@@ -159,8 +172,10 @@ class _$_Story extends _Story {
       required this.description,
       required this.glumRating,
       required this.date,
-      required final List<Tag> tags})
+      required final List<Tag> tags,
+      required final List<Photo> photos})
       : _tags = tags,
+        _photos = photos,
         super._();
 
   @override
@@ -181,9 +196,17 @@ class _$_Story extends _Story {
     return EqualUnmodifiableListView(_tags);
   }
 
+  final List<Photo> _photos;
+  @override
+  List<Photo> get photos {
+    if (_photos is EqualUnmodifiableListView) return _photos;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_photos);
+  }
+
   @override
   String toString() {
-    return 'Story(id: $id, title: $title, description: $description, glumRating: $glumRating, date: $date, tags: $tags)';
+    return 'Story(id: $id, title: $title, description: $description, glumRating: $glumRating, date: $date, tags: $tags, photos: $photos)';
   }
 
   @override
@@ -198,12 +221,20 @@ class _$_Story extends _Story {
             (identical(other.glumRating, glumRating) ||
                 other.glumRating == glumRating) &&
             (identical(other.date, date) || other.date == date) &&
-            const DeepCollectionEquality().equals(other._tags, _tags));
+            const DeepCollectionEquality().equals(other._tags, _tags) &&
+            const DeepCollectionEquality().equals(other._photos, _photos));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, description,
-      glumRating, date, const DeepCollectionEquality().hash(_tags));
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      title,
+      description,
+      glumRating,
+      date,
+      const DeepCollectionEquality().hash(_tags),
+      const DeepCollectionEquality().hash(_photos));
 
   @JsonKey(ignore: true)
   @override
@@ -219,7 +250,8 @@ abstract class _Story extends Story {
       required final String description,
       required final int glumRating,
       required final DateTime date,
-      required final List<Tag> tags}) = _$_Story;
+      required final List<Tag> tags,
+      required final List<Photo> photos}) = _$_Story;
   const _Story._() : super._();
 
   @override
@@ -234,6 +266,8 @@ abstract class _Story extends Story {
   DateTime get date;
   @override
   List<Tag> get tags;
+  @override
+  List<Photo> get photos;
   @override
   @JsonKey(ignore: true)
   _$$_StoryCopyWith<_$_Story> get copyWith =>

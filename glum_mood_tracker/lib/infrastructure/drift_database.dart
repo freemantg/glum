@@ -20,7 +20,7 @@ class Stories extends Table {
   DateTimeColumn get date => dateTime()();
 }
 
-@DataClassName('Photo')
+@DataClassName('PhotoData')
 class Photos extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get fileName => text()();
@@ -74,11 +74,11 @@ class PhotoDao extends DatabaseAccessor<GlumDatabase> with _$PhotoDaoMixin {
   PhotoDao(this.db) : super(db);
   final GlumDatabase db;
 
-  Future<List<Photo>> getAllPhotos() async {
+  Future<List<PhotoData>> getAllPhotos() async {
     final query = await select(photos).get();
     final photosData = query
         .map(
-          (row) => Photo(
+          (row) => PhotoData(
             id: row.id,
             fileName: row.fileName,
             filePath: row.filePath,
@@ -88,7 +88,7 @@ class PhotoDao extends DatabaseAccessor<GlumDatabase> with _$PhotoDaoMixin {
     return photosData;
   }
 
-  Future<int> insertPhoto(Photo photo) async {
+  Future<int> insertPhoto(PhotoData photo) async {
     return await into(photos).insert(
       PhotosCompanion.insert(
         fileName: photo.fileName,
@@ -121,6 +121,8 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
         await (delete(storyEntries)..where((tbl) => tbl.story.equals(storyId)))
             .go();
 
+        //Grabbing a photoId;
+
         //and write the new ones.
         for (final tag in entry.tags) {
           await into(storyEntries).insert(
@@ -152,7 +154,7 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
     return Rx.combineLatest2(
       storyStream,
       tagStream,
-      (a, b) => StoryDto(story: a, tags: b),
+      (a, b) => StoryDto(story: a, tags: b, photos: []),
     );
   }
 
@@ -195,6 +197,7 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
                 StoryDto(
                   story: idToStory[id]!,
                   tags: idToTags[id] ?? [],
+                  photos: [],
                 )
             ];
           },
