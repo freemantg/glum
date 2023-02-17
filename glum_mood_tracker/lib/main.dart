@@ -1,8 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter/widgets.dart';
-
 
 import 'presentation/routes/app_router.gr.dart';
 
@@ -22,6 +20,7 @@ class AppWidget extends StatelessWidget {
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark().copyWith(
+          useMaterial3: true,
           appBarTheme: const AppBarTheme(
             iconTheme: IconThemeData(),
             backgroundColor: Colors.transparent,

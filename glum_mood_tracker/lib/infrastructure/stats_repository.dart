@@ -3,7 +3,8 @@ import 'package:glum_mood_tracker/domain/interfaces.dart';
 import 'package:glum_mood_tracker/domain/story_failure.dart';
 import 'package:glum_mood_tracker/domain/story.dart';
 import 'package:glum_mood_tracker/domain/tag.dart';
-import 'package:glum_mood_tracker/infrastructure/drift_database.dart';
+import 'package:glum_mood_tracker/infrastructure/drift_database.dart'
+    hide Tag, Story;
 import 'package:rxdart/rxdart.dart';
 
 class StatsRepository implements IStatsRepository {

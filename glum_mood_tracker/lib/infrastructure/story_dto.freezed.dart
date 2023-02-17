@@ -14,12 +14,21 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+StoryDto _$StoryDtoFromJson(Map<String, dynamic> json) {
+  return _StoryDto.fromJson(json);
+}
+
 /// @nodoc
 mixin _$StoryDto {
-  StoryData get story => throw _privateConstructorUsedError;
-  List<TagData> get tags => throw _privateConstructorUsedError;
-  List<PhotoData> get photos => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+  int get glumRating => throw _privateConstructorUsedError;
+  DateTime get date => throw _privateConstructorUsedError;
+  List<TagDto> get tags => throw _privateConstructorUsedError;
+  List<PhotoDto> get photos => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $StoryDtoCopyWith<StoryDto> get copyWith =>
       throw _privateConstructorUsedError;
@@ -30,7 +39,14 @@ abstract class $StoryDtoCopyWith<$Res> {
   factory $StoryDtoCopyWith(StoryDto value, $Res Function(StoryDto) then) =
       _$StoryDtoCopyWithImpl<$Res, StoryDto>;
   @useResult
-  $Res call({StoryData story, List<TagData> tags, List<PhotoData> photos});
+  $Res call(
+      {int? id,
+      String title,
+      String description,
+      int glumRating,
+      DateTime date,
+      List<TagDto> tags,
+      List<PhotoDto> photos});
 }
 
 /// @nodoc
@@ -46,23 +62,43 @@ class _$StoryDtoCopyWithImpl<$Res, $Val extends StoryDto>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? story = freezed,
+    Object? id = freezed,
+    Object? title = null,
+    Object? description = null,
+    Object? glumRating = null,
+    Object? date = null,
     Object? tags = null,
     Object? photos = null,
   }) {
     return _then(_value.copyWith(
-      story: freezed == story
-          ? _value.story
-          : story // ignore: cast_nullable_to_non_nullable
-              as StoryData,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      glumRating: null == glumRating
+          ? _value.glumRating
+          : glumRating // ignore: cast_nullable_to_non_nullable
+              as int,
+      date: null == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       tags: null == tags
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as List<TagData>,
+              as List<TagDto>,
       photos: null == photos
           ? _value.photos
           : photos // ignore: cast_nullable_to_non_nullable
-              as List<PhotoData>,
+              as List<PhotoDto>,
     ) as $Val);
   }
 }
@@ -74,7 +110,14 @@ abstract class _$$_StoryDtoCopyWith<$Res> implements $StoryDtoCopyWith<$Res> {
       __$$_StoryDtoCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({StoryData story, List<TagData> tags, List<PhotoData> photos});
+  $Res call(
+      {int? id,
+      String title,
+      String description,
+      int glumRating,
+      DateTime date,
+      List<TagDto> tags,
+      List<PhotoDto> photos});
 }
 
 /// @nodoc
@@ -88,51 +131,86 @@ class __$$_StoryDtoCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? story = freezed,
+    Object? id = freezed,
+    Object? title = null,
+    Object? description = null,
+    Object? glumRating = null,
+    Object? date = null,
     Object? tags = null,
     Object? photos = null,
   }) {
     return _then(_$_StoryDto(
-      story: freezed == story
-          ? _value.story
-          : story // ignore: cast_nullable_to_non_nullable
-              as StoryData,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      glumRating: null == glumRating
+          ? _value.glumRating
+          : glumRating // ignore: cast_nullable_to_non_nullable
+              as int,
+      date: null == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       tags: null == tags
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as List<TagData>,
+              as List<TagDto>,
       photos: null == photos
           ? _value._photos
           : photos // ignore: cast_nullable_to_non_nullable
-              as List<PhotoData>,
+              as List<PhotoDto>,
     ));
   }
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_StoryDto extends _StoryDto {
   const _$_StoryDto(
-      {required this.story,
-      required final List<TagData> tags,
-      required final List<PhotoData> photos})
+      {required this.id,
+      required this.title,
+      required this.description,
+      required this.glumRating,
+      required this.date,
+      required final List<TagDto> tags,
+      required final List<PhotoDto> photos})
       : _tags = tags,
         _photos = photos,
         super._();
 
+  factory _$_StoryDto.fromJson(Map<String, dynamic> json) =>
+      _$$_StoryDtoFromJson(json);
+
   @override
-  final StoryData story;
-  final List<TagData> _tags;
+  final int? id;
   @override
-  List<TagData> get tags {
+  final String title;
+  @override
+  final String description;
+  @override
+  final int glumRating;
+  @override
+  final DateTime date;
+  final List<TagDto> _tags;
+  @override
+  List<TagDto> get tags {
     if (_tags is EqualUnmodifiableListView) return _tags;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_tags);
   }
 
-  final List<PhotoData> _photos;
+  final List<PhotoDto> _photos;
   @override
-  List<PhotoData> get photos {
+  List<PhotoDto> get photos {
     if (_photos is EqualUnmodifiableListView) return _photos;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_photos);
@@ -140,7 +218,7 @@ class _$_StoryDto extends _StoryDto {
 
   @override
   String toString() {
-    return 'StoryDto(story: $story, tags: $tags, photos: $photos)';
+    return 'StoryDto(id: $id, title: $title, description: $description, glumRating: $glumRating, date: $date, tags: $tags, photos: $photos)';
   }
 
   @override
@@ -148,15 +226,26 @@ class _$_StoryDto extends _StoryDto {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_StoryDto &&
-            const DeepCollectionEquality().equals(other.story, story) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.glumRating, glumRating) ||
+                other.glumRating == glumRating) &&
+            (identical(other.date, date) || other.date == date) &&
             const DeepCollectionEquality().equals(other._tags, _tags) &&
             const DeepCollectionEquality().equals(other._photos, _photos));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(story),
+      id,
+      title,
+      description,
+      glumRating,
+      date,
       const DeepCollectionEquality().hash(_tags),
       const DeepCollectionEquality().hash(_photos));
 
@@ -165,21 +254,42 @@ class _$_StoryDto extends _StoryDto {
   @pragma('vm:prefer-inline')
   _$$_StoryDtoCopyWith<_$_StoryDto> get copyWith =>
       __$$_StoryDtoCopyWithImpl<_$_StoryDto>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_StoryDtoToJson(
+      this,
+    );
+  }
 }
 
 abstract class _StoryDto extends StoryDto {
   const factory _StoryDto(
-      {required final StoryData story,
-      required final List<TagData> tags,
-      required final List<PhotoData> photos}) = _$_StoryDto;
+      {required final int? id,
+      required final String title,
+      required final String description,
+      required final int glumRating,
+      required final DateTime date,
+      required final List<TagDto> tags,
+      required final List<PhotoDto> photos}) = _$_StoryDto;
   const _StoryDto._() : super._();
 
+  factory _StoryDto.fromJson(Map<String, dynamic> json) = _$_StoryDto.fromJson;
+
   @override
-  StoryData get story;
+  int? get id;
   @override
-  List<TagData> get tags;
+  String get title;
   @override
-  List<PhotoData> get photos;
+  String get description;
+  @override
+  int get glumRating;
+  @override
+  DateTime get date;
+  @override
+  List<TagDto> get tags;
+  @override
+  List<PhotoDto> get photos;
   @override
   @JsonKey(ignore: true)
   _$$_StoryDtoCopyWith<_$_StoryDto> get copyWith =>

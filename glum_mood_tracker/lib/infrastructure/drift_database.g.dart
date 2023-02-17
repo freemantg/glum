@@ -3,13 +3,13 @@
 part of 'drift_database.dart';
 
 // ignore_for_file: type=lint
-class StoryData extends DataClass implements Insertable<StoryData> {
+class Story extends DataClass implements Insertable<Story> {
   final int id;
   final String title;
   final String description;
   final int glumRating;
   final DateTime date;
-  const StoryData(
+  const Story(
       {required this.id,
       required this.title,
       required this.description,
@@ -36,10 +36,10 @@ class StoryData extends DataClass implements Insertable<StoryData> {
     );
   }
 
-  factory StoryData.fromJson(Map<String, dynamic> json,
+  factory Story.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return StoryData(
+    return Story(
       id: serializer.fromJson<int>(json['id']),
       title: serializer.fromJson<String>(json['title']),
       description: serializer.fromJson<String>(json['description']),
@@ -59,13 +59,13 @@ class StoryData extends DataClass implements Insertable<StoryData> {
     };
   }
 
-  StoryData copyWith(
+  Story copyWith(
           {int? id,
           String? title,
           String? description,
           int? glumRating,
           DateTime? date}) =>
-      StoryData(
+      Story(
         id: id ?? this.id,
         title: title ?? this.title,
         description: description ?? this.description,
@@ -74,7 +74,7 @@ class StoryData extends DataClass implements Insertable<StoryData> {
       );
   @override
   String toString() {
-    return (StringBuffer('StoryData(')
+    return (StringBuffer('Story(')
           ..write('id: $id, ')
           ..write('title: $title, ')
           ..write('description: $description, ')
@@ -89,7 +89,7 @@ class StoryData extends DataClass implements Insertable<StoryData> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is StoryData &&
+      (other is Story &&
           other.id == this.id &&
           other.title == this.title &&
           other.description == this.description &&
@@ -97,7 +97,7 @@ class StoryData extends DataClass implements Insertable<StoryData> {
           other.date == this.date);
 }
 
-class StoriesCompanion extends UpdateCompanion<StoryData> {
+class StoriesCompanion extends UpdateCompanion<Story> {
   final Value<int> id;
   final Value<String> title;
   final Value<String> description;
@@ -119,7 +119,7 @@ class StoriesCompanion extends UpdateCompanion<StoryData> {
   })  : title = Value(title),
         glumRating = Value(glumRating),
         date = Value(date);
-  static Insertable<StoryData> custom({
+  static Insertable<Story> custom({
     Expression<int>? id,
     Expression<String>? title,
     Expression<String>? description,
@@ -184,7 +184,7 @@ class StoriesCompanion extends UpdateCompanion<StoryData> {
   }
 }
 
-class $StoriesTable extends Stories with TableInfo<$StoriesTable, StoryData> {
+class $StoriesTable extends Stories with TableInfo<$StoriesTable, Story> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -234,7 +234,7 @@ class $StoriesTable extends Stories with TableInfo<$StoriesTable, StoryData> {
   @override
   String get actualTableName => 'stories';
   @override
-  VerificationContext validateIntegrity(Insertable<StoryData> instance,
+  VerificationContext validateIntegrity(Insertable<Story> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -273,9 +273,9 @@ class $StoriesTable extends Stories with TableInfo<$StoriesTable, StoryData> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  StoryData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  Story map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return StoryData(
+    return Story(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       title: attachedDatabase.typeMapping
@@ -295,10 +295,10 @@ class $StoriesTable extends Stories with TableInfo<$StoriesTable, StoryData> {
   }
 }
 
-class TagData extends DataClass implements Insertable<TagData> {
+class Tag extends DataClass implements Insertable<Tag> {
   final int id;
   final String title;
-  const TagData({required this.id, required this.title});
+  const Tag({required this.id, required this.title});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -314,10 +314,10 @@ class TagData extends DataClass implements Insertable<TagData> {
     );
   }
 
-  factory TagData.fromJson(Map<String, dynamic> json,
+  factory Tag.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return TagData(
+    return Tag(
       id: serializer.fromJson<int>(json['id']),
       title: serializer.fromJson<String>(json['title']),
     );
@@ -331,13 +331,13 @@ class TagData extends DataClass implements Insertable<TagData> {
     };
   }
 
-  TagData copyWith({int? id, String? title}) => TagData(
+  Tag copyWith({int? id, String? title}) => Tag(
         id: id ?? this.id,
         title: title ?? this.title,
       );
   @override
   String toString() {
-    return (StringBuffer('TagData(')
+    return (StringBuffer('Tag(')
           ..write('id: $id, ')
           ..write('title: $title')
           ..write(')'))
@@ -349,10 +349,10 @@ class TagData extends DataClass implements Insertable<TagData> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is TagData && other.id == this.id && other.title == this.title);
+      (other is Tag && other.id == this.id && other.title == this.title);
 }
 
-class TagsCompanion extends UpdateCompanion<TagData> {
+class TagsCompanion extends UpdateCompanion<Tag> {
   final Value<int> id;
   final Value<String> title;
   const TagsCompanion({
@@ -363,7 +363,7 @@ class TagsCompanion extends UpdateCompanion<TagData> {
     this.id = const Value.absent(),
     required String title,
   }) : title = Value(title);
-  static Insertable<TagData> custom({
+  static Insertable<Tag> custom({
     Expression<int>? id,
     Expression<String>? title,
   }) {
@@ -402,7 +402,7 @@ class TagsCompanion extends UpdateCompanion<TagData> {
   }
 }
 
-class $TagsTable extends Tags with TableInfo<$TagsTable, TagData> {
+class $TagsTable extends Tags with TableInfo<$TagsTable, Tag> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -432,7 +432,7 @@ class $TagsTable extends Tags with TableInfo<$TagsTable, TagData> {
   @override
   String get actualTableName => 'tags';
   @override
-  VerificationContext validateIntegrity(Insertable<TagData> instance,
+  VerificationContext validateIntegrity(Insertable<Tag> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -451,9 +451,9 @@ class $TagsTable extends Tags with TableInfo<$TagsTable, TagData> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  TagData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  Tag map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return TagData(
+    return Tag(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       title: attachedDatabase.typeMapping
@@ -467,11 +467,11 @@ class $TagsTable extends Tags with TableInfo<$TagsTable, TagData> {
   }
 }
 
-class PhotoData extends DataClass implements Insertable<PhotoData> {
+class Photo extends DataClass implements Insertable<Photo> {
   final int id;
   final String fileName;
   final String filePath;
-  const PhotoData(
+  const Photo(
       {required this.id, required this.fileName, required this.filePath});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -490,10 +490,10 @@ class PhotoData extends DataClass implements Insertable<PhotoData> {
     );
   }
 
-  factory PhotoData.fromJson(Map<String, dynamic> json,
+  factory Photo.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return PhotoData(
+    return Photo(
       id: serializer.fromJson<int>(json['id']),
       fileName: serializer.fromJson<String>(json['fileName']),
       filePath: serializer.fromJson<String>(json['filePath']),
@@ -509,15 +509,14 @@ class PhotoData extends DataClass implements Insertable<PhotoData> {
     };
   }
 
-  PhotoData copyWith({int? id, String? fileName, String? filePath}) =>
-      PhotoData(
+  Photo copyWith({int? id, String? fileName, String? filePath}) => Photo(
         id: id ?? this.id,
         fileName: fileName ?? this.fileName,
         filePath: filePath ?? this.filePath,
       );
   @override
   String toString() {
-    return (StringBuffer('PhotoData(')
+    return (StringBuffer('Photo(')
           ..write('id: $id, ')
           ..write('fileName: $fileName, ')
           ..write('filePath: $filePath')
@@ -530,13 +529,13 @@ class PhotoData extends DataClass implements Insertable<PhotoData> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is PhotoData &&
+      (other is Photo &&
           other.id == this.id &&
           other.fileName == this.fileName &&
           other.filePath == this.filePath);
 }
 
-class PhotosCompanion extends UpdateCompanion<PhotoData> {
+class PhotosCompanion extends UpdateCompanion<Photo> {
   final Value<int> id;
   final Value<String> fileName;
   final Value<String> filePath;
@@ -551,7 +550,7 @@ class PhotosCompanion extends UpdateCompanion<PhotoData> {
     required String filePath,
   })  : fileName = Value(fileName),
         filePath = Value(filePath);
-  static Insertable<PhotoData> custom({
+  static Insertable<Photo> custom({
     Expression<int>? id,
     Expression<String>? fileName,
     Expression<String>? filePath,
@@ -598,7 +597,7 @@ class PhotosCompanion extends UpdateCompanion<PhotoData> {
   }
 }
 
-class $PhotosTable extends Photos with TableInfo<$PhotosTable, PhotoData> {
+class $PhotosTable extends Photos with TableInfo<$PhotosTable, Photo> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -631,7 +630,7 @@ class $PhotosTable extends Photos with TableInfo<$PhotosTable, PhotoData> {
   @override
   String get actualTableName => 'photos';
   @override
-  VerificationContext validateIntegrity(Insertable<PhotoData> instance,
+  VerificationContext validateIntegrity(Insertable<Photo> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -656,9 +655,9 @@ class $PhotosTable extends Photos with TableInfo<$PhotosTable, PhotoData> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  PhotoData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  Photo map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return PhotoData(
+    return Photo(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       fileName: attachedDatabase.typeMapping
@@ -674,195 +673,161 @@ class $PhotosTable extends Photos with TableInfo<$PhotosTable, PhotoData> {
   }
 }
 
-class StoryEntry extends DataClass implements Insertable<StoryEntry> {
-  final int story;
-  final int photo;
-  final int tag;
-  const StoryEntry(
-      {required this.story, required this.photo, required this.tag});
+class StoryTag extends DataClass implements Insertable<StoryTag> {
+  final int storyId;
+  final int tagId;
+  const StoryTag({required this.storyId, required this.tagId});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['story'] = Variable<int>(story);
-    map['photo'] = Variable<int>(photo);
-    map['tag'] = Variable<int>(tag);
+    map['story_id'] = Variable<int>(storyId);
+    map['tag_id'] = Variable<int>(tagId);
     return map;
   }
 
-  StoryEntriesCompanion toCompanion(bool nullToAbsent) {
-    return StoryEntriesCompanion(
-      story: Value(story),
-      photo: Value(photo),
-      tag: Value(tag),
+  StoryTagsCompanion toCompanion(bool nullToAbsent) {
+    return StoryTagsCompanion(
+      storyId: Value(storyId),
+      tagId: Value(tagId),
     );
   }
 
-  factory StoryEntry.fromJson(Map<String, dynamic> json,
+  factory StoryTag.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return StoryEntry(
-      story: serializer.fromJson<int>(json['story']),
-      photo: serializer.fromJson<int>(json['photo']),
-      tag: serializer.fromJson<int>(json['tag']),
+    return StoryTag(
+      storyId: serializer.fromJson<int>(json['storyId']),
+      tagId: serializer.fromJson<int>(json['tagId']),
     );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'story': serializer.toJson<int>(story),
-      'photo': serializer.toJson<int>(photo),
-      'tag': serializer.toJson<int>(tag),
+      'storyId': serializer.toJson<int>(storyId),
+      'tagId': serializer.toJson<int>(tagId),
     };
   }
 
-  StoryEntry copyWith({int? story, int? photo, int? tag}) => StoryEntry(
-        story: story ?? this.story,
-        photo: photo ?? this.photo,
-        tag: tag ?? this.tag,
+  StoryTag copyWith({int? storyId, int? tagId}) => StoryTag(
+        storyId: storyId ?? this.storyId,
+        tagId: tagId ?? this.tagId,
       );
   @override
   String toString() {
-    return (StringBuffer('StoryEntry(')
-          ..write('story: $story, ')
-          ..write('photo: $photo, ')
-          ..write('tag: $tag')
+    return (StringBuffer('StoryTag(')
+          ..write('storyId: $storyId, ')
+          ..write('tagId: $tagId')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(story, photo, tag);
+  int get hashCode => Object.hash(storyId, tagId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is StoryEntry &&
-          other.story == this.story &&
-          other.photo == this.photo &&
-          other.tag == this.tag);
+      (other is StoryTag &&
+          other.storyId == this.storyId &&
+          other.tagId == this.tagId);
 }
 
-class StoryEntriesCompanion extends UpdateCompanion<StoryEntry> {
-  final Value<int> story;
-  final Value<int> photo;
-  final Value<int> tag;
-  const StoryEntriesCompanion({
-    this.story = const Value.absent(),
-    this.photo = const Value.absent(),
-    this.tag = const Value.absent(),
+class StoryTagsCompanion extends UpdateCompanion<StoryTag> {
+  final Value<int> storyId;
+  final Value<int> tagId;
+  const StoryTagsCompanion({
+    this.storyId = const Value.absent(),
+    this.tagId = const Value.absent(),
   });
-  StoryEntriesCompanion.insert({
-    required int story,
-    required int photo,
-    required int tag,
-  })  : story = Value(story),
-        photo = Value(photo),
-        tag = Value(tag);
-  static Insertable<StoryEntry> custom({
-    Expression<int>? story,
-    Expression<int>? photo,
-    Expression<int>? tag,
+  StoryTagsCompanion.insert({
+    required int storyId,
+    required int tagId,
+  })  : storyId = Value(storyId),
+        tagId = Value(tagId);
+  static Insertable<StoryTag> custom({
+    Expression<int>? storyId,
+    Expression<int>? tagId,
   }) {
     return RawValuesInsertable({
-      if (story != null) 'story': story,
-      if (photo != null) 'photo': photo,
-      if (tag != null) 'tag': tag,
+      if (storyId != null) 'story_id': storyId,
+      if (tagId != null) 'tag_id': tagId,
     });
   }
 
-  StoryEntriesCompanion copyWith(
-      {Value<int>? story, Value<int>? photo, Value<int>? tag}) {
-    return StoryEntriesCompanion(
-      story: story ?? this.story,
-      photo: photo ?? this.photo,
-      tag: tag ?? this.tag,
+  StoryTagsCompanion copyWith({Value<int>? storyId, Value<int>? tagId}) {
+    return StoryTagsCompanion(
+      storyId: storyId ?? this.storyId,
+      tagId: tagId ?? this.tagId,
     );
   }
 
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (story.present) {
-      map['story'] = Variable<int>(story.value);
+    if (storyId.present) {
+      map['story_id'] = Variable<int>(storyId.value);
     }
-    if (photo.present) {
-      map['photo'] = Variable<int>(photo.value);
-    }
-    if (tag.present) {
-      map['tag'] = Variable<int>(tag.value);
+    if (tagId.present) {
+      map['tag_id'] = Variable<int>(tagId.value);
     }
     return map;
   }
 
   @override
   String toString() {
-    return (StringBuffer('StoryEntriesCompanion(')
-          ..write('story: $story, ')
-          ..write('photo: $photo, ')
-          ..write('tag: $tag')
+    return (StringBuffer('StoryTagsCompanion(')
+          ..write('storyId: $storyId, ')
+          ..write('tagId: $tagId')
           ..write(')'))
         .toString();
   }
 }
 
-class $StoryEntriesTable extends StoryEntries
-    with TableInfo<$StoryEntriesTable, StoryEntry> {
+class $StoryTagsTable extends StoryTags
+    with TableInfo<$StoryTagsTable, StoryTag> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $StoryEntriesTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _storyMeta = const VerificationMeta('story');
+  $StoryTagsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _storyIdMeta =
+      const VerificationMeta('storyId');
   @override
-  late final GeneratedColumn<int> story = GeneratedColumn<int>(
-      'story', aliasedName, false,
+  late final GeneratedColumn<int> storyId = GeneratedColumn<int>(
+      'story_id', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('REFERENCES stories (id)'));
-  static const VerificationMeta _photoMeta = const VerificationMeta('photo');
+  static const VerificationMeta _tagIdMeta = const VerificationMeta('tagId');
   @override
-  late final GeneratedColumn<int> photo = GeneratedColumn<int>(
-      'photo', aliasedName, false,
-      type: DriftSqlType.int,
-      requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES photos (id)'));
-  static const VerificationMeta _tagMeta = const VerificationMeta('tag');
-  @override
-  late final GeneratedColumn<int> tag = GeneratedColumn<int>(
-      'tag', aliasedName, false,
+  late final GeneratedColumn<int> tagId = GeneratedColumn<int>(
+      'tag_id', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('REFERENCES tags (id)'));
   @override
-  List<GeneratedColumn> get $columns => [story, photo, tag];
+  List<GeneratedColumn> get $columns => [storyId, tagId];
   @override
-  String get aliasedName => _alias ?? 'story_entries';
+  String get aliasedName => _alias ?? 'story_tags';
   @override
-  String get actualTableName => 'story_entries';
+  String get actualTableName => 'story_tags';
   @override
-  VerificationContext validateIntegrity(Insertable<StoryEntry> instance,
+  VerificationContext validateIntegrity(Insertable<StoryTag> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('story')) {
-      context.handle(
-          _storyMeta, story.isAcceptableOrUnknown(data['story']!, _storyMeta));
+    if (data.containsKey('story_id')) {
+      context.handle(_storyIdMeta,
+          storyId.isAcceptableOrUnknown(data['story_id']!, _storyIdMeta));
     } else if (isInserting) {
-      context.missing(_storyMeta);
+      context.missing(_storyIdMeta);
     }
-    if (data.containsKey('photo')) {
+    if (data.containsKey('tag_id')) {
       context.handle(
-          _photoMeta, photo.isAcceptableOrUnknown(data['photo']!, _photoMeta));
+          _tagIdMeta, tagId.isAcceptableOrUnknown(data['tag_id']!, _tagIdMeta));
     } else if (isInserting) {
-      context.missing(_photoMeta);
-    }
-    if (data.containsKey('tag')) {
-      context.handle(
-          _tagMeta, tag.isAcceptableOrUnknown(data['tag']!, _tagMeta));
-    } else if (isInserting) {
-      context.missing(_tagMeta);
+      context.missing(_tagIdMeta);
     }
     return context;
   }
@@ -870,21 +835,198 @@ class $StoryEntriesTable extends StoryEntries
   @override
   Set<GeneratedColumn> get $primaryKey => const {};
   @override
-  StoryEntry map(Map<String, dynamic> data, {String? tablePrefix}) {
+  StoryTag map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return StoryEntry(
-      story: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}story'])!,
-      photo: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}photo'])!,
-      tag: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}tag'])!,
+    return StoryTag(
+      storyId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}story_id'])!,
+      tagId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}tag_id'])!,
     );
   }
 
   @override
-  $StoryEntriesTable createAlias(String alias) {
-    return $StoryEntriesTable(attachedDatabase, alias);
+  $StoryTagsTable createAlias(String alias) {
+    return $StoryTagsTable(attachedDatabase, alias);
+  }
+}
+
+class StoryPhoto extends DataClass implements Insertable<StoryPhoto> {
+  final int storyId;
+  final int photoId;
+  const StoryPhoto({required this.storyId, required this.photoId});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['story_id'] = Variable<int>(storyId);
+    map['photo_id'] = Variable<int>(photoId);
+    return map;
+  }
+
+  StoryPhotosCompanion toCompanion(bool nullToAbsent) {
+    return StoryPhotosCompanion(
+      storyId: Value(storyId),
+      photoId: Value(photoId),
+    );
+  }
+
+  factory StoryPhoto.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return StoryPhoto(
+      storyId: serializer.fromJson<int>(json['storyId']),
+      photoId: serializer.fromJson<int>(json['photoId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'storyId': serializer.toJson<int>(storyId),
+      'photoId': serializer.toJson<int>(photoId),
+    };
+  }
+
+  StoryPhoto copyWith({int? storyId, int? photoId}) => StoryPhoto(
+        storyId: storyId ?? this.storyId,
+        photoId: photoId ?? this.photoId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('StoryPhoto(')
+          ..write('storyId: $storyId, ')
+          ..write('photoId: $photoId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(storyId, photoId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is StoryPhoto &&
+          other.storyId == this.storyId &&
+          other.photoId == this.photoId);
+}
+
+class StoryPhotosCompanion extends UpdateCompanion<StoryPhoto> {
+  final Value<int> storyId;
+  final Value<int> photoId;
+  const StoryPhotosCompanion({
+    this.storyId = const Value.absent(),
+    this.photoId = const Value.absent(),
+  });
+  StoryPhotosCompanion.insert({
+    required int storyId,
+    required int photoId,
+  })  : storyId = Value(storyId),
+        photoId = Value(photoId);
+  static Insertable<StoryPhoto> custom({
+    Expression<int>? storyId,
+    Expression<int>? photoId,
+  }) {
+    return RawValuesInsertable({
+      if (storyId != null) 'story_id': storyId,
+      if (photoId != null) 'photo_id': photoId,
+    });
+  }
+
+  StoryPhotosCompanion copyWith({Value<int>? storyId, Value<int>? photoId}) {
+    return StoryPhotosCompanion(
+      storyId: storyId ?? this.storyId,
+      photoId: photoId ?? this.photoId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (storyId.present) {
+      map['story_id'] = Variable<int>(storyId.value);
+    }
+    if (photoId.present) {
+      map['photo_id'] = Variable<int>(photoId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('StoryPhotosCompanion(')
+          ..write('storyId: $storyId, ')
+          ..write('photoId: $photoId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $StoryPhotosTable extends StoryPhotos
+    with TableInfo<$StoryPhotosTable, StoryPhoto> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $StoryPhotosTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _storyIdMeta =
+      const VerificationMeta('storyId');
+  @override
+  late final GeneratedColumn<int> storyId = GeneratedColumn<int>(
+      'story_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES stories (id)'));
+  static const VerificationMeta _photoIdMeta =
+      const VerificationMeta('photoId');
+  @override
+  late final GeneratedColumn<int> photoId = GeneratedColumn<int>(
+      'photo_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES photos (id)'));
+  @override
+  List<GeneratedColumn> get $columns => [storyId, photoId];
+  @override
+  String get aliasedName => _alias ?? 'story_photos';
+  @override
+  String get actualTableName => 'story_photos';
+  @override
+  VerificationContext validateIntegrity(Insertable<StoryPhoto> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('story_id')) {
+      context.handle(_storyIdMeta,
+          storyId.isAcceptableOrUnknown(data['story_id']!, _storyIdMeta));
+    } else if (isInserting) {
+      context.missing(_storyIdMeta);
+    }
+    if (data.containsKey('photo_id')) {
+      context.handle(_photoIdMeta,
+          photoId.isAcceptableOrUnknown(data['photo_id']!, _photoIdMeta));
+    } else if (isInserting) {
+      context.missing(_photoIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  StoryPhoto map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return StoryPhoto(
+      storyId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}story_id'])!,
+      photoId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}photo_id'])!,
+    );
+  }
+
+  @override
+  $StoryPhotosTable createAlias(String alias) {
+    return $StoryPhotosTable(attachedDatabase, alias);
   }
 }
 
@@ -893,32 +1035,31 @@ abstract class _$GlumDatabase extends GeneratedDatabase {
   late final $StoriesTable stories = $StoriesTable(this);
   late final $TagsTable tags = $TagsTable(this);
   late final $PhotosTable photos = $PhotosTable(this);
-  late final $StoryEntriesTable storyEntries = $StoryEntriesTable(this);
+  late final $StoryTagsTable storyTags = $StoryTagsTable(this);
+  late final $StoryPhotosTable storyPhotos = $StoryPhotosTable(this);
   late final StoryDao storyDao = StoryDao(this as GlumDatabase);
   late final TagDao tagDao = TagDao(this as GlumDatabase);
+  late final PhotoDao photoDao = PhotoDao(this as GlumDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [stories, tags, photos, storyEntries];
+      [stories, tags, photos, storyTags, storyPhotos];
 }
 
 mixin _$StoryDaoMixin on DatabaseAccessor<GlumDatabase> {
   $StoriesTable get stories => attachedDatabase.stories;
   $PhotosTable get photos => attachedDatabase.photos;
   $TagsTable get tags => attachedDatabase.tags;
-  $StoryEntriesTable get storyEntries => attachedDatabase.storyEntries;
+  $StoryTagsTable get storyTags => attachedDatabase.storyTags;
+  $StoryPhotosTable get storyPhotos => attachedDatabase.storyPhotos;
 }
 mixin _$TagDaoMixin on DatabaseAccessor<GlumDatabase> {
   $TagsTable get tags => attachedDatabase.tags;
   $StoriesTable get stories => attachedDatabase.stories;
-  $PhotosTable get photos => attachedDatabase.photos;
-  $StoryEntriesTable get storyEntries => attachedDatabase.storyEntries;
+  $StoryTagsTable get storyTags => attachedDatabase.storyTags;
 }
 mixin _$PhotoDaoMixin on DatabaseAccessor<GlumDatabase> {
   $PhotosTable get photos => attachedDatabase.photos;
-  $StoriesTable get stories => attachedDatabase.stories;
-  $TagsTable get tags => attachedDatabase.tags;
-  $StoryEntriesTable get storyEntries => attachedDatabase.storyEntries;
 }

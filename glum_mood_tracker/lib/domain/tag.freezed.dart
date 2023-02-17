@@ -96,7 +96,7 @@ class __$$_TagCopyWithImpl<$Res> extends _$TagCopyWithImpl<$Res, _$_Tag>
 /// @nodoc
 
 class _$_Tag extends _Tag {
-  const _$_Tag({this.id, required this.title}) : super._();
+  const _$_Tag({required this.id, required this.title}) : super._();
 
   @override
   final int? id;
@@ -128,7 +128,8 @@ class _$_Tag extends _Tag {
 }
 
 abstract class _Tag extends Tag {
-  const factory _Tag({final int? id, required final String title}) = _$_Tag;
+  const factory _Tag({required final int? id, required final String title}) =
+      _$_Tag;
   const _Tag._() : super._();
 
   @override

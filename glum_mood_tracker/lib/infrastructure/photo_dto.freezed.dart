@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'photo.dart';
+part of 'photo_dto.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,28 +14,33 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+PhotoDto _$PhotoDtoFromJson(Map<String, dynamic> json) {
+  return _PhotoDto.fromJson(json);
+}
+
 /// @nodoc
-mixin _$Photo {
-  File? get file => throw _privateConstructorUsedError;
+mixin _$PhotoDto {
   String get fileName => throw _privateConstructorUsedError;
   String get filePath => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $PhotoCopyWith<Photo> get copyWith => throw _privateConstructorUsedError;
+  $PhotoDtoCopyWith<PhotoDto> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $PhotoCopyWith<$Res> {
-  factory $PhotoCopyWith(Photo value, $Res Function(Photo) then) =
-      _$PhotoCopyWithImpl<$Res, Photo>;
+abstract class $PhotoDtoCopyWith<$Res> {
+  factory $PhotoDtoCopyWith(PhotoDto value, $Res Function(PhotoDto) then) =
+      _$PhotoDtoCopyWithImpl<$Res, PhotoDto>;
   @useResult
-  $Res call({File? file, String fileName, String filePath});
+  $Res call({String fileName, String filePath});
 }
 
 /// @nodoc
-class _$PhotoCopyWithImpl<$Res, $Val extends Photo>
-    implements $PhotoCopyWith<$Res> {
-  _$PhotoCopyWithImpl(this._value, this._then);
+class _$PhotoDtoCopyWithImpl<$Res, $Val extends PhotoDto>
+    implements $PhotoDtoCopyWith<$Res> {
+  _$PhotoDtoCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -45,15 +50,10 @@ class _$PhotoCopyWithImpl<$Res, $Val extends Photo>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? file = freezed,
     Object? fileName = null,
     Object? filePath = null,
   }) {
     return _then(_value.copyWith(
-      file: freezed == file
-          ? _value.file
-          : file // ignore: cast_nullable_to_non_nullable
-              as File?,
       fileName: null == fileName
           ? _value.fileName
           : fileName // ignore: cast_nullable_to_non_nullable
@@ -67,32 +67,30 @@ class _$PhotoCopyWithImpl<$Res, $Val extends Photo>
 }
 
 /// @nodoc
-abstract class _$$_PhotoCopyWith<$Res> implements $PhotoCopyWith<$Res> {
-  factory _$$_PhotoCopyWith(_$_Photo value, $Res Function(_$_Photo) then) =
-      __$$_PhotoCopyWithImpl<$Res>;
+abstract class _$$_PhotoDtoCopyWith<$Res> implements $PhotoDtoCopyWith<$Res> {
+  factory _$$_PhotoDtoCopyWith(
+          _$_PhotoDto value, $Res Function(_$_PhotoDto) then) =
+      __$$_PhotoDtoCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({File? file, String fileName, String filePath});
+  $Res call({String fileName, String filePath});
 }
 
 /// @nodoc
-class __$$_PhotoCopyWithImpl<$Res> extends _$PhotoCopyWithImpl<$Res, _$_Photo>
-    implements _$$_PhotoCopyWith<$Res> {
-  __$$_PhotoCopyWithImpl(_$_Photo _value, $Res Function(_$_Photo) _then)
+class __$$_PhotoDtoCopyWithImpl<$Res>
+    extends _$PhotoDtoCopyWithImpl<$Res, _$_PhotoDto>
+    implements _$$_PhotoDtoCopyWith<$Res> {
+  __$$_PhotoDtoCopyWithImpl(
+      _$_PhotoDto _value, $Res Function(_$_PhotoDto) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? file = freezed,
     Object? fileName = null,
     Object? filePath = null,
   }) {
-    return _then(_$_Photo(
-      file: freezed == file
-          ? _value.file
-          : file // ignore: cast_nullable_to_non_nullable
-              as File?,
+    return _then(_$_PhotoDto(
       fileName: null == fileName
           ? _value.fileName
           : fileName // ignore: cast_nullable_to_non_nullable
@@ -106,14 +104,14 @@ class __$$_PhotoCopyWithImpl<$Res> extends _$PhotoCopyWithImpl<$Res, _$_Photo>
 }
 
 /// @nodoc
-
-class _$_Photo extends _Photo {
-  const _$_Photo(
-      {required this.file, required this.fileName, required this.filePath})
+@JsonSerializable()
+class _$_PhotoDto extends _PhotoDto {
+  const _$_PhotoDto({required this.fileName, required this.filePath})
       : super._();
 
-  @override
-  final File? file;
+  factory _$_PhotoDto.fromJson(Map<String, dynamic> json) =>
+      _$$_PhotoDtoFromJson(json);
+
   @override
   final String fileName;
   @override
@@ -121,46 +119,52 @@ class _$_Photo extends _Photo {
 
   @override
   String toString() {
-    return 'Photo(file: $file, fileName: $fileName, filePath: $filePath)';
+    return 'PhotoDto(fileName: $fileName, filePath: $filePath)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Photo &&
-            (identical(other.file, file) || other.file == file) &&
+            other is _$_PhotoDto &&
             (identical(other.fileName, fileName) ||
                 other.fileName == fileName) &&
             (identical(other.filePath, filePath) ||
                 other.filePath == filePath));
   }
 
+  @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, file, fileName, filePath);
+  int get hashCode => Object.hash(runtimeType, fileName, filePath);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PhotoCopyWith<_$_Photo> get copyWith =>
-      __$$_PhotoCopyWithImpl<_$_Photo>(this, _$identity);
-}
-
-abstract class _Photo extends Photo {
-  const factory _Photo(
-      {required final File? file,
-      required final String fileName,
-      required final String filePath}) = _$_Photo;
-  const _Photo._() : super._();
+  _$$_PhotoDtoCopyWith<_$_PhotoDto> get copyWith =>
+      __$$_PhotoDtoCopyWithImpl<_$_PhotoDto>(this, _$identity);
 
   @override
-  File? get file;
+  Map<String, dynamic> toJson() {
+    return _$$_PhotoDtoToJson(
+      this,
+    );
+  }
+}
+
+abstract class _PhotoDto extends PhotoDto {
+  const factory _PhotoDto(
+      {required final String fileName,
+      required final String filePath}) = _$_PhotoDto;
+  const _PhotoDto._() : super._();
+
+  factory _PhotoDto.fromJson(Map<String, dynamic> json) = _$_PhotoDto.fromJson;
+
   @override
   String get fileName;
   @override
   String get filePath;
   @override
   @JsonKey(ignore: true)
-  _$$_PhotoCopyWith<_$_Photo> get copyWith =>
+  _$$_PhotoDtoCopyWith<_$_PhotoDto> get copyWith =>
       throw _privateConstructorUsedError;
 }

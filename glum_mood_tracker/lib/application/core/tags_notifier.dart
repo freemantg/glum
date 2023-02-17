@@ -24,7 +24,7 @@ class TagNotifier extends StateNotifier<TagsState> {
   TagNotifier(this._repository) : super(const TagsState.initial(tags: []));
 
   Future<void> addTag(String tagName) async {
-    final tag = Tag(title: tagName);
+    final tag = Tag(id: null, title: tagName);
     await _repository.addTag(tag);
     await watchTags();
   }

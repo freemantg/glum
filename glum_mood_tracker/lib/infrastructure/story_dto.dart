@@ -1,52 +1,49 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:glum_mood_tracker/domain/tag.dart';
 
 import '../domain/story.dart';
-import 'drift_database.dart';
+import 'photo_dto.dart';
+import 'tag_dto.dart';
 
 part 'story_dto.freezed.dart';
+part 'story_dto.g.dart';
 
 @freezed
 class StoryDto with _$StoryDto {
   const StoryDto._();
   const factory StoryDto({
-    required StoryData story,
-    required List<TagData> tags,
-    required List<PhotoData> photos,
+    required int? id,
+    required String title,
+    required String description,
+    required int glumRating,
+    required DateTime date,
+    required List<TagDto> tags,
+    required List<PhotoDto> photos,
   }) = _StoryDto;
 
-  factory StoryDto.fromDomain(Story story) => StoryDto(
-        story: StoryData(
-          id: story.id ?? 0,
-          title: story.title,
-          description: story.description,
-          glumRating: story.glumRating,
-          date: story.date,
-        ),
-        tags: [
-          for (var tag in story.tags)
-            TagData(
-              id: tag.id!,
-              title: tag.title,
-            )
-        ],
-        photos: [],
-      );
+  factory StoryDto.fromDomain(Story story) {
+    return StoryDto(
+      id: story.id,
+      title: story.title,
+      description: story.description,
+      glumRating: story.glumRating,
+      date: story.date,
+      tags: story.tags.map((e) => TagDto.fromDomain(e)).toList(),
+      photos: story.photos.map((e) => PhotoDto.fromDomain(e)).toList(),
+    );
+  }
 
-  Story toDomain() => Story(
-        id: story.id,
-        title: story.title,
-        description: story.description,
-        glumRating: story.glumRating,
-        date: story.date,
-        tags: tags
-            .map(
-              (tagData) => Tag(
-                id: tagData.id,
-                title: tagData.title,
-              ),
-            )
-            .toList(),
-        photos: [],
-      );
+  Story toDomain() {
+    return Story(
+      id: id,
+      title: title,
+      description: description,
+      glumRating: glumRating,
+      date: date,
+      tags: tags.map((e) => e.toDomain()).toList(),
+      photos: photos.map((e) => e.toDomain()).toList(),
+    );
+  }
+
+  factory StoryDto.fromJson(Map<String, dynamic> json) =>
+      _$StoryDtoFromJson(json);
 }

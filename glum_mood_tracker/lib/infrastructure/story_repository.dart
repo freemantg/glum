@@ -1,10 +1,12 @@
 import 'package:glum_mood_tracker/domain/story_failure.dart';
-import 'package:glum_mood_tracker/domain/story.dart';
 import 'package:dartz/dartz.dart';
 import 'package:glum_mood_tracker/domain/interfaces.dart';
-import 'package:glum_mood_tracker/infrastructure/drift_database.dart';
+import 'package:glum_mood_tracker/infrastructure/drift_database.dart'
+    hide Story;
 import 'package:glum_mood_tracker/infrastructure/story_dto.dart';
 import 'package:rxdart/rxdart.dart';
+
+import '../domain/story.dart';
 
 class StoryRepository implements IStoryRepository {
   final GlumDatabase _db;
@@ -14,7 +16,8 @@ class StoryRepository implements IStoryRepository {
   @override
   Future<Either<StoryFailure, Unit>> createStory(Story story) async {
     try {
-      await _db.storyDao.writeStoryWithTags(StoryDto.fromDomain(story));
+      await _db.storyDao
+          .insertStoryWithTagsAndPhotos(StoryDto.fromDomain(story));
       return right(unit);
     } catch (e) {
       return left(const StoryFailure.unexpected());
@@ -36,7 +39,7 @@ class StoryRepository implements IStoryRepository {
   @override
   Stream<Either<StoryFailure, List<Story>>> watchStoriesByMonthYear(
       DateTime monthYear) async* {
-    final storyStream = _db.storyDao.watchStoriesByMonthYear(monthYear);
+    final storyStream = _db.storyDao.watchStoriesByMonthAndYear(monthYear);
     yield* storyStream
         .map((dtos) => right<StoryFailure, List<Story>>(
               dtos.map((e) => e.toDomain()).toList(),

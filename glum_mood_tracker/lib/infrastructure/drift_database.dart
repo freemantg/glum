@@ -2,16 +2,15 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:glum_mood_tracker/infrastructure/photo_dto.dart';
+import 'package:glum_mood_tracker/infrastructure/story_dto.dart';
 import 'package:glum_mood_tracker/infrastructure/tag_dto.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
-import 'package:rxdart/rxdart.dart';
-
-import 'story_dto.dart';
 
 part 'drift_database.g.dart';
 
-@DataClassName('StoryData')
+@DataClassName("Story")
 class Stories extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get title => text().withLength(min: 1)();
@@ -20,32 +19,52 @@ class Stories extends Table {
   DateTimeColumn get date => dateTime()();
 }
 
-@DataClassName('PhotoData')
+@DataClassName("Tag")
+class Tags extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get title => text().withLength(min: 1)();
+}
+
+@DataClassName("Photo")
 class Photos extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get fileName => text()();
   TextColumn get filePath => text()();
 }
 
-@DataClassName('TagData')
-class Tags extends Table {
-  IntColumn get id => integer().autoIncrement()();
-  TextColumn get title => text().withLength(min: 1)();
+@DataClassName("StoryTag")
+class StoryTags extends Table {
+  IntColumn get storyId => integer().references(Stories, #id)();
+  IntColumn get tagId => integer().references(Tags, #id)();
 }
 
-@DataClassName('StoryEntry')
-class StoryEntries extends Table {
-  IntColumn get story => integer().references(Stories, #id)();
-  IntColumn get photo => integer().references(Photos, #id)();
-  IntColumn get tag => integer().references(Tags, #id)();
+@DataClassName("StoryPhoto")
+class StoryPhotos extends Table {
+  IntColumn get storyId => integer().references(Stories, #id)();
+  IntColumn get photoId => integer().references(Photos, #id)();
 }
 
-@DriftDatabase(tables: [Stories, Tags, StoryEntries], daos: [StoryDao, TagDao])
+class StoryWithTagAndPhoto {
+  StoryWithTagAndPhoto({
+    required this.story,
+    required this.tags,
+    required this.photos,
+  });
+
+  final Story story;
+  final List<Tag> tags;
+  final List<Photo> photos;
+}
+
+@DriftDatabase(
+  tables: [Stories, Tags, Photos, StoryTags, StoryPhotos],
+  daos: [StoryDao, TagDao, PhotoDao],
+)
 class GlumDatabase extends _$GlumDatabase {
   GlumDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration =>
@@ -69,141 +88,233 @@ LazyDatabase _openConnection() {
   );
 }
 
-@DriftAccessor(tables: [Photos, StoryEntries])
+@DriftAccessor(tables: [Photos])
 class PhotoDao extends DatabaseAccessor<GlumDatabase> with _$PhotoDaoMixin {
   PhotoDao(this.db) : super(db);
   final GlumDatabase db;
 
-  Future<List<PhotoData>> getAllPhotos() async {
-    final query = await select(photos).get();
-    final photosData = query
-        .map(
-          (row) => PhotoData(
-            id: row.id,
-            fileName: row.fileName,
-            filePath: row.filePath,
-          ),
-        )
-        .toList();
-    return photosData;
+  Future<List<PhotoDto>> getAllPhotos() async {
+    final photoData = await select(photos).get();
+    return photoData.map((e) => PhotoDto.fromJson(e.toJson())).toList();
   }
 
-  Future<int> insertPhoto(PhotoData photo) async {
-    return await into(photos).insert(
-      PhotosCompanion.insert(
-        fileName: photo.fileName,
-        filePath: photo.filePath,
-      ),
+  Future<int> insertPhoto(PhotoDto photoDto) async {
+    final photo = PhotosCompanion.insert(
+      fileName: photoDto.fileName,
+      filePath: photoDto.filePath,
     );
+    return await into(photos).insert(photo);
   }
+
+  Future<PhotoDto?> getPhotoById(int id) async {
+    final query = select(photos)..where((row) => row.id.equals(id));
+    final photo = await query.getSingleOrNull();
+    if (photo != null) {
+      return PhotoDto.fromJson(photo.toJson());
+    }
+    return null;
+  }
+
+  Future<int> deletePhoto(int id) async => deletePhoto(id);
 }
 
-@DriftAccessor(tables: [Stories, StoryEntries])
+@DriftAccessor(tables: [Stories, Photos, Tags, StoryTags, StoryPhotos])
 class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
   StoryDao(this.db) : super(db);
   final GlumDatabase db;
 
-  Future<void> writeStoryWithTags(StoryDto entry) {
-    return transaction(
-      () async {
-        final story = StoriesCompanion.insert(
-          title: entry.story.title,
-          description: Value(entry.story.description),
-          glumRating: entry.story.glumRating,
-          date: entry.story.date,
-        );
-
-        //First, we write the story.
-        final storyId =
-            await into(stories).insert(story, mode: InsertMode.replace);
-
-        //We replace the entries of the story, so first delete the old ones.
-        await (delete(storyEntries)..where((tbl) => tbl.story.equals(storyId)))
-            .go();
-
-        //Grabbing a photoId;
-
-        //and write the new ones.
-        for (final tag in entry.tags) {
-          await into(storyEntries).insert(
-            StoryEntry(
-              story: storyId, tag: tag.id, photo: 1, //TODO: TAKE ID
-            ),
-          );
-        }
-      },
-    );
+  Future<List<int>> bulkInsertAndReturnIds(
+    TableInfo table,
+    List<UpdateCompanion> companions,
+  ) async {
+    final lastRowId = await transaction(() async {
+      await batch((batch) {
+        batch.insertAll(table, companions);
+      });
+      final queryRow = await customSelect(
+        "SELECT last_insert_rowid()",
+        readsFrom: {table},
+      ).getSingle();
+      return queryRow
+          .data
+          .values // [rowId]
+          .first as int; // rowId
+    });
+    return List.generate(companions.length, (i) => lastRowId - i);
   }
 
-  Stream<StoryDto> watchStory(int storyId) {
-    final storyQuery = select(stories)..where((tbl) => tbl.id.equals(storyId));
-    final tagQuery = select(storyEntries).join(
+  Future<void> insertStoryWithTagsAndPhotos(StoryDto storyDto) async {
+    final storyCompanion = StoriesCompanion.insert(
+      title: storyDto.title,
+      glumRating: storyDto.glumRating,
+      date: storyDto.date,
+    );
+
+    final storyId = await into(stories).insert(storyCompanion);
+
+    if (storyDto.tags.isNotEmpty) {
+      final tagCompanions = storyDto.tags
+          .map((e) => TagsCompanion.insert(title: e.title))
+          .toList();
+
+      final tagIds = await bulkInsertAndReturnIds(tags, tagCompanions);
+
+      final storyTagsCompanions = tagIds
+          .map(
+            (tagId) => (StoryTagsCompanion.insert(
+              storyId: storyId,
+              tagId: tagId,
+            )),
+          )
+          .toList();
+      await bulkInsertAndReturnIds(storyTags, storyTagsCompanions);
+    }
+
+    if (storyDto.photos.isNotEmpty) {
+      final photoCompanions = storyDto.photos
+          .map((dto) => PhotosCompanion.insert(
+                fileName: dto.fileName,
+                filePath: dto.filePath,
+              ))
+          .toList();
+      final photoIds = await bulkInsertAndReturnIds(photos, photoCompanions);
+      final storyPhotoCompanions = photoIds
+          .map(
+            (photoId) => StoryPhotosCompanion.insert(
+              storyId: storyId,
+              photoId: photoId,
+            ),
+          )
+          .toList();
+      await bulkInsertAndReturnIds(storyPhotos, storyPhotoCompanions);
+    }
+  }
+
+  Stream<List<StoryDto>> watchAllStories() {
+    final query = select(stories).join(
       [
-        innerJoin(
-          tags,
-          tags.id.equalsExp(storyEntries.tag),
-        ),
+        leftOuterJoin(storyTags, storyTags.storyId.equalsExp(stories.id)),
+        leftOuterJoin(tags, storyTags.tagId.equalsExp(tags.id)),
+        leftOuterJoin(storyPhotos, storyPhotos.storyId.equalsExp(stories.id)),
+        leftOuterJoin(photos, photos.id.equalsExp(storyPhotos.storyId)),
       ],
-    )..where(storyEntries.story.equals(storyId));
+    );
 
-    final storyStream = storyQuery.watchSingle();
-    final tagStream = tagQuery.watch().map(
-          (rows) => rows.map((row) => row.readTable(tags)).toList(),
-        );
+    return query.watch().map(
+      (rows) {
+        final storiesWithTagsAndPhoto = <StoryWithTagAndPhoto>[];
 
-    return Rx.combineLatest2(
-      storyStream,
-      tagStream,
-      (a, b) => StoryDto(story: a, tags: b, photos: []),
+        for (final row in rows) {
+          final story = row.readTable(stories);
+          final tag = row.readTable(tags);
+          final photo = row.readTable(photos);
+
+          final existingStoryWithTagsAndPhoto =
+              storiesWithTagsAndPhoto.firstWhere(
+            (s) => s.story.id == story.id,
+            orElse: () {
+              final newStoryWithTagAndPhoto = StoryWithTagAndPhoto(
+                story: story,
+                tags: [],
+                photos: [],
+              );
+              storiesWithTagsAndPhoto.add(newStoryWithTagAndPhoto);
+              return newStoryWithTagAndPhoto;
+            },
+          );
+
+          existingStoryWithTagsAndPhoto.tags.add(tag);
+          existingStoryWithTagsAndPhoto.photos.add(photo);
+        }
+
+        return storiesWithTagsAndPhoto
+            .map(
+              (e) => StoryDto(
+                id: e.story.id,
+                title: e.story.title,
+                description: e.story.description,
+                glumRating: e.story.glumRating,
+                date: e.story.date,
+                tags: e.tags
+                    .map((tagData) => TagDto.fromJson(tagData.toJson()))
+                    .toList(),
+                photos: e.photos
+                    .map((photoData) => PhotoDto.fromJson(photoData.toJson()))
+                    .toList(),
+              ),
+            )
+            .toList();
+      },
     );
   }
 
-  Stream<List<StoryDto>> watchStoriesByMonthYear(DateTime monthYear) {
-    final storyStream = (select(stories)
-          ..where(
-            (tbl) {
-              final date = tbl.date;
-              return date.year.equals(monthYear.year) &
-                  date.month.equals(monthYear.month);
+  Stream<List<StoryDto>> watchStoriesByMonthAndYear(DateTime monthYear) {
+    final startDate = DateTime(monthYear.year, monthYear.month, 1);
+    final endDate = DateTime(monthYear.year, monthYear.month + 1, 0);
+
+    final query = select(stories).join(
+      [
+        innerJoin(storyTags, storyTags.storyId.equalsExp(stories.id)),
+        innerJoin(tags, tags.id.equalsExp(storyTags.tagId)),
+        innerJoin(storyPhotos, storyPhotos.storyId.equalsExp(stories.id)),
+        innerJoin(photos, photos.id.equalsExp(storyPhotos.photoId))
+      ],
+    );
+    // ..where(stories.date.isBetweenValues(startDate, endDate))
+    // ..orderBy([OrderingTerm.asc(stories.date)]);
+    return query.watch().map(
+      (rows) {
+        final storiesWithTagsAndPhoto = <StoryWithTagAndPhoto>[];
+
+        for (final row in rows) {
+          final story = row.readTable(stories);
+          final tag = row.readTable(tags);
+          final photo = row.readTable(photos);
+
+          final existingStoryWithTagsAndPhoto =
+              storiesWithTagsAndPhoto.firstWhere(
+            (s) => s.story.id == story.id,
+            orElse: () {
+              final newStoryWithTagAndPhoto = StoryWithTagAndPhoto(
+                story: story,
+                tags: [],
+                photos: [],
+              );
+              storiesWithTagsAndPhoto.add(newStoryWithTagAndPhoto);
+              return newStoryWithTagAndPhoto;
             },
-          ))
-        .watch();
+          );
+          existingStoryWithTagsAndPhoto.tags.add(tag);
+          existingStoryWithTagsAndPhoto.photos.add(photo);
+        }
 
-    return storyStream.switchMap(
-      (stories) {
-        final idToStory = {for (var story in stories) story.id: story};
-        final ids = idToStory.keys;
-
-        final tagQuery = select(storyEntries).join(
-          [
-            innerJoin(
-              tags,
-              tags.id.equalsExp(storyEntries.tag),
-            ),
-          ],
-        )..where(storyEntries.story.isIn(ids));
-
-        return tagQuery.watch().map(
-          (rows) {
-            final idToTags = <int, List<TagData>>{};
-            for (final row in rows) {
-              final tag = row.readTable(tags);
-              final id = row.readTable(storyEntries).story;
-
-              idToTags.putIfAbsent(id, () => []).add(tag);
-            }
-            return [
-              for (var id in ids)
-                StoryDto(
-                  story: idToStory[id]!,
-                  tags: idToTags[id] ?? [],
-                  photos: [],
-                )
-            ];
-          },
-        );
+        return storiesWithTagsAndPhoto
+            .map(
+              (e) => StoryDto(
+                id: e.story.id,
+                title: e.story.title,
+                description: e.story.description,
+                glumRating: e.story.glumRating,
+                date: e.story.date,
+                tags: e.tags
+                    .map((tagData) => TagDto.fromJson(tagData.toJson()))
+                    .toList(),
+                photos: e.photos
+                    .map((photoData) => PhotoDto.fromJson(photoData.toJson()))
+                    .toList(),
+              ),
+            )
+            .toList();
       },
     );
+  }
+
+  Future<int> deleteStory(int storyId) async {
+    // First, delete any associated tags and photos from join tables.
+    await (delete(storyTags)..where((tbl) => tbl.storyId.equals(storyId))).go();
+    await (delete(storyPhotos)..where((tbl) => tbl.storyId.equals(storyId)))
+        .go();
+    return deleteStory(storyId);
   }
 
   Future<int?> countStories() async {
@@ -220,10 +331,8 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
     return row.read(avgGlum);
   }
 
-  Future<void> updateStory(Insertable<StoryData> story) =>
-      update(stories).replace(story);
-  Future<void> deleteStory(Insertable<StoryData> story) =>
-      delete(stories).delete(story);
+  // Future<void> updateStory(Insertable<StoryData> story) =>
+  //     update(stories).replace(story);
 
   Future<Map<int, int>> glumDistribution() async {
     //{Glum Rating: Percentage out of 100%}
@@ -275,14 +384,14 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
   }
 }
 
-@DriftAccessor(tables: [Tags, StoryEntries])
+@DriftAccessor(tables: [Tags, StoryTags])
 class TagDao extends DatabaseAccessor<GlumDatabase> with _$TagDaoMixin {
   TagDao(this.db) : super(db);
 
   final GlumDatabase db;
 
   Stream<List<TagDto>> watchTags() => select(tags).watch().map(
-        (data) => data.map((e) => TagDto.FromJson(e.toJson())).toList(),
+        (data) => data.map((e) => TagDto.fromJson(e.toJson())).toList(),
       );
 
   Stream<Map<TagDto, int>> watchTrendingTags() {
@@ -290,8 +399,8 @@ class TagDao extends DatabaseAccessor<GlumDatabase> with _$TagDaoMixin {
     final tagsCount = tags.id.count();
     final query = select(tags).join([
       innerJoin(
-        storyEntries,
-        storyEntries.tag.equalsExp(tags.id),
+        storyTags,
+        storyTags.tagId.equalsExp(tags.id),
       ),
     ]);
 
@@ -304,7 +413,7 @@ class TagDao extends DatabaseAccessor<GlumDatabase> with _$TagDaoMixin {
     return query.watch().map(
       (rows) {
         for (var row in rows) {
-          final tagDto = TagDto.FromJson(row.readTable(tags).toJson());
+          final tagDto = TagDto.fromJson(row.readTable(tags).toJson());
           final count = row.read(tagsCount);
           tagsAndCount[tagDto] = count ?? 0;
         }
@@ -318,12 +427,12 @@ class TagDao extends DatabaseAccessor<GlumDatabase> with _$TagDaoMixin {
     final tagsCount = tags.id.count();
     final query = select(tags).join([
       innerJoin(
-        storyEntries,
-        storyEntries.tag.equalsExp(tags.id),
+        storyTags,
+        storyTags.tagId.equalsExp(tags.id),
       ),
       innerJoin(
         stories,
-        storyEntries.story.equalsExp(stories.id),
+        storyTags.storyId.equalsExp(stories.id),
       )
     ]);
     query
@@ -339,7 +448,7 @@ class TagDao extends DatabaseAccessor<GlumDatabase> with _$TagDaoMixin {
     return query.watch().map(
       (rows) {
         for (var row in rows) {
-          final tagDto = TagDto.FromJson(row.readTable(tags).toJson());
+          final tagDto = TagDto.fromJson(row.readTable(tags).toJson());
           final count = row.read(tagsCount);
           tagsAndCount[tagDto] = count ?? 0;
         }
@@ -353,7 +462,5 @@ class TagDao extends DatabaseAccessor<GlumDatabase> with _$TagDaoMixin {
     await into(tags).insert(tagCompanion);
   }
 
-  Future<void> deleteTag(TagDto tag) async {
-    (delete(tags)..where((tbl) => tbl.id.equalsNullable(tag.id))).go();
-  }
+  Future<void> deleteTag(int tagId) async => await deleteTag(tagId);
 }

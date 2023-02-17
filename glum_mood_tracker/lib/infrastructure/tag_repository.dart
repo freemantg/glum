@@ -2,10 +2,11 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:glum_mood_tracker/domain/interfaces.dart';
 import 'package:glum_mood_tracker/domain/tag_failure.dart';
-import 'package:glum_mood_tracker/domain/tag.dart';
-import 'package:glum_mood_tracker/infrastructure/drift_database.dart';
+import 'package:glum_mood_tracker/infrastructure/drift_database.dart' hide Tag;
 import 'package:glum_mood_tracker/infrastructure/tag_dto.dart';
 import 'package:rxdart/rxdart.dart';
+
+import '../domain/tag.dart';
 
 class TagRepository implements ITagRepository {
   final GlumDatabase _db;
@@ -25,7 +26,7 @@ class TagRepository implements ITagRepository {
   @override
   Future<Either<TagFailure, Unit>> deleteTag(Tag tag) async {
     try {
-      await _db.tagDao.deleteTag(TagDto.fromDomain(tag));
+      await _db.tagDao.deleteTag(TagDto.fromDomain(tag).id);
       return right(unit);
     } catch (e) {
       return left(const TagFailure.unexpected());

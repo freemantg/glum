@@ -6,23 +6,20 @@ part 'tag_dto.freezed.dart';
 part 'tag_dto.g.dart';
 
 @freezed
-@JsonSerializable()
 class TagDto with _$TagDto {
   const TagDto._();
+  @JsonSerializable(includeIfNull: false)
   const factory TagDto({
-    int? id,
+    required int id,
     required String title,
   }) = _TagDto;
 
   factory TagDto.fromDomain(Tag tag) => TagDto(
-        id: tag.id,
+        id: tag.id ?? 0,
         title: tag.title,
       );
 
-  Tag toDomain() => Tag(
-        id: id ?? 0,
-        title: title,
-      );
+  factory TagDto.fromJson(Map<String, dynamic> json) => _$TagDtoFromJson(json);
 
-  factory TagDto.FromJson(Map<String, dynamic> json) => _$TagDtoFromJson(json);
+  Tag toDomain() => Tag(id: id, title: title);
 }

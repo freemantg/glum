@@ -8,8 +8,14 @@ part 'photo.freezed.dart';
 class Photo with _$Photo {
   const Photo._();
   const factory Photo({
-    required File file,
+    required File? file,
     required String fileName,
     required String filePath,
   }) = _Photo;
+
+  factory Photo.empty() => const Photo(
+        file: null,
+        fileName: '',
+        filePath: '',
+      );
 }
