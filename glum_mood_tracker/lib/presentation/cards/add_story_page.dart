@@ -24,7 +24,6 @@ class _AddStoryPageState extends ConsumerState<AddStoryPage> {
   @override
   void initState() {
     super.initState();
-    print(widget.story.toString());
     Future.microtask(
       () => ref
           .read(storyFormNotifierProvider.notifier)
@@ -47,7 +46,7 @@ class _AddStoryPageState extends ConsumerState<AddStoryPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const TitleTextField(),
+                TitleTextField(title: widget.story?.title),
                 const Divider(height: 0),
                 SizedBox(height: $styles.insets.xs),
                 const RatingBarWidget(),
@@ -240,22 +239,27 @@ class DescriptionTextField extends ConsumerWidget {
 class TitleTextField extends HookConsumerWidget {
   const TitleTextField({
     super.key,
+    required this.title,
   });
+
+  final String? title;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final formState = ref.watch(storyFormNotifierProvider);
-    final titleController = useTextEditingController(
-        text: formState.story.title.isEmpty ? 'Title' : formState.story.title);
+    final titleController = useTextEditingController(text: title);
 
-    return TextField(
-      controller: titleController,
-      textAlign: TextAlign.center,
-      style: $styles.text.h3.copyWith(fontSize: 18.0),
-      decoration:
-          const InputDecoration(border: InputBorder.none, hintText: "Title"),
-      onChanged: (value) =>
-          ref.read(storyFormNotifierProvider.notifier).titleChanged(value),
+    return Column(
+      children: [
+        TextField(
+          controller: titleController,
+          textAlign: TextAlign.center,
+          style: $styles.text.h3.copyWith(fontSize: 18.0),
+          decoration: const InputDecoration(
+              border: InputBorder.none, hintText: "Title"),
+          onChanged: (value) =>
+              ref.read(storyFormNotifierProvider.notifier).titleChanged(value),
+        ),
+      ],
     );
   }
 }

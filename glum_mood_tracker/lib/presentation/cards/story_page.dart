@@ -86,8 +86,9 @@ class StyledBottomBar extends StatelessWidget {
               Row(
                 children: [
                   IconButton(
-                    onPressed: () =>
-                        context.router.push(AddStoryPageRoute(story: story)),
+                    onPressed: () => context.router
+                        .push(AddStoryPageRoute(story: story))
+                        .then((_) => context.popRoute()),
                     icon: const Icon(Icons.more_horiz),
                   ),
                   const Spacer(),
