@@ -34,6 +34,9 @@ class _MonthPageState extends ConsumerState<MonthPage> {
                   final story = stories[index];
 
                   return GestureDetector(
+                    onLongPress: () => ref
+                        .read(storiesNotifierProvider.notifier)
+                        .deleteStory(story.id!),
                     onTap: () =>
                         context.router.push(StoryPageRoute(story: story)),
                     child: StyledCard(
@@ -44,6 +47,7 @@ class _MonthPageState extends ConsumerState<MonthPage> {
                             padding: EdgeInsets.all($styles.insets.lg),
                             child: Column(
                               children: [
+                                Text(story.id.toString()),
                                 Text(
                                   story.date.day.toString(),
                                   style: $styles.text.h3,

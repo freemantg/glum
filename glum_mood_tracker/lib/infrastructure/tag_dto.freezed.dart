@@ -20,7 +20,7 @@ TagDto _$TagDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TagDto {
-  int get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -33,7 +33,7 @@ abstract class $TagDtoCopyWith<$Res> {
   factory $TagDtoCopyWith(TagDto value, $Res Function(TagDto) then) =
       _$TagDtoCopyWithImpl<$Res, TagDto>;
   @useResult
-  $Res call({int id, String title});
+  $Res call({int? id, String title});
 }
 
 /// @nodoc
@@ -49,14 +49,14 @@ class _$TagDtoCopyWithImpl<$Res, $Val extends TagDto>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? title = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -71,7 +71,7 @@ abstract class _$$_TagDtoCopyWith<$Res> implements $TagDtoCopyWith<$Res> {
       __$$_TagDtoCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String title});
+  $Res call({int? id, String title});
 }
 
 /// @nodoc
@@ -84,14 +84,14 @@ class __$$_TagDtoCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? title = null,
   }) {
     return _then(_$_TagDto(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -104,13 +104,13 @@ class __$$_TagDtoCopyWithImpl<$Res>
 
 @JsonSerializable(includeIfNull: false)
 class _$_TagDto extends _TagDto {
-  const _$_TagDto({required this.id, required this.title}) : super._();
+  const _$_TagDto({this.id, required this.title}) : super._();
 
   factory _$_TagDto.fromJson(Map<String, dynamic> json) =>
       _$$_TagDtoFromJson(json);
 
   @override
-  final int id;
+  final int? id;
   @override
   final String title;
 
@@ -147,14 +147,14 @@ class _$_TagDto extends _TagDto {
 }
 
 abstract class _TagDto extends TagDto {
-  const factory _TagDto({required final int id, required final String title}) =
+  const factory _TagDto({final int? id, required final String title}) =
       _$_TagDto;
   const _TagDto._() : super._();
 
   factory _TagDto.fromJson(Map<String, dynamic> json) = _$_TagDto.fromJson;
 
   @override
-  int get id;
+  int? get id;
   @override
   String get title;
   @override

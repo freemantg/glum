@@ -14,7 +14,7 @@ class StoryRepository implements IStoryRepository {
   StoryRepository(this._db);
 
   @override
-  Future<Either<StoryFailure, Unit>> createStory(Story story) async {
+  Future<Either<StoryFailure, Unit>> addStory(Story story) async {
     try {
       await _db.storyDao
           .insertStoryWithTagsAndPhotos(StoryDto.fromDomain(story));
@@ -25,15 +25,24 @@ class StoryRepository implements IStoryRepository {
   }
 
   @override
-  Future<Either<StoryFailure, Unit>> deleteStory(Story story) {
-    // TODO: implement deleteStory
-    throw UnimplementedError();
+  Future<Either<StoryFailure, Unit>> deleteStory(int storyId) async {
+    try {
+      await _db.storyDao.deleteStory(storyId);
+      return right(unit);
+    } catch (e) {
+      return left(const StoryFailure.unexpected());
+    }
   }
 
   @override
-  Future<Either<StoryFailure, Unit>> updateStory(Story story) {
-    // TODO: implement updateStory
-    throw UnimplementedError();
+  Future<Either<StoryFailure, Unit>> updateStory(Story story) async {
+    try {
+      await _db.storyDao
+          .updateStoryWithTagsAndPhotos(StoryDto.fromDomain(story));
+      return right(unit);
+    } catch (e) {
+      return left(const StoryFailure.unexpected());
+    }
   }
 
   @override

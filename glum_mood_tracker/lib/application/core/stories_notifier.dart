@@ -38,4 +38,13 @@ class StoriesNotifier extends StateNotifier<StoriesState> {
       },
     );
   }
+
+  Future<void> deleteStory(int storyId) async {
+    state = StoriesState.loadInProgress(stories: state.stories);
+    final failureOrSuccess = await _repository.deleteStory(storyId);
+    state = failureOrSuccess.fold(
+      (failure) => StoriesState.failure(failure, stories: state.stories),
+      (success) => StoriesState.initial(stories: state.stories),
+    );
+  }
 }

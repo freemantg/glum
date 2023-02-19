@@ -26,7 +26,7 @@ class TagRepository implements ITagRepository {
   @override
   Future<Either<TagFailure, Unit>> deleteTag(Tag tag) async {
     try {
-      await _db.tagDao.deleteTag(TagDto.fromDomain(tag).id);
+      await _db.tagDao.deleteTag(TagDto.fromDomain(tag).id!);
       return right(unit);
     } catch (e) {
       return left(const TagFailure.unexpected());

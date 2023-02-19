@@ -45,9 +45,11 @@ class StoryFormNotifier extends StateNotifier<StoryFormState> {
 
   Future<void> save() async {
     state = state.copyWith(isSaving: true);
-    final failureOrSuccess = await _repository.createStory(
-      state.story.copyWith(tags: state.selectedTags),
-    );
+    final failureOrSuccess = state.isEditing
+        ? await _repository.updateStory(state.story)
+        : await _repository.addStory(
+            state.story.copyWith(tags: state.selectedTags),
+          );
     state = state.copyWith(
       isSaving: false,
       failureOrSuccess: optionOf(failureOrSuccess),

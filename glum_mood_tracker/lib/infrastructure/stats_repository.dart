@@ -106,7 +106,6 @@ class StatsRepository implements IStatsRepository {
       tagDtosAndCountMap.forEach(
         (dto, count) => tagsAndCountMap[dto.toDomain()] = count,
       );
-      print(tagsAndCountMap);
       return right<StoryFailure, Map<Tag, int>>(tagsAndCountMap);
     }).onErrorReturnWith(
       (error, stackTrace) {

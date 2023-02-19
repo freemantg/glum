@@ -10,12 +10,12 @@ class TagDto with _$TagDto {
   const TagDto._();
   @JsonSerializable(includeIfNull: false)
   const factory TagDto({
-    required int id,
+     int? id,
     required String title,
   }) = _TagDto;
 
   factory TagDto.fromDomain(Tag tag) => TagDto(
-        id: tag.id ?? 0,
+        id: tag.id,
         title: tag.title,
       );
 

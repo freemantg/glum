@@ -65,7 +65,8 @@ class _TagModalBottomSheetState extends ConsumerState<TagModalBottomSheet> {
       body: ref.watch(tagFormNotifierProvider).maybeWhen(
             loadInProgress: (tags) => const CircularProgressIndicator(),
             loadSuccess: (tags) => ListView.separated(
-              separatorBuilder: (context, index) => const Divider(),
+              separatorBuilder: (context, index) =>
+                  const Divider(thickness: 0.1),
               itemCount: tags.length,
               shrinkWrap: true,
               itemBuilder: (context, index) {
@@ -82,10 +83,6 @@ class _TagModalBottomSheetState extends ConsumerState<TagModalBottomSheet> {
                     children: [
                       Text(tag.title),
                       const Spacer(),
-                      Text(
-                        tag.id.toString(),
-                        style: $styles.text.bodyBold.copyWith(height: 0),
-                      ),
                       IconButton(
                         icon: const Icon(Icons.more_vert),
                         onPressed: () => ref

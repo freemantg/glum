@@ -8,9 +8,9 @@ import 'story.dart';
 abstract class IStoryRepository {
   Stream<Either<StoryFailure, List<Story>>> watchStoriesByMonthYear(
       DateTime monthYear);
-  Future<Either<StoryFailure, Unit>> createStory(Story story);
+  Future<Either<StoryFailure, Unit>> addStory(Story story);
   Future<Either<StoryFailure, Unit>> updateStory(Story story);
-  Future<Either<StoryFailure, Unit>> deleteStory(Story story);
+  Future<Either<StoryFailure, Unit>> deleteStory(int storyId);
 }
 
 abstract class ITagRepository {
@@ -28,6 +28,7 @@ abstract class IStatsRepository {
   Future<Either<StoryFailure, Map<int, int>>> glumDistribution();
   Future<Either<StoryFailure, Unit>> fetchStats();
   Future<Either<StoryFailure, Map<DateTime, int>>> yearInGlums();
-  Stream<Either<StoryFailure, Map<Tag, int>>> tagsByMoodsOrGlums(bool filterByMoods);
+  Stream<Either<StoryFailure, Map<Tag, int>>> tagsByMoodsOrGlums(
+      bool filterByMoods);
   Stream<Either<StoryFailure, Map<Tag, int>>> trendingTags();
 }
