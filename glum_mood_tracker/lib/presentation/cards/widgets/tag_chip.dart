@@ -11,19 +11,13 @@ class TagChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Chip(
+      side: BorderSide(color: Colors.white.withOpacity(0.1)),
       visualDensity: VisualDensity.compact,
-      label: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            tag.title,
-            style: $styles.text.bodySmall.copyWith(
-              height: 0,
-              fontSize: 12.0,
-            ),
-          ),
-        ],
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular($styles.corners.lg)),
       ),
+      labelPadding: EdgeInsets.zero,
+      label: Text("# ${tag.title}", style: $styles.text.caption),
     );
   }
 }

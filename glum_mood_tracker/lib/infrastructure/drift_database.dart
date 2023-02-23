@@ -8,6 +8,8 @@ import 'package:glum_mood_tracker/infrastructure/tag_dto.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 
+import 'card_dto.dart';
+
 part 'drift_database.g.dart';
 
 @DataClassName("Story")
@@ -57,8 +59,21 @@ class StoryWithTagAndPhoto {
 }
 
 @DriftDatabase(
-  tables: [Stories, Tags, Photos, StoryTags, StoryPhotos],
-  daos: [StoryDao, TagDao, PhotoDao],
+  tables: [
+    Stories,
+    Tags,
+    Photos,
+    StoryTags,
+    StoryPhotos,
+    Cards,
+    CardPhotos,
+  ],
+  daos: [
+    StoryDao,
+    TagDao,
+    PhotoDao,
+    CardDao,
+  ],
 )
 class GlumDatabase extends _$GlumDatabase {
   GlumDatabase() : super(_openConnection());
@@ -86,6 +101,33 @@ LazyDatabase _openConnection() {
       return NativeDatabase(file);
     },
   );
+}
+
+@DataClassName("Card")
+class Cards extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  DateTimeColumn get monthYear => dateTime().nullable()();
+  IntColumn get colorValue => integer().nullable()();
+}
+
+@DataClassName("CardPhoto")
+class CardPhotos extends Table {
+  IntColumn get storyId => integer().references(Cards, #id)();
+  IntColumn get photoId => integer().references(Photos, #id)();
+}
+
+@DriftAccessor(tables: [Cards, CardPhotos])
+class CardDao extends DatabaseAccessor<GlumDatabase> with _$PhotoDaoMixin {
+  CardDao(this.db) : super(db);
+  final GlumDatabase db;
+
+  Future<int> insertCard(CardDto cardDto) async {
+    final cardCompanion = CardsCompanion.insert(
+      monthYear: Value(cardDto.monthYear),
+      colorValue: Value(cardDto.colorValue),
+    );
+    return 1;
+  }
 }
 
 @DriftAccessor(tables: [Photos])
@@ -155,6 +197,7 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
   Future<void> insertStoryWithTagsAndPhotos(StoryDto storyDto) async {
     final storyCompanion = StoriesCompanion.insert(
       title: storyDto.title,
+      description: Value(storyDto.description),
       glumRating: storyDto.glumRating,
       date: storyDto.date,
     );
@@ -181,8 +224,8 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
                 filePath: dto.filePath,
               ))
           .toList();
-      final photoIds =
-          await bulkInsertAndReturnIds(storyPhotos, photoCompanions);
+      final photoIds = await bulkInsertAndReturnIds(photos, photoCompanions);
+      print("PHOTOIDS: $photoIds");
       final storyPhotoCompanions = photoIds
           .map(
             (photoId) => StoryPhotosCompanion.insert(
@@ -277,11 +320,8 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
 
         for (final row in rows) {
           final story = row.readTable(stories);
-          print("STORY: $story");
           final tag = row.readTableOrNull(tags);
-          print("TAGGG: $tag");
           final photo = row.readTableOrNull(photos);
-
           final existingStoryWithTagsAndPhoto =
               storiesWithTagsAndPhoto.firstWhere(
             (s) => s.story.id == story.id,
@@ -316,6 +356,7 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
               ),
             )
             .toList();
+        print(dtos);
         return dtos;
       },
     );

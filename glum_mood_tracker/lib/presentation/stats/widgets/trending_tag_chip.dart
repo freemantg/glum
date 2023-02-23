@@ -16,23 +16,27 @@ class TrendingTagChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Chip(
+      side: BorderSide.none,
+      labelPadding: EdgeInsets.zero,
       visualDensity: VisualDensity.compact,
+      backgroundColor: const Color(0xFFD76A66),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(12)),
+      ),
       label: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             "#${tag.title}",
-            style: $styles.text.bodySmall.copyWith(
+            style: $styles.text.caption.copyWith(
               height: 0,
-              fontSize: 12.0,
             ),
           ),
           SizedBox(width: $styles.insets.xs),
           Text(
             count.toString(),
-            style: $styles.text.bodySmall.copyWith(
+            style: $styles.text.caption.copyWith(
               height: 0,
-              fontSize: 12.0,
             ),
           ),
         ],

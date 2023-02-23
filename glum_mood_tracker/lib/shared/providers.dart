@@ -4,6 +4,7 @@ import 'package:glum_mood_tracker/application/core/stories_notifier.dart';
 import 'package:glum_mood_tracker/application/core/story_form_notifier.dart';
 import 'package:glum_mood_tracker/application/core/tags_notifier.dart';
 import 'package:glum_mood_tracker/infrastructure/drift_database.dart';
+import 'package:glum_mood_tracker/infrastructure/photo_repository.dart';
 import 'package:glum_mood_tracker/infrastructure/story_repository.dart';
 import 'package:glum_mood_tracker/infrastructure/tag_repository.dart';
 
@@ -16,19 +17,26 @@ final storiesNotifierProvider =
 
 final storyFormNotifierProvider =
     StateNotifierProvider.autoDispose<StoryFormNotifier, StoryFormState>(
-        (ref) => StoryFormNotifier(ref.watch(storyRepositoryProvider)));
+  (ref) => StoryFormNotifier(ref.watch(storyRepositoryProvider)),
+);
 
 final tagFormNotifierProvider = StateNotifierProvider<TagNotifier, TagsState>(
   (ref) => TagNotifier(ref.watch(tagRepositoryProvider)),
 );
 
 final storyRepositoryProvider = Provider(
-  (ref) => StoryRepository(ref.watch(glumDatabaseProvider)),
+  (ref) => StoryRepository(
+      ref.watch(glumDatabaseProvider),
+      ref.watch(
+        photoRepositoryProvider,
+      )),
 );
 
 final tagRepositoryProvider = Provider(
   (ref) => TagRepository(ref.watch(glumDatabaseProvider)),
 );
+
+final photoRepositoryProvider = Provider((ref) => PhotoRepository());
 
 final glumDatabaseProvider = Provider((ref) => GlumDatabase());
 

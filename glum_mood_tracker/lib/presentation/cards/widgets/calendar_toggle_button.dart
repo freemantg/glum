@@ -23,9 +23,8 @@ class CalendarToggleButton extends HookWidget {
           horizontal: $styles.insets.lg,
         ),
         decoration: BoxDecoration(
-          color: showCalendar
-              ? Theme.of(context).disabledColor
-              : Theme.of(context).cardColor,
+          border: Border.all(color: Colors.white12),
+          color: Colors.transparent,
           borderRadius: BorderRadius.circular($styles.corners.lg),
         ),
         child: Text(

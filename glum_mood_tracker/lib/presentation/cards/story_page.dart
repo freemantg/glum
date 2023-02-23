@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:glum_mood_tracker/presentation/routes/app_router.gr.dart';
@@ -16,40 +18,58 @@ class StoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: ListView(
-          children: [
-            const Placeholder(fallbackHeight: 250),
-            Padding(
-              padding: EdgeInsets.all($styles.insets.sm),
-              child: Column(
-                children: [
-                  SizedBox(height: $styles.insets.sm),
-                  Text(story.title, style: $styles.text.h3),
-                  SizedBox(height: $styles.insets.xs),
-                  Text(
-                    story.date.dateTimeInStoryPageFormat,
-                    style: $styles.text.caption.copyWith(color: Colors.grey),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return ListView(
+              children: [
+                if (story.photos.isNotEmpty)
+                  Image.file(
+                    File(story.photos.first.filePath),
+                    height: constraints.maxHeight / 2,
+                    fit: BoxFit.cover,
                   ),
-                  SizedBox(height: $styles.insets.sm),
-                  Text(
-                    story.glumRating.toString(),
-                    style: $styles.text.h3,
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: $styles.insets.sm,
+                    right: $styles.insets.sm,
+                    bottom: $styles.insets.sm,
                   ),
-                  SizedBox(height: $styles.insets.md),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      story.description,
-                      textAlign: TextAlign.left,
-                      style: $styles.text.bodySmall.copyWith(
-                        color: Colors.grey.withOpacity(0.95),
+                  child: Column(
+                    children: [
+                      SizedBox(height: $styles.insets.sm),
+                      Text(
+                        story.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: $styles.text.h3,
                       ),
-                    ),
+                      SizedBox(height: $styles.insets.xs),
+                      Text(
+                        story.date.dateTimeInStoryPageFormat,
+                        style: $styles.text.caption
+                            .copyWith(color: Colors.white70),
+                      ),
+                      SizedBox(height: $styles.insets.sm),
+                      Text(
+                        story.glumRating.toString(),
+                        style: $styles.text.h3,
+                      ),
+                      SizedBox(height: $styles.insets.md),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          story.description,
+                          textAlign: TextAlign.left,
+                          style: $styles.text.bodySmall
+                              .copyWith(color: Colors.white70),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-          ],
+                ),
+              ],
+            );
+          },
         ),
       ),
       bottomNavigationBar: StyledBottomBar(story: story),
@@ -82,7 +102,10 @@ class StyledBottomBar extends StatelessWidget {
                   children: story.tags.map((e) => TagChip(tag: e)).toList(),
                 ),
               ),
-              const Divider(height: 0),
+              const Divider(
+                thickness: 0.1,
+                height: 0,
+              ),
               Row(
                 children: [
                   IconButton(

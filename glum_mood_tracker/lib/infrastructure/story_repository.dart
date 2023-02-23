@@ -3,6 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:glum_mood_tracker/domain/interfaces.dart';
 import 'package:glum_mood_tracker/infrastructure/drift_database.dart'
     hide Story;
+import 'package:glum_mood_tracker/infrastructure/photo_repository.dart';
 import 'package:glum_mood_tracker/infrastructure/story_dto.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -10,14 +11,18 @@ import '../domain/story.dart';
 
 class StoryRepository implements IStoryRepository {
   final GlumDatabase _db;
+  final PhotoRepository _photoRepository;
 
-  StoryRepository(this._db);
+  StoryRepository(this._db, this._photoRepository);
 
   @override
   Future<Either<StoryFailure, Unit>> addStory(Story story) async {
     try {
-      await _db.storyDao
-          .insertStoryWithTagsAndPhotos(StoryDto.fromDomain(story));
+      Future.wait([
+        _db.storyDao.insertStoryWithTagsAndPhotos(StoryDto.fromDomain(story)),
+        _photoRepository.savePhoto(story.photos.first),
+      ]);
+
       return right(unit);
     } catch (e) {
       return left(const StoryFailure.unexpected());
@@ -37,8 +42,10 @@ class StoryRepository implements IStoryRepository {
   @override
   Future<Either<StoryFailure, Unit>> updateStory(Story story) async {
     try {
+      print(story.tags);
       await _db.storyDao
           .updateStoryWithTagsAndPhotos(StoryDto.fromDomain(story));
+
       return right(unit);
     } catch (e) {
       return left(const StoryFailure.unexpected());

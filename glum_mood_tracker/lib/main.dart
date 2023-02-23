@@ -21,6 +21,14 @@ class AppWidget extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark().copyWith(
           useMaterial3: true,
+          floatingActionButtonTheme: const FloatingActionButtonThemeData(
+            backgroundColor: Color(0xFFD76A66),
+          ),
+          colorScheme: ColorScheme.fromSeed(
+            background: const Color(0xFF121212),
+            seedColor: Colors.pinkAccent,
+            brightness: Brightness.dark,
+          ),
           appBarTheme: const AppBarTheme(
             iconTheme: IconThemeData(),
             backgroundColor: Colors.transparent,

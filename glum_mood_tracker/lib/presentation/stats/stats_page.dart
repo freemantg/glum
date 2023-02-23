@@ -163,7 +163,7 @@ Widget _buildYearIndividualGlum({required int day, required int month}) {
             color: (glumRating != null) ? glumRating.ratingToColor() : null,
             border: Border.all(
               width: 0.5,
-              color: const Color(0xFFDB6162).withOpacity(0.5),
+              color: const Color(0xFFDB6162).withOpacity(0.2),
             ),
             borderRadius: const BorderRadius.all(Radius.circular(2.0)),
           ),
@@ -468,11 +468,6 @@ class StoryCountCard extends ConsumerWidget {
                 style: $styles.text.bodyBold.copyWith(
                   height: 0,
                   fontWeight: FontWeight.bold,
-                  color: ref
-                      .watch(statsNotifierProvider)
-                      .glumAverage
-                      .ceil()
-                      .ratingToColor(),
                 ),
               ),
               SizedBox(height: $styles.insets.xxs),
@@ -550,6 +545,7 @@ class StyledCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 0,
       clipBehavior: Clip.hardEdge,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular($styles.corners.md)),

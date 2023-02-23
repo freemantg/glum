@@ -155,7 +155,7 @@ class MonthCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => context.pushRoute(MonthPageRoute(monthYear: monthYear)),
       child: Card(
-        elevation: 8.0,
+        elevation: 8,
         margin: EdgeInsets.all($styles.insets.sm),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular($styles.corners.md)),
@@ -244,7 +244,7 @@ class StyledMonthViewCalendar extends StatelessWidget {
         Text(
           'Select a date to write',
           style: $styles.text.bodySmallBold.copyWith(
-            color: Colors.grey,
+            color: Colors.white70,
             fontSize: 12,
           ),
         ),
@@ -293,7 +293,7 @@ class DateButton extends ConsumerWidget {
         buttonDay.toString(),
         textAlign: TextAlign.center,
         style: (story.id == null)
-            ? $styles.text.bodySmall.copyWith(color: Colors.grey)
+            ? $styles.text.bodySmall.copyWith(color: Colors.white60)
             : $styles.text.bodySmall.copyWith(
                 color: Colors.pink,
                 fontWeight: FontWeight.bold,

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -47,10 +49,8 @@ class _AddStoryPageState extends ConsumerState<AddStoryPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TitleTextField(title: widget.story?.title),
-                const Divider(height: 0),
                 SizedBox(height: $styles.insets.xs),
                 const RatingBarWidget(),
-                const Divider(),
                 SizedBox(height: $styles.insets.xs),
                 const DescriptionTextField(),
                 TagBar(ref: ref),
@@ -138,39 +138,24 @@ class RatingBarWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          RatingBar(
-            glow: false,
-            minRating: 1,
-            initialRating: ref
-                .watch(storyFormNotifierProvider)
-                .story
-                .glumRating
-                .toDouble(),
-            itemSize: 24.0,
-            itemPadding: EdgeInsets.symmetric(horizontal: $styles.insets.xxs),
-            onRatingUpdate: (rating) => ref
-                .read(storyFormNotifierProvider.notifier)
-                .ratingChanged(rating.toInt()),
-            ratingWidget: RatingWidget(
-              full: Container(
-                color: const Color(0xFFE35062),
-                height: 16.0,
-                width: 16.0,
-              ),
-              half: const SizedBox.shrink(),
-              empty: Container(
-                color: const Color(0XFFC17D35).withOpacity(0.25),
-                height: 16.0,
-                width: 16.0,
-              ),
+    return Center(
+      child: RatingBar.builder(
+        itemPadding: EdgeInsets.only(left: $styles.insets.xs),
+        glow: false,
+        itemSize: 24,
+        unratedColor: const Color(0xFFDB6162).withOpacity(0.15),
+        itemBuilder: (context, index) {
+          return Container(
+            padding: EdgeInsets.all($styles.insets.xs),
+            decoration: BoxDecoration(
+              color: (index + 1).ratingToColor(),
+              borderRadius: BorderRadius.circular(4.0),
             ),
-          ),
-        ],
+          );
+        },
+        onRatingUpdate: (rating) => ref
+            .read(storyFormNotifierProvider.notifier)
+            .ratingChanged(rating.toInt()),
       ),
     );
   }
@@ -191,23 +176,31 @@ class AddTagWidget extends StatelessWidget {
   }
 }
 
-class AddPhotoWidget extends StatelessWidget {
+class AddPhotoWidget extends ConsumerWidget {
   const AddPhotoWidget({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final storyForm = ref.watch(storyFormNotifierProvider);
+
     return Container(
       color: Colors.white.withOpacity(0.1),
       height: MediaQuery.of(context).size.height / 2.5,
-      child: IconButton(
-        onPressed: () {},
-        icon: const Icon(
-          Icons.add_a_photo,
-          color: Color(0xFFDA736E),
-        ),
-      ),
+      child: storyForm.story.photos.isEmpty
+          ? IconButton(
+              onPressed: () =>
+                  ref.read(storyFormNotifierProvider.notifier).photoChanged(),
+              icon: const Icon(
+                Icons.add_a_photo,
+                color: Color(0xFFDA736E),
+              ),
+            )
+          : Image.file(
+              File(storyForm.story.photos.first.filePath),
+              fit: BoxFit.cover,
+            ),
     );
   }
 }
@@ -222,7 +215,7 @@ class DescriptionTextField extends ConsumerWidget {
     final formState = ref.watch(storyFormNotifierProvider);
 
     return TextField(
-      style: $styles.text.body,
+      style: $styles.text.body.copyWith(color: Colors.white60),
       maxLines: null,
       decoration: InputDecoration(
         border: InputBorder.none,

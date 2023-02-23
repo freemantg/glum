@@ -1030,6 +1030,399 @@ class $StoryPhotosTable extends StoryPhotos
   }
 }
 
+class Card extends DataClass implements Insertable<Card> {
+  final int id;
+  final DateTime? monthYear;
+  final int? colorValue;
+  const Card({required this.id, this.monthYear, this.colorValue});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    if (!nullToAbsent || monthYear != null) {
+      map['month_year'] = Variable<DateTime>(monthYear);
+    }
+    if (!nullToAbsent || colorValue != null) {
+      map['color_value'] = Variable<int>(colorValue);
+    }
+    return map;
+  }
+
+  CardsCompanion toCompanion(bool nullToAbsent) {
+    return CardsCompanion(
+      id: Value(id),
+      monthYear: monthYear == null && nullToAbsent
+          ? const Value.absent()
+          : Value(monthYear),
+      colorValue: colorValue == null && nullToAbsent
+          ? const Value.absent()
+          : Value(colorValue),
+    );
+  }
+
+  factory Card.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Card(
+      id: serializer.fromJson<int>(json['id']),
+      monthYear: serializer.fromJson<DateTime?>(json['monthYear']),
+      colorValue: serializer.fromJson<int?>(json['colorValue']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'monthYear': serializer.toJson<DateTime?>(monthYear),
+      'colorValue': serializer.toJson<int?>(colorValue),
+    };
+  }
+
+  Card copyWith(
+          {int? id,
+          Value<DateTime?> monthYear = const Value.absent(),
+          Value<int?> colorValue = const Value.absent()}) =>
+      Card(
+        id: id ?? this.id,
+        monthYear: monthYear.present ? monthYear.value : this.monthYear,
+        colorValue: colorValue.present ? colorValue.value : this.colorValue,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('Card(')
+          ..write('id: $id, ')
+          ..write('monthYear: $monthYear, ')
+          ..write('colorValue: $colorValue')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, monthYear, colorValue);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Card &&
+          other.id == this.id &&
+          other.monthYear == this.monthYear &&
+          other.colorValue == this.colorValue);
+}
+
+class CardsCompanion extends UpdateCompanion<Card> {
+  final Value<int> id;
+  final Value<DateTime?> monthYear;
+  final Value<int?> colorValue;
+  const CardsCompanion({
+    this.id = const Value.absent(),
+    this.monthYear = const Value.absent(),
+    this.colorValue = const Value.absent(),
+  });
+  CardsCompanion.insert({
+    this.id = const Value.absent(),
+    this.monthYear = const Value.absent(),
+    this.colorValue = const Value.absent(),
+  });
+  static Insertable<Card> custom({
+    Expression<int>? id,
+    Expression<DateTime>? monthYear,
+    Expression<int>? colorValue,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (monthYear != null) 'month_year': monthYear,
+      if (colorValue != null) 'color_value': colorValue,
+    });
+  }
+
+  CardsCompanion copyWith(
+      {Value<int>? id, Value<DateTime?>? monthYear, Value<int?>? colorValue}) {
+    return CardsCompanion(
+      id: id ?? this.id,
+      monthYear: monthYear ?? this.monthYear,
+      colorValue: colorValue ?? this.colorValue,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (monthYear.present) {
+      map['month_year'] = Variable<DateTime>(monthYear.value);
+    }
+    if (colorValue.present) {
+      map['color_value'] = Variable<int>(colorValue.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CardsCompanion(')
+          ..write('id: $id, ')
+          ..write('monthYear: $monthYear, ')
+          ..write('colorValue: $colorValue')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CardsTable extends Cards with TableInfo<$CardsTable, Card> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CardsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _monthYearMeta =
+      const VerificationMeta('monthYear');
+  @override
+  late final GeneratedColumn<DateTime> monthYear = GeneratedColumn<DateTime>(
+      'month_year', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _colorValueMeta =
+      const VerificationMeta('colorValue');
+  @override
+  late final GeneratedColumn<int> colorValue = GeneratedColumn<int>(
+      'color_value', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns => [id, monthYear, colorValue];
+  @override
+  String get aliasedName => _alias ?? 'cards';
+  @override
+  String get actualTableName => 'cards';
+  @override
+  VerificationContext validateIntegrity(Insertable<Card> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('month_year')) {
+      context.handle(_monthYearMeta,
+          monthYear.isAcceptableOrUnknown(data['month_year']!, _monthYearMeta));
+    }
+    if (data.containsKey('color_value')) {
+      context.handle(
+          _colorValueMeta,
+          colorValue.isAcceptableOrUnknown(
+              data['color_value']!, _colorValueMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Card map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Card(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      monthYear: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}month_year']),
+      colorValue: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}color_value']),
+    );
+  }
+
+  @override
+  $CardsTable createAlias(String alias) {
+    return $CardsTable(attachedDatabase, alias);
+  }
+}
+
+class CardPhoto extends DataClass implements Insertable<CardPhoto> {
+  final int storyId;
+  final int photoId;
+  const CardPhoto({required this.storyId, required this.photoId});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['story_id'] = Variable<int>(storyId);
+    map['photo_id'] = Variable<int>(photoId);
+    return map;
+  }
+
+  CardPhotosCompanion toCompanion(bool nullToAbsent) {
+    return CardPhotosCompanion(
+      storyId: Value(storyId),
+      photoId: Value(photoId),
+    );
+  }
+
+  factory CardPhoto.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CardPhoto(
+      storyId: serializer.fromJson<int>(json['storyId']),
+      photoId: serializer.fromJson<int>(json['photoId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'storyId': serializer.toJson<int>(storyId),
+      'photoId': serializer.toJson<int>(photoId),
+    };
+  }
+
+  CardPhoto copyWith({int? storyId, int? photoId}) => CardPhoto(
+        storyId: storyId ?? this.storyId,
+        photoId: photoId ?? this.photoId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('CardPhoto(')
+          ..write('storyId: $storyId, ')
+          ..write('photoId: $photoId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(storyId, photoId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CardPhoto &&
+          other.storyId == this.storyId &&
+          other.photoId == this.photoId);
+}
+
+class CardPhotosCompanion extends UpdateCompanion<CardPhoto> {
+  final Value<int> storyId;
+  final Value<int> photoId;
+  const CardPhotosCompanion({
+    this.storyId = const Value.absent(),
+    this.photoId = const Value.absent(),
+  });
+  CardPhotosCompanion.insert({
+    required int storyId,
+    required int photoId,
+  })  : storyId = Value(storyId),
+        photoId = Value(photoId);
+  static Insertable<CardPhoto> custom({
+    Expression<int>? storyId,
+    Expression<int>? photoId,
+  }) {
+    return RawValuesInsertable({
+      if (storyId != null) 'story_id': storyId,
+      if (photoId != null) 'photo_id': photoId,
+    });
+  }
+
+  CardPhotosCompanion copyWith({Value<int>? storyId, Value<int>? photoId}) {
+    return CardPhotosCompanion(
+      storyId: storyId ?? this.storyId,
+      photoId: photoId ?? this.photoId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (storyId.present) {
+      map['story_id'] = Variable<int>(storyId.value);
+    }
+    if (photoId.present) {
+      map['photo_id'] = Variable<int>(photoId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CardPhotosCompanion(')
+          ..write('storyId: $storyId, ')
+          ..write('photoId: $photoId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CardPhotosTable extends CardPhotos
+    with TableInfo<$CardPhotosTable, CardPhoto> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CardPhotosTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _storyIdMeta =
+      const VerificationMeta('storyId');
+  @override
+  late final GeneratedColumn<int> storyId = GeneratedColumn<int>(
+      'story_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES cards (id)'));
+  static const VerificationMeta _photoIdMeta =
+      const VerificationMeta('photoId');
+  @override
+  late final GeneratedColumn<int> photoId = GeneratedColumn<int>(
+      'photo_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES photos (id)'));
+  @override
+  List<GeneratedColumn> get $columns => [storyId, photoId];
+  @override
+  String get aliasedName => _alias ?? 'card_photos';
+  @override
+  String get actualTableName => 'card_photos';
+  @override
+  VerificationContext validateIntegrity(Insertable<CardPhoto> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('story_id')) {
+      context.handle(_storyIdMeta,
+          storyId.isAcceptableOrUnknown(data['story_id']!, _storyIdMeta));
+    } else if (isInserting) {
+      context.missing(_storyIdMeta);
+    }
+    if (data.containsKey('photo_id')) {
+      context.handle(_photoIdMeta,
+          photoId.isAcceptableOrUnknown(data['photo_id']!, _photoIdMeta));
+    } else if (isInserting) {
+      context.missing(_photoIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  CardPhoto map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CardPhoto(
+      storyId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}story_id'])!,
+      photoId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}photo_id'])!,
+    );
+  }
+
+  @override
+  $CardPhotosTable createAlias(String alias) {
+    return $CardPhotosTable(attachedDatabase, alias);
+  }
+}
+
 abstract class _$GlumDatabase extends GeneratedDatabase {
   _$GlumDatabase(QueryExecutor e) : super(e);
   late final $StoriesTable stories = $StoriesTable(this);
@@ -1037,15 +1430,18 @@ abstract class _$GlumDatabase extends GeneratedDatabase {
   late final $PhotosTable photos = $PhotosTable(this);
   late final $StoryTagsTable storyTags = $StoryTagsTable(this);
   late final $StoryPhotosTable storyPhotos = $StoryPhotosTable(this);
+  late final $CardsTable cards = $CardsTable(this);
+  late final $CardPhotosTable cardPhotos = $CardPhotosTable(this);
   late final StoryDao storyDao = StoryDao(this as GlumDatabase);
   late final TagDao tagDao = TagDao(this as GlumDatabase);
   late final PhotoDao photoDao = PhotoDao(this as GlumDatabase);
+  late final CardDao cardDao = CardDao(this as GlumDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [stories, tags, photos, storyTags, storyPhotos];
+      [stories, tags, photos, storyTags, storyPhotos, cards, cardPhotos];
 }
 
 mixin _$StoryDaoMixin on DatabaseAccessor<GlumDatabase> {
@@ -1062,4 +1458,9 @@ mixin _$TagDaoMixin on DatabaseAccessor<GlumDatabase> {
 }
 mixin _$PhotoDaoMixin on DatabaseAccessor<GlumDatabase> {
   $PhotosTable get photos => attachedDatabase.photos;
+}
+mixin _$CardDaoMixin on DatabaseAccessor<GlumDatabase> {
+  $CardsTable get cards => attachedDatabase.cards;
+  $PhotosTable get photos => attachedDatabase.photos;
+  $CardPhotosTable get cardPhotos => attachedDatabase.cardPhotos;
 }
