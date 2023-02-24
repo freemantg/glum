@@ -1245,20 +1245,20 @@ class $CardsTable extends Cards with TableInfo<$CardsTable, Card> {
 }
 
 class CardPhoto extends DataClass implements Insertable<CardPhoto> {
-  final int storyId;
+  final int cardId;
   final int photoId;
-  const CardPhoto({required this.storyId, required this.photoId});
+  const CardPhoto({required this.cardId, required this.photoId});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['story_id'] = Variable<int>(storyId);
+    map['card_id'] = Variable<int>(cardId);
     map['photo_id'] = Variable<int>(photoId);
     return map;
   }
 
   CardPhotosCompanion toCompanion(bool nullToAbsent) {
     return CardPhotosCompanion(
-      storyId: Value(storyId),
+      cardId: Value(cardId),
       photoId: Value(photoId),
     );
   }
@@ -1267,7 +1267,7 @@ class CardPhoto extends DataClass implements Insertable<CardPhoto> {
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return CardPhoto(
-      storyId: serializer.fromJson<int>(json['storyId']),
+      cardId: serializer.fromJson<int>(json['cardId']),
       photoId: serializer.fromJson<int>(json['photoId']),
     );
   }
@@ -1275,59 +1275,59 @@ class CardPhoto extends DataClass implements Insertable<CardPhoto> {
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'storyId': serializer.toJson<int>(storyId),
+      'cardId': serializer.toJson<int>(cardId),
       'photoId': serializer.toJson<int>(photoId),
     };
   }
 
-  CardPhoto copyWith({int? storyId, int? photoId}) => CardPhoto(
-        storyId: storyId ?? this.storyId,
+  CardPhoto copyWith({int? cardId, int? photoId}) => CardPhoto(
+        cardId: cardId ?? this.cardId,
         photoId: photoId ?? this.photoId,
       );
   @override
   String toString() {
     return (StringBuffer('CardPhoto(')
-          ..write('storyId: $storyId, ')
+          ..write('cardId: $cardId, ')
           ..write('photoId: $photoId')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(storyId, photoId);
+  int get hashCode => Object.hash(cardId, photoId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is CardPhoto &&
-          other.storyId == this.storyId &&
+          other.cardId == this.cardId &&
           other.photoId == this.photoId);
 }
 
 class CardPhotosCompanion extends UpdateCompanion<CardPhoto> {
-  final Value<int> storyId;
+  final Value<int> cardId;
   final Value<int> photoId;
   const CardPhotosCompanion({
-    this.storyId = const Value.absent(),
+    this.cardId = const Value.absent(),
     this.photoId = const Value.absent(),
   });
   CardPhotosCompanion.insert({
-    required int storyId,
+    required int cardId,
     required int photoId,
-  })  : storyId = Value(storyId),
+  })  : cardId = Value(cardId),
         photoId = Value(photoId);
   static Insertable<CardPhoto> custom({
-    Expression<int>? storyId,
+    Expression<int>? cardId,
     Expression<int>? photoId,
   }) {
     return RawValuesInsertable({
-      if (storyId != null) 'story_id': storyId,
+      if (cardId != null) 'card_id': cardId,
       if (photoId != null) 'photo_id': photoId,
     });
   }
 
-  CardPhotosCompanion copyWith({Value<int>? storyId, Value<int>? photoId}) {
+  CardPhotosCompanion copyWith({Value<int>? cardId, Value<int>? photoId}) {
     return CardPhotosCompanion(
-      storyId: storyId ?? this.storyId,
+      cardId: cardId ?? this.cardId,
       photoId: photoId ?? this.photoId,
     );
   }
@@ -1335,8 +1335,8 @@ class CardPhotosCompanion extends UpdateCompanion<CardPhoto> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (storyId.present) {
-      map['story_id'] = Variable<int>(storyId.value);
+    if (cardId.present) {
+      map['card_id'] = Variable<int>(cardId.value);
     }
     if (photoId.present) {
       map['photo_id'] = Variable<int>(photoId.value);
@@ -1347,7 +1347,7 @@ class CardPhotosCompanion extends UpdateCompanion<CardPhoto> {
   @override
   String toString() {
     return (StringBuffer('CardPhotosCompanion(')
-          ..write('storyId: $storyId, ')
+          ..write('cardId: $cardId, ')
           ..write('photoId: $photoId')
           ..write(')'))
         .toString();
@@ -1360,11 +1360,10 @@ class $CardPhotosTable extends CardPhotos
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $CardPhotosTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _storyIdMeta =
-      const VerificationMeta('storyId');
+  static const VerificationMeta _cardIdMeta = const VerificationMeta('cardId');
   @override
-  late final GeneratedColumn<int> storyId = GeneratedColumn<int>(
-      'story_id', aliasedName, false,
+  late final GeneratedColumn<int> cardId = GeneratedColumn<int>(
+      'card_id', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints:
@@ -1379,7 +1378,7 @@ class $CardPhotosTable extends CardPhotos
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('REFERENCES photos (id)'));
   @override
-  List<GeneratedColumn> get $columns => [storyId, photoId];
+  List<GeneratedColumn> get $columns => [cardId, photoId];
   @override
   String get aliasedName => _alias ?? 'card_photos';
   @override
@@ -1389,11 +1388,11 @@ class $CardPhotosTable extends CardPhotos
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('story_id')) {
-      context.handle(_storyIdMeta,
-          storyId.isAcceptableOrUnknown(data['story_id']!, _storyIdMeta));
+    if (data.containsKey('card_id')) {
+      context.handle(_cardIdMeta,
+          cardId.isAcceptableOrUnknown(data['card_id']!, _cardIdMeta));
     } else if (isInserting) {
-      context.missing(_storyIdMeta);
+      context.missing(_cardIdMeta);
     }
     if (data.containsKey('photo_id')) {
       context.handle(_photoIdMeta,
@@ -1410,8 +1409,8 @@ class $CardPhotosTable extends CardPhotos
   CardPhoto map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return CardPhoto(
-      storyId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}story_id'])!,
+      cardId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}card_id'])!,
       photoId: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}photo_id'])!,
     );

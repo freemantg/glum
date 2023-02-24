@@ -58,6 +58,19 @@ class StoryWithTagAndPhoto {
   final List<Photo> photos;
 }
 
+@DataClassName("Card")
+class Cards extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  DateTimeColumn get monthYear => dateTime().nullable()();
+  IntColumn get colorValue => integer().nullable()();
+}
+
+@DataClassName("CardPhoto")
+class CardPhotos extends Table {
+  IntColumn get cardId => integer().references(Cards, #id)();
+  IntColumn get photoId => integer().references(Photos, #id)();
+}
+
 @DriftDatabase(
   tables: [
     Stories,
@@ -79,7 +92,7 @@ class GlumDatabase extends _$GlumDatabase {
   GlumDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration =>
@@ -103,30 +116,43 @@ LazyDatabase _openConnection() {
   );
 }
 
-@DataClassName("Card")
-class Cards extends Table {
-  IntColumn get id => integer().autoIncrement()();
-  DateTimeColumn get monthYear => dateTime().nullable()();
-  IntColumn get colorValue => integer().nullable()();
-}
-
-@DataClassName("CardPhoto")
-class CardPhotos extends Table {
-  IntColumn get storyId => integer().references(Cards, #id)();
-  IntColumn get photoId => integer().references(Photos, #id)();
-}
-
 @DriftAccessor(tables: [Cards, CardPhotos])
-class CardDao extends DatabaseAccessor<GlumDatabase> with _$PhotoDaoMixin {
+class CardDao extends DatabaseAccessor<GlumDatabase> with _$CardDaoMixin {
   CardDao(this.db) : super(db);
   final GlumDatabase db;
 
-  Future<int> insertCard(CardDto cardDto) async {
+  Future<void> insertCard(CardDto cardDto) async {
     final cardCompanion = CardsCompanion.insert(
       monthYear: Value(cardDto.monthYear),
       colorValue: Value(cardDto.colorValue),
     );
-    return 1;
+    final cardId = await into(cards).insert(cardCompanion);
+
+    if (cardDto.photo != null) {
+      final photoCompanion = PhotosCompanion.insert(
+        fileName: cardDto.photo!.fileName,
+        filePath: cardDto.photo!.filePath,
+      );
+      final photoId = await into(photos).insert(photoCompanion);
+      final cardPhotoCompanion = CardPhotosCompanion.insert(
+        cardId: cardId,
+        photoId: photoId,
+      );
+      await into(cardPhotos).insert(cardPhotoCompanion);
+    }
+  }
+
+  Future<CardDto?> watchCardByMonthYear(DateTime monthYear) async {
+    final query = select(cards).join(
+      [leftOuterJoin(cardPhotos, cardPhotos.cardId.equalsExp(cards.id))],
+    )..where(cards.monthYear.equals(monthYear));
+
+    final result = await query.getSingleOrNull();
+    if (result != null) {
+      final cardDto = CardDto.fromJson(result.readTable(cards).toJson());
+      return cardDto;
+    }
+    return null;
   }
 }
 

@@ -1,8 +1,10 @@
 import 'package:dartz/dartz.dart';
+import 'package:glum_mood_tracker/domain/card.dart';
 import 'package:glum_mood_tracker/domain/story_failure.dart';
 import 'package:glum_mood_tracker/domain/tag.dart';
 import 'package:glum_mood_tracker/domain/tag_failure.dart';
 
+import 'card_failure.dart';
 import 'story.dart';
 
 abstract class IStoryRepository {
@@ -11,6 +13,13 @@ abstract class IStoryRepository {
   Future<Either<StoryFailure, Unit>> addStory(Story story);
   Future<Either<StoryFailure, Unit>> updateStory(Story story);
   Future<Either<StoryFailure, Unit>> deleteStory(int storyId);
+}
+
+abstract class ICardRepository {
+  Stream<Either<CardFailure, List<Card>>> watchAllCards();
+  Future<Either<CardFailure, Unit>> addCard(Card card);
+  Future<Either<CardFailure, Unit>> updateCard(Card card);
+  Future<Either<CardFailure, Unit>> deleteCard(Card card);
 }
 
 abstract class ITagRepository {
