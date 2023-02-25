@@ -1032,16 +1032,14 @@ class $StoryPhotosTable extends StoryPhotos
 
 class Card extends DataClass implements Insertable<Card> {
   final int id;
-  final DateTime? monthYear;
+  final DateTime monthYear;
   final int? colorValue;
-  const Card({required this.id, this.monthYear, this.colorValue});
+  const Card({required this.id, required this.monthYear, this.colorValue});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    if (!nullToAbsent || monthYear != null) {
-      map['month_year'] = Variable<DateTime>(monthYear);
-    }
+    map['month_year'] = Variable<DateTime>(monthYear);
     if (!nullToAbsent || colorValue != null) {
       map['color_value'] = Variable<int>(colorValue);
     }
@@ -1051,9 +1049,7 @@ class Card extends DataClass implements Insertable<Card> {
   CardsCompanion toCompanion(bool nullToAbsent) {
     return CardsCompanion(
       id: Value(id),
-      monthYear: monthYear == null && nullToAbsent
-          ? const Value.absent()
-          : Value(monthYear),
+      monthYear: Value(monthYear),
       colorValue: colorValue == null && nullToAbsent
           ? const Value.absent()
           : Value(colorValue),
@@ -1065,7 +1061,7 @@ class Card extends DataClass implements Insertable<Card> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Card(
       id: serializer.fromJson<int>(json['id']),
-      monthYear: serializer.fromJson<DateTime?>(json['monthYear']),
+      monthYear: serializer.fromJson<DateTime>(json['monthYear']),
       colorValue: serializer.fromJson<int?>(json['colorValue']),
     );
   }
@@ -1074,18 +1070,18 @@ class Card extends DataClass implements Insertable<Card> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'monthYear': serializer.toJson<DateTime?>(monthYear),
+      'monthYear': serializer.toJson<DateTime>(monthYear),
       'colorValue': serializer.toJson<int?>(colorValue),
     };
   }
 
   Card copyWith(
           {int? id,
-          Value<DateTime?> monthYear = const Value.absent(),
+          DateTime? monthYear,
           Value<int?> colorValue = const Value.absent()}) =>
       Card(
         id: id ?? this.id,
-        monthYear: monthYear.present ? monthYear.value : this.monthYear,
+        monthYear: monthYear ?? this.monthYear,
         colorValue: colorValue.present ? colorValue.value : this.colorValue,
       );
   @override
@@ -1111,7 +1107,7 @@ class Card extends DataClass implements Insertable<Card> {
 
 class CardsCompanion extends UpdateCompanion<Card> {
   final Value<int> id;
-  final Value<DateTime?> monthYear;
+  final Value<DateTime> monthYear;
   final Value<int?> colorValue;
   const CardsCompanion({
     this.id = const Value.absent(),
@@ -1120,9 +1116,9 @@ class CardsCompanion extends UpdateCompanion<Card> {
   });
   CardsCompanion.insert({
     this.id = const Value.absent(),
-    this.monthYear = const Value.absent(),
+    required DateTime monthYear,
     this.colorValue = const Value.absent(),
-  });
+  }) : monthYear = Value(monthYear);
   static Insertable<Card> custom({
     Expression<int>? id,
     Expression<DateTime>? monthYear,
@@ -1136,7 +1132,7 @@ class CardsCompanion extends UpdateCompanion<Card> {
   }
 
   CardsCompanion copyWith(
-      {Value<int>? id, Value<DateTime?>? monthYear, Value<int?>? colorValue}) {
+      {Value<int>? id, Value<DateTime>? monthYear, Value<int?>? colorValue}) {
     return CardsCompanion(
       id: id ?? this.id,
       monthYear: monthYear ?? this.monthYear,
@@ -1188,8 +1184,8 @@ class $CardsTable extends Cards with TableInfo<$CardsTable, Card> {
       const VerificationMeta('monthYear');
   @override
   late final GeneratedColumn<DateTime> monthYear = GeneratedColumn<DateTime>(
-      'month_year', aliasedName, true,
-      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+      'month_year', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
   static const VerificationMeta _colorValueMeta =
       const VerificationMeta('colorValue');
   @override
@@ -1213,6 +1209,8 @@ class $CardsTable extends Cards with TableInfo<$CardsTable, Card> {
     if (data.containsKey('month_year')) {
       context.handle(_monthYearMeta,
           monthYear.isAcceptableOrUnknown(data['month_year']!, _monthYearMeta));
+    } else if (isInserting) {
+      context.missing(_monthYearMeta);
     }
     if (data.containsKey('color_value')) {
       context.handle(
@@ -1232,7 +1230,7 @@ class $CardsTable extends Cards with TableInfo<$CardsTable, Card> {
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       monthYear: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}month_year']),
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}month_year'])!,
       colorValue: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}color_value']),
     );

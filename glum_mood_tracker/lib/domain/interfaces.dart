@@ -16,7 +16,7 @@ abstract class IStoryRepository {
 }
 
 abstract class ICardRepository {
-  Stream<Either<CardFailure, List<Card>>> watchAllCards();
+  Stream<Either<CardFailure, List<Card?>>> watchAllCards();
   Future<Either<CardFailure, Unit>> addCard(Card card);
   Future<Either<CardFailure, Unit>> updateCard(Card card);
   Future<Either<CardFailure, Unit>> deleteCard(Card card);

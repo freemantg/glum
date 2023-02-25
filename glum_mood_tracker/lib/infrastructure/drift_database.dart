@@ -61,7 +61,7 @@ class StoryWithTagAndPhoto {
 @DataClassName("Card")
 class Cards extends Table {
   IntColumn get id => integer().autoIncrement()();
-  DateTimeColumn get monthYear => dateTime().nullable()();
+  DateTimeColumn get monthYear => dateTime()();
   IntColumn get colorValue => integer().nullable()();
 }
 
@@ -123,7 +123,7 @@ class CardDao extends DatabaseAccessor<GlumDatabase> with _$CardDaoMixin {
 
   Future<void> insertCard(CardDto cardDto) async {
     final cardCompanion = CardsCompanion.insert(
-      monthYear: Value(cardDto.monthYear),
+      monthYear: cardDto.monthYear,
       colorValue: Value(cardDto.colorValue),
     );
     final cardId = await into(cards).insert(cardCompanion);
@@ -153,6 +153,35 @@ class CardDao extends DatabaseAccessor<GlumDatabase> with _$CardDaoMixin {
       return cardDto;
     }
     return null;
+  }
+
+  Stream<List<CardDto?>> watchAllCards() {
+    final query = select(cards).join(
+      [
+        leftOuterJoin(cardPhotos, cardPhotos.cardId.equalsExp(cards.id)),
+        leftOuterJoin(photos, photos.id.equalsExp(cardPhotos.photoId)),
+      ],
+    );
+
+    return query.watch().map(
+      (rows) {
+        final cardDtos = <CardDto>[];
+
+        for (final row in rows) {
+          final cardData = row.readTable(cards);
+          final photoData = row.readTable(photos);
+
+          final cardDto = CardDto(
+            monthYear: cardData.monthYear,
+            colorValue: cardData.colorValue,
+            photo: PhotoDto.fromJson(photoData.toJson()),
+          );
+
+          cardDtos.add(cardDto);
+        }
+        return cardDtos;
+      },
+    );
   }
 }
 
@@ -502,6 +531,7 @@ class TagDao extends DatabaseAccessor<GlumDatabase> with _$TagDaoMixin {
   Stream<Map<TagDto, int>> watchingTagsByMoodsOrGlums(bool filterByMoods) {
     final tagsAndCount = <TagDto, int>{};
     final tagsCount = tags.id.count();
+
     final query = select(tags).join([
       innerJoin(
         storyTags,

@@ -1,14 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:glum_mood_tracker/application/core/card_notifier.dart';
 import 'package:glum_mood_tracker/application/core/date_time_notifier.dart';
 import 'package:glum_mood_tracker/application/core/stories_notifier.dart';
 import 'package:glum_mood_tracker/application/core/story_form_notifier.dart';
 import 'package:glum_mood_tracker/application/core/tags_notifier.dart';
-import 'package:glum_mood_tracker/infrastructure/drift_database.dart';
+import 'package:glum_mood_tracker/infrastructure/drift_database.dart' hide Card;
 import 'package:glum_mood_tracker/infrastructure/photo_repository.dart';
 import 'package:glum_mood_tracker/infrastructure/story_repository.dart';
 import 'package:glum_mood_tracker/infrastructure/tag_repository.dart';
 
 import '../application/stats/stats_notifier.dart';
+import '../domain/card.dart';
+import '../infrastructure/card_repository.dart';
 import '../infrastructure/stats_repository.dart';
 
 final storiesNotifierProvider =
@@ -50,3 +53,10 @@ final statsRepositoryProvider = Provider(
 
 final statsNotifierProvider = StateNotifierProvider<StatsNotifier, StatsState>(
     (ref) => StatsNotifier(repository: ref.watch(statsRepositoryProvider)));
+
+final cardsNotifierProvider =
+    StateNotifierProvider<CardsNotifier, AsyncValue<List<Card?>>>(
+        (ref) => CardsNotifier(ref.watch(cardRepositoryProvider)));
+
+final cardRepositoryProvider = Provider(
+    (ref) => CardRepository(database: ref.watch(glumDatabaseProvider)));
