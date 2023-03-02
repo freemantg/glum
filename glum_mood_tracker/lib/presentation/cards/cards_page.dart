@@ -7,11 +7,13 @@ import 'package:glum_mood_tracker/shared/providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../domain/card.dart' as domain;
 import '../../domain/story.dart';
 import '../../styles/styles.dart';
 import '../routes/app_router.gr.dart';
 import 'widgets/calendar_toggle_button.dart';
 import 'widgets/cards_visual_options_button.dart';
+import 'widgets/month_card.dart';
 import 'widgets/year_selector_button.dart';
 
 class CardsPage extends StatelessWidget {
@@ -131,74 +133,16 @@ class CardCarousel extends ConsumerWidget {
               },
               orElse: () => DateTime.now(),
             );
+        final card = domain.Card(monthYear: monthYear);
         return MonthCard(
           showCalendar: showCalendar,
-          monthYear: monthYear,
+          card: card,
         );
       },
     );
   }
 }
 
-class MonthCard extends StatelessWidget {
-  const MonthCard({
-    super.key,
-    required this.showCalendar,
-    required this.monthYear,
-  });
-
-  final bool showCalendar;
-  final DateTime monthYear;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => context.pushRoute(MonthPageRoute(monthYear: monthYear)),
-      child: Card(
-        elevation: 8,
-        margin: EdgeInsets.all($styles.insets.sm),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular($styles.corners.md)),
-        ),
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(
-            $styles.insets.sm,
-            $styles.insets.md,
-            $styles.insets.sm,
-            $styles.insets.sm,
-          ),
-          child: Column(
-            crossAxisAlignment: showCalendar
-                ? CrossAxisAlignment.center
-                : CrossAxisAlignment.start,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(monthYear.month.toString(), style: $styles.text.h1),
-                  Text(
-                    DateFormat.MMM()
-                        .format(DateTime(monthYear.year, monthYear.month))
-                        .toUpperCase(),
-                    style: $styles.text.h3.copyWith(
-                      height: 0,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                ],
-              ),
-              const Spacer(),
-              showCalendar
-                  ? StyledMonthViewCalendar(monthYear: monthYear)
-                  : MonthProgressBar(monthYear: monthYear),
-              showCalendar ? const Spacer() : const SizedBox.shrink(),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 class StyledMonthViewCalendar extends StatelessWidget {
   const StyledMonthViewCalendar({

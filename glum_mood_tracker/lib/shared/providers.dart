@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:glum_mood_tracker/application/core/card_form_notifier.dart';
 import 'package:glum_mood_tracker/application/core/card_notifier.dart';
 import 'package:glum_mood_tracker/application/core/date_time_notifier.dart';
 import 'package:glum_mood_tracker/application/core/stories_notifier.dart';
@@ -60,3 +61,8 @@ final cardsNotifierProvider =
 
 final cardRepositoryProvider = Provider(
     (ref) => CardRepository(database: ref.watch(glumDatabaseProvider)));
+
+final cardFormNotifierProvider =
+    StateNotifierProvider<CardFormNotifier, CardFormState>(
+  (ref) => CardFormNotifier(ref.watch(cardRepositoryProvider)),
+);
