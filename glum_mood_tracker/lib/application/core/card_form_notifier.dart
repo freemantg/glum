@@ -39,9 +39,14 @@ class CardFormNotifier extends StateNotifier<CardFormState> {
     if (card != null) {
       state = state.copyWith(
         card: card,
-        isEditing: true,
+        isEditing: false,
       );
     }
+
+  }
+
+  Future<void> monthYearChanged(DateTime monthYear) async {
+    state = state.copyWith(card: state.card.copyWith(monthYear: monthYear));
   }
 
   Future<void> photoChanged(Photo photo) async {
@@ -50,6 +55,7 @@ class CardFormNotifier extends StateNotifier<CardFormState> {
 
   Future<void> colorChanged(Color color) async {
     state = state.copyWith(card: state.card.copyWith(color: color));
+    saved();
   }
 
   Future<void> saved() async {

@@ -58,6 +58,8 @@ class _MonthCardState extends ConsumerState<MonthCard> {
                 ? CrossAxisAlignment.center
                 : CrossAxisAlignment.start,
             children: [
+              Text('FORM STATE DATE ${widget.card.monthYear.toString()}'),
+              Text('PASSED IN CARD DATE ${widget.card.monthYear.toString()}'),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [

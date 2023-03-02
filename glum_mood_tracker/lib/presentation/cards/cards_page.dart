@@ -5,7 +5,6 @@ import 'package:glum_mood_tracker/presentation/cards/providers/providers.dart';
 import 'package:glum_mood_tracker/shared/extensions.dart';
 import 'package:glum_mood_tracker/shared/providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../domain/card.dart' as domain;
 import '../../domain/story.dart';
@@ -16,8 +15,22 @@ import 'widgets/cards_visual_options_button.dart';
 import 'widgets/month_card.dart';
 import 'widgets/year_selector_button.dart';
 
-class CardsPage extends StatelessWidget {
+class CardsPage extends ConsumerStatefulWidget {
   const CardsPage({super.key});
+
+  @override
+  ConsumerState<CardsPage> createState() => _CardsPageState();
+}
+
+class _CardsPageState extends ConsumerState<CardsPage> {
+  @override
+  void initState() {
+    super.initState();
+    // ref
+    //     .read(storiesNotifierProvider.notifier)
+    //     .watchStoriesByMonthYear(DateTime.now());
+    Future.microtask(() => ref.read(cardsNotifier.notifier).watchAllCards());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,6 +123,13 @@ class CardCarousel extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final cards = ref.watch(cardsNotifier).maybeMap(
+          loadSuccess: (state) {
+            return state.cards;
+          },
+          orElse: () => <domain.Card>[],
+        );
+
     return PageView.builder(
       onPageChanged: (index) {
         final monthYear = ref.watch(dateTimeNotifierProvider).maybeMap(
@@ -133,7 +153,10 @@ class CardCarousel extends ConsumerWidget {
               },
               orElse: () => DateTime.now(),
             );
-        final card = domain.Card(monthYear: monthYear);
+        final card = cards.firstWhere(
+          (card) => card.monthYear.isAtSameMomentAs(monthYear),
+          orElse: () => domain.Card(monthYear: monthYear),
+        );
         return MonthCard(
           showCalendar: showCalendar,
           card: card,
@@ -142,7 +165,6 @@ class CardCarousel extends ConsumerWidget {
     );
   }
 }
-
 
 class StyledMonthViewCalendar extends StatelessWidget {
   const StyledMonthViewCalendar({

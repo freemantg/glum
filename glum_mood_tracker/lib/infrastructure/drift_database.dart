@@ -92,7 +92,7 @@ class GlumDatabase extends _$GlumDatabase {
   GlumDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration =>
@@ -116,7 +116,7 @@ LazyDatabase _openConnection() {
   );
 }
 
-@DriftAccessor(tables: [Cards, CardPhotos])
+@DriftAccessor(tables: [Cards, CardPhotos, Photos])
 class CardDao extends DatabaseAccessor<GlumDatabase> with _$CardDaoMixin {
   CardDao(this.db) : super(db);
   final GlumDatabase db;
@@ -142,7 +142,7 @@ class CardDao extends DatabaseAccessor<GlumDatabase> with _$CardDaoMixin {
     }
   }
 
-  Future<CardDto?> watchCardByMonthYear(DateTime monthYear) async {
+  Future<CardDto> watchCardByMonthYear(DateTime monthYear) async {
     final query = select(cards).join(
       [leftOuterJoin(cardPhotos, cardPhotos.cardId.equalsExp(cards.id))],
     )..where(cards.monthYear.equals(monthYear));
@@ -152,10 +152,10 @@ class CardDao extends DatabaseAccessor<GlumDatabase> with _$CardDaoMixin {
       final cardDto = CardDto.fromJson(result.readTable(cards).toJson());
       return cardDto;
     }
-    return null;
+    return CardDto(monthYear: monthYear);
   }
 
-  Stream<List<CardDto?>> watchAllCards() {
+  Stream<List<CardDto>> watchAllCards() {
     final query = select(cards).join(
       [
         leftOuterJoin(cardPhotos, cardPhotos.cardId.equalsExp(cards.id)),
@@ -169,16 +169,20 @@ class CardDao extends DatabaseAccessor<GlumDatabase> with _$CardDaoMixin {
 
         for (final row in rows) {
           final cardData = row.readTable(cards);
-          final photoData = row.readTable(photos);
+          final photoData = row.readTableOrNull(photos);
 
           final cardDto = CardDto(
+            id: cardData.id,
             monthYear: cardData.monthYear,
             colorValue: cardData.colorValue,
-            photo: PhotoDto.fromJson(photoData.toJson()),
+            photo: (photoData != null)
+                ? PhotoDto.fromJson(photoData.toJson())
+                : null,
           );
-
+          print(cardDto);
           cardDtos.add(cardDto);
         }
+        print("CARD DETOS: {$cardDtos}");
         return cardDtos;
       },
     );
@@ -280,7 +284,6 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
               ))
           .toList();
       final photoIds = await bulkInsertAndReturnIds(photos, photoCompanions);
-      print("PHOTOIDS: $photoIds");
       final storyPhotoCompanions = photoIds
           .map(
             (photoId) => StoryPhotosCompanion.insert(
@@ -411,7 +414,6 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
               ),
             )
             .toList();
-        print(dtos);
         return dtos;
       },
     );

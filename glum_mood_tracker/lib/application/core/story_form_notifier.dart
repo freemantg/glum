@@ -97,6 +97,5 @@ class StoryFormNotifier extends StateNotifier<StoryFormState> {
       updatedTags = List.from(state.selectedTags)..add(tag);
     }
     state = state.copyWith(selectedTags: updatedTags);
-    print("UPDATED TAGS $updatedTags");
   }
 }

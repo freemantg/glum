@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:glum_mood_tracker/shared/providers.dart';
 
 import '../../../styles/colors.dart';
 import '../../../styles/styles.dart';
 
-class CardVisualOptionsButton extends StatelessWidget {
+class CardVisualOptionsButton extends ConsumerWidget {
   const CardVisualOptionsButton({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       child: const Icon(Icons.more_horiz),
       onTap: () => showModalBottomSheet(
@@ -52,17 +54,21 @@ class CardVisualOptionsButton extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    ...List.generate(
-                      colors.length,
-                      (index) => Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: colors[index],
+                    ...List.generate(colors.length, (index) {
+                      return GestureDetector(
+                        onTap: () => ref
+                            .read(cardFormNotifierProvider.notifier)
+                            .colorChanged(colors[index]),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: colors[index],
+                          ),
+                          height: 42.0,
+                          width: 42.0,
                         ),
-                        height: 42.0,
-                        width: 42.0,
-                      ),
-                    )
+                      );
+                    })
                   ],
                 ),
                 SizedBox(height: $styles.insets.xl),

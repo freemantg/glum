@@ -42,7 +42,6 @@ class StoryRepository implements IStoryRepository {
   @override
   Future<Either<StoryFailure, Unit>> updateStory(Story story) async {
     try {
-      print(story.tags);
       await _db.storyDao
           .updateStoryWithTagsAndPhotos(StoryDto.fromDomain(story));
 

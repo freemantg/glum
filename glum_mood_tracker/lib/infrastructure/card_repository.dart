@@ -14,6 +14,7 @@ class CardRepository extends ICardRepository {
 
   @override
   Future<Either<CardFailure, Unit>> addCard(Card card) async {
+    print("ADD CARDDDD: $card");
     try {
       await _db.cardDao.insertCard(CardDto.fromDomain(card));
       return right(unit);
@@ -35,12 +36,12 @@ class CardRepository extends ICardRepository {
   }
 
   @override
-  Stream<Either<CardFailure, List<Card?>>> watchAllCards() async* {
+  Stream<Either<CardFailure, List<Card>>> watchAllCards() async* {
     final stream = _db.cardDao.watchAllCards();
     yield* stream.map(
       (dtos) {
-        final cards = dtos.map((e) => e?.toDomain()).toList();
-        return right<CardFailure, List<Card?>>(cards);
+        final cards = dtos.map((e) => e.toDomain()).toList();
+        return right<CardFailure, List<Card>>(cards);
       },
     ).onErrorReturnWith(
       (error, stackTrace) {
