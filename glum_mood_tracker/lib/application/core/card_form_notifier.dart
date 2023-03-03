@@ -39,13 +39,13 @@ class CardFormNotifier extends StateNotifier<CardFormState> {
     if (card != null) {
       state = state.copyWith(
         card: card,
-        isEditing: false,
+        isEditing: true,
       );
     }
-
   }
 
   Future<void> monthYearChanged(DateTime monthYear) async {
+    state = CardFormState.initial();
     state = state.copyWith(card: state.card.copyWith(monthYear: monthYear));
   }
 

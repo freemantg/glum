@@ -3,6 +3,117 @@
 part of 'drift_database.dart';
 
 // ignore_for_file: type=lint
+class $StoriesTable extends Stories with TableInfo<$StoriesTable, Story> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $StoriesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title =
+      GeneratedColumn<String>('title', aliasedName, false,
+          additionalChecks: GeneratedColumn.checkTextLength(
+            minTextLength: 1,
+          ),
+          type: DriftSqlType.string,
+          requiredDuringInsert: true);
+  static const VerificationMeta _descriptionMeta =
+      const VerificationMeta('description');
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+      'description', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(''));
+  static const VerificationMeta _glumRatingMeta =
+      const VerificationMeta('glumRating');
+  @override
+  late final GeneratedColumn<int> glumRating = GeneratedColumn<int>(
+      'glum_rating', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
+      'date', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, title, description, glumRating, date];
+  @override
+  String get aliasedName => _alias ?? 'stories';
+  @override
+  String get actualTableName => 'stories';
+  @override
+  VerificationContext validateIntegrity(Insertable<Story> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+          _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+          _descriptionMeta,
+          description.isAcceptableOrUnknown(
+              data['description']!, _descriptionMeta));
+    }
+    if (data.containsKey('glum_rating')) {
+      context.handle(
+          _glumRatingMeta,
+          glumRating.isAcceptableOrUnknown(
+              data['glum_rating']!, _glumRatingMeta));
+    } else if (isInserting) {
+      context.missing(_glumRatingMeta);
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+          _dateMeta, date.isAcceptableOrUnknown(data['date']!, _dateMeta));
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Story map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Story(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      title: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
+      description: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}description'])!,
+      glumRating: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}glum_rating'])!,
+      date: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}date'])!,
+    );
+  }
+
+  @override
+  $StoriesTable createAlias(String alias) {
+    return $StoriesTable(attachedDatabase, alias);
+  }
+}
+
 class Story extends DataClass implements Insertable<Story> {
   final int id;
   final String title;
@@ -184,11 +295,11 @@ class StoriesCompanion extends UpdateCompanion<Story> {
   }
 }
 
-class $StoriesTable extends Stories with TableInfo<$StoriesTable, Story> {
+class $TagsTable extends Tags with TableInfo<$TagsTable, Tag> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $StoriesTable(this.attachedDatabase, [this._alias]);
+  $TagsTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -207,34 +318,14 @@ class $StoriesTable extends Stories with TableInfo<$StoriesTable, Story> {
           ),
           type: DriftSqlType.string,
           requiredDuringInsert: true);
-  static const VerificationMeta _descriptionMeta =
-      const VerificationMeta('description');
   @override
-  late final GeneratedColumn<String> description = GeneratedColumn<String>(
-      'description', aliasedName, false,
-      type: DriftSqlType.string,
-      requiredDuringInsert: false,
-      defaultValue: const Constant(''));
-  static const VerificationMeta _glumRatingMeta =
-      const VerificationMeta('glumRating');
+  List<GeneratedColumn> get $columns => [id, title];
   @override
-  late final GeneratedColumn<int> glumRating = GeneratedColumn<int>(
-      'glum_rating', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  String get aliasedName => _alias ?? 'tags';
   @override
-  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
-      'date', aliasedName, false,
-      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  String get actualTableName => 'tags';
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, title, description, glumRating, date];
-  @override
-  String get aliasedName => _alias ?? 'stories';
-  @override
-  String get actualTableName => 'stories';
-  @override
-  VerificationContext validateIntegrity(Insertable<Story> instance,
+  VerificationContext validateIntegrity(Insertable<Tag> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -247,51 +338,25 @@ class $StoriesTable extends Stories with TableInfo<$StoriesTable, Story> {
     } else if (isInserting) {
       context.missing(_titleMeta);
     }
-    if (data.containsKey('description')) {
-      context.handle(
-          _descriptionMeta,
-          description.isAcceptableOrUnknown(
-              data['description']!, _descriptionMeta));
-    }
-    if (data.containsKey('glum_rating')) {
-      context.handle(
-          _glumRatingMeta,
-          glumRating.isAcceptableOrUnknown(
-              data['glum_rating']!, _glumRatingMeta));
-    } else if (isInserting) {
-      context.missing(_glumRatingMeta);
-    }
-    if (data.containsKey('date')) {
-      context.handle(
-          _dateMeta, date.isAcceptableOrUnknown(data['date']!, _dateMeta));
-    } else if (isInserting) {
-      context.missing(_dateMeta);
-    }
     return context;
   }
 
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Story map(Map<String, dynamic> data, {String? tablePrefix}) {
+  Tag map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Story(
+    return Tag(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       title: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
-      description: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}description'])!,
-      glumRating: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}glum_rating'])!,
-      date: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}date'])!,
     );
   }
 
   @override
-  $StoriesTable createAlias(String alias) {
-    return $StoriesTable(attachedDatabase, alias);
+  $TagsTable createAlias(String alias) {
+    return $TagsTable(attachedDatabase, alias);
   }
 }
 
@@ -402,11 +467,11 @@ class TagsCompanion extends UpdateCompanion<Tag> {
   }
 }
 
-class $TagsTable extends Tags with TableInfo<$TagsTable, Tag> {
+class $PhotosTable extends Photos with TableInfo<$PhotosTable, Photo> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $TagsTable(this.attachedDatabase, [this._alias]);
+  $PhotosTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -416,34 +481,43 @@ class $TagsTable extends Tags with TableInfo<$TagsTable, Tag> {
       requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  static const VerificationMeta _fileNameMeta =
+      const VerificationMeta('fileName');
   @override
-  late final GeneratedColumn<String> title =
-      GeneratedColumn<String>('title', aliasedName, false,
-          additionalChecks: GeneratedColumn.checkTextLength(
-            minTextLength: 1,
-          ),
-          type: DriftSqlType.string,
-          requiredDuringInsert: true);
+  late final GeneratedColumn<String> fileName = GeneratedColumn<String>(
+      'file_name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _filePathMeta =
+      const VerificationMeta('filePath');
   @override
-  List<GeneratedColumn> get $columns => [id, title];
+  late final GeneratedColumn<String> filePath = GeneratedColumn<String>(
+      'file_path', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   @override
-  String get aliasedName => _alias ?? 'tags';
+  List<GeneratedColumn> get $columns => [id, fileName, filePath];
   @override
-  String get actualTableName => 'tags';
+  String get aliasedName => _alias ?? 'photos';
   @override
-  VerificationContext validateIntegrity(Insertable<Tag> instance,
+  String get actualTableName => 'photos';
+  @override
+  VerificationContext validateIntegrity(Insertable<Photo> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('title')) {
-      context.handle(
-          _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
+    if (data.containsKey('file_name')) {
+      context.handle(_fileNameMeta,
+          fileName.isAcceptableOrUnknown(data['file_name']!, _fileNameMeta));
     } else if (isInserting) {
-      context.missing(_titleMeta);
+      context.missing(_fileNameMeta);
+    }
+    if (data.containsKey('file_path')) {
+      context.handle(_filePathMeta,
+          filePath.isAcceptableOrUnknown(data['file_path']!, _filePathMeta));
+    } else if (isInserting) {
+      context.missing(_filePathMeta);
     }
     return context;
   }
@@ -451,19 +525,21 @@ class $TagsTable extends Tags with TableInfo<$TagsTable, Tag> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Tag map(Map<String, dynamic> data, {String? tablePrefix}) {
+  Photo map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Tag(
+    return Photo(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      title: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
+      fileName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}file_name'])!,
+      filePath: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}file_path'])!,
     );
   }
 
   @override
-  $TagsTable createAlias(String alias) {
-    return $TagsTable(attachedDatabase, alias);
+  $PhotosTable createAlias(String alias) {
+    return $PhotosTable(attachedDatabase, alias);
   }
 }
 
@@ -597,79 +673,71 @@ class PhotosCompanion extends UpdateCompanion<Photo> {
   }
 }
 
-class $PhotosTable extends Photos with TableInfo<$PhotosTable, Photo> {
+class $StoryTagsTable extends StoryTags
+    with TableInfo<$StoryTagsTable, StoryTag> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $PhotosTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  $StoryTagsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _storyIdMeta =
+      const VerificationMeta('storyId');
   @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
-      hasAutoIncrement: true,
+  late final GeneratedColumn<int> storyId = GeneratedColumn<int>(
+      'story_id', aliasedName, false,
       type: DriftSqlType.int,
-      requiredDuringInsert: false,
+      requiredDuringInsert: true,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _fileNameMeta =
-      const VerificationMeta('fileName');
+          GeneratedColumn.constraintIsAlways('REFERENCES stories (id)'));
+  static const VerificationMeta _tagIdMeta = const VerificationMeta('tagId');
   @override
-  late final GeneratedColumn<String> fileName = GeneratedColumn<String>(
-      'file_name', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _filePathMeta =
-      const VerificationMeta('filePath');
+  late final GeneratedColumn<int> tagId = GeneratedColumn<int>(
+      'tag_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES tags (id)'));
   @override
-  late final GeneratedColumn<String> filePath = GeneratedColumn<String>(
-      'file_path', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+  List<GeneratedColumn> get $columns => [storyId, tagId];
   @override
-  List<GeneratedColumn> get $columns => [id, fileName, filePath];
+  String get aliasedName => _alias ?? 'story_tags';
   @override
-  String get aliasedName => _alias ?? 'photos';
+  String get actualTableName => 'story_tags';
   @override
-  String get actualTableName => 'photos';
-  @override
-  VerificationContext validateIntegrity(Insertable<Photo> instance,
+  VerificationContext validateIntegrity(Insertable<StoryTag> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('file_name')) {
-      context.handle(_fileNameMeta,
-          fileName.isAcceptableOrUnknown(data['file_name']!, _fileNameMeta));
+    if (data.containsKey('story_id')) {
+      context.handle(_storyIdMeta,
+          storyId.isAcceptableOrUnknown(data['story_id']!, _storyIdMeta));
     } else if (isInserting) {
-      context.missing(_fileNameMeta);
+      context.missing(_storyIdMeta);
     }
-    if (data.containsKey('file_path')) {
-      context.handle(_filePathMeta,
-          filePath.isAcceptableOrUnknown(data['file_path']!, _filePathMeta));
+    if (data.containsKey('tag_id')) {
+      context.handle(
+          _tagIdMeta, tagId.isAcceptableOrUnknown(data['tag_id']!, _tagIdMeta));
     } else if (isInserting) {
-      context.missing(_filePathMeta);
+      context.missing(_tagIdMeta);
     }
     return context;
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id};
+  Set<GeneratedColumn> get $primaryKey => const {};
   @override
-  Photo map(Map<String, dynamic> data, {String? tablePrefix}) {
+  StoryTag map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Photo(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      fileName: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}file_name'])!,
-      filePath: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}file_path'])!,
+    return StoryTag(
+      storyId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}story_id'])!,
+      tagId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}tag_id'])!,
     );
   }
 
   @override
-  $PhotosTable createAlias(String alias) {
-    return $PhotosTable(attachedDatabase, alias);
+  $StoryTagsTable createAlias(String alias) {
+    return $StoryTagsTable(attachedDatabase, alias);
   }
 }
 
@@ -783,12 +851,12 @@ class StoryTagsCompanion extends UpdateCompanion<StoryTag> {
   }
 }
 
-class $StoryTagsTable extends StoryTags
-    with TableInfo<$StoryTagsTable, StoryTag> {
+class $StoryPhotosTable extends StoryPhotos
+    with TableInfo<$StoryPhotosTable, StoryPhoto> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $StoryTagsTable(this.attachedDatabase, [this._alias]);
+  $StoryPhotosTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _storyIdMeta =
       const VerificationMeta('storyId');
   @override
@@ -798,22 +866,23 @@ class $StoryTagsTable extends StoryTags
       requiredDuringInsert: true,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('REFERENCES stories (id)'));
-  static const VerificationMeta _tagIdMeta = const VerificationMeta('tagId');
+  static const VerificationMeta _photoIdMeta =
+      const VerificationMeta('photoId');
   @override
-  late final GeneratedColumn<int> tagId = GeneratedColumn<int>(
-      'tag_id', aliasedName, false,
+  late final GeneratedColumn<int> photoId = GeneratedColumn<int>(
+      'photo_id', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES tags (id)'));
+          GeneratedColumn.constraintIsAlways('REFERENCES photos (id)'));
   @override
-  List<GeneratedColumn> get $columns => [storyId, tagId];
+  List<GeneratedColumn> get $columns => [storyId, photoId];
   @override
-  String get aliasedName => _alias ?? 'story_tags';
+  String get aliasedName => _alias ?? 'story_photos';
   @override
-  String get actualTableName => 'story_tags';
+  String get actualTableName => 'story_photos';
   @override
-  VerificationContext validateIntegrity(Insertable<StoryTag> instance,
+  VerificationContext validateIntegrity(Insertable<StoryPhoto> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -823,11 +892,11 @@ class $StoryTagsTable extends StoryTags
     } else if (isInserting) {
       context.missing(_storyIdMeta);
     }
-    if (data.containsKey('tag_id')) {
-      context.handle(
-          _tagIdMeta, tagId.isAcceptableOrUnknown(data['tag_id']!, _tagIdMeta));
+    if (data.containsKey('photo_id')) {
+      context.handle(_photoIdMeta,
+          photoId.isAcceptableOrUnknown(data['photo_id']!, _photoIdMeta));
     } else if (isInserting) {
-      context.missing(_tagIdMeta);
+      context.missing(_photoIdMeta);
     }
     return context;
   }
@@ -835,19 +904,19 @@ class $StoryTagsTable extends StoryTags
   @override
   Set<GeneratedColumn> get $primaryKey => const {};
   @override
-  StoryTag map(Map<String, dynamic> data, {String? tablePrefix}) {
+  StoryPhoto map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return StoryTag(
+    return StoryPhoto(
       storyId: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}story_id'])!,
-      tagId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}tag_id'])!,
+      photoId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}photo_id'])!,
     );
   }
 
   @override
-  $StoryTagsTable createAlias(String alias) {
-    return $StoryTagsTable(attachedDatabase, alias);
+  $StoryPhotosTable createAlias(String alias) {
+    return $StoryPhotosTable(attachedDatabase, alias);
   }
 }
 
@@ -961,72 +1030,79 @@ class StoryPhotosCompanion extends UpdateCompanion<StoryPhoto> {
   }
 }
 
-class $StoryPhotosTable extends StoryPhotos
-    with TableInfo<$StoryPhotosTable, StoryPhoto> {
+class $CardsTable extends Cards with TableInfo<$CardsTable, Card> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $StoryPhotosTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _storyIdMeta =
-      const VerificationMeta('storyId');
+  $CardsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
-  late final GeneratedColumn<int> storyId = GeneratedColumn<int>(
-      'story_id', aliasedName, false,
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
       type: DriftSqlType.int,
-      requiredDuringInsert: true,
+      requiredDuringInsert: false,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES stories (id)'));
-  static const VerificationMeta _photoIdMeta =
-      const VerificationMeta('photoId');
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _monthYearMeta =
+      const VerificationMeta('monthYear');
   @override
-  late final GeneratedColumn<int> photoId = GeneratedColumn<int>(
-      'photo_id', aliasedName, false,
-      type: DriftSqlType.int,
-      requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES photos (id)'));
+  late final GeneratedColumn<DateTime> monthYear = GeneratedColumn<DateTime>(
+      'month_year', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _colorValueMeta =
+      const VerificationMeta('colorValue');
   @override
-  List<GeneratedColumn> get $columns => [storyId, photoId];
+  late final GeneratedColumn<int> colorValue = GeneratedColumn<int>(
+      'color_value', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
   @override
-  String get aliasedName => _alias ?? 'story_photos';
+  List<GeneratedColumn> get $columns => [id, monthYear, colorValue];
   @override
-  String get actualTableName => 'story_photos';
+  String get aliasedName => _alias ?? 'cards';
   @override
-  VerificationContext validateIntegrity(Insertable<StoryPhoto> instance,
+  String get actualTableName => 'cards';
+  @override
+  VerificationContext validateIntegrity(Insertable<Card> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('story_id')) {
-      context.handle(_storyIdMeta,
-          storyId.isAcceptableOrUnknown(data['story_id']!, _storyIdMeta));
-    } else if (isInserting) {
-      context.missing(_storyIdMeta);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('photo_id')) {
-      context.handle(_photoIdMeta,
-          photoId.isAcceptableOrUnknown(data['photo_id']!, _photoIdMeta));
+    if (data.containsKey('month_year')) {
+      context.handle(_monthYearMeta,
+          monthYear.isAcceptableOrUnknown(data['month_year']!, _monthYearMeta));
     } else if (isInserting) {
-      context.missing(_photoIdMeta);
+      context.missing(_monthYearMeta);
+    }
+    if (data.containsKey('color_value')) {
+      context.handle(
+          _colorValueMeta,
+          colorValue.isAcceptableOrUnknown(
+              data['color_value']!, _colorValueMeta));
     }
     return context;
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => const {};
+  Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  StoryPhoto map(Map<String, dynamic> data, {String? tablePrefix}) {
+  Card map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return StoryPhoto(
-      storyId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}story_id'])!,
-      photoId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}photo_id'])!,
+    return Card(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      monthYear: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}month_year'])!,
+      colorValue: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}color_value']),
     );
   }
 
   @override
-  $StoryPhotosTable createAlias(String alias) {
-    return $StoryPhotosTable(attachedDatabase, alias);
+  $CardsTable createAlias(String alias) {
+    return $CardsTable(attachedDatabase, alias);
   }
 }
 
@@ -1166,79 +1242,71 @@ class CardsCompanion extends UpdateCompanion<Card> {
   }
 }
 
-class $CardsTable extends Cards with TableInfo<$CardsTable, Card> {
+class $CardPhotosTable extends CardPhotos
+    with TableInfo<$CardPhotosTable, CardPhoto> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $CardsTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  $CardPhotosTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _cardIdMeta = const VerificationMeta('cardId');
   @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
-      hasAutoIncrement: true,
+  late final GeneratedColumn<int> cardId = GeneratedColumn<int>(
+      'card_id', aliasedName, false,
       type: DriftSqlType.int,
-      requiredDuringInsert: false,
+      requiredDuringInsert: true,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _monthYearMeta =
-      const VerificationMeta('monthYear');
+          GeneratedColumn.constraintIsAlways('REFERENCES cards (id)'));
+  static const VerificationMeta _photoIdMeta =
+      const VerificationMeta('photoId');
   @override
-  late final GeneratedColumn<DateTime> monthYear = GeneratedColumn<DateTime>(
-      'month_year', aliasedName, false,
-      type: DriftSqlType.dateTime, requiredDuringInsert: true);
-  static const VerificationMeta _colorValueMeta =
-      const VerificationMeta('colorValue');
+  late final GeneratedColumn<int> photoId = GeneratedColumn<int>(
+      'photo_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES photos (id)'));
   @override
-  late final GeneratedColumn<int> colorValue = GeneratedColumn<int>(
-      'color_value', aliasedName, true,
-      type: DriftSqlType.int, requiredDuringInsert: false);
+  List<GeneratedColumn> get $columns => [cardId, photoId];
   @override
-  List<GeneratedColumn> get $columns => [id, monthYear, colorValue];
+  String get aliasedName => _alias ?? 'card_photos';
   @override
-  String get aliasedName => _alias ?? 'cards';
+  String get actualTableName => 'card_photos';
   @override
-  String get actualTableName => 'cards';
-  @override
-  VerificationContext validateIntegrity(Insertable<Card> instance,
+  VerificationContext validateIntegrity(Insertable<CardPhoto> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('month_year')) {
-      context.handle(_monthYearMeta,
-          monthYear.isAcceptableOrUnknown(data['month_year']!, _monthYearMeta));
+    if (data.containsKey('card_id')) {
+      context.handle(_cardIdMeta,
+          cardId.isAcceptableOrUnknown(data['card_id']!, _cardIdMeta));
     } else if (isInserting) {
-      context.missing(_monthYearMeta);
+      context.missing(_cardIdMeta);
     }
-    if (data.containsKey('color_value')) {
-      context.handle(
-          _colorValueMeta,
-          colorValue.isAcceptableOrUnknown(
-              data['color_value']!, _colorValueMeta));
+    if (data.containsKey('photo_id')) {
+      context.handle(_photoIdMeta,
+          photoId.isAcceptableOrUnknown(data['photo_id']!, _photoIdMeta));
+    } else if (isInserting) {
+      context.missing(_photoIdMeta);
     }
     return context;
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id};
+  Set<GeneratedColumn> get $primaryKey => const {};
   @override
-  Card map(Map<String, dynamic> data, {String? tablePrefix}) {
+  CardPhoto map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Card(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      monthYear: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}month_year'])!,
-      colorValue: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}color_value']),
+    return CardPhoto(
+      cardId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}card_id'])!,
+      photoId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}photo_id'])!,
     );
   }
 
   @override
-  $CardsTable createAlias(String alias) {
-    return $CardsTable(attachedDatabase, alias);
+  $CardPhotosTable createAlias(String alias) {
+    return $CardPhotosTable(attachedDatabase, alias);
   }
 }
 
@@ -1349,74 +1417,6 @@ class CardPhotosCompanion extends UpdateCompanion<CardPhoto> {
           ..write('photoId: $photoId')
           ..write(')'))
         .toString();
-  }
-}
-
-class $CardPhotosTable extends CardPhotos
-    with TableInfo<$CardPhotosTable, CardPhoto> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $CardPhotosTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _cardIdMeta = const VerificationMeta('cardId');
-  @override
-  late final GeneratedColumn<int> cardId = GeneratedColumn<int>(
-      'card_id', aliasedName, false,
-      type: DriftSqlType.int,
-      requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES cards (id)'));
-  static const VerificationMeta _photoIdMeta =
-      const VerificationMeta('photoId');
-  @override
-  late final GeneratedColumn<int> photoId = GeneratedColumn<int>(
-      'photo_id', aliasedName, false,
-      type: DriftSqlType.int,
-      requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES photos (id)'));
-  @override
-  List<GeneratedColumn> get $columns => [cardId, photoId];
-  @override
-  String get aliasedName => _alias ?? 'card_photos';
-  @override
-  String get actualTableName => 'card_photos';
-  @override
-  VerificationContext validateIntegrity(Insertable<CardPhoto> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('card_id')) {
-      context.handle(_cardIdMeta,
-          cardId.isAcceptableOrUnknown(data['card_id']!, _cardIdMeta));
-    } else if (isInserting) {
-      context.missing(_cardIdMeta);
-    }
-    if (data.containsKey('photo_id')) {
-      context.handle(_photoIdMeta,
-          photoId.isAcceptableOrUnknown(data['photo_id']!, _photoIdMeta));
-    } else if (isInserting) {
-      context.missing(_photoIdMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => const {};
-  @override
-  CardPhoto map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return CardPhoto(
-      cardId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}card_id'])!,
-      photoId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}photo_id'])!,
-    );
-  }
-
-  @override
-  $CardPhotosTable createAlias(String alias) {
-    return $CardPhotosTable(attachedDatabase, alias);
   }
 }
 

@@ -179,10 +179,8 @@ class CardDao extends DatabaseAccessor<GlumDatabase> with _$CardDaoMixin {
                 ? PhotoDto.fromJson(photoData.toJson())
                 : null,
           );
-          print(cardDto);
           cardDtos.add(cardDto);
         }
-        print("CARD DETOS: {$cardDtos}");
         return cardDtos;
       },
     );

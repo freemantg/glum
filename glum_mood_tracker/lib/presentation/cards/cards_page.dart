@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:glum_mood_tracker/presentation/cards/providers/providers.dart';
@@ -6,7 +7,6 @@ import 'package:glum_mood_tracker/shared/extensions.dart';
 import 'package:glum_mood_tracker/shared/providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../domain/card.dart' as domain;
 import '../../domain/story.dart';
 import '../../styles/styles.dart';
 import '../routes/app_router.gr.dart';
@@ -127,7 +127,7 @@ class CardCarousel extends ConsumerWidget {
           loadSuccess: (state) {
             return state.cards;
           },
-          orElse: () => <domain.Card>[],
+          orElse: () => List.empty(),
         );
 
     return PageView.builder(
@@ -139,9 +139,10 @@ class CardCarousel extends ConsumerWidget {
               },
               orElse: () => DateTime.now(),
             );
-        ref
-            .read(storiesNotifierProvider.notifier)
-            .watchStoriesByMonthYear(monthYear);
+        ref.read(cardFormNotifierProvider.notifier).monthYearChanged(monthYear);
+        final card = cards.firstWhereOrNull(
+            (card) => card.monthYear.isAtSameMomentAs(monthYear));
+        ref.read(cardFormNotifierProvider.notifier).initialiseCard(card);
       },
       controller: ref.watch(pageViewControllerProvider),
       itemCount: 12,
@@ -153,12 +154,11 @@ class CardCarousel extends ConsumerWidget {
               },
               orElse: () => DateTime.now(),
             );
-        final card = cards.firstWhere(
-          (card) => card.monthYear.isAtSameMomentAs(monthYear),
-          orElse: () => domain.Card(monthYear: monthYear),
-        );
+        final card = cards.firstWhereOrNull(
+            (card) => card.monthYear.isAtSameMomentAs(monthYear));
         return MonthCard(
           showCalendar: showCalendar,
+          monthYear: monthYear,
           card: card,
         );
       },

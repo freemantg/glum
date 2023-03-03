@@ -38,7 +38,6 @@ class CardsStateNotifier extends StateNotifier<CardsState> {
           (cards) {
             final cardsss = cards.map((e) => e).toList();
             state = CardsState.loadSuccess(cards: cardsss);
-            print("CARDS $cardsss");
           },
         );
       },

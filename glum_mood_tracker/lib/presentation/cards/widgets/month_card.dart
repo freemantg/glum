@@ -9,38 +9,28 @@ import '/../domain/card.dart' as domain;
 import '../../routes/app_router.gr.dart';
 import '../cards_page.dart';
 
-class MonthCard extends ConsumerStatefulWidget {
+class MonthCard extends ConsumerWidget {
   const MonthCard({
     Key? key,
     required this.showCalendar,
     required this.card,
+    required this.monthYear,
   }) : super(key: key);
 
   final bool showCalendar;
-  final domain.Card card;
+  final domain.Card? card;
+  final DateTime monthYear;
 
   @override
-  ConsumerState<MonthCard> createState() => _MonthCardState();
-}
-
-class _MonthCardState extends ConsumerState<MonthCard> {
-  @override
-  void initState() {
-    super.initState();
-    Future.microtask(() => ref
-        .watch(cardFormNotifierProvider.notifier)
-        .initialiseCard(widget.card));
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final cardState = ref.watch(cardFormNotifierProvider).card;
 
     return GestureDetector(
-      onTap: () =>
-          context.pushRoute(MonthPageRoute(monthYear: widget.card.monthYear)),
+      onTap: () => context.pushRoute(
+        MonthPageRoute(monthYear: monthYear),
+      ),
       child: Card(
-        color: widget.card.color,
+        color: card?.color,
         elevation: 8,
         margin: EdgeInsets.all($styles.insets.sm),
         shape: RoundedRectangleBorder(
@@ -54,21 +44,17 @@ class _MonthCardState extends ConsumerState<MonthCard> {
             $styles.insets.sm,
           ),
           child: Column(
-            crossAxisAlignment: widget.showCalendar
+            crossAxisAlignment: showCalendar
                 ? CrossAxisAlignment.center
                 : CrossAxisAlignment.start,
             children: [
-              Text('FORM STATE DATE ${widget.card.monthYear.toString()}'),
-              Text('PASSED IN CARD DATE ${widget.card.monthYear.toString()}'),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(widget.card.monthYear.month.toString(),
-                      style: $styles.text.h1),
+                  Text(monthYear.month.toString(), style: $styles.text.h1),
                   Text(
                     DateFormat.MMM()
-                        .format(DateTime(widget.card.monthYear.year,
-                            widget.card.monthYear.month))
+                        .format(DateTime(monthYear.year, monthYear.month))
                         .toUpperCase(),
                     style: $styles.text.h3.copyWith(
                       height: 0,
@@ -78,10 +64,10 @@ class _MonthCardState extends ConsumerState<MonthCard> {
                 ],
               ),
               const Spacer(),
-              widget.showCalendar
-                  ? StyledMonthViewCalendar(monthYear: widget.card.monthYear)
-                  : MonthProgressBar(monthYear: widget.card.monthYear),
-              widget.showCalendar ? const Spacer() : const SizedBox.shrink(),
+              showCalendar
+                  ? StyledMonthViewCalendar(monthYear: monthYear)
+                  : MonthProgressBar(monthYear: monthYear),
+              showCalendar ? const Spacer() : const SizedBox.shrink(),
             ],
           ),
         ),

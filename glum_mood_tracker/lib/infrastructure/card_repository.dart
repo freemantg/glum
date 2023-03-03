@@ -14,7 +14,6 @@ class CardRepository extends ICardRepository {
 
   @override
   Future<Either<CardFailure, Unit>> addCard(Card card) async {
-    print("ADD CARDDDD: $card");
     try {
       await _db.cardDao.insertCard(CardDto.fromDomain(card));
       return right(unit);
