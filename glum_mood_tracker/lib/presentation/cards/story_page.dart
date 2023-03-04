@@ -35,8 +35,9 @@ class StoryPage extends StatelessWidget {
                     bottom: $styles.insets.sm,
                   ),
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      SizedBox(height: $styles.insets.sm),
+                      SizedBox(height: $styles.insets.lg),
                       Text(
                         story.title,
                         maxLines: 1,
@@ -50,9 +51,25 @@ class StoryPage extends StatelessWidget {
                             .copyWith(color: Colors.white70),
                       ),
                       SizedBox(height: $styles.insets.sm),
-                      Text(
-                        story.glumRating.toString(),
-                        style: $styles.text.h3,
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          vertical: $styles.insets.xxs,
+                          horizontal: $styles.insets.xs,
+                        ),
+                        decoration: BoxDecoration(
+                          color:
+                              story.glumRating.ratingToColor().withOpacity(0.1),
+                          border: Border.all(
+                            width: 1.5,
+                            color: Colors.white70.withOpacity(0.5),
+                          ),
+                          borderRadius:
+                              BorderRadius.circular($styles.corners.md),
+                        ),
+                        child: Text(
+                          story.glumRating.toString(),
+                          style: $styles.text.bodySmallBold.copyWith(height: 0),
+                        ),
                       ),
                       SizedBox(height: $styles.insets.md),
                       Align(

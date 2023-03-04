@@ -44,45 +44,63 @@ class _MonthPageState extends ConsumerState<MonthPage> {
                             context.router.push(StoryPageRoute(story: story)),
                         child: StyledCard(
                           customPadding: true,
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.all($styles.insets.lg),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      story.date.day.toString(),
-                                      style: $styles.text.h3,
-                                    ),
-                                    Text(
-                                      story.date.dateTimeInDayFormat,
-                                      style: $styles.text.caption,
-                                    ),
-                                    SizedBox(height: $styles.insets.sm),
-                                    Text(story.glumRating.toString())
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  height: constraints.maxHeight / 4,
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      left: BorderSide(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        width: 0.5,
-                                      ),
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                              maxHeight: constraints.maxHeight / 4,
+                            ),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.all($styles.insets.lg),
+                                  child: Expanded(
+                                    child: Column(
+                                      children: [
+                                        SizedBox(height: $styles.insets.xs),
+                                        Text(
+                                          story.date.day.toString(),
+                                          style: $styles.text.h2
+                                              .copyWith(height: 0),
+                                        ),
+                                        Text(
+                                          story.date.dateTimeInDayFormat,
+                                          style: $styles.text.caption
+                                              .copyWith(height: 0),
+                                        ),
+                                        SizedBox(height: $styles.insets.xs),
+                                        Text(
+                                          story.glumRating.toString(),
+                                          style: $styles.text.bodySmallBold
+                                              .copyWith(
+                                            color: Colors.grey.withOpacity(0.5),
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  child: (story.photos.isNotEmpty)
-                                      ? Image.file(
-                                          story.photos.first.file!,
-                                          fit: BoxFit.cover,
-                                        )
-                                      : TitleAndDescriptionWidget(story: story),
                                 ),
-                              ),
-                            ],
+                                Expanded(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                        left: BorderSide(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          width: 0.5,
+                                        ),
+                                      ),
+                                    ),
+                                    child: (story.photos.isNotEmpty)
+                                        ? Image.file(
+                                            story.photos.first.file!,
+                                            fit: BoxFit.cover,
+                                          )
+                                        : TitleAndDescriptionWidget(
+                                            story: story,
+                                          ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       );

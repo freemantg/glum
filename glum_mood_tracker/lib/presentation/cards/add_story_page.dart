@@ -51,13 +51,17 @@ class _AddStoryPageState extends ConsumerState<AddStoryPage> {
                 TitleTextField(title: widget.story?.title),
                 SizedBox(height: $styles.insets.xs),
                 const RatingBarWidget(),
-                SizedBox(height: $styles.insets.xs),
+                SizedBox(height: $styles.insets.sm),
                 const DescriptionTextField(),
-                TagBar(ref: ref),
               ],
             ),
           )
         ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.transparent,
+        elevation: 0,
+        child: TagBar(ref: ref),
       ),
     );
   }
@@ -167,9 +171,12 @@ class AddTagWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: Icon(
-        Icons.tag,
-        color: Colors.grey.withOpacity(0.85),
+      child: Transform.scale(
+        scaleX: -1,
+        child: Icon(
+          Icons.sell_outlined,
+          color: Colors.grey.withOpacity(0.85),
+        ),
       ),
       onTap: () => showTagModalBottomSheet(context),
     );
@@ -219,7 +226,7 @@ class DescriptionTextField extends ConsumerWidget {
       maxLines: null,
       decoration: InputDecoration(
         border: InputBorder.none,
-        hintStyle: $styles.text.bodySmall,
+        hintStyle: $styles.text.bodySmall.copyWith(color: Colors.grey),
         hintText: formState.story.description.isEmpty
             ? 'Write about your glum...'
             : formState.story.description,

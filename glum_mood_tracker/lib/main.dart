@@ -24,15 +24,13 @@ class AppWidget extends StatelessWidget {
           floatingActionButtonTheme: const FloatingActionButtonThemeData(
             backgroundColor: Color(0xFFD76A66),
           ),
-          colorScheme: ColorScheme.fromSeed(
-            background: const Color(0xFF121212),
-            seedColor: Colors.pinkAccent,
-            brightness: Brightness.dark,
-          ),
           appBarTheme: const AppBarTheme(
             iconTheme: IconThemeData(),
             backgroundColor: Colors.transparent,
             elevation: 0.0,
+          ),
+          bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+            selectedIconTheme: IconThemeData(color: Colors.white),
           ),
         ),
         routerDelegate: appRouter.delegate(),
