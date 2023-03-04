@@ -9,6 +9,7 @@ import 'package:glum_mood_tracker/infrastructure/drift_database.dart' hide Card;
 import 'package:glum_mood_tracker/infrastructure/photo_repository.dart';
 import 'package:glum_mood_tracker/infrastructure/story_repository.dart';
 import 'package:glum_mood_tracker/infrastructure/tag_repository.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../application/stats/stats_notifier.dart';
 import '../infrastructure/card_repository.dart';
@@ -20,7 +21,10 @@ final storiesNotifierProvider =
 
 final storyFormNotifierProvider =
     StateNotifierProvider.autoDispose<StoryFormNotifier, StoryFormState>(
-  (ref) => StoryFormNotifier(ref.watch(storyRepositoryProvider)),
+  (ref) => StoryFormNotifier(
+    storyRepository: ref.watch(storyRepositoryProvider),
+    photoRepository: ref.watch(photoRepositoryProvider),
+  ),
 );
 
 final tagFormNotifierProvider = StateNotifierProvider<TagNotifier, TagsState>(
@@ -39,7 +43,9 @@ final tagRepositoryProvider = Provider(
   (ref) => TagRepository(ref.watch(glumDatabaseProvider)),
 );
 
-final photoRepositoryProvider = Provider((ref) => PhotoRepository());
+final photoRepositoryProvider = Provider(
+  (ref) => PhotoRepository(imagePicker: ref.watch(imagePickerProvider)),
+);
 
 final glumDatabaseProvider = Provider((ref) => GlumDatabase());
 
@@ -59,10 +65,15 @@ final cardRepositoryProvider = Provider(
 
 final cardFormNotifierProvider =
     StateNotifierProvider<CardFormNotifier, CardFormState>(
-  (ref) => CardFormNotifier(ref.watch(cardRepositoryProvider)),
+  (ref) => CardFormNotifier(
+    cardRepository: ref.watch(cardRepositoryProvider),
+    photoRepository: ref.watch(photoRepositoryProvider),
+  ),
 );
 
 final cardsNotifier = StateNotifierProvider<CardsStateNotifier, CardsState>(
   (ref) =>
       CardsStateNotifier(cardRepository: ref.watch(cardRepositoryProvider)),
 );
+
+final imagePickerProvider = Provider((ref) => ImagePicker());

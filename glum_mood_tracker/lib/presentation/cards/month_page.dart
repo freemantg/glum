@@ -103,13 +103,13 @@ class _MonthPageState extends ConsumerState<MonthPage> {
           widget.monthYear.year,
           widget.monthYear.month,
         ).dateTimeInMonthYearString,
-        style: $styles.text.title2,
+        style: $styles.text.bodyBold,
       ),
       centerTitle: true,
       actions: [
         IconButton(
           onPressed: () {},
-          icon: const Icon(Icons.filter_list),
+          icon: const Icon(Icons.sort),
         ),
       ],
     );
@@ -133,6 +133,7 @@ class TitleAndDescriptionWidget extends StatelessWidget {
           padding: EdgeInsets.all($styles.insets.md),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 story.title,

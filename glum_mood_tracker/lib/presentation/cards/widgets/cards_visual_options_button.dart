@@ -39,7 +39,9 @@ class CardVisualOptionsButton extends ConsumerWidget {
                     ),
                     const Spacer(),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () => ref
+                          .read(cardFormNotifierProvider.notifier)
+                          .photoChanged(),
                       icon: const Icon(Icons.keyboard_arrow_right),
                     )
                   ],

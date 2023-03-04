@@ -219,6 +219,7 @@ class DescriptionTextField extends ConsumerWidget {
       maxLines: null,
       decoration: InputDecoration(
         border: InputBorder.none,
+        hintStyle: $styles.text.bodySmall,
         hintText: formState.story.description.isEmpty
             ? 'Write about your glum...'
             : formState.story.description,

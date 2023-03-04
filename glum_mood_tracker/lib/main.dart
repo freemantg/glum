@@ -63,7 +63,7 @@ class HomePage extends StatelessWidget {
               label: 'Cards',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
+              icon: Icon(Icons.view_timeline_outlined),
               label: 'Stats',
             )
           ],
@@ -74,7 +74,8 @@ class HomePage extends StatelessWidget {
         onPressed: () => AutoRouter.of(context).push(AddStoryPageRoute()),
         child: const Icon(Icons.edit),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterDocked,
     );
   }
 }

@@ -36,40 +36,56 @@ class MonthCard extends ConsumerWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular($styles.corners.md)),
         ),
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(
-            $styles.insets.sm,
-            $styles.insets.md,
-            $styles.insets.sm,
-            $styles.insets.sm,
-          ),
-          child: Column(
-            crossAxisAlignment: showCalendar
-                ? CrossAxisAlignment.center
-                : CrossAxisAlignment.start,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(monthYear.month.toString(), style: $styles.text.h1),
-                  Text(
-                    DateFormat.MMM()
-                        .format(DateTime(monthYear.year, monthYear.month))
-                        .toUpperCase(),
-                    style: $styles.text.h3.copyWith(
-                      height: 0,
-                      fontWeight: FontWeight.normal,
+        child: Stack(
+          children: [
+            if (!showCalendar)
+              if (card?.photo?.file != null)
+                Positioned.fill(
+                  child: ClipRRect(
+                    borderRadius:
+                        BorderRadius.all(Radius.circular($styles.corners.md)),
+                    child: Image.file(
+                      card!.photo!.file!,
+                      fit: BoxFit.cover,
                     ),
                   ),
+                ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                $styles.insets.sm,
+                $styles.insets.md,
+                $styles.insets.sm,
+                $styles.insets.sm,
+              ),
+              child: Column(
+                crossAxisAlignment: showCalendar
+                    ? CrossAxisAlignment.center
+                    : CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(monthYear.month.toString(), style: $styles.text.h1),
+                      Text(
+                        DateFormat.MMM()
+                            .format(DateTime(monthYear.year, monthYear.month))
+                            .toUpperCase(),
+                        style: $styles.text.h3.copyWith(
+                          height: 0,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  showCalendar
+                      ? StyledMonthViewCalendar(monthYear: monthYear)
+                      : MonthProgressBar(monthYear: monthYear),
+                  showCalendar ? const Spacer() : const SizedBox.shrink(),
                 ],
               ),
-              const Spacer(),
-              showCalendar
-                  ? StyledMonthViewCalendar(monthYear: monthYear)
-                  : MonthProgressBar(monthYear: monthYear),
-              showCalendar ? const Spacer() : const SizedBox.shrink(),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

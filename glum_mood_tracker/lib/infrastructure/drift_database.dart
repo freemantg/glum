@@ -142,17 +142,18 @@ class CardDao extends DatabaseAccessor<GlumDatabase> with _$CardDaoMixin {
     }
   }
 
-  Future<CardDto> watchCardByMonthYear(DateTime monthYear) async {
-    final query = select(cards).join(
-      [leftOuterJoin(cardPhotos, cardPhotos.cardId.equalsExp(cards.id))],
-    )..where(cards.monthYear.equals(monthYear));
-
-    final result = await query.getSingleOrNull();
-    if (result != null) {
-      final cardDto = CardDto.fromJson(result.readTable(cards).toJson());
-      return cardDto;
+  Future<void> updateCard(CardDto cardDto) async {
+    final id = cardDto.id;
+    if (id != null) {
+      await deleteCard(id);
+      await insertCard(cardDto);
     }
-    return CardDto(monthYear: monthYear);
+  }
+
+  Future<void> deleteCard(int cardId) async {
+    // First, delete any associated card and photos from join tables.
+    await (delete(cardPhotos)..where((tbl) => tbl.cardId.equals(cardId))).go();
+    await (delete(cards)..where((tbl) => tbl.id.equals(cardId))).go();
   }
 
   Stream<List<CardDto>> watchAllCards() {

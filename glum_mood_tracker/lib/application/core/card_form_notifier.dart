@@ -1,12 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart' hide Card;
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:glum_mood_tracker/domain/photo.dart';
 import 'package:glum_mood_tracker/infrastructure/card_repository.dart';
 
 import '../../domain/card.dart';
 import '../../domain/card_failure.dart';
+import '../../infrastructure/photo_repository.dart';
 
 part 'card_form_notifier.freezed.dart';
 
@@ -31,9 +32,15 @@ class CardFormState with _$CardFormState {
 }
 
 class CardFormNotifier extends StateNotifier<CardFormState> {
-  CardFormNotifier(this._cardRepository) : super(CardFormState.initial());
+  CardFormNotifier({
+    required CardRepository cardRepository,
+    required PhotoRepository photoRepository,
+  })  : _cardRepository = cardRepository,
+        _photoRepository = photoRepository,
+        super(CardFormState.initial());
 
   final CardRepository _cardRepository;
+  final PhotoRepository _photoRepository;
 
   Future<void> initialiseCard(Card? card) async {
     if (card != null) {
@@ -49,8 +56,13 @@ class CardFormNotifier extends StateNotifier<CardFormState> {
     state = state.copyWith(card: state.card.copyWith(monthYear: monthYear));
   }
 
-  Future<void> photoChanged(Photo photo) async {
-    state = state.copyWith(card: state.card.copyWith(photo: photo));
+  Future<void> photoChanged() async {
+    final photo = await _photoRepository.pickPhoto();
+    if (photo != null) {
+      await _photoRepository.savePhoto(photo);
+      state = state.copyWith(card: state.card.copyWith(photo: photo));
+      saved();
+    }
   }
 
   Future<void> colorChanged(Color color) async {

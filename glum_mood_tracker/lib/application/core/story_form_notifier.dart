@@ -1,13 +1,9 @@
-import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:glum_mood_tracker/infrastructure/photo_repository.dart';
 import 'package:glum_mood_tracker/infrastructure/story_repository.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart' as path;
 
-import '../../domain/photo.dart';
 import '../../domain/story.dart';
 import '../../domain/story_failure.dart';
 import '../../domain/tag.dart';
@@ -36,8 +32,14 @@ class StoryFormState with _$StoryFormState {
 
 class StoryFormNotifier extends StateNotifier<StoryFormState> {
   final StoryRepository _storyRepository;
+  final PhotoRepository _photoRepository;
 
-  StoryFormNotifier(this._storyRepository) : super(StoryFormState.initial());
+  StoryFormNotifier({
+    required StoryRepository storyRepository,
+    required PhotoRepository photoRepository,
+  })  : _storyRepository = storyRepository,
+        _photoRepository = photoRepository,
+        super(StoryFormState.initial());
 
   Future<void> initialiseStory(Story? story) async {
     if (story == null) return;
@@ -76,15 +78,9 @@ class StoryFormNotifier extends StateNotifier<StoryFormState> {
       state = state.copyWith(story: state.story.copyWith(date: date));
 
   Future<void> photoChanged() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      final fileName = path.basename(pickedFile.path);
-      final photo = Photo(
-        file: File(pickedFile.path),
-        fileName: fileName,
-        filePath: pickedFile.path,
-      );
+    final photo = await _photoRepository.pickPhoto();
+    if (photo != null) {
+      await _photoRepository.savePhoto(photo);
       state = state.copyWith(story: state.story.copyWith(photos: [photo]));
     }
   }

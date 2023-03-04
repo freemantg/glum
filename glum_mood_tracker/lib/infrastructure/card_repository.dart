@@ -29,9 +29,13 @@ class CardRepository extends ICardRepository {
   }
 
   @override
-  Future<Either<CardFailure, Unit>> updateCard(Card card) {
-    // TODO: implement updateCard
-    throw UnimplementedError();
+  Future<Either<CardFailure, Unit>> updateCard(Card card) async {
+    try {
+      await _db.cardDao.updateCard(CardDto.fromDomain(card));
+      return right(unit);
+    } catch (e) {
+      return left(const CardFailure.unableToUpdate());
+    }
   }
 
   @override

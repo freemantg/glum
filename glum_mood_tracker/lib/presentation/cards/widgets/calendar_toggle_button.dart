@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-
-import '../../../styles/styles.dart';
+import 'package:glum_mood_tracker/styles/styles.dart';
 
 class CalendarToggleButton extends HookWidget {
   const CalendarToggleButton({
@@ -18,18 +17,14 @@ class CalendarToggleButton extends HookWidget {
     return GestureDetector(
       onTap: toggleCalendar,
       child: Container(
-        padding: EdgeInsets.symmetric(
-          vertical: $styles.insets.xs,
-          horizontal: $styles.insets.lg,
-        ),
+        padding: EdgeInsets.all($styles.insets.xs),
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.white12),
-          color: Colors.transparent,
-          borderRadius: BorderRadius.circular($styles.corners.lg),
+          color: Colors.white70.withOpacity(0.05),
+          shape: BoxShape.circle,
         ),
-        child: Text(
-          showCalendar ? 'MONTH' : 'CALENDAR',
-          style: $styles.text.caption.copyWith(height: 0),
+        child: Icon(
+          showCalendar ? Icons.undo : Icons.calendar_month_outlined,
+          // style: $styles.text.caption.copyWith(height: 0),
         ),
       ),
     );

@@ -26,10 +26,10 @@ class _CardsPageState extends ConsumerState<CardsPage> {
   @override
   void initState() {
     super.initState();
-    // ref
-    //     .read(storiesNotifierProvider.notifier)
-    //     .watchStoriesByMonthYear(DateTime.now());
-    Future.microtask(() => ref.read(cardsNotifier.notifier).watchAllCards());
+
+    Future.microtask(() {
+      ref.read(cardsNotifier.notifier).watchAllCards();
+    });
   }
 
   @override
@@ -76,23 +76,27 @@ AppBar _buildStyledAppBar() {
   final today = DateTime.now();
 
   return AppBar(
-    leading: IconButton(
-      icon: const Icon(Icons.search),
-      onPressed: () {},
-    ),
     actions: [
       Consumer(
         builder: (BuildContext context, WidgetRef ref, Widget? child) {
           return GestureDetector(
             child: Padding(
-              padding: const EdgeInsets.only(right: 18.0),
-              child: Center(
-                child: Text(
-                  today.dateTimeNowInString,
-                  style: $styles.text.bodySmallBold.copyWith(
-                    fontSize: 12.0,
+              padding: EdgeInsets.only(
+                top: $styles.insets.sm,
+                left: $styles.insets.sm,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    today.dateTimeNowInString,
+                    style: $styles.text.bodySmallBold,
                   ),
-                ),
+                  Text(
+                    today.dateTimeInDayLongFormat,
+                    style: $styles.text.caption,
+                  ),
+                ],
               ),
             ),
             onTap: () {
@@ -108,6 +112,11 @@ AppBar _buildStyledAppBar() {
             },
           );
         },
+      ),
+      const Spacer(),
+      IconButton(
+        icon: const Icon(Icons.settings),
+        onPressed: () {},
       ),
     ],
   );
@@ -139,6 +148,10 @@ class CardCarousel extends ConsumerWidget {
               },
               orElse: () => DateTime.now(),
             );
+
+        ref
+            .read(storiesNotifierProvider.notifier)
+            .watchStoriesByMonthYear(monthYear);
         ref.read(cardFormNotifierProvider.notifier).monthYearChanged(monthYear);
         final card = cards.firstWhereOrNull(
             (card) => card.monthYear.isAtSameMomentAs(monthYear));
@@ -214,7 +227,6 @@ class StyledMonthViewCalendar extends StatelessWidget {
             fontSize: 12,
           ),
         ),
-        SizedBox(height: $styles.insets.sm),
       ],
     );
   }
@@ -296,7 +308,10 @@ class MonthProgressBar extends ConsumerWidget {
           width: MediaQuery.of(context).size.width / 4,
           child: ClipRRect(
             borderRadius: BorderRadius.circular($styles.corners.sm),
-            child: LinearProgressIndicator(value: stories / daysInMonth),
+            child: LinearProgressIndicator(
+              value: stories / daysInMonth,
+              backgroundColor: Colors.white70.withOpacity(0.50),
+            ),
           ),
         ),
         SizedBox(width: $styles.insets.xs),
