@@ -222,10 +222,7 @@ class StyledMonthViewCalendar extends StatelessWidget {
         SizedBox(height: $styles.insets.sm),
         Text(
           'Select a date to write',
-          style: $styles.text.bodySmallBold.copyWith(
-            color: Colors.white70,
-            fontSize: 12,
-          ),
+          style: $styles.text.caption.copyWith(color: Colors.white70),
         ),
       ],
     );

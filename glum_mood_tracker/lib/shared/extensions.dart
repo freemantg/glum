@@ -7,7 +7,7 @@ extension DateTimeX on DateTime {
   String get dateTimeInString => DateFormat('EEEE, d MMM').format(this);
   String get dateTimeInMonthYearString => DateFormat("MMMM yyyy").format(this);
   String get dateTimeInStoryPageFormat =>
-      DateFormat("EE, MMM dd / yyyy").format(this).toUpperCase();
+      DateFormat("EE, MMMM d. yyyy").format(this);
   String get dateTimeInDayFormat => DateFormat("EE").format(this).toUpperCase();
   String get dateTimeInDayLongFormat => DateFormat("EEEE").format(this);
   String get dateTimeInShortDayFormat =>

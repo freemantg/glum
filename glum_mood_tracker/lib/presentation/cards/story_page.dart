@@ -7,7 +7,6 @@ import 'package:glum_mood_tracker/shared/extensions.dart';
 import 'package:glum_mood_tracker/styles/styles.dart';
 
 import '../../domain/story.dart';
-import 'widgets/tag_chip.dart';
 
 class StoryPage extends StatelessWidget {
   const StoryPage({super.key, required this.story});
@@ -47,8 +46,8 @@ class StoryPage extends StatelessWidget {
                       SizedBox(height: $styles.insets.xs),
                       Text(
                         story.date.dateTimeInStoryPageFormat,
-                        style: $styles.text.caption
-                            .copyWith(color: Colors.white70),
+                        style:
+                            $styles.text.caption.copyWith(color: Colors.grey),
                       ),
                       SizedBox(height: $styles.insets.sm),
                       Container(
@@ -113,12 +112,28 @@ class StyledBottomBar extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(vertical: $styles.insets.sm),
-                child: Wrap(
-                  spacing: $styles.insets.xs,
-                  children: story.tags.map((e) => TagChip(tag: e)).toList(),
-                ),
-              ),
+                  padding: EdgeInsets.symmetric(vertical: $styles.insets.sm),
+                  child: Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.start,
+                    children: [
+                      Transform.scale(
+                        scaleX: -1,
+                        child: Icon(
+                          Icons.sell_outlined,
+                          size: 16.0,
+                          color: Colors.grey.withOpacity(0.85),
+                        ),
+                      ),
+                      SizedBox(width: $styles.insets.xs),
+                      Text(
+                        story.tags.map((e) => e.title).toList().join(', '),
+                        style: $styles.text.bodySmall.copyWith(
+                          color: Colors.white.withOpacity(0.45),
+                          fontSize: 12.0,
+                        ),
+                      ),
+                    ],
+                  )),
               const Divider(
                 thickness: 0.1,
                 height: 0,

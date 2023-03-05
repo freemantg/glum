@@ -94,12 +94,7 @@ class YearInGlumsCard extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.all($styles.insets.sm),
-            child: Text(
-              'YEAR IN GLUMS',
-              style: $styles.text.caption.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            child: Text('Year in Glums', style: $styles.text.bodySmallBold),
           ),
           Table(
             children: [
@@ -190,12 +185,7 @@ class WeekDistributionCard extends ConsumerWidget {
         children: [
           Padding(
             padding: EdgeInsets.all($styles.insets.sm),
-            child: Text(
-              'YOUR RECENT GLUMS',
-              style: $styles.text.caption.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            child: Text('Recent Glums', style: $styles.text.bodySmallBold),
           ),
           Row(
             children: [
@@ -259,10 +249,7 @@ class GlumDistributionCard extends ConsumerWidget {
         children: [
           Padding(
             padding: EdgeInsets.all($styles.insets.sm),
-            child: Text(
-              'GLUM DISTRIBUTION',
-              style: $styles.text.caption.copyWith(fontWeight: FontWeight.bold),
-            ),
+            child: Text('Glum Count', style: $styles.text.bodySmallBold),
           ),
           Row(
             children: [
@@ -313,12 +300,7 @@ class TopTagsCard extends ConsumerWidget {
         children: [
           Row(
             children: [
-              Text(
-                'TRENDING TAGS',
-                style: $styles.text.caption.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              Text('Trending Tags', style: $styles.text.bodySmallBold),
               const Spacer(),
               Text(
                 trendingTags.length.toString(),
@@ -330,7 +312,7 @@ class TopTagsCard extends ConsumerWidget {
               )
             ],
           ),
-          const Divider(),
+          SizedBox(height: $styles.insets.sm),
           Wrap(
             alignment: WrapAlignment.center,
             spacing: $styles.insets.xs,
@@ -360,7 +342,7 @@ class TagsDistributionCard extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const ToggleTagsFilterButton(),
-          const Divider(),
+          SizedBox(height: $styles.insets.sm),
           Wrap(
             spacing: $styles.insets.xs,
             children: trendingTags.entries
@@ -393,21 +375,20 @@ class ToggleTagsFilterButton extends HookConsumerWidget {
       child: Row(
         children: [
           Text(
-            'MOODS',
-            style: $styles.text.caption.copyWith(
-              fontWeight: FontWeight.bold,
-              color: isMoodsFilter.value ? const Color(0xFFD76A66) : null,
+            'Moods',
+            style: $styles.text.bodySmallBold.copyWith(
+              color: isMoodsFilter.value
+                  ? const Color(0xFFD76A66)
+                  : Theme.of(context).disabledColor,
             ),
           ),
-          const SizedBox(
-            height: 12,
-            child: VerticalDivider(thickness: 1.5),
-          ),
+          SizedBox(width: $styles.insets.xs),
           Text(
-            'GLUMS',
-            style: $styles.text.caption.copyWith(
-              fontWeight: FontWeight.bold,
-              color: !isMoodsFilter.value ? const Color(0xFFD76A66) : null,
+            'Glums',
+            style: $styles.text.bodySmallBold.copyWith(
+              color: !isMoodsFilter.value
+                  ? const Color(0xFFD76A66)
+                  : Theme.of(context).disabledColor,
             ),
           ),
           const Spacer(),
@@ -439,7 +420,7 @@ class StoryCountCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return StyledCard(
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Column(
             children: [
@@ -453,13 +434,10 @@ class StoryCountCard extends ConsumerWidget {
               SizedBox(height: $styles.insets.xxs),
               Text(
                 'All Stories',
-                style: $styles.text.caption,
+                style: $styles.text.caption
+                    .copyWith(color: Theme.of(context).disabledColor),
               ),
             ],
-          ),
-          const SizedBox(
-            height: 24,
-            child: VerticalDivider(),
           ),
           Column(
             children: [
@@ -473,7 +451,8 @@ class StoryCountCard extends ConsumerWidget {
               SizedBox(height: $styles.insets.xxs),
               Text(
                 'Glum Average',
-                style: $styles.text.caption,
+                style: $styles.text.caption
+                    .copyWith(color: Theme.of(context).disabledColor),
               )
             ],
           ),
@@ -509,7 +488,8 @@ class StoryTitleWidget extends StatelessWidget {
                 SizedBox(height: $styles.insets.xxs),
                 Text(
                   'What matters is the interior',
-                  style: $styles.text.caption,
+                  style: $styles.text.caption
+                      .copyWith(color: Theme.of(context).disabledColor),
                 ),
               ],
             ),

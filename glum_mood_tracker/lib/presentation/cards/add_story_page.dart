@@ -11,7 +11,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../domain/story.dart';
 import 'widgets/tag_bottom_modal_sheet.dart';
-import 'widgets/tag_chip.dart';
 
 class AddStoryPage extends ConsumerStatefulWidget {
   const AddStoryPage({super.key, this.story});
@@ -120,16 +119,24 @@ class TagBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final tags = ref
+        .watch(storyFormNotifierProvider)
+        .selectedTags
+        .map((tag) => tag.title)
+        .toList();
+
     return Wrap(
       crossAxisAlignment: WrapCrossAlignment.center,
-      spacing: $styles.insets.xs,
       children: [
         const AddTagWidget(),
-        ...ref
-            .watch(storyFormNotifierProvider)
-            .selectedTags
-            .map((e) => TagChip(tag: e))
-            .toList()
+        SizedBox(width: $styles.insets.xs),
+        Text(
+          tags.join(', '),
+          style: $styles.text.bodySmall.copyWith(
+            color: Colors.white.withOpacity(0.45),
+            fontSize: 12.0,
+          ),
+        ),
       ],
     );
   }
@@ -175,6 +182,7 @@ class AddTagWidget extends StatelessWidget {
         scaleX: -1,
         child: Icon(
           Icons.sell_outlined,
+          size: 16.0,
           color: Colors.grey.withOpacity(0.85),
         ),
       ),
