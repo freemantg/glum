@@ -46,26 +46,27 @@ class _MonthPageState extends ConsumerState<MonthPage> {
                           customPadding: true,
                           child: ConstrainedBox(
                             constraints: BoxConstraints(
-                              maxHeight: constraints.maxHeight / 4.5,
+                              maxHeight: constraints.maxHeight / 4,
                             ),
                             child: Row(
                               children: [
                                 Padding(
                                   padding: EdgeInsets.all($styles.insets.lg),
                                   child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       SizedBox(height: $styles.insets.xs),
                                       Text(
                                         story.date.day.toString(),
-                                        style: $styles.text.h2.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          color:
-                                              story.glumRating.ratingToColor(),
-                                        ),
+                                        style: $styles.text.h2Condensed,
                                       ),
                                       Text(
-                                        story.date.dateTimeInDayFormat,
-                                        style: $styles.text.caption,
+                                        story.date.dateTimeInDayFormat
+                                            .toUpperCase(),
+                                        style: $styles.text.caption.copyWith(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                       SizedBox(height: $styles.insets.xs),
                                     ],
@@ -151,6 +152,7 @@ class TitleAndDescriptionWidget extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
+              SizedBox(height: $styles.insets.xxs),
               Text(
                 story.description,
                 style: $styles.text.caption.copyWith(

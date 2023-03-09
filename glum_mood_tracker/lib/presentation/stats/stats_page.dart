@@ -34,24 +34,19 @@ class _StatsPageState extends ConsumerState<StatsPage> {
     return Scaffold(
       appBar: _buildAppBar(),
       body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm),
-        children: [
-          const StoryTitleWidget(),
-          SizedBox(height: $styles.insets.xs),
-          const StoryCountCard(),
-          SizedBox(height: $styles.insets.xs),
-          const PhotosCard(),
-          SizedBox(height: $styles.insets.xs),
-          const GlumDistributionCard(),
-          SizedBox(height: $styles.insets.xs),
-          const WeekDistributionCard(),
-          SizedBox(height: $styles.insets.xs),
-          const YearInGlumsCard(),
-          SizedBox(height: $styles.insets.xs),
-          const TagsDistributionCard(),
-          SizedBox(height: $styles.insets.xs),
-          const TopTagsCard(),
-          SizedBox(height: $styles.insets.lg),
+        padding: EdgeInsets.only(
+            left: $styles.insets.sm,
+            right: $styles.insets.sm,
+            bottom: $styles.insets.lg),
+        children: const [
+          StoryTitleWidget(),
+          StoryCountCard(),
+          PhotosCard(),
+          GlumDistributionCard(),
+          WeekDistributionCard(),
+          YearInGlumsCard(),
+          TagsDistributionCard(),
+          TopTagsCard(),
         ],
       ),
     );
@@ -328,11 +323,6 @@ class GlumDistributionCard extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Glum Count', style: $styles.text.bodySmallBold),
-            Text(
-              'What matters is the interior',
-              style: $styles.text.caption
-                  .copyWith(color: Theme.of(context).disabledColor),
-            ),
             Align(
               alignment: Alignment.topCenter,
               heightFactor: heightFactor,
@@ -453,23 +443,13 @@ class GlumCountPercentageBar extends StatelessWidget {
   }
 }
 
-class PhotosCard extends ConsumerStatefulWidget {
+class PhotosCard extends ConsumerWidget {
   const PhotosCard({
     super.key,
   });
 
   @override
-  ConsumerState<PhotosCard> createState() => _PhotosCardState();
-}
-
-class _PhotosCardState extends ConsumerState<PhotosCard> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final glumDistribution = ref.watch(statsNotifierProvider).glumDistribution;
     final photos = ref.watch(photosStateNotifier).photos;
 
@@ -480,7 +460,24 @@ class _PhotosCardState extends ConsumerState<PhotosCard> {
         children: [
           Padding(
             padding: EdgeInsets.all($styles.insets.sm),
-            child: Text('Photos', style: $styles.text.bodySmallBold),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Text('Photos', style: $styles.text.bodySmallBold),
+                    const Spacer(),
+                    Text(
+                      photos.length.toString(),
+                      style: $styles.text.bodySmallBold.copyWith(height: 0),
+                    ),
+                    GestureDetector(
+                      child: const Icon(Icons.keyboard_arrow_right),
+                      onTap: () => showTagModalBottomSheet(context),
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
           ImageViewer(photos: photos)
         ],
@@ -704,10 +701,10 @@ class StoryTitleWidget extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular($styles.corners.md),
             ),
-            color: const Color(0xFFD76A66),
+            color: $styles.colors.primaryThemeColor,
             child: Padding(
               padding: EdgeInsets.all($styles.insets.xs),
-              child: Text('🐍', style: $styles.text.h3),
+              child: Text('🍚', style: $styles.text.h3),
             ),
           ),
         ),
@@ -729,7 +726,8 @@ class StyledCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 0,
+      color: $styles.colors.cardColor,
+      surfaceTintColor: $styles.colors.cardColor,
       clipBehavior: Clip.hardEdge,
       shape: RoundedRectangleBorder(
         borderRadius:

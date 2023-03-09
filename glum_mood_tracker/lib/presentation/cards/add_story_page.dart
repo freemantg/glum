@@ -51,7 +51,7 @@ class _AddStoryPageState extends ConsumerState<AddStoryPage> {
                 SizedBox(height: $styles.insets.xs),
                 const RatingBarWidget(),
                 SizedBox(height: $styles.insets.sm),
-                const DescriptionTextField(),
+                DescriptionTextField(description: widget.story?.description),
               ],
             ),
           )
@@ -88,7 +88,7 @@ class _AddStoryPageState extends ConsumerState<AddStoryPage> {
             },
             child: Text(
               ref.watch(storyFormNotifierProvider).story.date.dateTimeInString,
-              style: $styles.text.bodySmall,
+              style: $styles.text.bodyBold,
             ),
           );
         },
@@ -220,24 +220,26 @@ class AddPhotoWidget extends ConsumerWidget {
   }
 }
 
-class DescriptionTextField extends ConsumerWidget {
+class DescriptionTextField extends HookConsumerWidget {
   const DescriptionTextField({
     super.key,
+    this.description,
   });
+
+  final String? description;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final formState = ref.watch(storyFormNotifierProvider);
+    final descriptionController = useTextEditingController(text: description);
 
     return TextField(
+      controller: descriptionController,
       style: $styles.text.body.copyWith(color: Colors.white60),
       maxLines: null,
       decoration: InputDecoration(
         border: InputBorder.none,
         hintStyle: $styles.text.bodySmall.copyWith(color: Colors.grey),
-        hintText: formState.story.description.isEmpty
-            ? 'Write about your glum...'
-            : formState.story.description,
+        hintText: 'Write about your glum...',
       ),
       onChanged: (str) =>
           ref.read(storyFormNotifierProvider.notifier).descriptionChanged(str),

@@ -268,9 +268,10 @@ class DateButton extends ConsumerWidget {
         buttonDay.toString(),
         textAlign: TextAlign.center,
         style: (story.id == null)
-            ? $styles.text.bodySmall.copyWith(color: Colors.white60)
+            ? $styles.text.bodySmall
+                .copyWith(color: Theme.of(context).disabledColor)
             : $styles.text.bodySmall.copyWith(
-                color: Colors.pink,
+                color: $styles.colors.primaryThemeColor,
                 fontWeight: FontWeight.bold,
               ),
       ),
@@ -307,7 +308,10 @@ class MonthProgressBar extends ConsumerWidget {
             borderRadius: BorderRadius.circular($styles.corners.sm),
             child: LinearProgressIndicator(
               value: stories / daysInMonth,
-              backgroundColor: Colors.white70.withOpacity(0.50),
+              backgroundColor: Colors.white70.withOpacity(0.25),
+              valueColor: AlwaysStoppedAnimation<Color>(
+                $styles.colors.primaryThemeColor,
+              ),
             ),
           ),
         ),

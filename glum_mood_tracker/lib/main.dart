@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:glum_mood_tracker/styles/styles.dart';
 
 import 'presentation/routes/app_router.gr.dart';
 
@@ -21,8 +22,8 @@ class AppWidget extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark().copyWith(
           useMaterial3: true,
-          floatingActionButtonTheme: const FloatingActionButtonThemeData(
-            backgroundColor: Color(0xFFD76A66),
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+            backgroundColor: $styles.colors.primaryThemeColor,
           ),
           appBarTheme: const AppBarTheme(
             color: Colors.transparent,

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:glum_mood_tracker/styles/styles.dart';
 
 import '../../../styles/colors.dart';
 
@@ -57,7 +58,7 @@ class DoughnutChartPainter extends CustomPainter {
       currentAngle -= sweepAngle;
     }
 
-    final centerCirclePaint = Paint()..color = Theme.of(context).cardColor;
+    final centerCirclePaint = Paint()..color = $styles.colors.cardColor;
     canvas.drawCircle(
       Offset(size.width / 2, size.height / 2),
       size.width / 2 * 0.6,

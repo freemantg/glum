@@ -425,8 +425,8 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
     final photoQuery = selectOnly(storyPhotos, distinct: true)
       ..where(storyPhotos.storyId.equals(storyId))
       ..addColumns([storyPhotos.photoId]);
-    final photoResults = await photoQuery.getSingle();
-    final photoId = photoResults.read(storyPhotos.photoId);
+    final photoResults = await photoQuery.getSingleOrNull();
+    final photoId = photoResults?.read(storyPhotos.photoId);
     if (photoId != null) {
       await (delete(storyPhotos)..where((tbl) => tbl.storyId.equals(storyId)))
           .go();

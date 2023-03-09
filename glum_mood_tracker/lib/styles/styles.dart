@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 final $styles = AppStyle();
 
@@ -6,14 +7,23 @@ class AppStyle {
   late final _Corners corners = _Corners();
   late final _Insets insets = _Insets();
   late final _Text text = _Text();
+  late final _Colors colors = _Colors();
+}
+
+class _Colors {
+  late final primaryThemeColor = const Color(0xFFE0445D);
+  late final cardColor = const Color(0xFF393939);
 }
 
 @immutable
 class _Text {
-  TextStyle get titleFont => const TextStyle();
+  TextStyle get titleFont => GoogleFonts.roboto();
+  TextStyle get titleFontCondensed => const TextStyle(fontFamily: "clem");
 
   late final TextStyle h1 = copy(titleFont, sizePx: 64);
   late final TextStyle h2 = copy(titleFont, sizePx: 32, heightPx: 46);
+  late final TextStyle h2Condensed = copy(titleFontCondensed, sizePx: 32);
+
   late final TextStyle h3 =
       copy(titleFont, sizePx: 24, heightPx: 36, weight: FontWeight.w600);
   late final TextStyle h4 = copy(titleFont,
