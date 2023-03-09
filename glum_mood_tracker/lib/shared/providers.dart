@@ -5,6 +5,7 @@ import 'package:glum_mood_tracker/application/core/date_time_notifier.dart';
 import 'package:glum_mood_tracker/application/core/stories_notifier.dart';
 import 'package:glum_mood_tracker/application/core/story_form_notifier.dart';
 import 'package:glum_mood_tracker/application/core/tags_notifier.dart';
+import 'package:glum_mood_tracker/application/stats/photos_notifier.dart';
 import 'package:glum_mood_tracker/infrastructure/drift_database.dart' hide Card;
 import 'package:glum_mood_tracker/infrastructure/photo_repository.dart';
 import 'package:glum_mood_tracker/infrastructure/story_repository.dart';
@@ -44,7 +45,10 @@ final tagRepositoryProvider = Provider(
 );
 
 final photoRepositoryProvider = Provider(
-  (ref) => PhotoRepository(imagePicker: ref.watch(imagePickerProvider)),
+  (ref) => PhotoRepository(
+    imagePicker: ref.watch(imagePickerProvider),
+    glumDatabase: ref.watch(glumDatabaseProvider),
+  ),
 );
 
 final glumDatabaseProvider = Provider((ref) => GlumDatabase());
@@ -77,3 +81,9 @@ final cardsNotifier = StateNotifierProvider<CardsStateNotifier, CardsState>(
 );
 
 final imagePickerProvider = Provider((ref) => ImagePicker());
+
+final photosStateNotifier =
+    StateNotifierProvider<PhotosStateNotifier, PhotosState>(
+  (ref) =>
+      PhotosStateNotifier(photoRepository: ref.watch(photoRepositoryProvider)),
+);

@@ -3,9 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:glum_mood_tracker/main.dart';
 import 'package:glum_mood_tracker/presentation/cards/add_story_page.dart';
 import 'package:glum_mood_tracker/presentation/cards/cards_page.dart';
-import 'package:glum_mood_tracker/presentation/cards/month_page.dart';
 import 'package:glum_mood_tracker/presentation/stats/stats_page.dart';
 
+import '../cards/month_page.dart';
 import '../cards/story_page.dart';
 
 @MaterialAutoRouter(
@@ -23,10 +23,6 @@ import '../cards/story_page.dart';
             AutoRoute(
               path: '',
               page: CardsPage,
-            ),
-            AutoRoute(
-              path: ':month',
-              page: MonthPage,
             ),
           ],
         ),
@@ -50,7 +46,11 @@ import '../cards/story_page.dart';
     AutoRoute(
       path: 'addStory',
       page: AddStoryPage,
-    )
+    ),
+    AutoRoute(
+      path: ':month',
+      page: MonthPage,
+    ),
   ],
 )
 class $AppRouter {}

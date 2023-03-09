@@ -25,8 +25,9 @@ class AppWidget extends StatelessWidget {
             backgroundColor: Color(0xFFD76A66),
           ),
           appBarTheme: const AppBarTheme(
+            color: Colors.transparent,
+            surfaceTintColor: Colors.transparent,
             iconTheme: IconThemeData(),
-            backgroundColor: Colors.transparent,
             elevation: 0.0,
           ),
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(

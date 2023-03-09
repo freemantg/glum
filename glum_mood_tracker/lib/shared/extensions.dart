@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:glum_mood_tracker/styles/colors.dart';
 import 'package:intl/intl.dart';
 
 extension DateTimeX on DateTime {
@@ -8,10 +9,9 @@ extension DateTimeX on DateTime {
   String get dateTimeInMonthYearString => DateFormat("MMMM yyyy").format(this);
   String get dateTimeInStoryPageFormat =>
       DateFormat("EE, MMMM d. yyyy").format(this);
-  String get dateTimeInDayFormat => DateFormat("EE").format(this).toUpperCase();
+  String get dateTimeInDayFormat => DateFormat("EE").format(this);
   String get dateTimeInDayLongFormat => DateFormat("EEEE").format(this);
-  String get dateTimeInShortDayFormat =>
-      DateFormat("MMM d").format(this).toUpperCase();
+  String get dateTimeInShortDayFormat => DateFormat("MMM d").format(this);
 }
 
 extension DateTimeDayIndex on int {
@@ -41,17 +41,36 @@ extension ColorX on int {
   Color ratingToColor() {
     switch (this) {
       case 1:
-        return const Color(0xFFD39E32);
+        return colors[1];
       case 2:
-        return const Color(0xFFCF6125);
+        return colors[2];
       case 3:
-        return const Color(0xFFDB6162);
+        return colors[3];
       case 4:
-        return const Color(0xFF96627F);
+        return colors[4];
       case 5:
-        return const Color(0xFF26A843);
+        return colors[5];
       default:
-        return Colors.black;
+        return Colors.transparent;
+    }
+  }
+}
+
+extension LabelX on int {
+  String ratingToLabel() {
+    switch (this) {
+      case 1:
+        return "Despair";
+      case 2:
+        return "Gloomy";
+      case 3:
+        return "So-So";
+      case 4:
+        return "Glimmer";
+      case 5:
+        return "Light";
+      default:
+        return "Error";
     }
   }
 }

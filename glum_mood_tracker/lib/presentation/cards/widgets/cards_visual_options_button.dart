@@ -56,7 +56,7 @@ class CardVisualOptionsButton extends ConsumerWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    ...List.generate(colors.length, (index) {
+                    ...List.generate(5, (index) {
                       return GestureDetector(
                         onTap: () => ref
                             .read(cardFormNotifierProvider.notifier)

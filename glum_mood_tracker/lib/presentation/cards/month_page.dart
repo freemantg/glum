@@ -46,37 +46,29 @@ class _MonthPageState extends ConsumerState<MonthPage> {
                           customPadding: true,
                           child: ConstrainedBox(
                             constraints: BoxConstraints(
-                              maxHeight: constraints.maxHeight / 4,
+                              maxHeight: constraints.maxHeight / 4.5,
                             ),
                             child: Row(
                               children: [
                                 Padding(
                                   padding: EdgeInsets.all($styles.insets.lg),
-                                  child: Expanded(
-                                    child: Column(
-                                      children: [
-                                        SizedBox(height: $styles.insets.xs),
-                                        Text(
-                                          story.date.day.toString(),
-                                          style: $styles.text.h2
-                                              .copyWith(height: 0),
+                                  child: Column(
+                                    children: [
+                                      SizedBox(height: $styles.insets.xs),
+                                      Text(
+                                        story.date.day.toString(),
+                                        style: $styles.text.h2.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color:
+                                              story.glumRating.ratingToColor(),
                                         ),
-                                        Text(
-                                          story.date.dateTimeInDayFormat,
-                                          style: $styles.text.caption
-                                              .copyWith(height: 0),
-                                        ),
-                                        SizedBox(height: $styles.insets.xs),
-                                        Text(
-                                          story.glumRating.toString(),
-                                          style: $styles.text.bodySmallBold
-                                              .copyWith(
-                                            color: Colors.grey.withOpacity(0.5),
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                      Text(
+                                        story.date.dateTimeInDayFormat,
+                                        style: $styles.text.caption,
+                                      ),
+                                      SizedBox(height: $styles.insets.xs),
+                                    ],
                                   ),
                                 ),
                                 Expanded(

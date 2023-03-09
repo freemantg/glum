@@ -28,6 +28,7 @@ abstract class ITagRepository {
   Future<Either<TagFailure, Unit>> deleteTag(Tag tag);
 }
 
+
 abstract class IStatsRepository {
   Stream<Either<StoryFailure, List<Story>>> watchAllStories();
   Future<Either<StoryFailure, int>> countAllStories();

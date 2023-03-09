@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../shared/providers.dart';
 import '../cards/widgets/tag_bottom_modal_sheet.dart';
+import 'widgets/doughnut_chart.dart';
 import 'widgets/trending_tag_chip.dart';
 
 class StatsPage extends ConsumerStatefulWidget {
@@ -21,8 +22,10 @@ class _StatsPageState extends ConsumerState<StatsPage> {
   void initState() {
     super.initState();
     Future.microtask(
-      () => ref.read(statsNotifierProvider.notifier).fetchStats(),
+      () => ref.watch(statsNotifierProvider.notifier).fetchStats(),
     );
+    Future.microtask(
+        () => ref.watch(photosStateNotifier.notifier).getAllPhotos());
   }
 
   @override
@@ -35,6 +38,8 @@ class _StatsPageState extends ConsumerState<StatsPage> {
           const StoryTitleWidget(),
           SizedBox(height: $styles.insets.xs),
           const StoryCountCard(),
+          SizedBox(height: $styles.insets.xs),
+          const PhotosCard(),
           SizedBox(height: $styles.insets.xs),
           const GlumDistributionCard(),
           SizedBox(height: $styles.insets.xs),
@@ -233,6 +238,22 @@ class WeekDistributionCard extends ConsumerWidget {
   }
 }
 
+class HalfClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path()
+      ..moveTo(0, 0)
+      ..lineTo(size.width, 0)
+      ..lineTo(size.width, size.height / 2)
+      ..lineTo(0, size.height / 2)
+      ..close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(HalfClipper oldClipper) => false;
+}
+
 class GlumDistributionCard extends ConsumerWidget {
   const GlumDistributionCard({
     super.key,
@@ -241,6 +262,164 @@ class GlumDistributionCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final glumDistribution = ref.watch(statsNotifierProvider).glumDistribution;
+    final totalGlumCount =
+        glumDistribution.values.fold(0, (x, y) => x + (y ?? 0));
+
+    const heightFactor = 0.5;
+    const doughnutChartHeight = 250.0;
+
+    return StyledCard(
+      customPadding: true,
+      child: Padding(
+        padding: EdgeInsets.all($styles.insets.sm),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Glum Count', style: $styles.text.bodySmallBold),
+            Text(
+              'What matters is the interior',
+              style: $styles.text.caption
+                  .copyWith(color: Theme.of(context).disabledColor),
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              heightFactor: heightFactor,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  DoughnutChart(
+                    data: glumDistribution.values.map((e) => e).toList(),
+                    width: doughnutChartHeight,
+                    height: doughnutChartHeight,
+                  ),
+                  Positioned(
+                    bottom: doughnutChartHeight / 2,
+                    child: Column(
+                      children: [
+                        Text(totalGlumCount.toString(), style: $styles.text.h2),
+                        Text('Total glums', style: $styles.text.caption),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: $styles.insets.md),
+            ...glumDistribution.entries
+                .map(
+                  (e) => GlumCountPercentageBar(
+                    glumRating: e.key,
+                    count: e.value ?? 0,
+                    totalGlums: 5,
+                  ),
+                )
+                .toList()
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class GlumCountPercentageBar extends StatelessWidget {
+  const GlumCountPercentageBar({
+    super.key,
+    required this.glumRating,
+    required this.count,
+    required this.totalGlums,
+  });
+
+  final int glumRating;
+  final int count;
+  final int totalGlums;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        vertical: $styles.insets.xs,
+        horizontal: $styles.insets.xxs,
+      ),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxHeight: 24.0),
+        child: Row(
+          children: [
+            AspectRatio(
+              aspectRatio: 1,
+              child: Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.all($styles.insets.xxs),
+                decoration: BoxDecoration(
+                  color: glumRating.ratingToColor(),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular($styles.corners.sm),
+                  ),
+                ),
+                child: Text(glumRating.toString()),
+              ),
+            ),
+            SizedBox(width: $styles.insets.sm),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(2.0),
+                    child: LinearProgressIndicator(
+                      value: count / totalGlums,
+                      backgroundColor:
+                          glumRating.ratingToColor().withOpacity(0.25),
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          glumRating.ratingToColor()),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        glumRating.ratingToLabel(),
+                        style: $styles.text.caption.copyWith(
+                          color: Colors.white70,
+                        ),
+                      ),
+                      const Spacer(),
+                      Text(
+                        '$count / ${((count / totalGlums) * 100).toInt()}%',
+                        style: $styles.text.caption.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class PhotosCard extends ConsumerStatefulWidget {
+  const PhotosCard({
+    super.key,
+  });
+
+  @override
+  ConsumerState<PhotosCard> createState() => _PhotosCardState();
+}
+
+class _PhotosCardState extends ConsumerState<PhotosCard> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final glumDistribution = ref.watch(statsNotifierProvider).glumDistribution;
+    final photos = ref.watch(photosStateNotifier).photos;
 
     return StyledCard(
       customPadding: true,
@@ -249,36 +428,9 @@ class GlumDistributionCard extends ConsumerWidget {
         children: [
           Padding(
             padding: EdgeInsets.all($styles.insets.sm),
-            child: Text('Glum Count', style: $styles.text.bodySmallBold),
+            child: Text('Photos', style: $styles.text.bodySmallBold),
           ),
-          Row(
-            children: [
-              ...List.generate(
-                glumDistribution.keys.length,
-                (index) {
-                  final glumPercentage = glumDistribution[index + 1];
-                  if (glumPercentage != 0) {
-                    return Expanded(
-                      flex: (glumDistribution[index + 1] ?? 0),
-                      child: Container(
-                        alignment: Alignment.center,
-                        padding:
-                            EdgeInsets.symmetric(vertical: $styles.insets.sm),
-                        decoration: BoxDecoration(
-                          color: (index + 1).ratingToColor(),
-                        ),
-                        child: Text(
-                          (glumDistribution[index + 1]).toString(),
-                          style: $styles.text.bodySmallBold,
-                        ),
-                      ),
-                    );
-                  }
-                  return const SizedBox.shrink();
-                },
-              )
-            ],
-          ),
+          ...photos.map((e) => Image.file(e.file!)).toList()
         ],
       ),
     );

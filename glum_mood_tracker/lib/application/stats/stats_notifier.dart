@@ -54,8 +54,6 @@ class StatsNotifier extends StateNotifier<StatsState> {
     state = state.copyWith(isLoading: false);
   }
 
-  Future<void> trendingTagsByCategoryToggle() async {}
-
   Future<void> countAllStories() async {
     final failureOrAllStoriesCount = await _repository.countAllStories();
     state = failureOrAllStoriesCount.fold(

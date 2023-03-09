@@ -18,11 +18,11 @@ import 'package:flutter/material.dart' as _i9;
 import '../../domain/story.dart' as _i11;
 import '../../main.dart' as _i1;
 import '../cards/add_story_page.dart' as _i3;
-import '../cards/cards_page.dart' as _i5;
-import '../cards/month_page.dart' as _i6;
+import '../cards/cards_page.dart' as _i6;
+import '../cards/month_page.dart' as _i4;
 import '../cards/story_page.dart' as _i2;
 import '../stats/stats_page.dart' as _i7;
-import 'app_router.dart' as _i4;
+import 'app_router.dart' as _i5;
 
 class AppRouter extends _i8.RootStackRouter {
   AppRouter([_i9.GlobalKey<_i9.NavigatorState>? navigatorKey])
@@ -57,32 +57,32 @@ class AppRouter extends _i8.RootStackRouter {
         ),
       );
     },
+    MonthPageRoute.name: (routeData) {
+      final args = routeData.argsAs<MonthPageRouteArgs>();
+      return _i8.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: _i4.MonthPage(
+          key: args.key,
+          monthYear: args.monthYear,
+        ),
+      );
+    },
     CardsRouter.name: (routeData) {
       return _i8.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i4.EmptyRouterPage(),
+        child: const _i5.EmptyRouterPage(),
       );
     },
     StatsRouter.name: (routeData) {
       return _i8.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i4.EmptyRouterPage(),
+        child: const _i5.EmptyRouterPage(),
       );
     },
     CardsPageRoute.name: (routeData) {
       return _i8.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i5.CardsPage(),
-      );
-    },
-    MonthPageRoute.name: (routeData) {
-      final args = routeData.argsAs<MonthPageRouteArgs>();
-      return _i8.MaterialPageX<dynamic>(
-        routeData: routeData,
-        child: _i6.MonthPage(
-          key: args.key,
-          monthYear: args.monthYear,
-        ),
+        child: const _i6.CardsPage(),
       );
     },
     StatsPageRoute.name: (routeData) {
@@ -108,12 +108,7 @@ class AppRouter extends _i8.RootStackRouter {
                   CardsPageRoute.name,
                   path: '',
                   parent: CardsRouter.name,
-                ),
-                _i8.RouteConfig(
-                  MonthPageRoute.name,
-                  path: ':month',
-                  parent: CardsRouter.name,
-                ),
+                )
               ],
             ),
             _i8.RouteConfig(
@@ -137,6 +132,10 @@ class AppRouter extends _i8.RootStackRouter {
         _i8.RouteConfig(
           AddStoryPageRoute.name,
           path: 'addStory',
+        ),
+        _i8.RouteConfig(
+          MonthPageRoute.name,
+          path: ':month',
         ),
       ];
 }
@@ -223,45 +222,7 @@ class AddStoryPageRouteArgs {
 }
 
 /// generated route for
-/// [_i4.EmptyRouterPage]
-class CardsRouter extends _i8.PageRouteInfo<void> {
-  const CardsRouter({List<_i8.PageRouteInfo>? children})
-      : super(
-          CardsRouter.name,
-          path: 'card',
-          initialChildren: children,
-        );
-
-  static const String name = 'CardsRouter';
-}
-
-/// generated route for
-/// [_i4.EmptyRouterPage]
-class StatsRouter extends _i8.PageRouteInfo<void> {
-  const StatsRouter({List<_i8.PageRouteInfo>? children})
-      : super(
-          StatsRouter.name,
-          path: 'stats',
-          initialChildren: children,
-        );
-
-  static const String name = 'StatsRouter';
-}
-
-/// generated route for
-/// [_i5.CardsPage]
-class CardsPageRoute extends _i8.PageRouteInfo<void> {
-  const CardsPageRoute()
-      : super(
-          CardsPageRoute.name,
-          path: '',
-        );
-
-  static const String name = 'CardsPageRoute';
-}
-
-/// generated route for
-/// [_i6.MonthPage]
+/// [_i4.MonthPage]
 class MonthPageRoute extends _i8.PageRouteInfo<MonthPageRouteArgs> {
   MonthPageRoute({
     _i10.Key? key,
@@ -292,6 +253,44 @@ class MonthPageRouteArgs {
   String toString() {
     return 'MonthPageRouteArgs{key: $key, monthYear: $monthYear}';
   }
+}
+
+/// generated route for
+/// [_i5.EmptyRouterPage]
+class CardsRouter extends _i8.PageRouteInfo<void> {
+  const CardsRouter({List<_i8.PageRouteInfo>? children})
+      : super(
+          CardsRouter.name,
+          path: 'card',
+          initialChildren: children,
+        );
+
+  static const String name = 'CardsRouter';
+}
+
+/// generated route for
+/// [_i5.EmptyRouterPage]
+class StatsRouter extends _i8.PageRouteInfo<void> {
+  const StatsRouter({List<_i8.PageRouteInfo>? children})
+      : super(
+          StatsRouter.name,
+          path: 'stats',
+          initialChildren: children,
+        );
+
+  static const String name = 'StatsRouter';
+}
+
+/// generated route for
+/// [_i6.CardsPage]
+class CardsPageRoute extends _i8.PageRouteInfo<void> {
+  const CardsPageRoute()
+      : super(
+          CardsPageRoute.name,
+          path: '',
+        );
+
+  static const String name = 'CardsPageRoute';
 }
 
 /// generated route for

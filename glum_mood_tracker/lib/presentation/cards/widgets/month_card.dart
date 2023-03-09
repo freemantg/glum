@@ -26,12 +26,10 @@ class MonthCard extends ConsumerWidget {
     final cardState = ref.watch(cardFormNotifierProvider).card;
 
     return GestureDetector(
-      onTap: () => context.pushRoute(
-        MonthPageRoute(monthYear: monthYear),
-      ),
+      onTap: () => context.router.push(MonthPageRoute(monthYear: monthYear)),
       child: Card(
         color: card?.color,
-        elevation: 8,
+        elevation: 0,
         margin: EdgeInsets.all($styles.insets.sm),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular($styles.corners.md)),

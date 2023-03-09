@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+
 import 'package:glum_mood_tracker/infrastructure/photo_dto.dart';
 import 'package:glum_mood_tracker/infrastructure/story_dto.dart';
 import 'package:glum_mood_tracker/infrastructure/tag_dto.dart';
@@ -214,8 +215,6 @@ class PhotoDao extends DatabaseAccessor<GlumDatabase> with _$PhotoDaoMixin {
     }
     return null;
   }
-
-  Future<int> deletePhoto(int id) async => deletePhoto(id);
 }
 
 @DriftAccessor(tables: [Stories, Photos, Tags, StoryTags, StoryPhotos])
@@ -421,8 +420,20 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
   Future<int> deleteStory(int storyId) async {
     // First, delete any associated tags and photos from join tables.
     await (delete(storyTags)..where((tbl) => tbl.storyId.equals(storyId))).go();
-    await (delete(storyPhotos)..where((tbl) => tbl.storyId.equals(storyId)))
-        .go();
+
+    // Second, delete any associated photos.
+    final photoQuery = selectOnly(storyPhotos, distinct: true)
+      ..where(storyPhotos.storyId.equals(storyId))
+      ..addColumns([storyPhotos.photoId]);
+    final photoResults = await photoQuery.getSingle();
+    final photoId = photoResults.read(storyPhotos.photoId);
+    if (photoId != null) {
+      await (delete(storyPhotos)..where((tbl) => tbl.storyId.equals(storyId)))
+          .go();
+      await (delete(photos)..where((tbl) => tbl.id.equals(photoId))).go();
+    }
+
+    // Third, delete story.
     await (delete(stories)..where((tbl) => tbl.id.equals(storyId))).go();
     return storyId;
   }

@@ -28,7 +28,7 @@ class _CardsPageState extends ConsumerState<CardsPage> {
     super.initState();
 
     Future.microtask(() {
-      ref.read(cardsNotifier.notifier).watchAllCards();
+      ref.watch(cardsNotifier.notifier).watchAllCards();
     });
   }
 
