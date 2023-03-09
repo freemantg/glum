@@ -187,7 +187,8 @@ class ImageViewer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenWidth =
+        MediaQuery.of(context).size.width - $styles.insets.xs;
     final double firstImageWidth = screenWidth / 2;
     final double remainingImageWidth = (screenWidth - firstImageWidth) / 2;
 
@@ -202,27 +203,23 @@ class ImageViewer extends StatelessWidget {
                     photos.first.file!,
                     width: firstImageWidth,
                     fit: BoxFit.cover,
+                    height: MediaQuery.of(context).size.height / 5,
                   ),
                 ),
                 Positioned.fill(
-                  child: Padding(
-                    padding: EdgeInsets.only(left: firstImageWidth),
-                    child: Expanded(
-                      child: GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                        ),
-                        itemCount: photos.length - 1,
-                        itemBuilder: (context, index) {
-                          return Image.file(
-                            photos[index + 1].file!,
-                            width: remainingImageWidth,
-                            fit: BoxFit.cover,
-                          );
-                        },
-                      ),
+                  left: firstImageWidth - 15,
+                  child: GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
                     ),
+                    itemCount: photos.length - 1,
+                    itemBuilder: (context, index) {
+                      return Image.file(
+                        photos[index + 1].file!,
+                        fit: BoxFit.cover,
+                      );
+                    },
                   ),
                 ),
               ],
