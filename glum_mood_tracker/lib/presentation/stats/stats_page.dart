@@ -5,6 +5,7 @@ import 'package:glum_mood_tracker/styles/styles.dart';
 import 'package:glum_mood_tracker/shared/extensions.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../domain/photo.dart';
 import '../../shared/providers.dart';
 import '../cards/widgets/tag_bottom_modal_sheet.dart';
 import 'widgets/doughnut_chart.dart';
@@ -174,6 +175,60 @@ Widget _buildYearIndividualGlum({required int day, required int month}) {
       );
     },
   );
+}
+
+class ImageViewer extends StatelessWidget {
+  final List<Photo> photos;
+
+  const ImageViewer({
+    super.key,
+    required this.photos,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double firstImageWidth = screenWidth / 2;
+    final double remainingImageWidth = (screenWidth - firstImageWidth) / 2;
+
+    return (photos.isEmpty)
+        ? const CircularProgressIndicator()
+        : SizedBox(
+            child: Stack(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Image.file(
+                    photos.first.file!,
+                    width: firstImageWidth,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Positioned.fill(
+                  child: Padding(
+                    padding: EdgeInsets.only(left: firstImageWidth),
+                    child: Expanded(
+                      child: GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                        ),
+                        itemCount: photos.length - 1,
+                        itemBuilder: (context, index) {
+                          return Image.file(
+                            photos[index + 1].file!,
+                            width: remainingImageWidth,
+                            fit: BoxFit.cover,
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+  }
 }
 
 class WeekDistributionCard extends ConsumerWidget {
@@ -430,7 +485,7 @@ class _PhotosCardState extends ConsumerState<PhotosCard> {
             padding: EdgeInsets.all($styles.insets.sm),
             child: Text('Photos', style: $styles.text.bodySmallBold),
           ),
-          ...photos.map((e) => Image.file(e.file!)).toList()
+          ImageViewer(photos: photos)
         ],
       ),
     );
@@ -680,7 +735,8 @@ class StyledCard extends StatelessWidget {
       elevation: 0,
       clipBehavior: Clip.hardEdge,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular($styles.corners.md)),
+        borderRadius:
+            BorderRadius.all(Radius.circular($styles.corners.md * 1.5)),
       ),
       child: Padding(
         padding: customPadding
