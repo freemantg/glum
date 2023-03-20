@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$CardFormState {
-  Card get card => throw _privateConstructorUsedError;
+  CardModel get card => throw _privateConstructorUsedError;
   bool get isEditing => throw _privateConstructorUsedError;
   bool get isSaving => throw _privateConstructorUsedError;
   Option<Either<CardFailure, Unit>> get failureOrSuccess =>
@@ -34,12 +34,12 @@ abstract class $CardFormStateCopyWith<$Res> {
       _$CardFormStateCopyWithImpl<$Res, CardFormState>;
   @useResult
   $Res call(
-      {Card card,
+      {CardModel card,
       bool isEditing,
       bool isSaving,
       Option<Either<CardFailure, Unit>> failureOrSuccess});
 
-  $CardCopyWith<$Res> get card;
+  $CardModelCopyWith<$Res> get card;
 }
 
 /// @nodoc
@@ -64,7 +64,7 @@ class _$CardFormStateCopyWithImpl<$Res, $Val extends CardFormState>
       card: null == card
           ? _value.card
           : card // ignore: cast_nullable_to_non_nullable
-              as Card,
+              as CardModel,
       isEditing: null == isEditing
           ? _value.isEditing
           : isEditing // ignore: cast_nullable_to_non_nullable
@@ -82,8 +82,8 @@ class _$CardFormStateCopyWithImpl<$Res, $Val extends CardFormState>
 
   @override
   @pragma('vm:prefer-inline')
-  $CardCopyWith<$Res> get card {
-    return $CardCopyWith<$Res>(_value.card, (value) {
+  $CardModelCopyWith<$Res> get card {
+    return $CardModelCopyWith<$Res>(_value.card, (value) {
       return _then(_value.copyWith(card: value) as $Val);
     });
   }
@@ -98,13 +98,13 @@ abstract class _$$_CardFormStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {Card card,
+      {CardModel card,
       bool isEditing,
       bool isSaving,
       Option<Either<CardFailure, Unit>> failureOrSuccess});
 
   @override
-  $CardCopyWith<$Res> get card;
+  $CardModelCopyWith<$Res> get card;
 }
 
 /// @nodoc
@@ -127,7 +127,7 @@ class __$$_CardFormStateCopyWithImpl<$Res>
       card: null == card
           ? _value.card
           : card // ignore: cast_nullable_to_non_nullable
-              as Card,
+              as CardModel,
       isEditing: null == isEditing
           ? _value.isEditing
           : isEditing // ignore: cast_nullable_to_non_nullable
@@ -155,7 +155,7 @@ class _$_CardFormState extends _CardFormState {
       : super._();
 
   @override
-  final Card card;
+  final CardModel card;
   @override
   final bool isEditing;
   @override
@@ -195,7 +195,7 @@ class _$_CardFormState extends _CardFormState {
 
 abstract class _CardFormState extends CardFormState {
   const factory _CardFormState(
-          {required final Card card,
+          {required final CardModel card,
           required final bool isEditing,
           required final bool isSaving,
           required final Option<Either<CardFailure, Unit>> failureOrSuccess}) =
@@ -203,7 +203,7 @@ abstract class _CardFormState extends CardFormState {
   const _CardFormState._() : super._();
 
   @override
-  Card get card;
+  CardModel get card;
   @override
   bool get isEditing;
   @override

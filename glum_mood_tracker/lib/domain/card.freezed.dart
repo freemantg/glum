@@ -15,20 +15,21 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$Card {
+mixin _$CardModel {
   int? get id => throw _privateConstructorUsedError;
   DateTime get monthYear => throw _privateConstructorUsedError;
   Color? get color => throw _privateConstructorUsedError;
   Photo? get photo => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $CardCopyWith<Card> get copyWith => throw _privateConstructorUsedError;
+  $CardModelCopyWith<CardModel> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CardCopyWith<$Res> {
-  factory $CardCopyWith(Card value, $Res Function(Card) then) =
-      _$CardCopyWithImpl<$Res, Card>;
+abstract class $CardModelCopyWith<$Res> {
+  factory $CardModelCopyWith(CardModel value, $Res Function(CardModel) then) =
+      _$CardModelCopyWithImpl<$Res, CardModel>;
   @useResult
   $Res call({int? id, DateTime monthYear, Color? color, Photo? photo});
 
@@ -36,9 +37,9 @@ abstract class $CardCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CardCopyWithImpl<$Res, $Val extends Card>
-    implements $CardCopyWith<$Res> {
-  _$CardCopyWithImpl(this._value, this._then);
+class _$CardModelCopyWithImpl<$Res, $Val extends CardModel>
+    implements $CardModelCopyWith<$Res> {
+  _$CardModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -87,9 +88,10 @@ class _$CardCopyWithImpl<$Res, $Val extends Card>
 }
 
 /// @nodoc
-abstract class _$$_CardCopyWith<$Res> implements $CardCopyWith<$Res> {
-  factory _$$_CardCopyWith(_$_Card value, $Res Function(_$_Card) then) =
-      __$$_CardCopyWithImpl<$Res>;
+abstract class _$$_CardModelCopyWith<$Res> implements $CardModelCopyWith<$Res> {
+  factory _$$_CardModelCopyWith(
+          _$_CardModel value, $Res Function(_$_CardModel) then) =
+      __$$_CardModelCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int? id, DateTime monthYear, Color? color, Photo? photo});
@@ -99,9 +101,11 @@ abstract class _$$_CardCopyWith<$Res> implements $CardCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_CardCopyWithImpl<$Res> extends _$CardCopyWithImpl<$Res, _$_Card>
-    implements _$$_CardCopyWith<$Res> {
-  __$$_CardCopyWithImpl(_$_Card _value, $Res Function(_$_Card) _then)
+class __$$_CardModelCopyWithImpl<$Res>
+    extends _$CardModelCopyWithImpl<$Res, _$_CardModel>
+    implements _$$_CardModelCopyWith<$Res> {
+  __$$_CardModelCopyWithImpl(
+      _$_CardModel _value, $Res Function(_$_CardModel) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -112,7 +116,7 @@ class __$$_CardCopyWithImpl<$Res> extends _$CardCopyWithImpl<$Res, _$_Card>
     Object? color = freezed,
     Object? photo = freezed,
   }) {
-    return _then(_$_Card(
+    return _then(_$_CardModel(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -135,8 +139,8 @@ class __$$_CardCopyWithImpl<$Res> extends _$CardCopyWithImpl<$Res, _$_Card>
 
 /// @nodoc
 
-class _$_Card extends _Card {
-  const _$_Card({this.id, required this.monthYear, this.color, this.photo})
+class _$_CardModel extends _CardModel {
+  const _$_CardModel({this.id, required this.monthYear, this.color, this.photo})
       : super._();
 
   @override
@@ -150,14 +154,14 @@ class _$_Card extends _Card {
 
   @override
   String toString() {
-    return 'Card(id: $id, monthYear: $monthYear, color: $color, photo: $photo)';
+    return 'CardModel(id: $id, monthYear: $monthYear, color: $color, photo: $photo)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Card &&
+            other is _$_CardModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.monthYear, monthYear) ||
                 other.monthYear == monthYear) &&
@@ -171,17 +175,17 @@ class _$_Card extends _Card {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CardCopyWith<_$_Card> get copyWith =>
-      __$$_CardCopyWithImpl<_$_Card>(this, _$identity);
+  _$$_CardModelCopyWith<_$_CardModel> get copyWith =>
+      __$$_CardModelCopyWithImpl<_$_CardModel>(this, _$identity);
 }
 
-abstract class _Card extends Card {
-  const factory _Card(
+abstract class _CardModel extends CardModel {
+  const factory _CardModel(
       {final int? id,
       required final DateTime monthYear,
       final Color? color,
-      final Photo? photo}) = _$_Card;
-  const _Card._() : super._();
+      final Photo? photo}) = _$_CardModel;
+  const _CardModel._() : super._();
 
   @override
   int? get id;
@@ -193,5 +197,6 @@ abstract class _Card extends Card {
   Photo? get photo;
   @override
   @JsonKey(ignore: true)
-  _$$_CardCopyWith<_$_Card> get copyWith => throw _privateConstructorUsedError;
+  _$$_CardModelCopyWith<_$_CardModel> get copyWith =>
+      throw _privateConstructorUsedError;
 }

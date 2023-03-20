@@ -30,7 +30,7 @@ class YearSelectorButton extends ConsumerWidget {
                 data: (selectedDate) => selectedDate.value.year.toString(),
                 orElse: () => 'Error loading selected year',
               ),
-          style: $styles.text.h3.copyWith(height: 0),
+          style: $styles.text.h3Condensed,
         ),
         IconButton(
           onPressed: () {

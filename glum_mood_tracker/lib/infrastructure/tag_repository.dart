@@ -2,7 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:glum_mood_tracker/domain/interfaces.dart';
 import 'package:glum_mood_tracker/domain/tag_failure.dart';
-import 'package:glum_mood_tracker/infrastructure/drift_database.dart' hide Tag;
+import 'package:glum_mood_tracker/infrastructure/database/drift_database.dart'
+    hide Tag;
 import 'package:glum_mood_tracker/infrastructure/tag_dto.dart';
 import 'package:rxdart/rxdart.dart';
 

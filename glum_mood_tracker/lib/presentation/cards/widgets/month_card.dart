@@ -18,7 +18,7 @@ class MonthCard extends ConsumerWidget {
   }) : super(key: key);
 
   final bool showCalendar;
-  final domain.Card? card;
+  final domain.CardModel? card;
   final DateTime monthYear;
 
   @override

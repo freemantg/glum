@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:glum_mood_tracker/infrastructure/drift_database.dart'
+import 'package:glum_mood_tracker/infrastructure/database/drift_database.dart'
     hide Photo;
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';

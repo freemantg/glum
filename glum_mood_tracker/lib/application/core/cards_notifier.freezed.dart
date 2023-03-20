@@ -16,29 +16,30 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$CardsState {
-  List<Card> get cards => throw _privateConstructorUsedError;
+  List<CardModel> get cards => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Card> cards) initial,
-    required TResult Function(List<Card> cards) loadInProgress,
-    required TResult Function(List<Card> cards) loadSuccess,
-    required TResult Function(CardFailure failure, List<Card> cards) failure,
+    required TResult Function(List<CardModel> cards) initial,
+    required TResult Function(List<CardModel> cards) loadInProgress,
+    required TResult Function(List<CardModel> cards) loadSuccess,
+    required TResult Function(CardFailure failure, List<CardModel> cards)
+        failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Card> cards)? initial,
-    TResult? Function(List<Card> cards)? loadInProgress,
-    TResult? Function(List<Card> cards)? loadSuccess,
-    TResult? Function(CardFailure failure, List<Card> cards)? failure,
+    TResult? Function(List<CardModel> cards)? initial,
+    TResult? Function(List<CardModel> cards)? loadInProgress,
+    TResult? Function(List<CardModel> cards)? loadSuccess,
+    TResult? Function(CardFailure failure, List<CardModel> cards)? failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Card> cards)? initial,
-    TResult Function(List<Card> cards)? loadInProgress,
-    TResult Function(List<Card> cards)? loadSuccess,
-    TResult Function(CardFailure failure, List<Card> cards)? failure,
+    TResult Function(List<CardModel> cards)? initial,
+    TResult Function(List<CardModel> cards)? loadInProgress,
+    TResult Function(List<CardModel> cards)? loadSuccess,
+    TResult Function(CardFailure failure, List<CardModel> cards)? failure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -79,7 +80,7 @@ abstract class $CardsStateCopyWith<$Res> {
           CardsState value, $Res Function(CardsState) then) =
       _$CardsStateCopyWithImpl<$Res, CardsState>;
   @useResult
-  $Res call({List<Card> cards});
+  $Res call({List<CardModel> cards});
 }
 
 /// @nodoc
@@ -101,7 +102,7 @@ class _$CardsStateCopyWithImpl<$Res, $Val extends CardsState>
       cards: null == cards
           ? _value.cards
           : cards // ignore: cast_nullable_to_non_nullable
-              as List<Card>,
+              as List<CardModel>,
     ) as $Val);
   }
 }
@@ -113,7 +114,7 @@ abstract class _$$_InitialCopyWith<$Res> implements $CardsStateCopyWith<$Res> {
       __$$_InitialCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Card> cards});
+  $Res call({List<CardModel> cards});
 }
 
 /// @nodoc
@@ -132,7 +133,7 @@ class __$$_InitialCopyWithImpl<$Res>
       cards: null == cards
           ? _value._cards
           : cards // ignore: cast_nullable_to_non_nullable
-              as List<Card>,
+              as List<CardModel>,
     ));
   }
 }
@@ -140,13 +141,13 @@ class __$$_InitialCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Initial extends _Initial {
-  const _$_Initial({required final List<Card> cards})
+  const _$_Initial({required final List<CardModel> cards})
       : _cards = cards,
         super._();
 
-  final List<Card> _cards;
+  final List<CardModel> _cards;
   @override
-  List<Card> get cards {
+  List<CardModel> get cards {
     if (_cards is EqualUnmodifiableListView) return _cards;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_cards);
@@ -178,10 +179,11 @@ class _$_Initial extends _Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Card> cards) initial,
-    required TResult Function(List<Card> cards) loadInProgress,
-    required TResult Function(List<Card> cards) loadSuccess,
-    required TResult Function(CardFailure failure, List<Card> cards) failure,
+    required TResult Function(List<CardModel> cards) initial,
+    required TResult Function(List<CardModel> cards) loadInProgress,
+    required TResult Function(List<CardModel> cards) loadSuccess,
+    required TResult Function(CardFailure failure, List<CardModel> cards)
+        failure,
   }) {
     return initial(cards);
   }
@@ -189,10 +191,10 @@ class _$_Initial extends _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Card> cards)? initial,
-    TResult? Function(List<Card> cards)? loadInProgress,
-    TResult? Function(List<Card> cards)? loadSuccess,
-    TResult? Function(CardFailure failure, List<Card> cards)? failure,
+    TResult? Function(List<CardModel> cards)? initial,
+    TResult? Function(List<CardModel> cards)? loadInProgress,
+    TResult? Function(List<CardModel> cards)? loadSuccess,
+    TResult? Function(CardFailure failure, List<CardModel> cards)? failure,
   }) {
     return initial?.call(cards);
   }
@@ -200,10 +202,10 @@ class _$_Initial extends _Initial {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Card> cards)? initial,
-    TResult Function(List<Card> cards)? loadInProgress,
-    TResult Function(List<Card> cards)? loadSuccess,
-    TResult Function(CardFailure failure, List<Card> cards)? failure,
+    TResult Function(List<CardModel> cards)? initial,
+    TResult Function(List<CardModel> cards)? loadInProgress,
+    TResult Function(List<CardModel> cards)? loadSuccess,
+    TResult Function(CardFailure failure, List<CardModel> cards)? failure,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -251,11 +253,11 @@ class _$_Initial extends _Initial {
 }
 
 abstract class _Initial extends CardsState {
-  const factory _Initial({required final List<Card> cards}) = _$_Initial;
+  const factory _Initial({required final List<CardModel> cards}) = _$_Initial;
   const _Initial._() : super._();
 
   @override
-  List<Card> get cards;
+  List<CardModel> get cards;
   @override
   @JsonKey(ignore: true)
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
@@ -270,7 +272,7 @@ abstract class _$$_LoadInProgressCopyWith<$Res>
       __$$_LoadInProgressCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Card> cards});
+  $Res call({List<CardModel> cards});
 }
 
 /// @nodoc
@@ -290,7 +292,7 @@ class __$$_LoadInProgressCopyWithImpl<$Res>
       cards: null == cards
           ? _value._cards
           : cards // ignore: cast_nullable_to_non_nullable
-              as List<Card>,
+              as List<CardModel>,
     ));
   }
 }
@@ -298,13 +300,13 @@ class __$$_LoadInProgressCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadInProgress extends _LoadInProgress {
-  const _$_LoadInProgress({required final List<Card> cards})
+  const _$_LoadInProgress({required final List<CardModel> cards})
       : _cards = cards,
         super._();
 
-  final List<Card> _cards;
+  final List<CardModel> _cards;
   @override
-  List<Card> get cards {
+  List<CardModel> get cards {
     if (_cards is EqualUnmodifiableListView) return _cards;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_cards);
@@ -336,10 +338,11 @@ class _$_LoadInProgress extends _LoadInProgress {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Card> cards) initial,
-    required TResult Function(List<Card> cards) loadInProgress,
-    required TResult Function(List<Card> cards) loadSuccess,
-    required TResult Function(CardFailure failure, List<Card> cards) failure,
+    required TResult Function(List<CardModel> cards) initial,
+    required TResult Function(List<CardModel> cards) loadInProgress,
+    required TResult Function(List<CardModel> cards) loadSuccess,
+    required TResult Function(CardFailure failure, List<CardModel> cards)
+        failure,
   }) {
     return loadInProgress(cards);
   }
@@ -347,10 +350,10 @@ class _$_LoadInProgress extends _LoadInProgress {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Card> cards)? initial,
-    TResult? Function(List<Card> cards)? loadInProgress,
-    TResult? Function(List<Card> cards)? loadSuccess,
-    TResult? Function(CardFailure failure, List<Card> cards)? failure,
+    TResult? Function(List<CardModel> cards)? initial,
+    TResult? Function(List<CardModel> cards)? loadInProgress,
+    TResult? Function(List<CardModel> cards)? loadSuccess,
+    TResult? Function(CardFailure failure, List<CardModel> cards)? failure,
   }) {
     return loadInProgress?.call(cards);
   }
@@ -358,10 +361,10 @@ class _$_LoadInProgress extends _LoadInProgress {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Card> cards)? initial,
-    TResult Function(List<Card> cards)? loadInProgress,
-    TResult Function(List<Card> cards)? loadSuccess,
-    TResult Function(CardFailure failure, List<Card> cards)? failure,
+    TResult Function(List<CardModel> cards)? initial,
+    TResult Function(List<CardModel> cards)? loadInProgress,
+    TResult Function(List<CardModel> cards)? loadSuccess,
+    TResult Function(CardFailure failure, List<CardModel> cards)? failure,
     required TResult orElse(),
   }) {
     if (loadInProgress != null) {
@@ -409,12 +412,12 @@ class _$_LoadInProgress extends _LoadInProgress {
 }
 
 abstract class _LoadInProgress extends CardsState {
-  const factory _LoadInProgress({required final List<Card> cards}) =
+  const factory _LoadInProgress({required final List<CardModel> cards}) =
       _$_LoadInProgress;
   const _LoadInProgress._() : super._();
 
   @override
-  List<Card> get cards;
+  List<CardModel> get cards;
   @override
   @JsonKey(ignore: true)
   _$$_LoadInProgressCopyWith<_$_LoadInProgress> get copyWith =>
@@ -429,7 +432,7 @@ abstract class _$$_LoadSuccessCopyWith<$Res>
       __$$_LoadSuccessCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Card> cards});
+  $Res call({List<CardModel> cards});
 }
 
 /// @nodoc
@@ -449,7 +452,7 @@ class __$$_LoadSuccessCopyWithImpl<$Res>
       cards: null == cards
           ? _value._cards
           : cards // ignore: cast_nullable_to_non_nullable
-              as List<Card>,
+              as List<CardModel>,
     ));
   }
 }
@@ -457,13 +460,13 @@ class __$$_LoadSuccessCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadSuccess extends _LoadSuccess {
-  const _$_LoadSuccess({required final List<Card> cards})
+  const _$_LoadSuccess({required final List<CardModel> cards})
       : _cards = cards,
         super._();
 
-  final List<Card> _cards;
+  final List<CardModel> _cards;
   @override
-  List<Card> get cards {
+  List<CardModel> get cards {
     if (_cards is EqualUnmodifiableListView) return _cards;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_cards);
@@ -495,10 +498,11 @@ class _$_LoadSuccess extends _LoadSuccess {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Card> cards) initial,
-    required TResult Function(List<Card> cards) loadInProgress,
-    required TResult Function(List<Card> cards) loadSuccess,
-    required TResult Function(CardFailure failure, List<Card> cards) failure,
+    required TResult Function(List<CardModel> cards) initial,
+    required TResult Function(List<CardModel> cards) loadInProgress,
+    required TResult Function(List<CardModel> cards) loadSuccess,
+    required TResult Function(CardFailure failure, List<CardModel> cards)
+        failure,
   }) {
     return loadSuccess(cards);
   }
@@ -506,10 +510,10 @@ class _$_LoadSuccess extends _LoadSuccess {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Card> cards)? initial,
-    TResult? Function(List<Card> cards)? loadInProgress,
-    TResult? Function(List<Card> cards)? loadSuccess,
-    TResult? Function(CardFailure failure, List<Card> cards)? failure,
+    TResult? Function(List<CardModel> cards)? initial,
+    TResult? Function(List<CardModel> cards)? loadInProgress,
+    TResult? Function(List<CardModel> cards)? loadSuccess,
+    TResult? Function(CardFailure failure, List<CardModel> cards)? failure,
   }) {
     return loadSuccess?.call(cards);
   }
@@ -517,10 +521,10 @@ class _$_LoadSuccess extends _LoadSuccess {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Card> cards)? initial,
-    TResult Function(List<Card> cards)? loadInProgress,
-    TResult Function(List<Card> cards)? loadSuccess,
-    TResult Function(CardFailure failure, List<Card> cards)? failure,
+    TResult Function(List<CardModel> cards)? initial,
+    TResult Function(List<CardModel> cards)? loadInProgress,
+    TResult Function(List<CardModel> cards)? loadSuccess,
+    TResult Function(CardFailure failure, List<CardModel> cards)? failure,
     required TResult orElse(),
   }) {
     if (loadSuccess != null) {
@@ -568,12 +572,12 @@ class _$_LoadSuccess extends _LoadSuccess {
 }
 
 abstract class _LoadSuccess extends CardsState {
-  const factory _LoadSuccess({required final List<Card> cards}) =
+  const factory _LoadSuccess({required final List<CardModel> cards}) =
       _$_LoadSuccess;
   const _LoadSuccess._() : super._();
 
   @override
-  List<Card> get cards;
+  List<CardModel> get cards;
   @override
   @JsonKey(ignore: true)
   _$$_LoadSuccessCopyWith<_$_LoadSuccess> get copyWith =>
@@ -587,7 +591,7 @@ abstract class _$$_FailureCopyWith<$Res> implements $CardsStateCopyWith<$Res> {
       __$$_FailureCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({CardFailure failure, List<Card> cards});
+  $Res call({CardFailure failure, List<CardModel> cards});
 
   $CardFailureCopyWith<$Res> get failure;
 }
@@ -613,7 +617,7 @@ class __$$_FailureCopyWithImpl<$Res>
       cards: null == cards
           ? _value._cards
           : cards // ignore: cast_nullable_to_non_nullable
-              as List<Card>,
+              as List<CardModel>,
     ));
   }
 
@@ -629,15 +633,15 @@ class __$$_FailureCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Failure extends _Failure {
-  const _$_Failure(this.failure, {required final List<Card> cards})
+  const _$_Failure(this.failure, {required final List<CardModel> cards})
       : _cards = cards,
         super._();
 
   @override
   final CardFailure failure;
-  final List<Card> _cards;
+  final List<CardModel> _cards;
   @override
-  List<Card> get cards {
+  List<CardModel> get cards {
     if (_cards is EqualUnmodifiableListView) return _cards;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_cards);
@@ -670,10 +674,11 @@ class _$_Failure extends _Failure {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Card> cards) initial,
-    required TResult Function(List<Card> cards) loadInProgress,
-    required TResult Function(List<Card> cards) loadSuccess,
-    required TResult Function(CardFailure failure, List<Card> cards) failure,
+    required TResult Function(List<CardModel> cards) initial,
+    required TResult Function(List<CardModel> cards) loadInProgress,
+    required TResult Function(List<CardModel> cards) loadSuccess,
+    required TResult Function(CardFailure failure, List<CardModel> cards)
+        failure,
   }) {
     return failure(this.failure, cards);
   }
@@ -681,10 +686,10 @@ class _$_Failure extends _Failure {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Card> cards)? initial,
-    TResult? Function(List<Card> cards)? loadInProgress,
-    TResult? Function(List<Card> cards)? loadSuccess,
-    TResult? Function(CardFailure failure, List<Card> cards)? failure,
+    TResult? Function(List<CardModel> cards)? initial,
+    TResult? Function(List<CardModel> cards)? loadInProgress,
+    TResult? Function(List<CardModel> cards)? loadSuccess,
+    TResult? Function(CardFailure failure, List<CardModel> cards)? failure,
   }) {
     return failure?.call(this.failure, cards);
   }
@@ -692,10 +697,10 @@ class _$_Failure extends _Failure {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Card> cards)? initial,
-    TResult Function(List<Card> cards)? loadInProgress,
-    TResult Function(List<Card> cards)? loadSuccess,
-    TResult Function(CardFailure failure, List<Card> cards)? failure,
+    TResult Function(List<CardModel> cards)? initial,
+    TResult Function(List<CardModel> cards)? loadInProgress,
+    TResult Function(List<CardModel> cards)? loadSuccess,
+    TResult Function(CardFailure failure, List<CardModel> cards)? failure,
     required TResult orElse(),
   }) {
     if (failure != null) {
@@ -744,12 +749,12 @@ class _$_Failure extends _Failure {
 
 abstract class _Failure extends CardsState {
   const factory _Failure(final CardFailure failure,
-      {required final List<Card> cards}) = _$_Failure;
+      {required final List<CardModel> cards}) = _$_Failure;
   const _Failure._() : super._();
 
   CardFailure get failure;
   @override
-  List<Card> get cards;
+  List<CardModel> get cards;
   @override
   @JsonKey(ignore: true)
   _$$_FailureCopyWith<_$_Failure> get copyWith =>

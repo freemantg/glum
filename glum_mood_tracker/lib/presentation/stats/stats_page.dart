@@ -351,8 +351,8 @@ class GlumDistributionCard extends ConsumerWidget {
                 .map(
                   (e) => GlumCountPercentageBar(
                     glumRating: e.key,
-                    count: e.value ?? 0,
-                    totalGlums: 5,
+                    count: e.value,
+                    totalGlums: totalGlumCount,
                   ),
                 )
                 .toList()

@@ -6,7 +6,7 @@ import 'package:glum_mood_tracker/application/core/stories_notifier.dart';
 import 'package:glum_mood_tracker/application/core/story_form_notifier.dart';
 import 'package:glum_mood_tracker/application/core/tags_notifier.dart';
 import 'package:glum_mood_tracker/application/stats/photos_notifier.dart';
-import 'package:glum_mood_tracker/infrastructure/drift_database.dart' hide Card;
+import 'package:glum_mood_tracker/infrastructure/database/drift_database.dart';
 import 'package:glum_mood_tracker/infrastructure/photo_repository.dart';
 import 'package:glum_mood_tracker/infrastructure/story_repository.dart';
 import 'package:glum_mood_tracker/infrastructure/tag_repository.dart';

@@ -309,9 +309,7 @@ class MonthProgressBar extends ConsumerWidget {
             child: LinearProgressIndicator(
               value: stories / daysInMonth,
               backgroundColor: Colors.white70.withOpacity(0.25),
-              valueColor: AlwaysStoppedAnimation<Color>(
-                $styles.colors.primaryThemeColor,
-              ),
+              valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
             ),
           ),
         ),

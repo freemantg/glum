@@ -26,6 +26,9 @@ class _Text {
 
   late final TextStyle h3 =
       copy(titleFont, sizePx: 24, heightPx: 36, weight: FontWeight.w600);
+  late final TextStyle h3Condensed =
+      copy(titleFontCondensed, sizePx: 24, heightPx: 36);
+
   late final TextStyle h4 = copy(titleFont,
       sizePx: 14, heightPx: 23, spacingPc: 5, weight: FontWeight.w600);
 

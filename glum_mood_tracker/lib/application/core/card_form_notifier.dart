@@ -15,7 +15,7 @@ part 'card_form_notifier.freezed.dart';
 class CardFormState with _$CardFormState {
   const CardFormState._();
   const factory CardFormState({
-    required Card card,
+    required CardModel card,
     required bool isEditing,
     required bool isSaving,
     required Option<Either<CardFailure, Unit>> failureOrSuccess,
@@ -23,7 +23,7 @@ class CardFormState with _$CardFormState {
 
   factory CardFormState.initial() {
     return CardFormState(
-      card: Card(monthYear: DateTime.now()),
+      card: CardModel(monthYear: DateTime.now()),
       isEditing: false,
       isSaving: false,
       failureOrSuccess: none(),
@@ -42,7 +42,7 @@ class CardFormNotifier extends StateNotifier<CardFormState> {
   final CardRepository _cardRepository;
   final PhotoRepository _photoRepository;
 
-  Future<void> initialiseCard(Card? card) async {
+  Future<void> initialiseCard(CardModel? card) async {
     if (card != null) {
       state = state.copyWith(
         card: card,

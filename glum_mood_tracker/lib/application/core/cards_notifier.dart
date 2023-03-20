@@ -10,13 +10,13 @@ part 'cards_notifier.freezed.dart';
 @freezed
 class CardsState with _$CardsState {
   const CardsState._();
-  const factory CardsState.initial({required List<Card> cards}) = _Initial;
-  const factory CardsState.loadInProgress({required List<Card> cards}) =
+  const factory CardsState.initial({required List<CardModel> cards}) = _Initial;
+  const factory CardsState.loadInProgress({required List<CardModel> cards}) =
       _LoadInProgress;
-  const factory CardsState.loadSuccess({required List<Card> cards}) =
+  const factory CardsState.loadSuccess({required List<CardModel> cards}) =
       _LoadSuccess;
   const factory CardsState.failure(CardFailure failure,
-      {required List<Card> cards}) = _Failure;
+      {required List<CardModel> cards}) = _Failure;
 }
 
 class CardsStateNotifier extends StateNotifier<CardsState> {

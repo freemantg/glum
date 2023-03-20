@@ -16,9 +16,9 @@ abstract class IStoryRepository {
 }
 
 abstract class ICardRepository {
-  Stream<Either<CardFailure, List<Card?>>> watchAllCards();
-  Future<Either<CardFailure, Unit>> addCard(Card card);
-  Future<Either<CardFailure, Unit>> updateCard(Card card);
+  Stream<Either<CardFailure, List<CardModel?>>> watchAllCards();
+  Future<Either<CardFailure, Unit>> addCard(CardModel card);
+  Future<Either<CardFailure, Unit>> updateCard(CardModel card);
 }
 
 abstract class ITagRepository {
@@ -28,9 +28,7 @@ abstract class ITagRepository {
   Future<Either<TagFailure, Unit>> deleteTag(Tag tag);
 }
 
-
 abstract class IStatsRepository {
-  Stream<Either<StoryFailure, List<Story>>> watchAllStories();
   Future<Either<StoryFailure, int>> countAllStories();
   Future<Either<StoryFailure, double>> glumAverage();
   Future<Either<StoryFailure, Map<DateTime, int>>> averageWeek();

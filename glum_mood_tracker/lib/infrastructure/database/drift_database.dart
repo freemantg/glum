@@ -9,7 +9,7 @@ import 'package:glum_mood_tracker/infrastructure/tag_dto.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 
-import 'card_dto.dart';
+import '../card_dto.dart';
 
 part 'drift_database.g.dart';
 

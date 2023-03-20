@@ -5,7 +5,7 @@ import 'package:glum_mood_tracker/infrastructure/card_dto.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../domain/card.dart';
-import 'drift_database.dart' hide Card;
+import 'database/drift_database.dart' hide Card;
 
 class CardRepository extends ICardRepository {
   final GlumDatabase _db;
@@ -13,7 +13,7 @@ class CardRepository extends ICardRepository {
   CardRepository({required GlumDatabase database}) : _db = database;
 
   @override
-  Future<Either<CardFailure, Unit>> addCard(Card card) async {
+  Future<Either<CardFailure, Unit>> addCard(CardModel card) async {
     try {
       await _db.cardDao.insertCard(CardDto.fromDomain(card));
       return right(unit);
@@ -23,7 +23,7 @@ class CardRepository extends ICardRepository {
   }
 
   @override
-  Future<Either<CardFailure, Unit>> updateCard(Card card) async {
+  Future<Either<CardFailure, Unit>> updateCard(CardModel card) async {
     try {
       await _db.cardDao.updateCard(CardDto.fromDomain(card));
       return right(unit);
@@ -33,12 +33,12 @@ class CardRepository extends ICardRepository {
   }
 
   @override
-  Stream<Either<CardFailure, List<Card>>> watchAllCards() async* {
+  Stream<Either<CardFailure, List<CardModel>>> watchAllCards() async* {
     final stream = _db.cardDao.watchAllCards();
     yield* stream.map(
       (dtos) {
         final cards = dtos.map((e) => e.toDomain()).toList();
-        return right<CardFailure, List<Card>>(cards);
+        return right<CardFailure, List<CardModel>>(cards);
       },
     ).onErrorReturnWith(
       (error, stackTrace) {

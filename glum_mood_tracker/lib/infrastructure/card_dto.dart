@@ -20,7 +20,7 @@ class CardDto with _$CardDto {
   factory CardDto.fromJson(Map<String, dynamic> json) =>
       _$CardDtoFromJson(json);
 
-  factory CardDto.fromDomain(Card card) {
+  factory CardDto.fromDomain(CardModel card) {
     return CardDto(
       id: card.id,
       monthYear: card.monthYear,
@@ -29,8 +29,8 @@ class CardDto with _$CardDto {
     );
   }
 
-  Card toDomain() {
-    return Card(
+  CardModel toDomain() {
+    return CardModel(
       id: id,
       monthYear: monthYear,
       color: (colorValue != null) ? Color(colorValue!) : null,
