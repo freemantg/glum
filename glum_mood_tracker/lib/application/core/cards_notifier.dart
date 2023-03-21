@@ -3,7 +3,7 @@ import 'package:glum_mood_tracker/domain/card_failure.dart';
 import 'package:glum_mood_tracker/infrastructure/card_repository.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../domain/card.dart';
+import '../../domain/card_model.dart';
 
 part 'cards_notifier.freezed.dart';
 

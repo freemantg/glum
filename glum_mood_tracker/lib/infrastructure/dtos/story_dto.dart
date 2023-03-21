@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../domain/story.dart';
+import '../../../domain/story.dart';
 import 'photo_dto.dart';
 import 'tag_dto.dart';
 

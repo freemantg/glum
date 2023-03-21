@@ -2,18 +2,18 @@ import 'dart:io';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'photo.freezed.dart';
+part 'photo_model.freezed.dart';
 
 @freezed
-class Photo with _$Photo {
-  const Photo._();
-  const factory Photo({
+class PhotoModel with _$PhotoModel {
+  const PhotoModel._();
+  const factory PhotoModel({
     required File? file,
     required String fileName,
     required String filePath,
-  }) = _Photo;
+  }) = _PhotoModel;
 
-  factory Photo.empty() => const Photo(
+  factory PhotoModel.empty() => const PhotoModel(
         file: null,
         fileName: '',
         filePath: '',

@@ -6,7 +6,7 @@ import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 
-import '../../domain/photo.dart';
+import '../../domain/photo_model.dart';
 import '../../domain/story.dart';
 import '../../domain/tag.dart';
 import 'daos/daos.dart';

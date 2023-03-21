@@ -16,29 +16,30 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$PhotosState {
-  List<Photo> get photos => throw _privateConstructorUsedError;
+  List<PhotoModel> get photos => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Photo> photos) initial,
-    required TResult Function(List<Photo> photos) loadInProgress,
-    required TResult Function(List<Photo> photos) loadSuccess,
-    required TResult Function(PhotoFailure failure, List<Photo> photos) failure,
+    required TResult Function(List<PhotoModel> photos) initial,
+    required TResult Function(List<PhotoModel> photos) loadInProgress,
+    required TResult Function(List<PhotoModel> photos) loadSuccess,
+    required TResult Function(PhotoFailure failure, List<PhotoModel> photos)
+        failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Photo> photos)? initial,
-    TResult? Function(List<Photo> photos)? loadInProgress,
-    TResult? Function(List<Photo> photos)? loadSuccess,
-    TResult? Function(PhotoFailure failure, List<Photo> photos)? failure,
+    TResult? Function(List<PhotoModel> photos)? initial,
+    TResult? Function(List<PhotoModel> photos)? loadInProgress,
+    TResult? Function(List<PhotoModel> photos)? loadSuccess,
+    TResult? Function(PhotoFailure failure, List<PhotoModel> photos)? failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Photo> photos)? initial,
-    TResult Function(List<Photo> photos)? loadInProgress,
-    TResult Function(List<Photo> photos)? loadSuccess,
-    TResult Function(PhotoFailure failure, List<Photo> photos)? failure,
+    TResult Function(List<PhotoModel> photos)? initial,
+    TResult Function(List<PhotoModel> photos)? loadInProgress,
+    TResult Function(List<PhotoModel> photos)? loadSuccess,
+    TResult Function(PhotoFailure failure, List<PhotoModel> photos)? failure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -79,7 +80,7 @@ abstract class $PhotosStateCopyWith<$Res> {
           PhotosState value, $Res Function(PhotosState) then) =
       _$PhotosStateCopyWithImpl<$Res, PhotosState>;
   @useResult
-  $Res call({List<Photo> photos});
+  $Res call({List<PhotoModel> photos});
 }
 
 /// @nodoc
@@ -101,7 +102,7 @@ class _$PhotosStateCopyWithImpl<$Res, $Val extends PhotosState>
       photos: null == photos
           ? _value.photos
           : photos // ignore: cast_nullable_to_non_nullable
-              as List<Photo>,
+              as List<PhotoModel>,
     ) as $Val);
   }
 }
@@ -113,7 +114,7 @@ abstract class _$$_InitialCopyWith<$Res> implements $PhotosStateCopyWith<$Res> {
       __$$_InitialCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Photo> photos});
+  $Res call({List<PhotoModel> photos});
 }
 
 /// @nodoc
@@ -132,7 +133,7 @@ class __$$_InitialCopyWithImpl<$Res>
       photos: null == photos
           ? _value._photos
           : photos // ignore: cast_nullable_to_non_nullable
-              as List<Photo>,
+              as List<PhotoModel>,
     ));
   }
 }
@@ -140,13 +141,13 @@ class __$$_InitialCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Initial extends _Initial {
-  const _$_Initial({required final List<Photo> photos})
+  const _$_Initial({required final List<PhotoModel> photos})
       : _photos = photos,
         super._();
 
-  final List<Photo> _photos;
+  final List<PhotoModel> _photos;
   @override
-  List<Photo> get photos {
+  List<PhotoModel> get photos {
     if (_photos is EqualUnmodifiableListView) return _photos;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_photos);
@@ -178,10 +179,11 @@ class _$_Initial extends _Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Photo> photos) initial,
-    required TResult Function(List<Photo> photos) loadInProgress,
-    required TResult Function(List<Photo> photos) loadSuccess,
-    required TResult Function(PhotoFailure failure, List<Photo> photos) failure,
+    required TResult Function(List<PhotoModel> photos) initial,
+    required TResult Function(List<PhotoModel> photos) loadInProgress,
+    required TResult Function(List<PhotoModel> photos) loadSuccess,
+    required TResult Function(PhotoFailure failure, List<PhotoModel> photos)
+        failure,
   }) {
     return initial(photos);
   }
@@ -189,10 +191,10 @@ class _$_Initial extends _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Photo> photos)? initial,
-    TResult? Function(List<Photo> photos)? loadInProgress,
-    TResult? Function(List<Photo> photos)? loadSuccess,
-    TResult? Function(PhotoFailure failure, List<Photo> photos)? failure,
+    TResult? Function(List<PhotoModel> photos)? initial,
+    TResult? Function(List<PhotoModel> photos)? loadInProgress,
+    TResult? Function(List<PhotoModel> photos)? loadSuccess,
+    TResult? Function(PhotoFailure failure, List<PhotoModel> photos)? failure,
   }) {
     return initial?.call(photos);
   }
@@ -200,10 +202,10 @@ class _$_Initial extends _Initial {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Photo> photos)? initial,
-    TResult Function(List<Photo> photos)? loadInProgress,
-    TResult Function(List<Photo> photos)? loadSuccess,
-    TResult Function(PhotoFailure failure, List<Photo> photos)? failure,
+    TResult Function(List<PhotoModel> photos)? initial,
+    TResult Function(List<PhotoModel> photos)? loadInProgress,
+    TResult Function(List<PhotoModel> photos)? loadSuccess,
+    TResult Function(PhotoFailure failure, List<PhotoModel> photos)? failure,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -251,11 +253,11 @@ class _$_Initial extends _Initial {
 }
 
 abstract class _Initial extends PhotosState {
-  const factory _Initial({required final List<Photo> photos}) = _$_Initial;
+  const factory _Initial({required final List<PhotoModel> photos}) = _$_Initial;
   const _Initial._() : super._();
 
   @override
-  List<Photo> get photos;
+  List<PhotoModel> get photos;
   @override
   @JsonKey(ignore: true)
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
@@ -270,7 +272,7 @@ abstract class _$$_LoadInProgressCopyWith<$Res>
       __$$_LoadInProgressCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Photo> photos});
+  $Res call({List<PhotoModel> photos});
 }
 
 /// @nodoc
@@ -290,7 +292,7 @@ class __$$_LoadInProgressCopyWithImpl<$Res>
       photos: null == photos
           ? _value._photos
           : photos // ignore: cast_nullable_to_non_nullable
-              as List<Photo>,
+              as List<PhotoModel>,
     ));
   }
 }
@@ -298,13 +300,13 @@ class __$$_LoadInProgressCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadInProgress extends _LoadInProgress {
-  const _$_LoadInProgress({required final List<Photo> photos})
+  const _$_LoadInProgress({required final List<PhotoModel> photos})
       : _photos = photos,
         super._();
 
-  final List<Photo> _photos;
+  final List<PhotoModel> _photos;
   @override
-  List<Photo> get photos {
+  List<PhotoModel> get photos {
     if (_photos is EqualUnmodifiableListView) return _photos;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_photos);
@@ -336,10 +338,11 @@ class _$_LoadInProgress extends _LoadInProgress {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Photo> photos) initial,
-    required TResult Function(List<Photo> photos) loadInProgress,
-    required TResult Function(List<Photo> photos) loadSuccess,
-    required TResult Function(PhotoFailure failure, List<Photo> photos) failure,
+    required TResult Function(List<PhotoModel> photos) initial,
+    required TResult Function(List<PhotoModel> photos) loadInProgress,
+    required TResult Function(List<PhotoModel> photos) loadSuccess,
+    required TResult Function(PhotoFailure failure, List<PhotoModel> photos)
+        failure,
   }) {
     return loadInProgress(photos);
   }
@@ -347,10 +350,10 @@ class _$_LoadInProgress extends _LoadInProgress {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Photo> photos)? initial,
-    TResult? Function(List<Photo> photos)? loadInProgress,
-    TResult? Function(List<Photo> photos)? loadSuccess,
-    TResult? Function(PhotoFailure failure, List<Photo> photos)? failure,
+    TResult? Function(List<PhotoModel> photos)? initial,
+    TResult? Function(List<PhotoModel> photos)? loadInProgress,
+    TResult? Function(List<PhotoModel> photos)? loadSuccess,
+    TResult? Function(PhotoFailure failure, List<PhotoModel> photos)? failure,
   }) {
     return loadInProgress?.call(photos);
   }
@@ -358,10 +361,10 @@ class _$_LoadInProgress extends _LoadInProgress {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Photo> photos)? initial,
-    TResult Function(List<Photo> photos)? loadInProgress,
-    TResult Function(List<Photo> photos)? loadSuccess,
-    TResult Function(PhotoFailure failure, List<Photo> photos)? failure,
+    TResult Function(List<PhotoModel> photos)? initial,
+    TResult Function(List<PhotoModel> photos)? loadInProgress,
+    TResult Function(List<PhotoModel> photos)? loadSuccess,
+    TResult Function(PhotoFailure failure, List<PhotoModel> photos)? failure,
     required TResult orElse(),
   }) {
     if (loadInProgress != null) {
@@ -409,12 +412,12 @@ class _$_LoadInProgress extends _LoadInProgress {
 }
 
 abstract class _LoadInProgress extends PhotosState {
-  const factory _LoadInProgress({required final List<Photo> photos}) =
+  const factory _LoadInProgress({required final List<PhotoModel> photos}) =
       _$_LoadInProgress;
   const _LoadInProgress._() : super._();
 
   @override
-  List<Photo> get photos;
+  List<PhotoModel> get photos;
   @override
   @JsonKey(ignore: true)
   _$$_LoadInProgressCopyWith<_$_LoadInProgress> get copyWith =>
@@ -429,7 +432,7 @@ abstract class _$$_LoadSuccessCopyWith<$Res>
       __$$_LoadSuccessCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Photo> photos});
+  $Res call({List<PhotoModel> photos});
 }
 
 /// @nodoc
@@ -449,7 +452,7 @@ class __$$_LoadSuccessCopyWithImpl<$Res>
       photos: null == photos
           ? _value._photos
           : photos // ignore: cast_nullable_to_non_nullable
-              as List<Photo>,
+              as List<PhotoModel>,
     ));
   }
 }
@@ -457,13 +460,13 @@ class __$$_LoadSuccessCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadSuccess extends _LoadSuccess {
-  const _$_LoadSuccess({required final List<Photo> photos})
+  const _$_LoadSuccess({required final List<PhotoModel> photos})
       : _photos = photos,
         super._();
 
-  final List<Photo> _photos;
+  final List<PhotoModel> _photos;
   @override
-  List<Photo> get photos {
+  List<PhotoModel> get photos {
     if (_photos is EqualUnmodifiableListView) return _photos;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_photos);
@@ -495,10 +498,11 @@ class _$_LoadSuccess extends _LoadSuccess {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Photo> photos) initial,
-    required TResult Function(List<Photo> photos) loadInProgress,
-    required TResult Function(List<Photo> photos) loadSuccess,
-    required TResult Function(PhotoFailure failure, List<Photo> photos) failure,
+    required TResult Function(List<PhotoModel> photos) initial,
+    required TResult Function(List<PhotoModel> photos) loadInProgress,
+    required TResult Function(List<PhotoModel> photos) loadSuccess,
+    required TResult Function(PhotoFailure failure, List<PhotoModel> photos)
+        failure,
   }) {
     return loadSuccess(photos);
   }
@@ -506,10 +510,10 @@ class _$_LoadSuccess extends _LoadSuccess {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Photo> photos)? initial,
-    TResult? Function(List<Photo> photos)? loadInProgress,
-    TResult? Function(List<Photo> photos)? loadSuccess,
-    TResult? Function(PhotoFailure failure, List<Photo> photos)? failure,
+    TResult? Function(List<PhotoModel> photos)? initial,
+    TResult? Function(List<PhotoModel> photos)? loadInProgress,
+    TResult? Function(List<PhotoModel> photos)? loadSuccess,
+    TResult? Function(PhotoFailure failure, List<PhotoModel> photos)? failure,
   }) {
     return loadSuccess?.call(photos);
   }
@@ -517,10 +521,10 @@ class _$_LoadSuccess extends _LoadSuccess {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Photo> photos)? initial,
-    TResult Function(List<Photo> photos)? loadInProgress,
-    TResult Function(List<Photo> photos)? loadSuccess,
-    TResult Function(PhotoFailure failure, List<Photo> photos)? failure,
+    TResult Function(List<PhotoModel> photos)? initial,
+    TResult Function(List<PhotoModel> photos)? loadInProgress,
+    TResult Function(List<PhotoModel> photos)? loadSuccess,
+    TResult Function(PhotoFailure failure, List<PhotoModel> photos)? failure,
     required TResult orElse(),
   }) {
     if (loadSuccess != null) {
@@ -568,12 +572,12 @@ class _$_LoadSuccess extends _LoadSuccess {
 }
 
 abstract class _LoadSuccess extends PhotosState {
-  const factory _LoadSuccess({required final List<Photo> photos}) =
+  const factory _LoadSuccess({required final List<PhotoModel> photos}) =
       _$_LoadSuccess;
   const _LoadSuccess._() : super._();
 
   @override
-  List<Photo> get photos;
+  List<PhotoModel> get photos;
   @override
   @JsonKey(ignore: true)
   _$$_LoadSuccessCopyWith<_$_LoadSuccess> get copyWith =>
@@ -587,7 +591,7 @@ abstract class _$$_FailureCopyWith<$Res> implements $PhotosStateCopyWith<$Res> {
       __$$_FailureCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({PhotoFailure failure, List<Photo> photos});
+  $Res call({PhotoFailure failure, List<PhotoModel> photos});
 
   $PhotoFailureCopyWith<$Res> get failure;
 }
@@ -613,7 +617,7 @@ class __$$_FailureCopyWithImpl<$Res>
       photos: null == photos
           ? _value._photos
           : photos // ignore: cast_nullable_to_non_nullable
-              as List<Photo>,
+              as List<PhotoModel>,
     ));
   }
 
@@ -629,15 +633,15 @@ class __$$_FailureCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Failure extends _Failure {
-  const _$_Failure(this.failure, {required final List<Photo> photos})
+  const _$_Failure(this.failure, {required final List<PhotoModel> photos})
       : _photos = photos,
         super._();
 
   @override
   final PhotoFailure failure;
-  final List<Photo> _photos;
+  final List<PhotoModel> _photos;
   @override
-  List<Photo> get photos {
+  List<PhotoModel> get photos {
     if (_photos is EqualUnmodifiableListView) return _photos;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_photos);
@@ -670,10 +674,11 @@ class _$_Failure extends _Failure {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Photo> photos) initial,
-    required TResult Function(List<Photo> photos) loadInProgress,
-    required TResult Function(List<Photo> photos) loadSuccess,
-    required TResult Function(PhotoFailure failure, List<Photo> photos) failure,
+    required TResult Function(List<PhotoModel> photos) initial,
+    required TResult Function(List<PhotoModel> photos) loadInProgress,
+    required TResult Function(List<PhotoModel> photos) loadSuccess,
+    required TResult Function(PhotoFailure failure, List<PhotoModel> photos)
+        failure,
   }) {
     return failure(this.failure, photos);
   }
@@ -681,10 +686,10 @@ class _$_Failure extends _Failure {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Photo> photos)? initial,
-    TResult? Function(List<Photo> photos)? loadInProgress,
-    TResult? Function(List<Photo> photos)? loadSuccess,
-    TResult? Function(PhotoFailure failure, List<Photo> photos)? failure,
+    TResult? Function(List<PhotoModel> photos)? initial,
+    TResult? Function(List<PhotoModel> photos)? loadInProgress,
+    TResult? Function(List<PhotoModel> photos)? loadSuccess,
+    TResult? Function(PhotoFailure failure, List<PhotoModel> photos)? failure,
   }) {
     return failure?.call(this.failure, photos);
   }
@@ -692,10 +697,10 @@ class _$_Failure extends _Failure {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Photo> photos)? initial,
-    TResult Function(List<Photo> photos)? loadInProgress,
-    TResult Function(List<Photo> photos)? loadSuccess,
-    TResult Function(PhotoFailure failure, List<Photo> photos)? failure,
+    TResult Function(List<PhotoModel> photos)? initial,
+    TResult Function(List<PhotoModel> photos)? loadInProgress,
+    TResult Function(List<PhotoModel> photos)? loadSuccess,
+    TResult Function(PhotoFailure failure, List<PhotoModel> photos)? failure,
     required TResult orElse(),
   }) {
     if (failure != null) {
@@ -744,12 +749,12 @@ class _$_Failure extends _Failure {
 
 abstract class _Failure extends PhotosState {
   const factory _Failure(final PhotoFailure failure,
-      {required final List<Photo> photos}) = _$_Failure;
+      {required final List<PhotoModel> photos}) = _$_Failure;
   const _Failure._() : super._();
 
   PhotoFailure get failure;
   @override
-  List<Photo> get photos;
+  List<PhotoModel> get photos;
   @override
   @JsonKey(ignore: true)
   _$$_FailureCopyWith<_$_Failure> get copyWith =>

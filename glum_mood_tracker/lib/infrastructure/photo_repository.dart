@@ -5,9 +5,8 @@ import 'package:glum_mood_tracker/infrastructure/database/drift_database.dart'
     hide Photo;
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 
-import '../domain/photo.dart';
+import '../domain/photo_model.dart';
 import '../domain/photo_failure.dart';
 
 class PhotoRepository {
@@ -20,12 +19,8 @@ class PhotoRepository {
   })  : _imagePicker = imagePicker,
         _glumDatabase = glumDatabase;
 
-  Future<String> _getDocumentDirectoryPath() async {
-    final directory = await getApplicationDocumentsDirectory();
-    return directory.path;
-  }
-
-  Future<Either<PhotoFailure, List<Photo>>> getAllPhotos() async {
+  // Get all photos from the database
+  Future<Either<PhotoFailure, List<PhotoModel>>> getAllPhotos() async {
     try {
       final photos = await _glumDatabase.photoDao.getAllPhotos();
       return right(photos.map((e) => e.toDomain()).toList());
@@ -34,7 +29,8 @@ class PhotoRepository {
     }
   }
 
-  Future<Photo?> pickPhoto() async {
+  // Pick a photo from the gallery and crop it
+  Future<PhotoModel?> pickPhoto() async {
     final pickedFile =
         await _imagePicker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
@@ -42,7 +38,7 @@ class PhotoRepository {
           await ImageCropper().cropImage(sourcePath: pickedFile.path);
       if (croppedFile != null) {
         final fileName = croppedFile.path;
-        final photo = Photo(
+        final photo = PhotoModel(
           file: File(croppedFile.path),
           fileName: fileName,
           filePath: croppedFile.path,
@@ -53,7 +49,8 @@ class PhotoRepository {
     return null;
   }
 
-  Future<File> savePhoto(Photo photo) async {
+  // Save a photo to the local storage
+  Future<File> savePhoto(PhotoModel photo) async {
     final file = File(photo.filePath);
     final photoFile = photo.file;
     return file.writeAsBytes(await photoFile!.readAsBytes());

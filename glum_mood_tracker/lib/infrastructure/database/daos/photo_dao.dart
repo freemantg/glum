@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 
-import '../../dtos.dart';
+import '../../dtos/dtos.dart';
 import '../drift_database.dart';
 
 part 'photo_dao.g.dart';

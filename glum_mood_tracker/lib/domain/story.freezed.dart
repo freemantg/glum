@@ -22,7 +22,7 @@ mixin _$Story {
   int get glumRating => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
   List<Tag> get tags => throw _privateConstructorUsedError;
-  List<Photo> get photos => throw _privateConstructorUsedError;
+  List<PhotoModel> get photos => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $StoryCopyWith<Story> get copyWith => throw _privateConstructorUsedError;
@@ -40,7 +40,7 @@ abstract class $StoryCopyWith<$Res> {
       int glumRating,
       DateTime date,
       List<Tag> tags,
-      List<Photo> photos});
+      List<PhotoModel> photos});
 }
 
 /// @nodoc
@@ -92,7 +92,7 @@ class _$StoryCopyWithImpl<$Res, $Val extends Story>
       photos: null == photos
           ? _value.photos
           : photos // ignore: cast_nullable_to_non_nullable
-              as List<Photo>,
+              as List<PhotoModel>,
     ) as $Val);
   }
 }
@@ -110,7 +110,7 @@ abstract class _$$_StoryCopyWith<$Res> implements $StoryCopyWith<$Res> {
       int glumRating,
       DateTime date,
       List<Tag> tags,
-      List<Photo> photos});
+      List<PhotoModel> photos});
 }
 
 /// @nodoc
@@ -158,7 +158,7 @@ class __$$_StoryCopyWithImpl<$Res> extends _$StoryCopyWithImpl<$Res, _$_Story>
       photos: null == photos
           ? _value._photos
           : photos // ignore: cast_nullable_to_non_nullable
-              as List<Photo>,
+              as List<PhotoModel>,
     ));
   }
 }
@@ -173,7 +173,7 @@ class _$_Story extends _Story {
       required this.glumRating,
       required this.date,
       required final List<Tag> tags,
-      required final List<Photo> photos})
+      required final List<PhotoModel> photos})
       : _tags = tags,
         _photos = photos,
         super._();
@@ -196,9 +196,9 @@ class _$_Story extends _Story {
     return EqualUnmodifiableListView(_tags);
   }
 
-  final List<Photo> _photos;
+  final List<PhotoModel> _photos;
   @override
-  List<Photo> get photos {
+  List<PhotoModel> get photos {
     if (_photos is EqualUnmodifiableListView) return _photos;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_photos);
@@ -251,7 +251,7 @@ abstract class _Story extends Story {
       required final int glumRating,
       required final DateTime date,
       required final List<Tag> tags,
-      required final List<Photo> photos}) = _$_Story;
+      required final List<PhotoModel> photos}) = _$_Story;
   const _Story._() : super._();
 
   @override
@@ -267,7 +267,7 @@ abstract class _Story extends Story {
   @override
   List<Tag> get tags;
   @override
-  List<Photo> get photos;
+  List<PhotoModel> get photos;
   @override
   @JsonKey(ignore: true)
   _$$_StoryCopyWith<_$_Story> get copyWith =>

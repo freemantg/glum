@@ -101,8 +101,7 @@ class __$$_TagDtoCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
-@JsonSerializable(includeIfNull: false)
+@JsonSerializable()
 class _$_TagDto extends _TagDto {
   const _$_TagDto({this.id, required this.title}) : super._();
 

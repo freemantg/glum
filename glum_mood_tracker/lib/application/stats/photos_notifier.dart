@@ -3,21 +3,22 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:glum_mood_tracker/domain/photo_failure.dart';
 import 'package:glum_mood_tracker/infrastructure/photo_repository.dart';
 
-import '../../domain/photo.dart';
+import '../../domain/photo_model.dart';
 
 part 'photos_notifier.freezed.dart';
 
 @freezed
 class PhotosState with _$PhotosState {
   const PhotosState._();
-  const factory PhotosState.initial({required List<Photo> photos}) = _Initial;
-  const factory PhotosState.loadInProgress({required List<Photo> photos}) =
+  const factory PhotosState.initial({required List<PhotoModel> photos}) =
+      _Initial;
+  const factory PhotosState.loadInProgress({required List<PhotoModel> photos}) =
       _LoadInProgress;
-  const factory PhotosState.loadSuccess({required List<Photo> photos}) =
+  const factory PhotosState.loadSuccess({required List<PhotoModel> photos}) =
       _LoadSuccess;
   const factory PhotosState.failure(
     PhotoFailure failure, {
-    required List<Photo> photos,
+    required List<PhotoModel> photos,
   }) = _Failure;
 }
 

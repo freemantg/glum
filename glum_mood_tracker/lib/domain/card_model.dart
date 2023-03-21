@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:glum_mood_tracker/domain/photo.dart';
+import 'package:glum_mood_tracker/domain/photo_model.dart';
 
-part 'card.freezed.dart';
+part 'card_model.freezed.dart';
 
 @freezed
 class CardModel with _$CardModel {
@@ -11,6 +11,6 @@ class CardModel with _$CardModel {
     int? id,
     required DateTime monthYear,
     Color? color,
-    Photo? photo,
+    PhotoModel? photo,
   }) = _CardModel;
 }

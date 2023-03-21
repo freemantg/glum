@@ -5,7 +5,7 @@ import 'package:glum_mood_tracker/shared/providers.dart';
 import 'package:intl/intl.dart';
 
 import '../../../styles/styles.dart';
-import '/../domain/card.dart' as domain;
+import '../../../domain/card_model.dart' as domain;
 import '../../routes/app_router.gr.dart';
 import '../cards_page.dart';
 

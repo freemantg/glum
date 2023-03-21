@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:glum_mood_tracker/domain/interfaces.dart';
 import 'package:glum_mood_tracker/domain/story_failure.dart';
-import 'package:glum_mood_tracker/domain/story.dart';
 import 'package:glum_mood_tracker/domain/tag.dart';
 import 'package:glum_mood_tracker/infrastructure/database/drift_database.dart'
     hide Tag, Story;
@@ -24,17 +23,6 @@ class StatsRepository implements IStatsRepository {
     } catch (e) {
       return left(const StoryFailure.unexpected());
     }
-  }
-
-  @override
-  Stream<Either<StoryFailure, List<Story>>> watchAllStories() {
-    return const Stream.empty();
-  }
-
-  @override
-  Future<Either<StoryFailure, Unit>> fetchStats() {
-    // TODO: implement fetchStats
-    throw UnimplementedError();
   }
 
   @override

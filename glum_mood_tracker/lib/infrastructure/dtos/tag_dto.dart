@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../domain/tag.dart';
+import '../../../domain/tag.dart';
 
 part 'tag_dto.freezed.dart';
 part 'tag_dto.g.dart';
@@ -8,9 +8,8 @@ part 'tag_dto.g.dart';
 @freezed
 class TagDto with _$TagDto {
   const TagDto._();
-  @JsonSerializable(includeIfNull: false)
   const factory TagDto({
-     int? id,
+    int? id,
     required String title,
   }) = _TagDto;
 

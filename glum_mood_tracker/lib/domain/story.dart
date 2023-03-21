@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'photo.dart';
+import 'photo_model.dart';
 import 'tag.dart';
 
 part 'story.freezed.dart';
@@ -15,7 +15,7 @@ class Story with _$Story {
     required int glumRating,
     required DateTime date,
     required List<Tag> tags,
-    required List<Photo> photos,
+    required List<PhotoModel> photos,
   }) = _Story;
 
   factory Story.empty() => Story(

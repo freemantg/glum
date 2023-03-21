@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart' hide Card;
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:glum_mood_tracker/infrastructure/photo_dto.dart';
 
-import '../domain/card.dart';
+import '../../domain/card_model.dart';
+import 'dtos.dart';
 
 part 'card_dto.freezed.dart';
 part 'card_dto.g.dart';

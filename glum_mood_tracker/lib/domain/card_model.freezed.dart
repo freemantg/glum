@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'card.dart';
+part of 'card_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -19,7 +19,7 @@ mixin _$CardModel {
   int? get id => throw _privateConstructorUsedError;
   DateTime get monthYear => throw _privateConstructorUsedError;
   Color? get color => throw _privateConstructorUsedError;
-  Photo? get photo => throw _privateConstructorUsedError;
+  PhotoModel? get photo => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CardModelCopyWith<CardModel> get copyWith =>
@@ -31,9 +31,9 @@ abstract class $CardModelCopyWith<$Res> {
   factory $CardModelCopyWith(CardModel value, $Res Function(CardModel) then) =
       _$CardModelCopyWithImpl<$Res, CardModel>;
   @useResult
-  $Res call({int? id, DateTime monthYear, Color? color, Photo? photo});
+  $Res call({int? id, DateTime monthYear, Color? color, PhotoModel? photo});
 
-  $PhotoCopyWith<$Res>? get photo;
+  $PhotoModelCopyWith<$Res>? get photo;
 }
 
 /// @nodoc
@@ -70,18 +70,18 @@ class _$CardModelCopyWithImpl<$Res, $Val extends CardModel>
       photo: freezed == photo
           ? _value.photo
           : photo // ignore: cast_nullable_to_non_nullable
-              as Photo?,
+              as PhotoModel?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $PhotoCopyWith<$Res>? get photo {
+  $PhotoModelCopyWith<$Res>? get photo {
     if (_value.photo == null) {
       return null;
     }
 
-    return $PhotoCopyWith<$Res>(_value.photo!, (value) {
+    return $PhotoModelCopyWith<$Res>(_value.photo!, (value) {
       return _then(_value.copyWith(photo: value) as $Val);
     });
   }
@@ -94,10 +94,10 @@ abstract class _$$_CardModelCopyWith<$Res> implements $CardModelCopyWith<$Res> {
       __$$_CardModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int? id, DateTime monthYear, Color? color, Photo? photo});
+  $Res call({int? id, DateTime monthYear, Color? color, PhotoModel? photo});
 
   @override
-  $PhotoCopyWith<$Res>? get photo;
+  $PhotoModelCopyWith<$Res>? get photo;
 }
 
 /// @nodoc
@@ -132,7 +132,7 @@ class __$$_CardModelCopyWithImpl<$Res>
       photo: freezed == photo
           ? _value.photo
           : photo // ignore: cast_nullable_to_non_nullable
-              as Photo?,
+              as PhotoModel?,
     ));
   }
 }
@@ -150,7 +150,7 @@ class _$_CardModel extends _CardModel {
   @override
   final Color? color;
   @override
-  final Photo? photo;
+  final PhotoModel? photo;
 
   @override
   String toString() {
@@ -184,7 +184,7 @@ abstract class _CardModel extends CardModel {
       {final int? id,
       required final DateTime monthYear,
       final Color? color,
-      final Photo? photo}) = _$_CardModel;
+      final PhotoModel? photo}) = _$_CardModel;
   const _CardModel._() : super._();
 
   @override
@@ -194,7 +194,7 @@ abstract class _CardModel extends CardModel {
   @override
   Color? get color;
   @override
-  Photo? get photo;
+  PhotoModel? get photo;
   @override
   @JsonKey(ignore: true)
   _$$_CardModelCopyWith<_$_CardModel> get copyWith =>

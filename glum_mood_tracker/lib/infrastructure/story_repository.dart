@@ -4,10 +4,10 @@ import 'package:glum_mood_tracker/domain/interfaces.dart';
 import 'package:glum_mood_tracker/infrastructure/database/drift_database.dart'
     hide Story;
 import 'package:glum_mood_tracker/infrastructure/photo_repository.dart';
-import 'package:glum_mood_tracker/infrastructure/story_dto.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../domain/story.dart';
+import 'dtos/dtos.dart';
 
 class StoryRepository implements IStoryRepository {
   final GlumDatabase _db;

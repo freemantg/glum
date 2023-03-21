@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../domain/photo.dart';
+import '../../domain/photo_model.dart';
 
 part 'photo_dto.freezed.dart';
 part 'photo_dto.g.dart';
@@ -15,7 +15,7 @@ class PhotoDto with _$PhotoDto {
     required String filePath,
   }) = _PhotoDto;
 
-  factory PhotoDto.fromDomain(Photo photo) {
+  factory PhotoDto.fromDomain(PhotoModel photo) {
     return PhotoDto(
       fileName: photo.fileName,
       filePath: photo.filePath,
@@ -25,8 +25,8 @@ class PhotoDto with _$PhotoDto {
   factory PhotoDto.fromJson(Map<String, dynamic> json) =>
       _$PhotoDtoFromJson(json);
 
-  Photo toDomain() {
-    return Photo(
+  PhotoModel toDomain() {
+    return PhotoModel(
       file: File(filePath),
       fileName: fileName,
       filePath: filePath,
