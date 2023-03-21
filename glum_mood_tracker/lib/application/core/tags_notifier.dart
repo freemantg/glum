@@ -1,9 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:glum_mood_tracker/infrastructure/tag_repository.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../domain/failures/failures.dart';
 import '../../domain/models/models.dart';
+import '../../infrastructure/repositories/repositories.dart';
 
 part 'tags_notifier.freezed.dart';
 

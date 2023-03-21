@@ -26,7 +26,7 @@ class _StatsPageState extends ConsumerState<StatsPage> {
       () => ref.watch(statsNotifierProvider.notifier).fetchStats(),
     );
     Future.microtask(
-        () => ref.watch(photosStateNotifier.notifier).getAllPhotos());
+        () => ref.watch(photosStateNotifierProvider.notifier).getAllPhotos());
   }
 
   @override
@@ -451,7 +451,7 @@ class PhotosCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final glumDistribution = ref.watch(statsNotifierProvider).glumDistribution;
-    final photos = ref.watch(photosStateNotifier).photos;
+    final photos = ref.watch(photosStateNotifierProvider).photos;
 
     return StyledCard(
       customPadding: true,

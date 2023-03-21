@@ -3,8 +3,8 @@ import 'package:glum_mood_tracker/domain/interfaces.dart';
 import 'package:glum_mood_tracker/infrastructure/database/drift_database.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../domain/failures/failures.dart';
-import '../domain/models/models.dart';
+import '../../domain/failures/failures.dart';
+import '../../domain/models/models.dart';
 
 class StatsRepository implements IStatsRepository {
   final GlumDatabase _db;

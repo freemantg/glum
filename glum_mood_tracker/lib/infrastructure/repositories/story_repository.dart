@@ -1,12 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:glum_mood_tracker/domain/interfaces.dart';
 import 'package:glum_mood_tracker/infrastructure/database/drift_database.dart';
-import 'package:glum_mood_tracker/infrastructure/photo_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../domain/failures/failures.dart';
-import '../domain/models/models.dart';
-import 'dtos/dtos.dart';
+import '../../domain/failures/failures.dart';
+import '../../domain/models/models.dart';
+
+import '../dtos/dtos.dart';
+import 'repositories.dart';
 
 class StoryRepository implements IStoryRepository {
   final GlumDatabase _db;

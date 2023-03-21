@@ -1,13 +1,12 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter/foundation.dart';
 import 'package:glum_mood_tracker/domain/interfaces.dart';
 import 'package:glum_mood_tracker/infrastructure/database/drift_database.dart'
     hide Tag;
 import 'package:rxdart/rxdart.dart';
 
-import '../domain/failures/failures.dart';
-import '../domain/models/models.dart';
-import 'dtos/dtos.dart';
+import '../../domain/failures/failures.dart';
+import '../../domain/models/models.dart';
+import '../dtos/dtos.dart';
 
 class TagRepository implements ITagRepository {
   final GlumDatabase _db;
@@ -43,7 +42,6 @@ class TagRepository implements ITagRepository {
             ))
         .onErrorReturnWith(
       (error, stackTrace) {
-        debugPrint('ERROR');
         return left(const TagFailure.unexpected());
       },
     );

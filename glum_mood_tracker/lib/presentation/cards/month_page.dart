@@ -2,10 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:glum_mood_tracker/shared/extensions.dart';
-import 'package:glum_mood_tracker/shared/providers.dart';
 import 'package:glum_mood_tracker/styles/styles.dart';
 
 import '../../domain/models/models.dart';
+import '../../shared/providers.dart';
 import '../routes/app_router.gr.dart';
 import '../stats/stats_page.dart';
 
@@ -30,7 +30,7 @@ class _MonthPageState extends ConsumerState<MonthPage> {
         builder: (context, constraints) {
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm),
-            child: ref.watch(storiesNotifierProvider).maybeWhen(
+            child: ref.watch(storyNotifierProvider).maybeWhen(
                   loadSuccess: (stories) => ListView.builder(
                     itemCount: stories.length,
                     itemBuilder: (context, index) {
@@ -38,7 +38,7 @@ class _MonthPageState extends ConsumerState<MonthPage> {
 
                       return GestureDetector(
                         onLongPress: () => ref
-                            .read(storiesNotifierProvider.notifier)
+                            .read(storyNotifierProvider.notifier)
                             .deleteStory(story.id!),
                         onTap: () =>
                             context.router.push(StoryPageRoute(story: story)),

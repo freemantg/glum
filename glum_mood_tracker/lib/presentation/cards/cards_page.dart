@@ -28,7 +28,7 @@ class _CardsPageState extends ConsumerState<CardsPage> {
     super.initState();
 
     Future.microtask(() {
-      ref.watch(cardsNotifier.notifier).watchAllCards();
+      ref.watch(cardsStateNotifierProvider.notifier).watchAllCards();
     });
   }
 
@@ -132,7 +132,7 @@ class CardCarousel extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cards = ref.watch(cardsNotifier).maybeMap(
+    final cards = ref.watch(cardsStateNotifierProvider).maybeMap(
           loadSuccess: (state) {
             return state.cards;
           },
@@ -150,7 +150,7 @@ class CardCarousel extends ConsumerWidget {
             );
 
         ref
-            .read(storiesNotifierProvider.notifier)
+            .read(storyNotifierProvider.notifier)
             .watchStoriesByMonthYear(monthYear);
         ref.read(cardFormNotifierProvider.notifier).monthYearChanged(monthYear);
         final card = cards.firstWhereOrNull(
@@ -246,7 +246,7 @@ class DateButton extends ConsumerWidget {
     final buttonDay = (dateIndex + 1) - firstDayOfMonthOffset;
     final buttonDate = DateTime(monthYear.year, monthYear.month, buttonDay);
 
-    final story = ref.watch(storiesNotifierProvider).maybeWhen(
+    final story = ref.watch(storyNotifierProvider).maybeWhen(
           loadSuccess: (stories) {
             return stories.firstWhere(
               (story) => DateUtils.isSameDay(story.date, buttonDate),
@@ -291,7 +291,7 @@ class MonthProgressBar extends ConsumerWidget {
     final daysInMonth =
         DateUtils.getDaysInMonth(monthYear.year, monthYear.month);
 
-    final stories = ref.watch(storiesNotifierProvider).maybeWhen(
+    final stories = ref.watch(storyNotifierProvider).maybeWhen(
           loadSuccess: (stories) {
             return stories
                 .where((story) => DateUtils.isSameMonth(story.date, monthYear))

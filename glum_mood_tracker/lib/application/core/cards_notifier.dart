@@ -1,9 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:glum_mood_tracker/infrastructure/card_repository.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../domain/failures/failures.dart';
 import '../../domain/models/models.dart';
+import '../../infrastructure/repositories/repositories.dart';
 
 
 part 'cards_notifier.freezed.dart';
@@ -21,15 +21,15 @@ class CardsState with _$CardsState {
 }
 
 class CardsStateNotifier extends StateNotifier<CardsState> {
-  CardsStateNotifier({required CardRepository cardRepository})
-      : _cardRepository = cardRepository,
+  CardsStateNotifier({required CardRepository repository})
+      : _repository = repository,
         super(const CardsState.initial(cards: []));
 
-  final CardRepository _cardRepository;
+  final CardRepository _repository;
 
   Future<void> watchAllCards() async {
     state = CardsState.loadInProgress(cards: state.cards);
-    final cardsStream = _cardRepository.watchAllCards();
+    final cardsStream = _repository.watchAllCards();
     cardsStream.listen(
       (successOrFailure) {
         successOrFailure.fold(

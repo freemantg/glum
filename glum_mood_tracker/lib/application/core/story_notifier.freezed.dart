@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'stories_notifier.dart';
+part of 'story_notifier.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$StoriesState {
+mixin _$StoryState {
   List<StoryModel> get stories => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -70,23 +70,23 @@ mixin _$StoriesState {
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $StoriesStateCopyWith<StoriesState> get copyWith =>
+  $StoryStateCopyWith<StoryState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $StoriesStateCopyWith<$Res> {
-  factory $StoriesStateCopyWith(
-          StoriesState value, $Res Function(StoriesState) then) =
-      _$StoriesStateCopyWithImpl<$Res, StoriesState>;
+abstract class $StoryStateCopyWith<$Res> {
+  factory $StoryStateCopyWith(
+          StoryState value, $Res Function(StoryState) then) =
+      _$StoryStateCopyWithImpl<$Res, StoryState>;
   @useResult
   $Res call({List<StoryModel> stories});
 }
 
 /// @nodoc
-class _$StoriesStateCopyWithImpl<$Res, $Val extends StoriesState>
-    implements $StoriesStateCopyWith<$Res> {
-  _$StoriesStateCopyWithImpl(this._value, this._then);
+class _$StoryStateCopyWithImpl<$Res, $Val extends StoryState>
+    implements $StoryStateCopyWith<$Res> {
+  _$StoryStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -108,8 +108,7 @@ class _$StoriesStateCopyWithImpl<$Res, $Val extends StoriesState>
 }
 
 /// @nodoc
-abstract class _$$_InitialCopyWith<$Res>
-    implements $StoriesStateCopyWith<$Res> {
+abstract class _$$_InitialCopyWith<$Res> implements $StoryStateCopyWith<$Res> {
   factory _$$_InitialCopyWith(
           _$_Initial value, $Res Function(_$_Initial) then) =
       __$$_InitialCopyWithImpl<$Res>;
@@ -120,7 +119,7 @@ abstract class _$$_InitialCopyWith<$Res>
 
 /// @nodoc
 class __$$_InitialCopyWithImpl<$Res>
-    extends _$StoriesStateCopyWithImpl<$Res, _$_Initial>
+    extends _$StoryStateCopyWithImpl<$Res, _$_Initial>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
       : super(_value, _then);
@@ -156,7 +155,7 @@ class _$_Initial extends _Initial {
 
   @override
   String toString() {
-    return 'StoriesState.initial(stories: $stories)';
+    return 'StoryState.initial(stories: $stories)';
   }
 
   @override
@@ -253,7 +252,7 @@ class _$_Initial extends _Initial {
   }
 }
 
-abstract class _Initial extends StoriesState {
+abstract class _Initial extends StoryState {
   const factory _Initial({required final List<StoryModel> stories}) =
       _$_Initial;
   const _Initial._() : super._();
@@ -268,7 +267,7 @@ abstract class _Initial extends StoriesState {
 
 /// @nodoc
 abstract class _$$_LoadInProgressCopyWith<$Res>
-    implements $StoriesStateCopyWith<$Res> {
+    implements $StoryStateCopyWith<$Res> {
   factory _$$_LoadInProgressCopyWith(
           _$_LoadInProgress value, $Res Function(_$_LoadInProgress) then) =
       __$$_LoadInProgressCopyWithImpl<$Res>;
@@ -279,7 +278,7 @@ abstract class _$$_LoadInProgressCopyWith<$Res>
 
 /// @nodoc
 class __$$_LoadInProgressCopyWithImpl<$Res>
-    extends _$StoriesStateCopyWithImpl<$Res, _$_LoadInProgress>
+    extends _$StoryStateCopyWithImpl<$Res, _$_LoadInProgress>
     implements _$$_LoadInProgressCopyWith<$Res> {
   __$$_LoadInProgressCopyWithImpl(
       _$_LoadInProgress _value, $Res Function(_$_LoadInProgress) _then)
@@ -316,7 +315,7 @@ class _$_LoadInProgress extends _LoadInProgress {
 
   @override
   String toString() {
-    return 'StoriesState.loadInProgress(stories: $stories)';
+    return 'StoryState.loadInProgress(stories: $stories)';
   }
 
   @override
@@ -413,7 +412,7 @@ class _$_LoadInProgress extends _LoadInProgress {
   }
 }
 
-abstract class _LoadInProgress extends StoriesState {
+abstract class _LoadInProgress extends StoryState {
   const factory _LoadInProgress({required final List<StoryModel> stories}) =
       _$_LoadInProgress;
   const _LoadInProgress._() : super._();
@@ -428,7 +427,7 @@ abstract class _LoadInProgress extends StoriesState {
 
 /// @nodoc
 abstract class _$$_LoadSuccessCopyWith<$Res>
-    implements $StoriesStateCopyWith<$Res> {
+    implements $StoryStateCopyWith<$Res> {
   factory _$$_LoadSuccessCopyWith(
           _$_LoadSuccess value, $Res Function(_$_LoadSuccess) then) =
       __$$_LoadSuccessCopyWithImpl<$Res>;
@@ -439,7 +438,7 @@ abstract class _$$_LoadSuccessCopyWith<$Res>
 
 /// @nodoc
 class __$$_LoadSuccessCopyWithImpl<$Res>
-    extends _$StoriesStateCopyWithImpl<$Res, _$_LoadSuccess>
+    extends _$StoryStateCopyWithImpl<$Res, _$_LoadSuccess>
     implements _$$_LoadSuccessCopyWith<$Res> {
   __$$_LoadSuccessCopyWithImpl(
       _$_LoadSuccess _value, $Res Function(_$_LoadSuccess) _then)
@@ -476,7 +475,7 @@ class _$_LoadSuccess extends _LoadSuccess {
 
   @override
   String toString() {
-    return 'StoriesState.loadSuccess(stories: $stories)';
+    return 'StoryState.loadSuccess(stories: $stories)';
   }
 
   @override
@@ -573,7 +572,7 @@ class _$_LoadSuccess extends _LoadSuccess {
   }
 }
 
-abstract class _LoadSuccess extends StoriesState {
+abstract class _LoadSuccess extends StoryState {
   const factory _LoadSuccess({required final List<StoryModel> stories}) =
       _$_LoadSuccess;
   const _LoadSuccess._() : super._();
@@ -587,8 +586,7 @@ abstract class _LoadSuccess extends StoriesState {
 }
 
 /// @nodoc
-abstract class _$$_FailureCopyWith<$Res>
-    implements $StoriesStateCopyWith<$Res> {
+abstract class _$$_FailureCopyWith<$Res> implements $StoryStateCopyWith<$Res> {
   factory _$$_FailureCopyWith(
           _$_Failure value, $Res Function(_$_Failure) then) =
       __$$_FailureCopyWithImpl<$Res>;
@@ -601,7 +599,7 @@ abstract class _$$_FailureCopyWith<$Res>
 
 /// @nodoc
 class __$$_FailureCopyWithImpl<$Res>
-    extends _$StoriesStateCopyWithImpl<$Res, _$_Failure>
+    extends _$StoryStateCopyWithImpl<$Res, _$_Failure>
     implements _$$_FailureCopyWith<$Res> {
   __$$_FailureCopyWithImpl(_$_Failure _value, $Res Function(_$_Failure) _then)
       : super(_value, _then);
@@ -652,7 +650,7 @@ class _$_Failure extends _Failure {
 
   @override
   String toString() {
-    return 'StoriesState.failure(failure: $failure, stories: $stories)';
+    return 'StoryState.failure(failure: $failure, stories: $stories)';
   }
 
   @override
@@ -750,7 +748,7 @@ class _$_Failure extends _Failure {
   }
 }
 
-abstract class _Failure extends StoriesState {
+abstract class _Failure extends StoryState {
   const factory _Failure(final StoryFailure failure,
       {required final List<StoryModel> stories}) = _$_Failure;
   const _Failure._() : super._();

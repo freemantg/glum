@@ -24,7 +24,7 @@ class DateButton extends ConsumerWidget {
     final buttonDay = (dateIndex + 1) - firstDayOfMonthOffset;
     final buttonDate = DateTime(monthYear.year, monthYear.month, buttonDay);
 
-    final story = ref.watch(storiesNotifierProvider).maybeWhen(
+    final story = ref.watch(storyNotifierProvider).maybeWhen(
           loadSuccess: (stories) {
             return stories.firstWhere(
               (story) => DateUtils.isSameDay(story.date, buttonDate),

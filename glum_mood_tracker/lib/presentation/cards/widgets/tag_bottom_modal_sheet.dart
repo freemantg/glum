@@ -35,8 +35,7 @@ class _TagModalBottomSheetState extends ConsumerState<TagModalBottomSheet> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-        () => ref.read(tagFormNotifierProvider.notifier).watchTags());
+    Future.microtask(() => ref.read(tagNotifierProvider.notifier).watchTags());
   }
 
   @override
@@ -62,7 +61,7 @@ class _TagModalBottomSheetState extends ConsumerState<TagModalBottomSheet> {
           ),
         ],
       ),
-      body: ref.watch(tagFormNotifierProvider).maybeWhen(
+      body: ref.watch(tagNotifierProvider).maybeWhen(
             loadInProgress: (tags) => const CircularProgressIndicator(),
             loadSuccess: (tags) => ListView.separated(
               separatorBuilder: (context, index) =>
@@ -87,7 +86,7 @@ class _TagModalBottomSheetState extends ConsumerState<TagModalBottomSheet> {
                       IconButton(
                         icon: const Icon(Icons.more_vert),
                         onPressed: () => ref
-                            .read(tagFormNotifierProvider.notifier)
+                            .read(tagNotifierProvider.notifier)
                             .deleteTag(tag),
                       ),
                     ],
@@ -121,7 +120,7 @@ class TagActionAlertDialog extends HookConsumerWidget {
         TextButton(
           onPressed: () {
             ref
-                .read(tagFormNotifierProvider.notifier)
+                .read(tagNotifierProvider.notifier)
                 .addTag(controller.value.text);
             context.router.pop();
           },

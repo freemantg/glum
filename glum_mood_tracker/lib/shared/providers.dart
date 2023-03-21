@@ -1,24 +1,43 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:glum_mood_tracker/application/core/card_form_notifier.dart';
-import 'package:glum_mood_tracker/application/core/cards_notifier.dart';
-import 'package:glum_mood_tracker/application/core/date_time_notifier.dart';
-import 'package:glum_mood_tracker/application/core/stories_notifier.dart';
-import 'package:glum_mood_tracker/application/core/story_form_notifier.dart';
-import 'package:glum_mood_tracker/application/core/tags_notifier.dart';
-import 'package:glum_mood_tracker/application/stats/photos_notifier.dart';
 import 'package:glum_mood_tracker/infrastructure/database/drift_database.dart';
-import 'package:glum_mood_tracker/infrastructure/photo_repository.dart';
-import 'package:glum_mood_tracker/infrastructure/story_repository.dart';
-import 'package:glum_mood_tracker/infrastructure/tag_repository.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../application/stats/stats_notifier.dart';
-import '../infrastructure/card_repository.dart';
-import '../infrastructure/stats_repository.dart';
+import '../application/notifiers.dart';
+import '../infrastructure/repositories/repositories.dart';
 
-final storiesNotifierProvider =
-    StateNotifierProvider<StoriesNotifier, StoriesState>(
-        (ref) => StoriesNotifier(ref.watch(storyRepositoryProvider)));
+// Providers
+final storyRepositoryProvider = Provider(
+  (ref) => StoryRepository(
+    ref.watch(databaseProvider),
+    ref.watch(photoRepositoryProvider),
+  ),
+);
+
+final tagRepositoryProvider = Provider(
+  (ref) => TagRepository(ref.watch(databaseProvider)),
+);
+
+final photoRepositoryProvider = Provider(
+  (ref) => PhotoRepository(
+    imagePicker: ref.watch(imagePickerProvider),
+    glumDatabase: ref.watch(databaseProvider),
+  ),
+);
+final databaseProvider = Provider((ref) => GlumDatabase());
+final imagePickerProvider = Provider((ref) => ImagePicker());
+
+final statsRepositoryProvider = Provider(
+  (ref) => StatsRepository(database: ref.watch(databaseProvider)),
+);
+
+final cardRepositoryProvider = Provider(
+  (ref) => CardRepository(database: ref.watch(databaseProvider)),
+);
+
+// Notifiers
+final storyNotifierProvider = StateNotifierProvider<StoryNotifier, StoryState>(
+  (ref) => StoryNotifier(storyRepository: ref.watch(storyRepositoryProvider)),
+);
 
 final storyFormNotifierProvider =
     StateNotifierProvider.autoDispose<StoryFormNotifier, StoryFormState>(
@@ -27,63 +46,32 @@ final storyFormNotifierProvider =
     photoRepository: ref.watch(photoRepositoryProvider),
   ),
 );
-
-final tagFormNotifierProvider = StateNotifierProvider<TagNotifier, TagsState>(
+final tagNotifierProvider = StateNotifierProvider<TagNotifier, TagsState>(
   (ref) => TagNotifier(ref.watch(tagRepositoryProvider)),
 );
-
-final storyRepositoryProvider = Provider(
-  (ref) => StoryRepository(
-      ref.watch(glumDatabaseProvider),
-      ref.watch(
-        photoRepositoryProvider,
-      )),
-);
-
-final tagRepositoryProvider = Provider(
-  (ref) => TagRepository(ref.watch(glumDatabaseProvider)),
-);
-
-final photoRepositoryProvider = Provider(
-  (ref) => PhotoRepository(
-    imagePicker: ref.watch(imagePickerProvider),
-    glumDatabase: ref.watch(glumDatabaseProvider),
-  ),
-);
-
-final glumDatabaseProvider = Provider((ref) => GlumDatabase());
 
 final dateTimeNotifierProvider =
     StateNotifierProvider<DateTimeNotifier, AsyncValue<DateTime>>(
   (ref) => DateTimeNotifier(),
 );
 
-final statsRepositoryProvider = Provider(
-    (ref) => StatsRepository(database: ref.watch(glumDatabaseProvider)));
-
 final statsNotifierProvider = StateNotifierProvider<StatsNotifier, StatsState>(
-    (ref) => StatsNotifier(repository: ref.watch(statsRepositoryProvider)));
-
-final cardRepositoryProvider = Provider(
-    (ref) => CardRepository(database: ref.watch(glumDatabaseProvider)));
+  (ref) => StatsNotifier(repository: ref.watch(statsRepositoryProvider)),
+);
 
 final cardFormNotifierProvider =
     StateNotifierProvider<CardFormNotifier, CardFormState>(
   (ref) => CardFormNotifier(
-    cardRepository: ref.watch(cardRepositoryProvider),
-    photoRepository: ref.watch(photoRepositoryProvider),
-  ),
+      cardRepository: ref.watch(cardRepositoryProvider),
+      photoRepository: ref.watch(photoRepositoryProvider)),
 );
 
-final cardsNotifier = StateNotifierProvider<CardsStateNotifier, CardsState>(
-  (ref) =>
-      CardsStateNotifier(cardRepository: ref.watch(cardRepositoryProvider)),
+final cardsStateNotifierProvider =
+    StateNotifierProvider<CardsStateNotifier, CardsState>(
+  (ref) => CardsStateNotifier(repository: ref.watch(cardRepositoryProvider)),
 );
 
-final imagePickerProvider = Provider((ref) => ImagePicker());
-
-final photosStateNotifier =
+final photosStateNotifierProvider =
     StateNotifierProvider<PhotosStateNotifier, PhotosState>(
-  (ref) =>
-      PhotosStateNotifier(photoRepository: ref.watch(photoRepositoryProvider)),
+  (ref) => PhotosStateNotifier(repository: ref.watch(photoRepositoryProvider)),
 );

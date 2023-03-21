@@ -5,8 +5,9 @@ import 'package:glum_mood_tracker/infrastructure/database/drift_database.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../domain/failures/failures.dart';
-import '../domain/models/models.dart';
+import '../../domain/failures/failures.dart';
+import '../../domain/models/models.dart';
+
 
 class PhotoRepository {
   final ImagePicker _imagePicker;
