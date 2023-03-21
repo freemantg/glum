@@ -4,10 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:glum_mood_tracker/shared/extensions.dart';
 import 'package:glum_mood_tracker/styles/styles.dart';
 
-import '../../domain/models/models.dart';
-import '../../shared/providers.dart';
 import '../routes/app_router.gr.dart';
-import '../stats/stats_page.dart';
+import '../../shared/providers.dart';
+import '../stats/widgets/styled_card.dart';
+import 'widgets/widgets.dart';
 
 class MonthPage extends ConsumerStatefulWidget {
   const MonthPage({
@@ -117,76 +117,7 @@ class _MonthPageState extends ConsumerState<MonthPage> {
         style: $styles.text.bodyBold,
       ),
       centerTitle: true,
-      actions: [
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.sort),
-        ),
-      ],
-    );
-  }
-}
-
-class TitleAndDescriptionWidget extends StatelessWidget {
-  const TitleAndDescriptionWidget({
-    super.key,
-    required this.story,
-  });
-
-  final StoryModel story;
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        const QuotationDecal(),
-        Padding(
-          padding: EdgeInsets.all($styles.insets.md),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                story.title,
-                style: $styles.text.bodySmallBold,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              SizedBox(height: $styles.insets.xxs),
-              Text(
-                story.description,
-                style: $styles.text.caption.copyWith(
-                  color: Colors.white70,
-                ),
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ),
-        ),
-        const Positioned(
-          bottom: 0,
-          right: 0,
-          child: QuotationDecal(),
-        ),
-      ],
-    );
-  }
-}
-
-class QuotationDecal extends StatelessWidget {
-  const QuotationDecal({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all($styles.insets.xs),
-      child: Text(
-        '"',
-        style: $styles.text.h3.copyWith(color: Colors.white70),
-      ),
+      actions: const [Icon(Icons.sort)],
     );
   }
 }

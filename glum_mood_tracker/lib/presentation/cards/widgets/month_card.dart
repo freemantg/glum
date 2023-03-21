@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import '../../../domain/models/models.dart';
 import '../../../styles/styles.dart';
 import '../../routes/app_router.gr.dart';
-import '../cards_page.dart';
+import 'widgets.dart';
 
 class MonthCard extends ConsumerWidget {
   const MonthCard({
