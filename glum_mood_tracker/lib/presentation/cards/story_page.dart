@@ -6,12 +6,12 @@ import 'package:glum_mood_tracker/presentation/routes/app_router.gr.dart';
 import 'package:glum_mood_tracker/shared/extensions.dart';
 import 'package:glum_mood_tracker/styles/styles.dart';
 
-import '../../domain/story.dart';
+import '../../domain/models/models.dart';
 
 class StoryPage extends StatelessWidget {
   const StoryPage({super.key, required this.story});
 
-  final Story story;
+  final StoryModel story;
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +99,7 @@ class StyledBottomBar extends StatelessWidget {
     required this.story,
   });
 
-  final Story story;
+  final StoryModel story;
 
   @override
   Widget build(BuildContext context) {

@@ -2,7 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:glum_mood_tracker/infrastructure/stats_repository.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../domain/tag.dart';
+import '../../domain/models/models.dart';
 
 part 'stats_notifier.freezed.dart';
 
@@ -14,8 +14,8 @@ class StatsState with _$StatsState {
     required double glumAverage,
     required Map<int, int> glumDistribution,
     required Map<DateTime, int> weeklyGlum,
-    required Map<Tag, int> trendingTags,
-    required Map<Tag, int> trendingMoodsOrGlums,
+    required Map<TagModel, int> trendingTags,
+    required Map<TagModel, int> trendingMoodsOrGlums,
     required Map<DateTime, int> yearInGlums,
     required bool isLoading,
     required bool showErrorMessage,

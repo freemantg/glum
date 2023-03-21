@@ -16,30 +16,30 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$StoriesState {
-  List<Story> get stories => throw _privateConstructorUsedError;
+  List<StoryModel> get stories => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Story> stories) initial,
-    required TResult Function(List<Story> stories) loadInProgress,
-    required TResult Function(List<Story> stories) loadSuccess,
-    required TResult Function(StoryFailure failure, List<Story> stories)
+    required TResult Function(List<StoryModel> stories) initial,
+    required TResult Function(List<StoryModel> stories) loadInProgress,
+    required TResult Function(List<StoryModel> stories) loadSuccess,
+    required TResult Function(StoryFailure failure, List<StoryModel> stories)
         failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Story> stories)? initial,
-    TResult? Function(List<Story> stories)? loadInProgress,
-    TResult? Function(List<Story> stories)? loadSuccess,
-    TResult? Function(StoryFailure failure, List<Story> stories)? failure,
+    TResult? Function(List<StoryModel> stories)? initial,
+    TResult? Function(List<StoryModel> stories)? loadInProgress,
+    TResult? Function(List<StoryModel> stories)? loadSuccess,
+    TResult? Function(StoryFailure failure, List<StoryModel> stories)? failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Story> stories)? initial,
-    TResult Function(List<Story> stories)? loadInProgress,
-    TResult Function(List<Story> stories)? loadSuccess,
-    TResult Function(StoryFailure failure, List<Story> stories)? failure,
+    TResult Function(List<StoryModel> stories)? initial,
+    TResult Function(List<StoryModel> stories)? loadInProgress,
+    TResult Function(List<StoryModel> stories)? loadSuccess,
+    TResult Function(StoryFailure failure, List<StoryModel> stories)? failure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -80,7 +80,7 @@ abstract class $StoriesStateCopyWith<$Res> {
           StoriesState value, $Res Function(StoriesState) then) =
       _$StoriesStateCopyWithImpl<$Res, StoriesState>;
   @useResult
-  $Res call({List<Story> stories});
+  $Res call({List<StoryModel> stories});
 }
 
 /// @nodoc
@@ -102,7 +102,7 @@ class _$StoriesStateCopyWithImpl<$Res, $Val extends StoriesState>
       stories: null == stories
           ? _value.stories
           : stories // ignore: cast_nullable_to_non_nullable
-              as List<Story>,
+              as List<StoryModel>,
     ) as $Val);
   }
 }
@@ -115,7 +115,7 @@ abstract class _$$_InitialCopyWith<$Res>
       __$$_InitialCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Story> stories});
+  $Res call({List<StoryModel> stories});
 }
 
 /// @nodoc
@@ -134,7 +134,7 @@ class __$$_InitialCopyWithImpl<$Res>
       stories: null == stories
           ? _value._stories
           : stories // ignore: cast_nullable_to_non_nullable
-              as List<Story>,
+              as List<StoryModel>,
     ));
   }
 }
@@ -142,13 +142,13 @@ class __$$_InitialCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Initial extends _Initial {
-  const _$_Initial({required final List<Story> stories})
+  const _$_Initial({required final List<StoryModel> stories})
       : _stories = stories,
         super._();
 
-  final List<Story> _stories;
+  final List<StoryModel> _stories;
   @override
-  List<Story> get stories {
+  List<StoryModel> get stories {
     if (_stories is EqualUnmodifiableListView) return _stories;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_stories);
@@ -180,10 +180,10 @@ class _$_Initial extends _Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Story> stories) initial,
-    required TResult Function(List<Story> stories) loadInProgress,
-    required TResult Function(List<Story> stories) loadSuccess,
-    required TResult Function(StoryFailure failure, List<Story> stories)
+    required TResult Function(List<StoryModel> stories) initial,
+    required TResult Function(List<StoryModel> stories) loadInProgress,
+    required TResult Function(List<StoryModel> stories) loadSuccess,
+    required TResult Function(StoryFailure failure, List<StoryModel> stories)
         failure,
   }) {
     return initial(stories);
@@ -192,10 +192,10 @@ class _$_Initial extends _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Story> stories)? initial,
-    TResult? Function(List<Story> stories)? loadInProgress,
-    TResult? Function(List<Story> stories)? loadSuccess,
-    TResult? Function(StoryFailure failure, List<Story> stories)? failure,
+    TResult? Function(List<StoryModel> stories)? initial,
+    TResult? Function(List<StoryModel> stories)? loadInProgress,
+    TResult? Function(List<StoryModel> stories)? loadSuccess,
+    TResult? Function(StoryFailure failure, List<StoryModel> stories)? failure,
   }) {
     return initial?.call(stories);
   }
@@ -203,10 +203,10 @@ class _$_Initial extends _Initial {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Story> stories)? initial,
-    TResult Function(List<Story> stories)? loadInProgress,
-    TResult Function(List<Story> stories)? loadSuccess,
-    TResult Function(StoryFailure failure, List<Story> stories)? failure,
+    TResult Function(List<StoryModel> stories)? initial,
+    TResult Function(List<StoryModel> stories)? loadInProgress,
+    TResult Function(List<StoryModel> stories)? loadSuccess,
+    TResult Function(StoryFailure failure, List<StoryModel> stories)? failure,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -254,11 +254,12 @@ class _$_Initial extends _Initial {
 }
 
 abstract class _Initial extends StoriesState {
-  const factory _Initial({required final List<Story> stories}) = _$_Initial;
+  const factory _Initial({required final List<StoryModel> stories}) =
+      _$_Initial;
   const _Initial._() : super._();
 
   @override
-  List<Story> get stories;
+  List<StoryModel> get stories;
   @override
   @JsonKey(ignore: true)
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
@@ -273,7 +274,7 @@ abstract class _$$_LoadInProgressCopyWith<$Res>
       __$$_LoadInProgressCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Story> stories});
+  $Res call({List<StoryModel> stories});
 }
 
 /// @nodoc
@@ -293,7 +294,7 @@ class __$$_LoadInProgressCopyWithImpl<$Res>
       stories: null == stories
           ? _value._stories
           : stories // ignore: cast_nullable_to_non_nullable
-              as List<Story>,
+              as List<StoryModel>,
     ));
   }
 }
@@ -301,13 +302,13 @@ class __$$_LoadInProgressCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadInProgress extends _LoadInProgress {
-  const _$_LoadInProgress({required final List<Story> stories})
+  const _$_LoadInProgress({required final List<StoryModel> stories})
       : _stories = stories,
         super._();
 
-  final List<Story> _stories;
+  final List<StoryModel> _stories;
   @override
-  List<Story> get stories {
+  List<StoryModel> get stories {
     if (_stories is EqualUnmodifiableListView) return _stories;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_stories);
@@ -339,10 +340,10 @@ class _$_LoadInProgress extends _LoadInProgress {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Story> stories) initial,
-    required TResult Function(List<Story> stories) loadInProgress,
-    required TResult Function(List<Story> stories) loadSuccess,
-    required TResult Function(StoryFailure failure, List<Story> stories)
+    required TResult Function(List<StoryModel> stories) initial,
+    required TResult Function(List<StoryModel> stories) loadInProgress,
+    required TResult Function(List<StoryModel> stories) loadSuccess,
+    required TResult Function(StoryFailure failure, List<StoryModel> stories)
         failure,
   }) {
     return loadInProgress(stories);
@@ -351,10 +352,10 @@ class _$_LoadInProgress extends _LoadInProgress {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Story> stories)? initial,
-    TResult? Function(List<Story> stories)? loadInProgress,
-    TResult? Function(List<Story> stories)? loadSuccess,
-    TResult? Function(StoryFailure failure, List<Story> stories)? failure,
+    TResult? Function(List<StoryModel> stories)? initial,
+    TResult? Function(List<StoryModel> stories)? loadInProgress,
+    TResult? Function(List<StoryModel> stories)? loadSuccess,
+    TResult? Function(StoryFailure failure, List<StoryModel> stories)? failure,
   }) {
     return loadInProgress?.call(stories);
   }
@@ -362,10 +363,10 @@ class _$_LoadInProgress extends _LoadInProgress {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Story> stories)? initial,
-    TResult Function(List<Story> stories)? loadInProgress,
-    TResult Function(List<Story> stories)? loadSuccess,
-    TResult Function(StoryFailure failure, List<Story> stories)? failure,
+    TResult Function(List<StoryModel> stories)? initial,
+    TResult Function(List<StoryModel> stories)? loadInProgress,
+    TResult Function(List<StoryModel> stories)? loadSuccess,
+    TResult Function(StoryFailure failure, List<StoryModel> stories)? failure,
     required TResult orElse(),
   }) {
     if (loadInProgress != null) {
@@ -413,12 +414,12 @@ class _$_LoadInProgress extends _LoadInProgress {
 }
 
 abstract class _LoadInProgress extends StoriesState {
-  const factory _LoadInProgress({required final List<Story> stories}) =
+  const factory _LoadInProgress({required final List<StoryModel> stories}) =
       _$_LoadInProgress;
   const _LoadInProgress._() : super._();
 
   @override
-  List<Story> get stories;
+  List<StoryModel> get stories;
   @override
   @JsonKey(ignore: true)
   _$$_LoadInProgressCopyWith<_$_LoadInProgress> get copyWith =>
@@ -433,7 +434,7 @@ abstract class _$$_LoadSuccessCopyWith<$Res>
       __$$_LoadSuccessCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Story> stories});
+  $Res call({List<StoryModel> stories});
 }
 
 /// @nodoc
@@ -453,7 +454,7 @@ class __$$_LoadSuccessCopyWithImpl<$Res>
       stories: null == stories
           ? _value._stories
           : stories // ignore: cast_nullable_to_non_nullable
-              as List<Story>,
+              as List<StoryModel>,
     ));
   }
 }
@@ -461,13 +462,13 @@ class __$$_LoadSuccessCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadSuccess extends _LoadSuccess {
-  const _$_LoadSuccess({required final List<Story> stories})
+  const _$_LoadSuccess({required final List<StoryModel> stories})
       : _stories = stories,
         super._();
 
-  final List<Story> _stories;
+  final List<StoryModel> _stories;
   @override
-  List<Story> get stories {
+  List<StoryModel> get stories {
     if (_stories is EqualUnmodifiableListView) return _stories;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_stories);
@@ -499,10 +500,10 @@ class _$_LoadSuccess extends _LoadSuccess {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Story> stories) initial,
-    required TResult Function(List<Story> stories) loadInProgress,
-    required TResult Function(List<Story> stories) loadSuccess,
-    required TResult Function(StoryFailure failure, List<Story> stories)
+    required TResult Function(List<StoryModel> stories) initial,
+    required TResult Function(List<StoryModel> stories) loadInProgress,
+    required TResult Function(List<StoryModel> stories) loadSuccess,
+    required TResult Function(StoryFailure failure, List<StoryModel> stories)
         failure,
   }) {
     return loadSuccess(stories);
@@ -511,10 +512,10 @@ class _$_LoadSuccess extends _LoadSuccess {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Story> stories)? initial,
-    TResult? Function(List<Story> stories)? loadInProgress,
-    TResult? Function(List<Story> stories)? loadSuccess,
-    TResult? Function(StoryFailure failure, List<Story> stories)? failure,
+    TResult? Function(List<StoryModel> stories)? initial,
+    TResult? Function(List<StoryModel> stories)? loadInProgress,
+    TResult? Function(List<StoryModel> stories)? loadSuccess,
+    TResult? Function(StoryFailure failure, List<StoryModel> stories)? failure,
   }) {
     return loadSuccess?.call(stories);
   }
@@ -522,10 +523,10 @@ class _$_LoadSuccess extends _LoadSuccess {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Story> stories)? initial,
-    TResult Function(List<Story> stories)? loadInProgress,
-    TResult Function(List<Story> stories)? loadSuccess,
-    TResult Function(StoryFailure failure, List<Story> stories)? failure,
+    TResult Function(List<StoryModel> stories)? initial,
+    TResult Function(List<StoryModel> stories)? loadInProgress,
+    TResult Function(List<StoryModel> stories)? loadSuccess,
+    TResult Function(StoryFailure failure, List<StoryModel> stories)? failure,
     required TResult orElse(),
   }) {
     if (loadSuccess != null) {
@@ -573,12 +574,12 @@ class _$_LoadSuccess extends _LoadSuccess {
 }
 
 abstract class _LoadSuccess extends StoriesState {
-  const factory _LoadSuccess({required final List<Story> stories}) =
+  const factory _LoadSuccess({required final List<StoryModel> stories}) =
       _$_LoadSuccess;
   const _LoadSuccess._() : super._();
 
   @override
-  List<Story> get stories;
+  List<StoryModel> get stories;
   @override
   @JsonKey(ignore: true)
   _$$_LoadSuccessCopyWith<_$_LoadSuccess> get copyWith =>
@@ -593,7 +594,7 @@ abstract class _$$_FailureCopyWith<$Res>
       __$$_FailureCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({StoryFailure failure, List<Story> stories});
+  $Res call({StoryFailure failure, List<StoryModel> stories});
 
   $StoryFailureCopyWith<$Res> get failure;
 }
@@ -619,7 +620,7 @@ class __$$_FailureCopyWithImpl<$Res>
       stories: null == stories
           ? _value._stories
           : stories // ignore: cast_nullable_to_non_nullable
-              as List<Story>,
+              as List<StoryModel>,
     ));
   }
 
@@ -635,15 +636,15 @@ class __$$_FailureCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Failure extends _Failure {
-  const _$_Failure(this.failure, {required final List<Story> stories})
+  const _$_Failure(this.failure, {required final List<StoryModel> stories})
       : _stories = stories,
         super._();
 
   @override
   final StoryFailure failure;
-  final List<Story> _stories;
+  final List<StoryModel> _stories;
   @override
-  List<Story> get stories {
+  List<StoryModel> get stories {
     if (_stories is EqualUnmodifiableListView) return _stories;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_stories);
@@ -676,10 +677,10 @@ class _$_Failure extends _Failure {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Story> stories) initial,
-    required TResult Function(List<Story> stories) loadInProgress,
-    required TResult Function(List<Story> stories) loadSuccess,
-    required TResult Function(StoryFailure failure, List<Story> stories)
+    required TResult Function(List<StoryModel> stories) initial,
+    required TResult Function(List<StoryModel> stories) loadInProgress,
+    required TResult Function(List<StoryModel> stories) loadSuccess,
+    required TResult Function(StoryFailure failure, List<StoryModel> stories)
         failure,
   }) {
     return failure(this.failure, stories);
@@ -688,10 +689,10 @@ class _$_Failure extends _Failure {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Story> stories)? initial,
-    TResult? Function(List<Story> stories)? loadInProgress,
-    TResult? Function(List<Story> stories)? loadSuccess,
-    TResult? Function(StoryFailure failure, List<Story> stories)? failure,
+    TResult? Function(List<StoryModel> stories)? initial,
+    TResult? Function(List<StoryModel> stories)? loadInProgress,
+    TResult? Function(List<StoryModel> stories)? loadSuccess,
+    TResult? Function(StoryFailure failure, List<StoryModel> stories)? failure,
   }) {
     return failure?.call(this.failure, stories);
   }
@@ -699,10 +700,10 @@ class _$_Failure extends _Failure {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Story> stories)? initial,
-    TResult Function(List<Story> stories)? loadInProgress,
-    TResult Function(List<Story> stories)? loadSuccess,
-    TResult Function(StoryFailure failure, List<Story> stories)? failure,
+    TResult Function(List<StoryModel> stories)? initial,
+    TResult Function(List<StoryModel> stories)? loadInProgress,
+    TResult Function(List<StoryModel> stories)? loadSuccess,
+    TResult Function(StoryFailure failure, List<StoryModel> stories)? failure,
     required TResult orElse(),
   }) {
     if (failure != null) {
@@ -751,12 +752,12 @@ class _$_Failure extends _Failure {
 
 abstract class _Failure extends StoriesState {
   const factory _Failure(final StoryFailure failure,
-      {required final List<Story> stories}) = _$_Failure;
+      {required final List<StoryModel> stories}) = _$_Failure;
   const _Failure._() : super._();
 
   StoryFailure get failure;
   @override
-  List<Story> get stories;
+  List<StoryModel> get stories;
   @override
   @JsonKey(ignore: true)
   _$$_FailureCopyWith<_$_Failure> get copyWith =>

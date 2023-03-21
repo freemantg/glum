@@ -1,9 +1,10 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:glum_mood_tracker/domain/card_failure.dart';
 import 'package:glum_mood_tracker/infrastructure/card_repository.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../domain/card_model.dart';
+import '../../domain/failures/failures.dart';
+import '../../domain/models/models.dart';
+
 
 part 'cards_notifier.freezed.dart';
 

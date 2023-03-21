@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/tag.dart';
+import '../../../domain/models/models.dart';
 import '../../../styles/styles.dart';
 
 class TrendingTagChip extends StatelessWidget {
@@ -10,7 +10,7 @@ class TrendingTagChip extends StatelessWidget {
     required this.count,
   });
 
-  final Tag tag;
+  final TagModel tag;
   final int count;
 
   @override

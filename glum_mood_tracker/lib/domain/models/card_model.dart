@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:glum_mood_tracker/domain/photo_model.dart';
+
+import 'models.dart';
 
 part 'card_model.freezed.dart';
 

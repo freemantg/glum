@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:glum_mood_tracker/domain/interfaces.dart';
-import 'package:glum_mood_tracker/domain/story_failure.dart';
-import 'package:glum_mood_tracker/domain/tag.dart';
-import 'package:glum_mood_tracker/infrastructure/database/drift_database.dart'
-    hide Tag, Story;
+import 'package:glum_mood_tracker/infrastructure/database/drift_database.dart';
 import 'package:rxdart/rxdart.dart';
+
+import '../domain/failures/failures.dart';
+import '../domain/models/models.dart';
 
 class StatsRepository implements IStatsRepository {
   final GlumDatabase _db;
@@ -70,14 +70,14 @@ class StatsRepository implements IStatsRepository {
   }
 
   @override
-  Stream<Either<StoryFailure, Map<Tag, int>>> trendingTags() async* {
+  Stream<Either<StoryFailure, Map<TagModel, int>>> trendingTags() async* {
     final stream = _db.tagDao.watchTrendingTags();
     yield* stream.map((tagDtosAndCountMap) {
-      final tagsAndCountMap = <Tag, int>{};
+      final tagsAndCountMap = <TagModel, int>{};
       tagDtosAndCountMap.forEach(
         (dto, count) => tagsAndCountMap[dto.toDomain()] = count,
       );
-      return right<StoryFailure, Map<Tag, int>>(tagsAndCountMap);
+      return right<StoryFailure, Map<TagModel, int>>(tagsAndCountMap);
     }).onErrorReturnWith(
       (error, stackTrace) {
         return left(const StoryFailure.unexpected());
@@ -86,15 +86,15 @@ class StatsRepository implements IStatsRepository {
   }
 
   @override
-  Stream<Either<StoryFailure, Map<Tag, int>>> tagsByMoodsOrGlums(
+  Stream<Either<StoryFailure, Map<TagModel, int>>> tagsByMoodsOrGlums(
       bool filterByMoods) async* {
     final stream = _db.tagDao.watchTagsFilteredByMoodsOrGlums(filterByMoods);
     yield* stream.map((tagDtosAndCountMap) {
-      final tagsAndCountMap = <Tag, int>{};
+      final tagsAndCountMap = <TagModel, int>{};
       tagDtosAndCountMap.forEach(
         (dto, count) => tagsAndCountMap[dto.toDomain()] = count,
       );
-      return right<StoryFailure, Map<Tag, int>>(tagsAndCountMap);
+      return right<StoryFailure, Map<TagModel, int>>(tagsAndCountMap);
     }).onErrorReturnWith(
       (error, stackTrace) {
         return left(const StoryFailure.unexpected());

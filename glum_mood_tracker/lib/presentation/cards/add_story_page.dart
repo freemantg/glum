@@ -9,13 +9,13 @@ import 'package:glum_mood_tracker/shared/providers.dart';
 import 'package:glum_mood_tracker/styles/styles.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../domain/story.dart';
+import '../../domain/models/models.dart';
 import 'widgets/tag_bottom_modal_sheet.dart';
 
 class AddStoryPage extends ConsumerStatefulWidget {
   const AddStoryPage({super.key, this.story});
 
-  final Story? story;
+  final StoryModel? story;
 
   @override
   ConsumerState<AddStoryPage> createState() => _AddStoryPageState();

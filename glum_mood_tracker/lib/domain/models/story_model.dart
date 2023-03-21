@@ -1,24 +1,24 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'photo_model.dart';
-import 'tag.dart';
+import 'tag_model.dart';
 
-part 'story.freezed.dart';
+part 'story_model.freezed.dart';
 
 @freezed
-class Story with _$Story {
-  const Story._();
-  const factory Story({
+class StoryModel with _$StoryModel {
+  const StoryModel._();
+  const factory StoryModel({
     int? id,
     required String title,
     required String description,
     required int glumRating,
     required DateTime date,
-    required List<Tag> tags,
+    required List<TagModel> tags,
     required List<PhotoModel> photos,
-  }) = _Story;
+  }) = _StoryModel;
 
-  factory Story.empty() => Story(
+  factory StoryModel.empty() => StoryModel(
         title: '',
         description: '',
         glumRating: 3,

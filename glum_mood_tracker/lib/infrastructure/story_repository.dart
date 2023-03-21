@@ -1,12 +1,11 @@
-import 'package:glum_mood_tracker/domain/story_failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:glum_mood_tracker/domain/interfaces.dart';
-import 'package:glum_mood_tracker/infrastructure/database/drift_database.dart'
-    hide Story;
+import 'package:glum_mood_tracker/infrastructure/database/drift_database.dart';
 import 'package:glum_mood_tracker/infrastructure/photo_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../domain/story.dart';
+import '../domain/failures/failures.dart';
+import '../domain/models/models.dart';
 import 'dtos/dtos.dart';
 
 class StoryRepository implements IStoryRepository {
@@ -16,7 +15,7 @@ class StoryRepository implements IStoryRepository {
   StoryRepository(this._db, this._photoRepository);
 
   @override
-  Future<Either<StoryFailure, Unit>> addStory(Story story) async {
+  Future<Either<StoryFailure, Unit>> addStory(StoryModel story) async {
     try {
       Future.wait([
         _db.storyDao.insertStoryWithTagsAndPhotos(StoryDto.fromDomain(story)),
@@ -40,7 +39,7 @@ class StoryRepository implements IStoryRepository {
   }
 
   @override
-  Future<Either<StoryFailure, Unit>> updateStory(Story story) async {
+  Future<Either<StoryFailure, Unit>> updateStory(StoryModel story) async {
     try {
       await _db.storyDao
           .updateStoryWithTagsAndPhotos(StoryDto.fromDomain(story));
@@ -52,11 +51,11 @@ class StoryRepository implements IStoryRepository {
   }
 
   @override
-  Stream<Either<StoryFailure, List<Story>>> watchStoriesByMonthYear(
+  Stream<Either<StoryFailure, List<StoryModel>>> watchStoriesByMonthYear(
       DateTime monthYear) async* {
     final storyStream = _db.storyDao.watchStoriesByMonthAndYear(monthYear);
     yield* storyStream
-        .map((dtos) => right<StoryFailure, List<Story>>(
+        .map((dtos) => right<StoryFailure, List<StoryModel>>(
               dtos.map((e) => e.toDomain()).toList(),
             ))
         .onErrorReturnWith(

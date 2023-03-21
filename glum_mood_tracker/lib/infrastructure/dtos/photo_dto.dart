@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../domain/photo_model.dart';
+import '../../domain/models/models.dart';
+
 
 part 'photo_dto.freezed.dart';
 part 'photo_dto.g.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' hide Card;
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../domain/card_model.dart';
+import '../../domain/models/models.dart';
 import 'dtos.dart';
 
 part 'card_dto.freezed.dart';

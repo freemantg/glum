@@ -4,9 +4,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:glum_mood_tracker/infrastructure/photo_repository.dart';
 import 'package:glum_mood_tracker/infrastructure/story_repository.dart';
 
-import '../../domain/story.dart';
-import '../../domain/story_failure.dart';
-import '../../domain/tag.dart';
+import '../../domain/failures/failures.dart';
+import '../../domain/models/models.dart';
 
 part 'story_form_notifier.freezed.dart';
 
@@ -14,15 +13,15 @@ part 'story_form_notifier.freezed.dart';
 class StoryFormState with _$StoryFormState {
   const StoryFormState._();
   const factory StoryFormState({
-    required Story story,
-    required List<Tag> selectedTags,
+    required StoryModel story,
+    required List<TagModel> selectedTags,
     required bool isEditing,
     required bool isSaving,
     required Option<Either<StoryFailure, Unit>> failureOrSuccess,
   }) = _StoryFormState;
 
   factory StoryFormState.initial() => StoryFormState(
-        story: Story.empty(),
+        story: StoryModel.empty(),
         selectedTags: [],
         isEditing: false,
         isSaving: false,
@@ -41,7 +40,7 @@ class StoryFormNotifier extends StateNotifier<StoryFormState> {
         _photoRepository = photoRepository,
         super(StoryFormState.initial());
 
-  Future<void> initialiseStory(Story? story) async {
+  Future<void> initialiseStory(StoryModel? story) async {
     if (story == null) return;
     state = state.copyWith(
       isEditing: true,
@@ -85,8 +84,8 @@ class StoryFormNotifier extends StateNotifier<StoryFormState> {
     }
   }
 
-  Future<void> toggleTag(Tag tag) async {
-    List<Tag> updatedTags = List.empty();
+  Future<void> toggleTag(TagModel tag) async {
+    List<TagModel> updatedTags = List.empty();
     if (state.selectedTags.contains(tag)) {
       updatedTags = List.from(state.selectedTags)..remove(tag);
     } else {

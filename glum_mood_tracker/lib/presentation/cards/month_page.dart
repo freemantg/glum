@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:glum_mood_tracker/domain/story.dart';
 import 'package:glum_mood_tracker/shared/extensions.dart';
 import 'package:glum_mood_tracker/shared/providers.dart';
 import 'package:glum_mood_tracker/styles/styles.dart';
 
+import '../../domain/models/models.dart';
 import '../routes/app_router.gr.dart';
 import '../stats/stats_page.dart';
 
@@ -133,7 +133,7 @@ class TitleAndDescriptionWidget extends StatelessWidget {
     required this.story,
   });
 
-  final Story story;
+  final StoryModel story;
 
   @override
   Widget build(BuildContext context) {

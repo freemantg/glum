@@ -5,7 +5,7 @@ import 'package:glum_mood_tracker/styles/styles.dart';
 import 'package:glum_mood_tracker/shared/extensions.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../domain/photo_model.dart';
+import '../../domain/models/models.dart';
 import '../../shared/providers.dart';
 import '../cards/widgets/tag_bottom_modal_sheet.dart';
 import 'widgets/doughnut_chart.dart';

@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../domain/story.dart';
+import '../../domain/models/models.dart';
 import 'photo_dto.dart';
 import 'tag_dto.dart';
 
@@ -20,7 +20,7 @@ class StoryDto with _$StoryDto {
     required List<PhotoDto> photos,
   }) = _StoryDto;
 
-  factory StoryDto.fromDomain(Story story) {
+  factory StoryDto.fromDomain(StoryModel story) {
     return StoryDto(
       id: story.id,
       title: story.title,
@@ -32,8 +32,8 @@ class StoryDto with _$StoryDto {
     );
   }
 
-  Story toDomain() {
-    return Story(
+  StoryModel toDomain() {
+    return StoryModel(
       id: id,
       title: title,
       description: description,

@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:glum_mood_tracker/domain/story_failure.dart';
 
-import '../../domain/story.dart';
+import '../../domain/failures/failures.dart';
+import '../../domain/models/models.dart';
 import '../../infrastructure/story_repository.dart';
 
 part 'stories_notifier.freezed.dart';
@@ -10,13 +10,14 @@ part 'stories_notifier.freezed.dart';
 @freezed
 class StoriesState with _$StoriesState {
   const StoriesState._();
-  const factory StoriesState.initial({required List<Story> stories}) = _Initial;
-  const factory StoriesState.loadInProgress({required List<Story> stories}) =
-      _LoadInProgress;
-  const factory StoriesState.loadSuccess({required List<Story> stories}) =
+  const factory StoriesState.initial({required List<StoryModel> stories}) =
+      _Initial;
+  const factory StoriesState.loadInProgress(
+      {required List<StoryModel> stories}) = _LoadInProgress;
+  const factory StoriesState.loadSuccess({required List<StoryModel> stories}) =
       _LoadSuccess;
   const factory StoriesState.failure(StoryFailure failure,
-      {required List<Story> stories}) = _Failure;
+      {required List<StoryModel> stories}) = _Failure;
 }
 
 class StoriesNotifier extends StateNotifier<StoriesState> {

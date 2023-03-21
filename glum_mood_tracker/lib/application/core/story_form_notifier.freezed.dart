@@ -16,8 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$StoryFormState {
-  Story get story => throw _privateConstructorUsedError;
-  List<Tag> get selectedTags => throw _privateConstructorUsedError;
+  StoryModel get story => throw _privateConstructorUsedError;
+  List<TagModel> get selectedTags => throw _privateConstructorUsedError;
   bool get isEditing => throw _privateConstructorUsedError;
   bool get isSaving => throw _privateConstructorUsedError;
   Option<Either<StoryFailure, Unit>> get failureOrSuccess =>
@@ -35,13 +35,13 @@ abstract class $StoryFormStateCopyWith<$Res> {
       _$StoryFormStateCopyWithImpl<$Res, StoryFormState>;
   @useResult
   $Res call(
-      {Story story,
-      List<Tag> selectedTags,
+      {StoryModel story,
+      List<TagModel> selectedTags,
       bool isEditing,
       bool isSaving,
       Option<Either<StoryFailure, Unit>> failureOrSuccess});
 
-  $StoryCopyWith<$Res> get story;
+  $StoryModelCopyWith<$Res> get story;
 }
 
 /// @nodoc
@@ -67,11 +67,11 @@ class _$StoryFormStateCopyWithImpl<$Res, $Val extends StoryFormState>
       story: null == story
           ? _value.story
           : story // ignore: cast_nullable_to_non_nullable
-              as Story,
+              as StoryModel,
       selectedTags: null == selectedTags
           ? _value.selectedTags
           : selectedTags // ignore: cast_nullable_to_non_nullable
-              as List<Tag>,
+              as List<TagModel>,
       isEditing: null == isEditing
           ? _value.isEditing
           : isEditing // ignore: cast_nullable_to_non_nullable
@@ -89,8 +89,8 @@ class _$StoryFormStateCopyWithImpl<$Res, $Val extends StoryFormState>
 
   @override
   @pragma('vm:prefer-inline')
-  $StoryCopyWith<$Res> get story {
-    return $StoryCopyWith<$Res>(_value.story, (value) {
+  $StoryModelCopyWith<$Res> get story {
+    return $StoryModelCopyWith<$Res>(_value.story, (value) {
       return _then(_value.copyWith(story: value) as $Val);
     });
   }
@@ -105,14 +105,14 @@ abstract class _$$_StoryFormStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {Story story,
-      List<Tag> selectedTags,
+      {StoryModel story,
+      List<TagModel> selectedTags,
       bool isEditing,
       bool isSaving,
       Option<Either<StoryFailure, Unit>> failureOrSuccess});
 
   @override
-  $StoryCopyWith<$Res> get story;
+  $StoryModelCopyWith<$Res> get story;
 }
 
 /// @nodoc
@@ -136,11 +136,11 @@ class __$$_StoryFormStateCopyWithImpl<$Res>
       story: null == story
           ? _value.story
           : story // ignore: cast_nullable_to_non_nullable
-              as Story,
+              as StoryModel,
       selectedTags: null == selectedTags
           ? _value._selectedTags
           : selectedTags // ignore: cast_nullable_to_non_nullable
-              as List<Tag>,
+              as List<TagModel>,
       isEditing: null == isEditing
           ? _value.isEditing
           : isEditing // ignore: cast_nullable_to_non_nullable
@@ -162,7 +162,7 @@ class __$$_StoryFormStateCopyWithImpl<$Res>
 class _$_StoryFormState extends _StoryFormState {
   const _$_StoryFormState(
       {required this.story,
-      required final List<Tag> selectedTags,
+      required final List<TagModel> selectedTags,
       required this.isEditing,
       required this.isSaving,
       required this.failureOrSuccess})
@@ -170,10 +170,10 @@ class _$_StoryFormState extends _StoryFormState {
         super._();
 
   @override
-  final Story story;
-  final List<Tag> _selectedTags;
+  final StoryModel story;
+  final List<TagModel> _selectedTags;
   @override
-  List<Tag> get selectedTags {
+  List<TagModel> get selectedTags {
     if (_selectedTags is EqualUnmodifiableListView) return _selectedTags;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_selectedTags);
@@ -225,8 +225,8 @@ class _$_StoryFormState extends _StoryFormState {
 
 abstract class _StoryFormState extends StoryFormState {
   const factory _StoryFormState(
-          {required final Story story,
-          required final List<Tag> selectedTags,
+          {required final StoryModel story,
+          required final List<TagModel> selectedTags,
           required final bool isEditing,
           required final bool isSaving,
           required final Option<Either<StoryFailure, Unit>> failureOrSuccess}) =
@@ -234,9 +234,9 @@ abstract class _StoryFormState extends StoryFormState {
   const _StoryFormState._() : super._();
 
   @override
-  Story get story;
+  StoryModel get story;
   @override
-  List<Tag> get selectedTags;
+  List<TagModel> get selectedTags;
   @override
   bool get isEditing;
   @override

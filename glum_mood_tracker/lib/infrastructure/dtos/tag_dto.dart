@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../domain/tag.dart';
+import '../../domain/models/models.dart';
+
 
 part 'tag_dto.freezed.dart';
 part 'tag_dto.g.dart';
@@ -13,12 +14,12 @@ class TagDto with _$TagDto {
     required String title,
   }) = _TagDto;
 
-  factory TagDto.fromDomain(Tag tag) => TagDto(
+  factory TagDto.fromDomain(TagModel tag) => TagDto(
         id: tag.id,
         title: tag.title,
       );
 
   factory TagDto.fromJson(Map<String, dynamic> json) => _$TagDtoFromJson(json);
 
-  Tag toDomain() => Tag(id: id, title: title);
+  TagModel toDomain() => TagModel(id: id, title: title);
 }

@@ -1,9 +1,9 @@
-import 'package:glum_mood_tracker/domain/card_failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:glum_mood_tracker/domain/interfaces.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../domain/card_model.dart';
+import '../domain/failures/failures.dart';
+import '../domain/models/models.dart';
 import 'database/drift_database.dart';
 import 'dtos/dtos.dart';
 

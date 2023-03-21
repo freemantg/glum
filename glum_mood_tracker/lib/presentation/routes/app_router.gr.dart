@@ -15,7 +15,7 @@ import 'package:auto_route/auto_route.dart' as _i8;
 import 'package:flutter/foundation.dart' as _i10;
 import 'package:flutter/material.dart' as _i9;
 
-import '../../domain/story.dart' as _i11;
+import '../../domain/models/models.dart' as _i11;
 import '../../main.dart' as _i1;
 import '../cards/add_story_page.dart' as _i3;
 import '../cards/cards_page.dart' as _i6;
@@ -158,7 +158,7 @@ class HomePageRoute extends _i8.PageRouteInfo<void> {
 class StoryPageRoute extends _i8.PageRouteInfo<StoryPageRouteArgs> {
   StoryPageRoute({
     _i10.Key? key,
-    required _i11.Story story,
+    required _i11.StoryModel story,
   }) : super(
           StoryPageRoute.name,
           path: ':story',
@@ -179,7 +179,7 @@ class StoryPageRouteArgs {
 
   final _i10.Key? key;
 
-  final _i11.Story story;
+  final _i11.StoryModel story;
 
   @override
   String toString() {
@@ -192,7 +192,7 @@ class StoryPageRouteArgs {
 class AddStoryPageRoute extends _i8.PageRouteInfo<AddStoryPageRouteArgs> {
   AddStoryPageRoute({
     _i10.Key? key,
-    _i11.Story? story,
+    _i11.StoryModel? story,
   }) : super(
           AddStoryPageRoute.name,
           path: 'addStory',
@@ -213,7 +213,7 @@ class AddStoryPageRouteArgs {
 
   final _i10.Key? key;
 
-  final _i11.Story? story;
+  final _i11.StoryModel? story;
 
   @override
   String toString() {

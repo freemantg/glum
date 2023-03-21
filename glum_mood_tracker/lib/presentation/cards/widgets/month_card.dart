@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:glum_mood_tracker/shared/providers.dart';
 import 'package:intl/intl.dart';
 
+import '../../../domain/models/models.dart';
 import '../../../styles/styles.dart';
-import '../../../domain/card_model.dart' as domain;
 import '../../routes/app_router.gr.dart';
 import '../cards_page.dart';
 
@@ -18,7 +18,7 @@ class MonthCard extends ConsumerWidget {
   }) : super(key: key);
 
   final bool showCalendar;
-  final domain.CardModel? card;
+  final CardModel? card;
   final DateTime monthYear;
 
   @override

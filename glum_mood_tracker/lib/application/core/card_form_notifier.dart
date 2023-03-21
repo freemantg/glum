@@ -5,8 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:glum_mood_tracker/infrastructure/card_repository.dart';
 
-import '../../domain/card_model.dart';
-import '../../domain/card_failure.dart';
+import '../../domain/failures/failures.dart';
+import '../../domain/models/models.dart';
 import '../../infrastructure/photo_repository.dart';
 
 part 'card_form_notifier.freezed.dart';

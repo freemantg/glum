@@ -1,9 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:glum_mood_tracker/domain/photo_failure.dart';
 import 'package:glum_mood_tracker/infrastructure/photo_repository.dart';
 
-import '../../domain/photo_model.dart';
+import '../../domain/failures/failures.dart';
+import '../../domain/models/models.dart';
+
 
 part 'photos_notifier.freezed.dart';
 

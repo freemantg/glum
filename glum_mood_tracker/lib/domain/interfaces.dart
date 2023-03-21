@@ -1,17 +1,13 @@
 import 'package:dartz/dartz.dart';
-import 'package:glum_mood_tracker/domain/card_model.dart';
-import 'package:glum_mood_tracker/domain/story_failure.dart';
-import 'package:glum_mood_tracker/domain/tag.dart';
-import 'package:glum_mood_tracker/domain/tag_failure.dart';
 
-import 'card_failure.dart';
-import 'story.dart';
+import 'failures/failures.dart';
+import 'models/models.dart';
 
 abstract class IStoryRepository {
-  Stream<Either<StoryFailure, List<Story>>> watchStoriesByMonthYear(
+  Stream<Either<StoryFailure, List<StoryModel>>> watchStoriesByMonthYear(
       DateTime monthYear);
-  Future<Either<StoryFailure, Unit>> addStory(Story story);
-  Future<Either<StoryFailure, Unit>> updateStory(Story story);
+  Future<Either<StoryFailure, Unit>> addStory(StoryModel story);
+  Future<Either<StoryFailure, Unit>> updateStory(StoryModel story);
   Future<Either<StoryFailure, Unit>> deleteStory(int storyId);
 }
 
@@ -22,9 +18,9 @@ abstract class ICardRepository {
 }
 
 abstract class ITagRepository {
-  Stream<Either<TagFailure, List<Tag>>> watchAllTags();
-  Future<Either<TagFailure, Unit>> addTag(Tag tag);
-  Future<Either<TagFailure, Unit>> deleteTag(Tag tag);
+  Stream<Either<TagFailure, List<TagModel>>> watchAllTags();
+  Future<Either<TagFailure, Unit>> addTag(TagModel tag);
+  Future<Either<TagFailure, Unit>> deleteTag(TagModel tag);
 }
 
 abstract class IStatsRepository {
@@ -33,7 +29,7 @@ abstract class IStatsRepository {
   Future<Either<StoryFailure, Map<DateTime, int>>> averageWeek();
   Future<Either<StoryFailure, Map<int, int>>> glumDistribution();
   Future<Either<StoryFailure, Map<DateTime, int>>> yearInGlums();
-  Stream<Either<StoryFailure, Map<Tag, int>>> tagsByMoodsOrGlums(
+  Stream<Either<StoryFailure, Map<TagModel, int>>> tagsByMoodsOrGlums(
       bool filterByMoods);
-  Stream<Either<StoryFailure, Map<Tag, int>>> trendingTags();
+  Stream<Either<StoryFailure, Map<TagModel, int>>> trendingTags();
 }

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'tag.dart';
+part of 'tag_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,25 +15,27 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$Tag {
+mixin _$TagModel {
   int? get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $TagCopyWith<Tag> get copyWith => throw _privateConstructorUsedError;
+  $TagModelCopyWith<TagModel> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $TagCopyWith<$Res> {
-  factory $TagCopyWith(Tag value, $Res Function(Tag) then) =
-      _$TagCopyWithImpl<$Res, Tag>;
+abstract class $TagModelCopyWith<$Res> {
+  factory $TagModelCopyWith(TagModel value, $Res Function(TagModel) then) =
+      _$TagModelCopyWithImpl<$Res, TagModel>;
   @useResult
   $Res call({int? id, String title});
 }
 
 /// @nodoc
-class _$TagCopyWithImpl<$Res, $Val extends Tag> implements $TagCopyWith<$Res> {
-  _$TagCopyWithImpl(this._value, this._then);
+class _$TagModelCopyWithImpl<$Res, $Val extends TagModel>
+    implements $TagModelCopyWith<$Res> {
+  _$TagModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -60,18 +62,21 @@ class _$TagCopyWithImpl<$Res, $Val extends Tag> implements $TagCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$$_TagCopyWith<$Res> implements $TagCopyWith<$Res> {
-  factory _$$_TagCopyWith(_$_Tag value, $Res Function(_$_Tag) then) =
-      __$$_TagCopyWithImpl<$Res>;
+abstract class _$$_TagModelCopyWith<$Res> implements $TagModelCopyWith<$Res> {
+  factory _$$_TagModelCopyWith(
+          _$_TagModel value, $Res Function(_$_TagModel) then) =
+      __$$_TagModelCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int? id, String title});
 }
 
 /// @nodoc
-class __$$_TagCopyWithImpl<$Res> extends _$TagCopyWithImpl<$Res, _$_Tag>
-    implements _$$_TagCopyWith<$Res> {
-  __$$_TagCopyWithImpl(_$_Tag _value, $Res Function(_$_Tag) _then)
+class __$$_TagModelCopyWithImpl<$Res>
+    extends _$TagModelCopyWithImpl<$Res, _$_TagModel>
+    implements _$$_TagModelCopyWith<$Res> {
+  __$$_TagModelCopyWithImpl(
+      _$_TagModel _value, $Res Function(_$_TagModel) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -80,7 +85,7 @@ class __$$_TagCopyWithImpl<$Res> extends _$TagCopyWithImpl<$Res, _$_Tag>
     Object? id = freezed,
     Object? title = null,
   }) {
-    return _then(_$_Tag(
+    return _then(_$_TagModel(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -95,8 +100,8 @@ class __$$_TagCopyWithImpl<$Res> extends _$TagCopyWithImpl<$Res, _$_Tag>
 
 /// @nodoc
 
-class _$_Tag extends _Tag {
-  const _$_Tag({required this.id, required this.title}) : super._();
+class _$_TagModel extends _TagModel {
+  const _$_TagModel({required this.id, required this.title}) : super._();
 
   @override
   final int? id;
@@ -105,14 +110,14 @@ class _$_Tag extends _Tag {
 
   @override
   String toString() {
-    return 'Tag(id: $id, title: $title)';
+    return 'TagModel(id: $id, title: $title)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Tag &&
+            other is _$_TagModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title));
   }
@@ -123,14 +128,14 @@ class _$_Tag extends _Tag {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TagCopyWith<_$_Tag> get copyWith =>
-      __$$_TagCopyWithImpl<_$_Tag>(this, _$identity);
+  _$$_TagModelCopyWith<_$_TagModel> get copyWith =>
+      __$$_TagModelCopyWithImpl<_$_TagModel>(this, _$identity);
 }
 
-abstract class _Tag extends Tag {
-  const factory _Tag({required final int? id, required final String title}) =
-      _$_Tag;
-  const _Tag._() : super._();
+abstract class _TagModel extends TagModel {
+  const factory _TagModel(
+      {required final int? id, required final String title}) = _$_TagModel;
+  const _TagModel._() : super._();
 
   @override
   int? get id;
@@ -138,5 +143,6 @@ abstract class _Tag extends Tag {
   String get title;
   @override
   @JsonKey(ignore: true)
-  _$$_TagCopyWith<_$_Tag> get copyWith => throw _privateConstructorUsedError;
+  _$$_TagModelCopyWith<_$_TagModel> get copyWith =>
+      throw _privateConstructorUsedError;
 }

@@ -7,7 +7,7 @@ import 'package:glum_mood_tracker/shared/extensions.dart';
 import 'package:glum_mood_tracker/shared/providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../domain/story.dart';
+import '../../domain/models/models.dart';
 import '../../styles/styles.dart';
 import '../routes/app_router.gr.dart';
 import 'widgets/calendar_toggle_button.dart';
@@ -250,10 +250,10 @@ class DateButton extends ConsumerWidget {
           loadSuccess: (stories) {
             return stories.firstWhere(
               (story) => DateUtils.isSameDay(story.date, buttonDate),
-              orElse: () => Story.empty().copyWith(date: buttonDate),
+              orElse: () => StoryModel.empty().copyWith(date: buttonDate),
             );
           },
-          orElse: () => Story.empty(),
+          orElse: () => StoryModel.empty(),
         );
 
     return GestureDetector(

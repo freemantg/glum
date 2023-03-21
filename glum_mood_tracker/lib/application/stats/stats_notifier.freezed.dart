@@ -20,8 +20,9 @@ mixin _$StatsState {
   double get glumAverage => throw _privateConstructorUsedError;
   Map<int, int> get glumDistribution => throw _privateConstructorUsedError;
   Map<DateTime, int> get weeklyGlum => throw _privateConstructorUsedError;
-  Map<Tag, int> get trendingTags => throw _privateConstructorUsedError;
-  Map<Tag, int> get trendingMoodsOrGlums => throw _privateConstructorUsedError;
+  Map<TagModel, int> get trendingTags => throw _privateConstructorUsedError;
+  Map<TagModel, int> get trendingMoodsOrGlums =>
+      throw _privateConstructorUsedError;
   Map<DateTime, int> get yearInGlums => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   bool get showErrorMessage => throw _privateConstructorUsedError;
@@ -42,8 +43,8 @@ abstract class $StatsStateCopyWith<$Res> {
       double glumAverage,
       Map<int, int> glumDistribution,
       Map<DateTime, int> weeklyGlum,
-      Map<Tag, int> trendingTags,
-      Map<Tag, int> trendingMoodsOrGlums,
+      Map<TagModel, int> trendingTags,
+      Map<TagModel, int> trendingMoodsOrGlums,
       Map<DateTime, int> yearInGlums,
       bool isLoading,
       bool showErrorMessage});
@@ -92,11 +93,11 @@ class _$StatsStateCopyWithImpl<$Res, $Val extends StatsState>
       trendingTags: null == trendingTags
           ? _value.trendingTags
           : trendingTags // ignore: cast_nullable_to_non_nullable
-              as Map<Tag, int>,
+              as Map<TagModel, int>,
       trendingMoodsOrGlums: null == trendingMoodsOrGlums
           ? _value.trendingMoodsOrGlums
           : trendingMoodsOrGlums // ignore: cast_nullable_to_non_nullable
-              as Map<Tag, int>,
+              as Map<TagModel, int>,
       yearInGlums: null == yearInGlums
           ? _value.yearInGlums
           : yearInGlums // ignore: cast_nullable_to_non_nullable
@@ -126,8 +127,8 @@ abstract class _$$_StatsStateCopyWith<$Res>
       double glumAverage,
       Map<int, int> glumDistribution,
       Map<DateTime, int> weeklyGlum,
-      Map<Tag, int> trendingTags,
-      Map<Tag, int> trendingMoodsOrGlums,
+      Map<TagModel, int> trendingTags,
+      Map<TagModel, int> trendingMoodsOrGlums,
       Map<DateTime, int> yearInGlums,
       bool isLoading,
       bool showErrorMessage});
@@ -174,11 +175,11 @@ class __$$_StatsStateCopyWithImpl<$Res>
       trendingTags: null == trendingTags
           ? _value._trendingTags
           : trendingTags // ignore: cast_nullable_to_non_nullable
-              as Map<Tag, int>,
+              as Map<TagModel, int>,
       trendingMoodsOrGlums: null == trendingMoodsOrGlums
           ? _value._trendingMoodsOrGlums
           : trendingMoodsOrGlums // ignore: cast_nullable_to_non_nullable
-              as Map<Tag, int>,
+              as Map<TagModel, int>,
       yearInGlums: null == yearInGlums
           ? _value._yearInGlums
           : yearInGlums // ignore: cast_nullable_to_non_nullable
@@ -203,8 +204,8 @@ class _$_StatsState extends _StatsState {
       required this.glumAverage,
       required final Map<int, int> glumDistribution,
       required final Map<DateTime, int> weeklyGlum,
-      required final Map<Tag, int> trendingTags,
-      required final Map<Tag, int> trendingMoodsOrGlums,
+      required final Map<TagModel, int> trendingTags,
+      required final Map<TagModel, int> trendingMoodsOrGlums,
       required final Map<DateTime, int> yearInGlums,
       required this.isLoading,
       required this.showErrorMessage})
@@ -235,17 +236,17 @@ class _$_StatsState extends _StatsState {
     return EqualUnmodifiableMapView(_weeklyGlum);
   }
 
-  final Map<Tag, int> _trendingTags;
+  final Map<TagModel, int> _trendingTags;
   @override
-  Map<Tag, int> get trendingTags {
+  Map<TagModel, int> get trendingTags {
     if (_trendingTags is EqualUnmodifiableMapView) return _trendingTags;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_trendingTags);
   }
 
-  final Map<Tag, int> _trendingMoodsOrGlums;
+  final Map<TagModel, int> _trendingMoodsOrGlums;
   @override
-  Map<Tag, int> get trendingMoodsOrGlums {
+  Map<TagModel, int> get trendingMoodsOrGlums {
     if (_trendingMoodsOrGlums is EqualUnmodifiableMapView)
       return _trendingMoodsOrGlums;
     // ignore: implicit_dynamic_type
@@ -321,8 +322,8 @@ abstract class _StatsState extends StatsState {
       required final double glumAverage,
       required final Map<int, int> glumDistribution,
       required final Map<DateTime, int> weeklyGlum,
-      required final Map<Tag, int> trendingTags,
-      required final Map<Tag, int> trendingMoodsOrGlums,
+      required final Map<TagModel, int> trendingTags,
+      required final Map<TagModel, int> trendingMoodsOrGlums,
       required final Map<DateTime, int> yearInGlums,
       required final bool isLoading,
       required final bool showErrorMessage}) = _$_StatsState;
@@ -337,9 +338,9 @@ abstract class _StatsState extends StatsState {
   @override
   Map<DateTime, int> get weeklyGlum;
   @override
-  Map<Tag, int> get trendingTags;
+  Map<TagModel, int> get trendingTags;
   @override
-  Map<Tag, int> get trendingMoodsOrGlums;
+  Map<TagModel, int> get trendingMoodsOrGlums;
   @override
   Map<DateTime, int> get yearInGlums;
   @override

@@ -16,29 +16,29 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$TagsState {
-  List<Tag> get tags => throw _privateConstructorUsedError;
+  List<TagModel> get tags => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Tag> tags) initial,
-    required TResult Function(List<Tag> tags) loadInProgress,
-    required TResult Function(List<Tag> tags) loadSuccess,
-    required TResult Function(TagFailure failure, List<Tag> tags) failure,
+    required TResult Function(List<TagModel> tags) initial,
+    required TResult Function(List<TagModel> tags) loadInProgress,
+    required TResult Function(List<TagModel> tags) loadSuccess,
+    required TResult Function(TagFailure failure, List<TagModel> tags) failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Tag> tags)? initial,
-    TResult? Function(List<Tag> tags)? loadInProgress,
-    TResult? Function(List<Tag> tags)? loadSuccess,
-    TResult? Function(TagFailure failure, List<Tag> tags)? failure,
+    TResult? Function(List<TagModel> tags)? initial,
+    TResult? Function(List<TagModel> tags)? loadInProgress,
+    TResult? Function(List<TagModel> tags)? loadSuccess,
+    TResult? Function(TagFailure failure, List<TagModel> tags)? failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Tag> tags)? initial,
-    TResult Function(List<Tag> tags)? loadInProgress,
-    TResult Function(List<Tag> tags)? loadSuccess,
-    TResult Function(TagFailure failure, List<Tag> tags)? failure,
+    TResult Function(List<TagModel> tags)? initial,
+    TResult Function(List<TagModel> tags)? loadInProgress,
+    TResult Function(List<TagModel> tags)? loadSuccess,
+    TResult Function(TagFailure failure, List<TagModel> tags)? failure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -78,7 +78,7 @@ abstract class $TagsStateCopyWith<$Res> {
   factory $TagsStateCopyWith(TagsState value, $Res Function(TagsState) then) =
       _$TagsStateCopyWithImpl<$Res, TagsState>;
   @useResult
-  $Res call({List<Tag> tags});
+  $Res call({List<TagModel> tags});
 }
 
 /// @nodoc
@@ -100,7 +100,7 @@ class _$TagsStateCopyWithImpl<$Res, $Val extends TagsState>
       tags: null == tags
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as List<Tag>,
+              as List<TagModel>,
     ) as $Val);
   }
 }
@@ -112,7 +112,7 @@ abstract class _$$_InitialCopyWith<$Res> implements $TagsStateCopyWith<$Res> {
       __$$_InitialCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Tag> tags});
+  $Res call({List<TagModel> tags});
 }
 
 /// @nodoc
@@ -131,7 +131,7 @@ class __$$_InitialCopyWithImpl<$Res>
       tags: null == tags
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as List<Tag>,
+              as List<TagModel>,
     ));
   }
 }
@@ -139,13 +139,13 @@ class __$$_InitialCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Initial extends _Initial {
-  const _$_Initial({required final List<Tag> tags})
+  const _$_Initial({required final List<TagModel> tags})
       : _tags = tags,
         super._();
 
-  final List<Tag> _tags;
+  final List<TagModel> _tags;
   @override
-  List<Tag> get tags {
+  List<TagModel> get tags {
     if (_tags is EqualUnmodifiableListView) return _tags;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_tags);
@@ -177,10 +177,10 @@ class _$_Initial extends _Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Tag> tags) initial,
-    required TResult Function(List<Tag> tags) loadInProgress,
-    required TResult Function(List<Tag> tags) loadSuccess,
-    required TResult Function(TagFailure failure, List<Tag> tags) failure,
+    required TResult Function(List<TagModel> tags) initial,
+    required TResult Function(List<TagModel> tags) loadInProgress,
+    required TResult Function(List<TagModel> tags) loadSuccess,
+    required TResult Function(TagFailure failure, List<TagModel> tags) failure,
   }) {
     return initial(tags);
   }
@@ -188,10 +188,10 @@ class _$_Initial extends _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Tag> tags)? initial,
-    TResult? Function(List<Tag> tags)? loadInProgress,
-    TResult? Function(List<Tag> tags)? loadSuccess,
-    TResult? Function(TagFailure failure, List<Tag> tags)? failure,
+    TResult? Function(List<TagModel> tags)? initial,
+    TResult? Function(List<TagModel> tags)? loadInProgress,
+    TResult? Function(List<TagModel> tags)? loadSuccess,
+    TResult? Function(TagFailure failure, List<TagModel> tags)? failure,
   }) {
     return initial?.call(tags);
   }
@@ -199,10 +199,10 @@ class _$_Initial extends _Initial {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Tag> tags)? initial,
-    TResult Function(List<Tag> tags)? loadInProgress,
-    TResult Function(List<Tag> tags)? loadSuccess,
-    TResult Function(TagFailure failure, List<Tag> tags)? failure,
+    TResult Function(List<TagModel> tags)? initial,
+    TResult Function(List<TagModel> tags)? loadInProgress,
+    TResult Function(List<TagModel> tags)? loadSuccess,
+    TResult Function(TagFailure failure, List<TagModel> tags)? failure,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -250,11 +250,11 @@ class _$_Initial extends _Initial {
 }
 
 abstract class _Initial extends TagsState {
-  const factory _Initial({required final List<Tag> tags}) = _$_Initial;
+  const factory _Initial({required final List<TagModel> tags}) = _$_Initial;
   const _Initial._() : super._();
 
   @override
-  List<Tag> get tags;
+  List<TagModel> get tags;
   @override
   @JsonKey(ignore: true)
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
@@ -269,7 +269,7 @@ abstract class _$$_LoadInProgressCopyWith<$Res>
       __$$_LoadInProgressCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Tag> tags});
+  $Res call({List<TagModel> tags});
 }
 
 /// @nodoc
@@ -289,7 +289,7 @@ class __$$_LoadInProgressCopyWithImpl<$Res>
       tags: null == tags
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as List<Tag>,
+              as List<TagModel>,
     ));
   }
 }
@@ -297,13 +297,13 @@ class __$$_LoadInProgressCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadInProgress extends _LoadInProgress {
-  const _$_LoadInProgress({required final List<Tag> tags})
+  const _$_LoadInProgress({required final List<TagModel> tags})
       : _tags = tags,
         super._();
 
-  final List<Tag> _tags;
+  final List<TagModel> _tags;
   @override
-  List<Tag> get tags {
+  List<TagModel> get tags {
     if (_tags is EqualUnmodifiableListView) return _tags;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_tags);
@@ -335,10 +335,10 @@ class _$_LoadInProgress extends _LoadInProgress {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Tag> tags) initial,
-    required TResult Function(List<Tag> tags) loadInProgress,
-    required TResult Function(List<Tag> tags) loadSuccess,
-    required TResult Function(TagFailure failure, List<Tag> tags) failure,
+    required TResult Function(List<TagModel> tags) initial,
+    required TResult Function(List<TagModel> tags) loadInProgress,
+    required TResult Function(List<TagModel> tags) loadSuccess,
+    required TResult Function(TagFailure failure, List<TagModel> tags) failure,
   }) {
     return loadInProgress(tags);
   }
@@ -346,10 +346,10 @@ class _$_LoadInProgress extends _LoadInProgress {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Tag> tags)? initial,
-    TResult? Function(List<Tag> tags)? loadInProgress,
-    TResult? Function(List<Tag> tags)? loadSuccess,
-    TResult? Function(TagFailure failure, List<Tag> tags)? failure,
+    TResult? Function(List<TagModel> tags)? initial,
+    TResult? Function(List<TagModel> tags)? loadInProgress,
+    TResult? Function(List<TagModel> tags)? loadSuccess,
+    TResult? Function(TagFailure failure, List<TagModel> tags)? failure,
   }) {
     return loadInProgress?.call(tags);
   }
@@ -357,10 +357,10 @@ class _$_LoadInProgress extends _LoadInProgress {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Tag> tags)? initial,
-    TResult Function(List<Tag> tags)? loadInProgress,
-    TResult Function(List<Tag> tags)? loadSuccess,
-    TResult Function(TagFailure failure, List<Tag> tags)? failure,
+    TResult Function(List<TagModel> tags)? initial,
+    TResult Function(List<TagModel> tags)? loadInProgress,
+    TResult Function(List<TagModel> tags)? loadSuccess,
+    TResult Function(TagFailure failure, List<TagModel> tags)? failure,
     required TResult orElse(),
   }) {
     if (loadInProgress != null) {
@@ -408,12 +408,12 @@ class _$_LoadInProgress extends _LoadInProgress {
 }
 
 abstract class _LoadInProgress extends TagsState {
-  const factory _LoadInProgress({required final List<Tag> tags}) =
+  const factory _LoadInProgress({required final List<TagModel> tags}) =
       _$_LoadInProgress;
   const _LoadInProgress._() : super._();
 
   @override
-  List<Tag> get tags;
+  List<TagModel> get tags;
   @override
   @JsonKey(ignore: true)
   _$$_LoadInProgressCopyWith<_$_LoadInProgress> get copyWith =>
@@ -428,7 +428,7 @@ abstract class _$$_LoadSuccessCopyWith<$Res>
       __$$_LoadSuccessCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Tag> tags});
+  $Res call({List<TagModel> tags});
 }
 
 /// @nodoc
@@ -448,7 +448,7 @@ class __$$_LoadSuccessCopyWithImpl<$Res>
       tags: null == tags
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as List<Tag>,
+              as List<TagModel>,
     ));
   }
 }
@@ -456,13 +456,13 @@ class __$$_LoadSuccessCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadSuccess extends _LoadSuccess {
-  const _$_LoadSuccess({required final List<Tag> tags})
+  const _$_LoadSuccess({required final List<TagModel> tags})
       : _tags = tags,
         super._();
 
-  final List<Tag> _tags;
+  final List<TagModel> _tags;
   @override
-  List<Tag> get tags {
+  List<TagModel> get tags {
     if (_tags is EqualUnmodifiableListView) return _tags;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_tags);
@@ -494,10 +494,10 @@ class _$_LoadSuccess extends _LoadSuccess {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Tag> tags) initial,
-    required TResult Function(List<Tag> tags) loadInProgress,
-    required TResult Function(List<Tag> tags) loadSuccess,
-    required TResult Function(TagFailure failure, List<Tag> tags) failure,
+    required TResult Function(List<TagModel> tags) initial,
+    required TResult Function(List<TagModel> tags) loadInProgress,
+    required TResult Function(List<TagModel> tags) loadSuccess,
+    required TResult Function(TagFailure failure, List<TagModel> tags) failure,
   }) {
     return loadSuccess(tags);
   }
@@ -505,10 +505,10 @@ class _$_LoadSuccess extends _LoadSuccess {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Tag> tags)? initial,
-    TResult? Function(List<Tag> tags)? loadInProgress,
-    TResult? Function(List<Tag> tags)? loadSuccess,
-    TResult? Function(TagFailure failure, List<Tag> tags)? failure,
+    TResult? Function(List<TagModel> tags)? initial,
+    TResult? Function(List<TagModel> tags)? loadInProgress,
+    TResult? Function(List<TagModel> tags)? loadSuccess,
+    TResult? Function(TagFailure failure, List<TagModel> tags)? failure,
   }) {
     return loadSuccess?.call(tags);
   }
@@ -516,10 +516,10 @@ class _$_LoadSuccess extends _LoadSuccess {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Tag> tags)? initial,
-    TResult Function(List<Tag> tags)? loadInProgress,
-    TResult Function(List<Tag> tags)? loadSuccess,
-    TResult Function(TagFailure failure, List<Tag> tags)? failure,
+    TResult Function(List<TagModel> tags)? initial,
+    TResult Function(List<TagModel> tags)? loadInProgress,
+    TResult Function(List<TagModel> tags)? loadSuccess,
+    TResult Function(TagFailure failure, List<TagModel> tags)? failure,
     required TResult orElse(),
   }) {
     if (loadSuccess != null) {
@@ -567,11 +567,12 @@ class _$_LoadSuccess extends _LoadSuccess {
 }
 
 abstract class _LoadSuccess extends TagsState {
-  const factory _LoadSuccess({required final List<Tag> tags}) = _$_LoadSuccess;
+  const factory _LoadSuccess({required final List<TagModel> tags}) =
+      _$_LoadSuccess;
   const _LoadSuccess._() : super._();
 
   @override
-  List<Tag> get tags;
+  List<TagModel> get tags;
   @override
   @JsonKey(ignore: true)
   _$$_LoadSuccessCopyWith<_$_LoadSuccess> get copyWith =>
@@ -585,7 +586,7 @@ abstract class _$$_FailureCopyWith<$Res> implements $TagsStateCopyWith<$Res> {
       __$$_FailureCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({TagFailure failure, List<Tag> tags});
+  $Res call({TagFailure failure, List<TagModel> tags});
 
   $TagFailureCopyWith<$Res> get failure;
 }
@@ -611,7 +612,7 @@ class __$$_FailureCopyWithImpl<$Res>
       tags: null == tags
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as List<Tag>,
+              as List<TagModel>,
     ));
   }
 
@@ -627,15 +628,15 @@ class __$$_FailureCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Failure extends _Failure {
-  const _$_Failure(this.failure, {required final List<Tag> tags})
+  const _$_Failure(this.failure, {required final List<TagModel> tags})
       : _tags = tags,
         super._();
 
   @override
   final TagFailure failure;
-  final List<Tag> _tags;
+  final List<TagModel> _tags;
   @override
-  List<Tag> get tags {
+  List<TagModel> get tags {
     if (_tags is EqualUnmodifiableListView) return _tags;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_tags);
@@ -668,10 +669,10 @@ class _$_Failure extends _Failure {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Tag> tags) initial,
-    required TResult Function(List<Tag> tags) loadInProgress,
-    required TResult Function(List<Tag> tags) loadSuccess,
-    required TResult Function(TagFailure failure, List<Tag> tags) failure,
+    required TResult Function(List<TagModel> tags) initial,
+    required TResult Function(List<TagModel> tags) loadInProgress,
+    required TResult Function(List<TagModel> tags) loadSuccess,
+    required TResult Function(TagFailure failure, List<TagModel> tags) failure,
   }) {
     return failure(this.failure, tags);
   }
@@ -679,10 +680,10 @@ class _$_Failure extends _Failure {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Tag> tags)? initial,
-    TResult? Function(List<Tag> tags)? loadInProgress,
-    TResult? Function(List<Tag> tags)? loadSuccess,
-    TResult? Function(TagFailure failure, List<Tag> tags)? failure,
+    TResult? Function(List<TagModel> tags)? initial,
+    TResult? Function(List<TagModel> tags)? loadInProgress,
+    TResult? Function(List<TagModel> tags)? loadSuccess,
+    TResult? Function(TagFailure failure, List<TagModel> tags)? failure,
   }) {
     return failure?.call(this.failure, tags);
   }
@@ -690,10 +691,10 @@ class _$_Failure extends _Failure {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Tag> tags)? initial,
-    TResult Function(List<Tag> tags)? loadInProgress,
-    TResult Function(List<Tag> tags)? loadSuccess,
-    TResult Function(TagFailure failure, List<Tag> tags)? failure,
+    TResult Function(List<TagModel> tags)? initial,
+    TResult Function(List<TagModel> tags)? loadInProgress,
+    TResult Function(List<TagModel> tags)? loadSuccess,
+    TResult Function(TagFailure failure, List<TagModel> tags)? failure,
     required TResult orElse(),
   }) {
     if (failure != null) {
@@ -742,12 +743,12 @@ class _$_Failure extends _Failure {
 
 abstract class _Failure extends TagsState {
   const factory _Failure(final TagFailure failure,
-      {required final List<Tag> tags}) = _$_Failure;
+      {required final List<TagModel> tags}) = _$_Failure;
   const _Failure._() : super._();
 
   TagFailure get failure;
   @override
-  List<Tag> get tags;
+  List<TagModel> get tags;
   @override
   @JsonKey(ignore: true)
   _$$_FailureCopyWith<_$_Failure> get copyWith =>

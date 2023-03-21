@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../domain/story.dart';
+import '../../../domain/models/models.dart';
 import '../../../shared/providers.dart';
 import '../../../styles/styles.dart';
 import '../../routes/app_router.gr.dart';
@@ -28,10 +28,10 @@ class DateButton extends ConsumerWidget {
           loadSuccess: (stories) {
             return stories.firstWhere(
               (story) => DateUtils.isSameDay(story.date, buttonDate),
-              orElse: () => Story.empty().copyWith(date: buttonDate),
+              orElse: () => StoryModel.empty().copyWith(date: buttonDate),
             );
           },
-          orElse: () => Story.empty(),
+          orElse: () => StoryModel.empty(),
         );
 
     return GestureDetector(
@@ -46,7 +46,8 @@ class DateButton extends ConsumerWidget {
         buttonDay.toString(),
         textAlign: TextAlign.center,
         style: (story.id == null)
-            ? $styles.text.bodySmall.copyWith(color: Theme.of(context).disabledColor)
+            ? $styles.text.bodySmall
+                .copyWith(color: Theme.of(context).disabledColor)
             : $styles.text.bodySmall.copyWith(
                 color: Colors.pink,
                 fontWeight: FontWeight.bold,
