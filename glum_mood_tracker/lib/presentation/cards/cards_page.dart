@@ -9,7 +9,7 @@ import '../../styles/styles.dart';
 import 'widgets/widgets.dart';
 
 class CardsPage extends ConsumerStatefulWidget {
-  const CardsPage({super.key});
+  const CardsPage({Key? key}) : super(key: key);
 
   @override
   ConsumerState<CardsPage> createState() => _CardsPageState();
@@ -19,7 +19,10 @@ class _CardsPageState extends ConsumerState<CardsPage> {
   @override
   void initState() {
     super.initState();
+    _watchAllCards();
+  }
 
+  void _watchAllCards() {
     Future.microtask(() {
       ref.watch(cardsStateNotifierProvider.notifier).watchAllCards();
     });
@@ -70,44 +73,48 @@ AppBar _buildStyledAppBar() {
 
   return AppBar(
     actions: [
-      Consumer(
-        builder: (BuildContext context, WidgetRef ref, Widget? child) {
-          return GestureDetector(
-            child: Padding(
-              padding: EdgeInsets.only(
-                top: $styles.insets.sm,
-                left: $styles.insets.sm,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    today.dateTimeNowInString,
-                    style: $styles.text.bodySmallBold,
-                  ),
-                  Text(
-                    today.dateTimeInDayLongFormat,
-                    style: $styles.text.caption,
-                  ),
-                ],
-              ),
-            ),
-            onTap: () {
-              ref
-                  .read(dateTimeNotifierProvider.notifier)
-                  .updateSelectedDateTime(today);
-              ref.read(pageViewControllerProvider).animateToPage(
-                    //PageView index starts at 0. Months start at 1.
-                    today.month - 1,
-                    duration: kThemeAnimationDuration,
-                    curve: Curves.easeIn,
-                  );
-            },
-          );
-        },
-      ),
+      _buildAppBarDateWidget(today),
       const Spacer(),
       const Icon(Icons.settings),
     ],
+  );
+}
+
+Widget _buildAppBarDateWidget(DateTime today) {
+  return Consumer(
+    builder: (BuildContext context, WidgetRef ref, Widget? child) {
+      return GestureDetector(
+        child: Padding(
+          padding: EdgeInsets.only(
+            top: $styles.insets.sm,
+            left: $styles.insets.sm,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                today.dateTimeNowInString,
+                style: $styles.text.bodySmallBold,
+              ),
+              Text(
+                today.dateTimeInDayLongFormat,
+                style: $styles.text.caption,
+              ),
+            ],
+          ),
+        ),
+        onTap: () {
+          ref
+              .read(dateTimeNotifierProvider.notifier)
+              .updateSelectedDateTime(today);
+          ref.read(pageViewControllerProvider).animateToPage(
+                // PageView index starts at 0. Months start at 1.
+                today.month - 1,
+                duration: kThemeAnimationDuration,
+                curve: Curves.easeIn,
+              );
+        },
+      );
+    },
   );
 }
