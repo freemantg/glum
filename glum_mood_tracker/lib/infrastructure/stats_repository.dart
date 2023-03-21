@@ -100,7 +100,7 @@ class StatsRepository implements IStatsRepository {
   @override
   Stream<Either<StoryFailure, Map<Tag, int>>> tagsByMoodsOrGlums(
       bool filterByMoods) async* {
-    final stream = _db.tagDao.watchingTagsByMoodsOrGlums(filterByMoods);
+    final stream = _db.tagDao.watchTagsFilteredByMoodsOrGlums(filterByMoods);
     yield* stream.map((tagDtosAndCountMap) {
       final tagsAndCountMap = <Tag, int>{};
       tagDtosAndCountMap.forEach(

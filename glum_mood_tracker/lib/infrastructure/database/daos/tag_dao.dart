@@ -11,10 +11,12 @@ class TagDao extends DatabaseAccessor<GlumDatabase> with _$TagDaoMixin {
 
   final GlumDatabase db;
 
+  // Watch all tags
   Stream<List<TagDto>> watchTags() => select(tags).watch().map(
         (data) => data.map((e) => TagDto.fromJson(e.toJson())).toList(),
       );
 
+  // Watch the trending tags
   Stream<Map<TagDto, int>> watchTrendingTags() {
     final tagsAndCount = <TagDto, int>{};
     final tagsCount = tags.id.count();
@@ -43,7 +45,8 @@ class TagDao extends DatabaseAccessor<GlumDatabase> with _$TagDaoMixin {
     );
   }
 
-  Stream<Map<TagDto, int>> watchingTagsByMoodsOrGlums(bool filterByMoods) {
+  // Watch tags filtered by moods (true) or glums (false)
+  Stream<Map<TagDto, int>> watchTagsFilteredByMoodsOrGlums(bool filterByMoods) {
     final tagsAndCount = <TagDto, int>{};
     final tagsCount = tags.id.count();
 
@@ -79,11 +82,13 @@ class TagDao extends DatabaseAccessor<GlumDatabase> with _$TagDaoMixin {
     );
   }
 
+  // Insert a new tag
   Future<void> insertTag(TagDto tag) async {
     final tagCompanion = TagsCompanion.insert(title: tag.title);
     await into(tags).insert(tagCompanion);
   }
 
+  // Delete a tag by its ID
   Future<void> deleteTag(int tagId) async {
     (delete(storyTags)..where((tbl) => tbl.tagId.equals(tagId))).go();
     (delete(tags)..where((tbl) => tbl.id.equals(tagId))).go();
