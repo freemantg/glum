@@ -5,11 +5,13 @@ import '../drift_database.dart';
 
 part 'story_dao.g.dart';
 
+// Database Accessor class for Stories, Photos, Tags, StoryTags, and StoryPhotos tables
 @DriftAccessor(tables: [Stories, Photos, Tags, StoryTags, StoryPhotos])
 class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
   StoryDao(this.db) : super(db);
   final GlumDatabase db;
 
+  // Method for bulk insert and returning ids
   Future<List<int>> _bulkInsertAndReturnIds(
     TableInfo table,
     List<UpdateCompanion> companions,
@@ -27,6 +29,7 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
     return List.generate(companions.length, (i) => lastRowId - i);
   }
 
+  // Update a story with its tags and photos
   Future<void> updateStoryWithTagsAndPhotos(StoryDto storyDto) async {
     final storyId = storyDto.id;
     if (storyId != null) {
@@ -35,12 +38,14 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
     }
   }
 
+  // Insert a new story with its tags and photos
   Future<void> insertStoryWithTagsAndPhotos(StoryDto storyDto) async {
     final storyId = await _insertStory(storyDto);
     await _insertStoryTags(storyId, storyDto.tags);
     await _insertStoryPhotos(storyId, storyDto.photos);
   }
 
+  // Insert a new story into the Stories table
   Future<int> _insertStory(StoryDto storyDto) async {
     final storyCompanion = StoriesCompanion.insert(
       title: storyDto.title,
@@ -51,6 +56,7 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
     return into(stories).insert(storyCompanion);
   }
 
+  // Insert tags for a story into the StoryTags table
   Future<void> _insertStoryTags(int storyId, List<TagDto> tags) async {
     if (tags.isNotEmpty) {
       final storyTagsCompanions = tags
@@ -65,6 +71,7 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
     }
   }
 
+  // Insert photos for a story into the Photos and StoryPhotos tables
   Future<void> _insertStoryPhotos(int storyId, List<PhotoDto> photoDtos) async {
     if (photoDtos.isNotEmpty) {
       final photoCompanions = photoDtos
@@ -86,9 +93,11 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
     }
   }
 
+  // Update a story
   Future<void> updateStory(StoryDto storyDto) async =>
       await update(stories).replace(Story.fromJson(storyDto.toJson()));
 
+  // Stream of stories with their tags and photos by month and year
   Stream<List<StoryDto>> watchStoriesByMonthAndYear(DateTime monthYear) {
     final startDate = DateTime(monthYear.year, monthYear.month, 1);
     final endDate = DateTime(monthYear.year, monthYear.month + 1, 0);
@@ -100,6 +109,7 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
     return _mapStoriesWithTagsAndPhotosToDtos(query.watch());
   }
 
+  // Build a query for joining stories, tags, and photos
   JoinedSelectStatement _buildJoinedQuery() {
     return select(stories).join(
       [
@@ -111,6 +121,7 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
     );
   }
 
+  // Map stories with tags and photos to DTOs
   Stream<List<StoryDto>> _mapStoriesWithTagsAndPhotosToDtos(
       Stream<List<TypedResult>> rowsStream) {
     return rowsStream.map((rows) {
@@ -157,6 +168,7 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
     });
   }
 
+  // Delete a story and its associated tags and photos
   Future<int> deleteStory(int storyId) async {
     await _deleteStoryTags(storyId);
     await _deleteStoryPhotos(storyId);
@@ -164,10 +176,12 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
     return storyId;
   }
 
+  // Delete story tags associated with a story
   Future<void> _deleteStoryTags(int storyId) async {
     await (delete(storyTags)..where((tbl) => tbl.storyId.equals(storyId))).go();
   }
 
+  // Delete story photos associated with a story
   Future<void> _deleteStoryPhotos(int storyId) async {
     final photoIds = await _getPhotoIdsForStory(storyId);
     await (delete(storyPhotos)..where((tbl) => tbl.storyId.equals(storyId)))
@@ -175,12 +189,14 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
     await (delete(photos)..where((tbl) => tbl.id.isIn(photoIds))).go();
   }
 
+  // Get photo ids associated with a story
   Future<List<int>> _getPhotoIdsForStory(int storyId) async {
     final photoQuery = select(storyPhotos)
       ..where((tbl) => tbl.storyId.equals(storyId));
     return (await photoQuery.get()).map((e) => e.photoId).toList();
   }
 
+  // Count the total number of stories
   Future<int?> countStories() async {
     final storiesCount = stories.id.count();
     final query = selectOnly(stories)..addColumns([storiesCount]);
@@ -188,6 +204,7 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
     return row.read(storiesCount);
   }
 
+  // Calculate the average glum rating of all stories
   Future<double?> glumAverage() async {
     final avgGlum = stories.glumRating.avg();
     final query = selectOnly(stories)..addColumns([avgGlum]);
@@ -195,6 +212,7 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
     return row.read(avgGlum);
   }
 
+  // Calculate the distribution of glum ratings
   Future<Map<int, int>> glumDistribution() async {
     //{Glum Rating: Percentage out of 100%}
     final glumDistribution = <int, int>{};
@@ -208,6 +226,7 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
     return glumDistribution;
   }
 
+  // Count stories with a specific glum rating
   Future<int> _countStoriesWithGlumRating(int glumRating) async {
     final glumRatingCount =
         stories.id.count(filter: stories.glumRating.equals(glumRating));
@@ -216,6 +235,7 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
     return row.read(glumRatingCount) ?? 0;
   }
 
+  // Get the average glum rating for the last week
   Future<Map<DateTime, int>> averageWeek() async {
     final averageWeek = <DateTime, int>{};
 
@@ -227,6 +247,7 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
     return averageWeek;
   }
 
+  // Build the query for averageWeek()
   JoinedSelectStatement _buildAverageWeekQuery() {
     return selectOnly(stories, distinct: true)
       ..addColumns([stories.date])
@@ -235,6 +256,7 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
       ..limit(7);
   }
 
+  // Get the glum ratings for the current year
   Future<Map<DateTime, int>> yearInGlums() async {
     final yearInGlums = <DateTime, int>{};
     final query = _buildYearInGlumsQuery();
@@ -245,6 +267,7 @@ class StoryDao extends DatabaseAccessor<GlumDatabase> with _$StoryDaoMixin {
     return yearInGlums;
   }
 
+// Build the query for yearInGlums()
   JoinedSelectStatement _buildYearInGlumsQuery() {
     return selectOnly(stories)
       ..addColumns([stories.date])
