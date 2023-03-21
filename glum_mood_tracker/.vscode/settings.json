@@ -1,3 +1,16 @@
 {
-    "java.configuration.updateBuildConfiguration": "interactive"
+  "java.configuration.updateBuildConfiguration": "interactive",
+  "files.exclude": {
+    "lib\\infrastructure\\database\\daos\\card_dao.g.dart": true,
+    "lib\\infrastructure\\database\\daos\\story_dao.g.dart": true,
+    "lib\\infrastructure\\database\\drift_database.g.dart": true,
+    "lib\\infrastructure\\tag_dto.g.dart": true,
+    "lib\\infrastructure\\tag_dto.freezed.dart": true,
+    "lib\\infrastructure\\story_dto.g.dart": true,
+    "lib\\infrastructure\\photo_dto.g.dart": true,
+    "lib\\infrastructure\\card_dto.g.dart": true,
+    "lib\\infrastructure\\photo_dto.freezed.dart": true,
+    "lib\\infrastructure\\story_dto.freezed.dart": true,
+    "lib\\infrastructure\\card_dto.freezed.dart": true
+  }
 }

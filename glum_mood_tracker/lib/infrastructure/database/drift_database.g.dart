@@ -1440,24 +1440,3 @@ abstract class _$GlumDatabase extends GeneratedDatabase {
   List<DatabaseSchemaEntity> get allSchemaEntities =>
       [stories, tags, photos, storyTags, storyPhotos, cards, cardPhotos];
 }
-
-mixin _$StoryDaoMixin on DatabaseAccessor<GlumDatabase> {
-  $StoriesTable get stories => attachedDatabase.stories;
-  $PhotosTable get photos => attachedDatabase.photos;
-  $TagsTable get tags => attachedDatabase.tags;
-  $StoryTagsTable get storyTags => attachedDatabase.storyTags;
-  $StoryPhotosTable get storyPhotos => attachedDatabase.storyPhotos;
-}
-mixin _$TagDaoMixin on DatabaseAccessor<GlumDatabase> {
-  $TagsTable get tags => attachedDatabase.tags;
-  $StoriesTable get stories => attachedDatabase.stories;
-  $StoryTagsTable get storyTags => attachedDatabase.storyTags;
-}
-mixin _$PhotoDaoMixin on DatabaseAccessor<GlumDatabase> {
-  $PhotosTable get photos => attachedDatabase.photos;
-}
-mixin _$CardDaoMixin on DatabaseAccessor<GlumDatabase> {
-  $CardsTable get cards => attachedDatabase.cards;
-  $PhotosTable get photos => attachedDatabase.photos;
-  $CardPhotosTable get cardPhotos => attachedDatabase.cardPhotos;
-}

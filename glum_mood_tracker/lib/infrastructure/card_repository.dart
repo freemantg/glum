@@ -5,7 +5,7 @@ import 'package:glum_mood_tracker/infrastructure/card_dto.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../domain/card.dart';
-import 'database/drift_database.dart' hide Card;
+import 'database/drift_database.dart';
 
 class CardRepository extends ICardRepository {
   final GlumDatabase _db;
