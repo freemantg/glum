@@ -7,9 +7,11 @@ part 'card_dao.g.dart';
 
 @DriftAccessor(tables: [Cards, CardPhotos, Photos])
 class CardDao extends DatabaseAccessor<GlumDatabase> with _$CardDaoMixin {
+  // Constructor
   CardDao(this.db) : super(db);
   final GlumDatabase db;
 
+  // Insert a new card into the database
   Future<void> insertCard(CardDto cardDto) async {
     final cardCompanion = CardsCompanion.insert(
       monthYear: cardDto.monthYear,
@@ -31,6 +33,7 @@ class CardDao extends DatabaseAccessor<GlumDatabase> with _$CardDaoMixin {
     }
   }
 
+  // Update an existing card in the database
   Future<void> updateCard(CardDto cardDto) async {
     final id = cardDto.id;
     if (id != null) {
@@ -39,12 +42,14 @@ class CardDao extends DatabaseAccessor<GlumDatabase> with _$CardDaoMixin {
     }
   }
 
+  // Delete a card from the database
   Future<void> deleteCard(int cardId) async {
     // First, delete any associated card and photos from join tables.
     await (delete(cardPhotos)..where((tbl) => tbl.cardId.equals(cardId))).go();
     await (delete(cards)..where((tbl) => tbl.id.equals(cardId))).go();
   }
 
+  // Watch all cards in the database
   Stream<List<CardDto>> watchAllCards() {
     final query = select(cards).join(
       [
