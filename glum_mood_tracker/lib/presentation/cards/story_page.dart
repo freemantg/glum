@@ -8,7 +8,7 @@ import '../../domain/models/models.dart';
 import 'widgets/widgets.dart';
 
 class StoryPage extends StatelessWidget {
-  const StoryPage({super.key, required this.story});
+  const StoryPage({Key? key, required this.story}) : super(key: key);
 
   final StoryModel story;
 
@@ -20,74 +20,96 @@ class StoryPage extends StatelessWidget {
           builder: (context, constraints) {
             return ListView(
               children: [
-                if (story.photos.isNotEmpty)
-                  Image.file(
-                    File(story.photos.first.filePath),
-                    height: constraints.maxHeight / 2,
-                    fit: BoxFit.cover,
-                  ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: $styles.insets.sm,
-                    right: $styles.insets.sm,
-                    bottom: $styles.insets.sm,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(height: $styles.insets.lg),
-                      Text(
-                        story.title,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: $styles.text.h3,
-                      ),
-                      SizedBox(height: $styles.insets.xs),
-                      Text(
-                        story.date.dateTimeInStoryPageFormat,
-                        style:
-                            $styles.text.caption.copyWith(color: Colors.grey),
-                      ),
-                      SizedBox(height: $styles.insets.sm),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          vertical: $styles.insets.xxs,
-                          horizontal: $styles.insets.xs,
-                        ),
-                        decoration: BoxDecoration(
-                          color:
-                              story.glumRating.ratingToColor().withOpacity(0.1),
-                          border: Border.all(
-                            width: 1.5,
-                            color: Colors.white70.withOpacity(0.5),
-                          ),
-                          borderRadius:
-                              BorderRadius.circular($styles.corners.md),
-                        ),
-                        child: Text(
-                          story.glumRating.toString(),
-                          style: $styles.text.bodySmallBold.copyWith(height: 0),
-                        ),
-                      ),
-                      SizedBox(height: $styles.insets.md),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          story.description,
-                          textAlign: TextAlign.left,
-                          style: $styles.text.bodySmall
-                              .copyWith(color: Colors.white70),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                _buildStoryImage(constraints),
+                _buildStoryDetails(context),
               ],
             );
           },
         ),
       ),
       bottomNavigationBar: StyledBottomBar(story: story),
+    );
+  }
+
+  Widget _buildStoryImage(BoxConstraints constraints) {
+    if (story.photos.isNotEmpty) {
+      return Image.file(
+        File(story.photos.first.filePath),
+        height: constraints.maxHeight / 2,
+        fit: BoxFit.cover,
+      );
+    }
+    return const SizedBox.shrink();
+  }
+
+  Widget _buildStoryDetails(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: $styles.insets.sm,
+        right: $styles.insets.sm,
+        bottom: $styles.insets.sm,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(height: $styles.insets.lg),
+          _buildStoryTitle(),
+          SizedBox(height: $styles.insets.xs),
+          _buildStoryDate(),
+          SizedBox(height: $styles.insets.sm),
+          _buildStoryRating(),
+          SizedBox(height: $styles.insets.md),
+          _buildStoryDescription(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStoryTitle() {
+    return Text(
+      story.title,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: $styles.text.h3,
+    );
+  }
+
+  Widget _buildStoryDate() {
+    return Text(
+      story.date.dateTimeInStoryPageFormat,
+      style: $styles.text.caption.copyWith(color: Colors.grey),
+    );
+  }
+
+  Widget _buildStoryRating() {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        vertical: $styles.insets.xxs,
+        horizontal: $styles.insets.xs,
+      ),
+      decoration: BoxDecoration(
+        color: story.glumRating.ratingToColor().withOpacity(0.1),
+        border: Border.all(
+          width: 1.5,
+          color: Colors.white70.withOpacity(0.5),
+        ),
+        borderRadius: BorderRadius.circular($styles.corners.md),
+      ),
+      child: Text(
+        story.glumRating.toString(),
+        style: $styles.text.bodySmallBold.copyWith(height: 0),
+      ),
+    );
+  }
+
+  Widget _buildStoryDescription() {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        story.description,
+        textAlign: TextAlign.left,
+        style: $styles.text.bodySmall.copyWith(color: Colors.white70),
+      ),
     );
   }
 }

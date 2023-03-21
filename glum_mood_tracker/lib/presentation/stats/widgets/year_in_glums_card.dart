@@ -8,7 +8,7 @@ import '../../../styles/styles.dart';
 import 'widgets.dart';
 
 class YearInGlumsCard extends StatelessWidget {
-  const YearInGlumsCard({super.key});
+  const YearInGlumsCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,81 +17,103 @@ class YearInGlumsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: EdgeInsets.all($styles.insets.sm),
-            child: Text('Year in Glums', style: $styles.text.bodySmallBold),
-          ),
-          Table(
-            children: [
-              TableRow(
-                children: [
-                  const Text(''),
-                  ...monthInitials
-                      .map(
-                        (e) => TableCell(
-                          verticalAlignment: TableCellVerticalAlignment.middle,
-                          child: Text(
-                            e,
-                            textAlign: TextAlign.center,
-                            style: $styles.text.caption,
-                          ),
-                        ),
-                      )
-                      .toList()
-                ],
-              ),
-              //MONTH COLUMNS 31st - 1st
-              for (int i = 1; i <= 31; i++)
-                TableRow(
-                  children: [
-                    TableCell(
-                      verticalAlignment: TableCellVerticalAlignment.middle,
-                      child: Text(
-                        i.toString(),
-                        textAlign: TextAlign.center,
-                        style: $styles.text.caption,
-                      ),
-                    ),
-                    for (int j = 1; j <= 12; j++)
-                      _buildYearIndividualGlum(day: i, month: j)
-                  ],
-                )
-            ],
-          )
+          _buildTitle(),
+          _buildTable(),
         ],
       ),
     );
   }
-}
 
-Widget _buildYearIndividualGlum({required int day, required int month}) {
-  return Consumer(
-    builder: (context, ref, child) {
-      final yearInGlumsMap = ref.watch(statsNotifierProvider).yearInGlums;
-      int? glumRating;
+  Widget _buildTitle() {
+    return Padding(
+      padding: EdgeInsets.all($styles.insets.sm),
+      child: Text('Year in Glums', style: $styles.text.bodySmallBold),
+    );
+  }
 
-      for (var key in yearInGlumsMap.keys) {
-        if (DateUtils.isSameDay(
-            key, DateTime(DateTime.now().year, month, day))) {
-          glumRating = yearInGlumsMap[key];
+  Widget _buildTable() {
+    return Table(
+      children: [
+        _buildMonthInitialsRow(),
+        for (int i = 1; i <= 31; i++) _buildDayRow(i),
+      ],
+    );
+  }
+
+  TableRow _buildMonthInitialsRow() {
+    return TableRow(
+      children: [
+        const Text(''),
+        ...monthInitials
+            .map(
+              (e) => TableCell(
+                verticalAlignment: TableCellVerticalAlignment.middle,
+                child: Text(
+                  e,
+                  textAlign: TextAlign.center,
+                  style: $styles.text.caption,
+                ),
+              ),
+            )
+            .toList()
+      ],
+    );
+  }
+
+  TableRow _buildDayRow(int day) {
+    return TableRow(
+      children: [
+        _buildDayNumber(day),
+        for (int j = 1; j <= 12; j++)
+          _buildYearIndividualGlum(day: day, month: j),
+      ],
+    );
+  }
+
+  Widget _buildDayNumber(int day) {
+    return TableCell(
+      verticalAlignment: TableCellVerticalAlignment.middle,
+      child: Text(
+        day.toString(),
+        textAlign: TextAlign.center,
+        style: $styles.text.caption,
+      ),
+    );
+  }
+
+  Widget _buildYearIndividualGlum({required int day, required int month}) {
+    return Consumer(
+      builder: (context, ref, child) {
+        final yearInGlumsMap = ref.watch(statsNotifierProvider).yearInGlums;
+        int? glumRating;
+
+        for (var key in yearInGlumsMap.keys) {
+          if (DateUtils.isSameDay(
+              key, DateTime(DateTime.now().year, month, day))) {
+            glumRating = yearInGlumsMap[key];
+          }
         }
-      }
-      return AspectRatio(
-        aspectRatio: 1,
-        child: Container(
-          decoration: BoxDecoration(
-            color: (glumRating != null) ? glumRating.ratingToColor() : null,
-            border: Border.all(
-              width: 0.5,
-              color: const Color(0xFFDB6162).withOpacity(0.2),
-            ),
-            borderRadius: const BorderRadius.all(Radius.circular(2.0)),
+        return _buildGlumRatingBox(glumRating);
+      },
+    );
+  }
+
+  Widget _buildGlumRatingBox(int? glumRating) {
+    return AspectRatio(
+      aspectRatio: 1,
+      child: Container(
+        decoration: BoxDecoration(
+          color: (glumRating != null) ? glumRating.ratingToColor() : null,
+          border: Border.all(
+            width: 0.5,
+            color: const Color(0xFFDB6162).withOpacity(0.2),
           ),
-          child: (glumRating != null)
-              ? Center(child: Text(glumRating.toString()))
-              : const SizedBox.shrink(),
+          borderRadius: const BorderRadius.all(Radius.circular(2.0)),
         ),
-      );
-    },
-  );
+        child: (glumRating != null)
+            ? Center(child: Text(glumRating.toString()))
+            : const SizedBox.shrink(),
+      ),
+    );
+  }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../styles/styles.dart';
-import 'styled_card.dart';
+import 'widgets.dart';
 
 class StatsHeader extends StatelessWidget {
   const StatsHeader({
