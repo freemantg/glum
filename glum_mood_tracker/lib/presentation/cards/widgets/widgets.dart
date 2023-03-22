@@ -1,4 +1,5 @@
 export 'add_photo_widget.dart';
+export 'add_tag_widget.dart';
 export 'calendar_toggle_button.dart';
 export 'card_carousel.dart';
 export 'cards_visual_options_button.dart';
@@ -9,6 +10,7 @@ export 'month_progress_bar.dart';
 export 'rating_bar_widget.dart';
 export 'styled_bottom_bar.dart';
 export 'styled_month_view_calendar.dart';
+export 'tag_bar.dart';
 export 'tag_bottom_modal_sheet.dart';
 export 'title_description.dart';
 export 'title_text_field.dart';
