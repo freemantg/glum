@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:glum_mood_tracker/shared/extensions.dart';
 import 'package:glum_mood_tracker/styles/styles.dart';
@@ -7,6 +8,7 @@ import 'package:glum_mood_tracker/styles/styles.dart';
 import '../../domain/models/models.dart';
 import 'widgets/widgets.dart';
 
+@RoutePage()
 class StoryPage extends StatelessWidget {
   const StoryPage({Key? key, required this.story}) : super(key: key);
 

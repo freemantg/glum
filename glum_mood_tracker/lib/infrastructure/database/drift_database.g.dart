@@ -803,29 +803,36 @@ class StoryTag extends DataClass implements Insertable<StoryTag> {
 class StoryTagsCompanion extends UpdateCompanion<StoryTag> {
   final Value<int> storyId;
   final Value<int> tagId;
+  final Value<int> rowid;
   const StoryTagsCompanion({
     this.storyId = const Value.absent(),
     this.tagId = const Value.absent(),
+    this.rowid = const Value.absent(),
   });
   StoryTagsCompanion.insert({
     required int storyId,
     required int tagId,
+    this.rowid = const Value.absent(),
   })  : storyId = Value(storyId),
         tagId = Value(tagId);
   static Insertable<StoryTag> custom({
     Expression<int>? storyId,
     Expression<int>? tagId,
+    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (storyId != null) 'story_id': storyId,
       if (tagId != null) 'tag_id': tagId,
+      if (rowid != null) 'rowid': rowid,
     });
   }
 
-  StoryTagsCompanion copyWith({Value<int>? storyId, Value<int>? tagId}) {
+  StoryTagsCompanion copyWith(
+      {Value<int>? storyId, Value<int>? tagId, Value<int>? rowid}) {
     return StoryTagsCompanion(
       storyId: storyId ?? this.storyId,
       tagId: tagId ?? this.tagId,
+      rowid: rowid ?? this.rowid,
     );
   }
 
@@ -838,6 +845,9 @@ class StoryTagsCompanion extends UpdateCompanion<StoryTag> {
     if (tagId.present) {
       map['tag_id'] = Variable<int>(tagId.value);
     }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
     return map;
   }
 
@@ -845,7 +855,8 @@ class StoryTagsCompanion extends UpdateCompanion<StoryTag> {
   String toString() {
     return (StringBuffer('StoryTagsCompanion(')
           ..write('storyId: $storyId, ')
-          ..write('tagId: $tagId')
+          ..write('tagId: $tagId, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -982,29 +993,36 @@ class StoryPhoto extends DataClass implements Insertable<StoryPhoto> {
 class StoryPhotosCompanion extends UpdateCompanion<StoryPhoto> {
   final Value<int> storyId;
   final Value<int> photoId;
+  final Value<int> rowid;
   const StoryPhotosCompanion({
     this.storyId = const Value.absent(),
     this.photoId = const Value.absent(),
+    this.rowid = const Value.absent(),
   });
   StoryPhotosCompanion.insert({
     required int storyId,
     required int photoId,
+    this.rowid = const Value.absent(),
   })  : storyId = Value(storyId),
         photoId = Value(photoId);
   static Insertable<StoryPhoto> custom({
     Expression<int>? storyId,
     Expression<int>? photoId,
+    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (storyId != null) 'story_id': storyId,
       if (photoId != null) 'photo_id': photoId,
+      if (rowid != null) 'rowid': rowid,
     });
   }
 
-  StoryPhotosCompanion copyWith({Value<int>? storyId, Value<int>? photoId}) {
+  StoryPhotosCompanion copyWith(
+      {Value<int>? storyId, Value<int>? photoId, Value<int>? rowid}) {
     return StoryPhotosCompanion(
       storyId: storyId ?? this.storyId,
       photoId: photoId ?? this.photoId,
+      rowid: rowid ?? this.rowid,
     );
   }
 
@@ -1017,6 +1035,9 @@ class StoryPhotosCompanion extends UpdateCompanion<StoryPhoto> {
     if (photoId.present) {
       map['photo_id'] = Variable<int>(photoId.value);
     }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
     return map;
   }
 
@@ -1024,7 +1045,8 @@ class StoryPhotosCompanion extends UpdateCompanion<StoryPhoto> {
   String toString() {
     return (StringBuffer('StoryPhotosCompanion(')
           ..write('storyId: $storyId, ')
-          ..write('photoId: $photoId')
+          ..write('photoId: $photoId, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -1372,29 +1394,36 @@ class CardPhoto extends DataClass implements Insertable<CardPhoto> {
 class CardPhotosCompanion extends UpdateCompanion<CardPhoto> {
   final Value<int> cardId;
   final Value<int> photoId;
+  final Value<int> rowid;
   const CardPhotosCompanion({
     this.cardId = const Value.absent(),
     this.photoId = const Value.absent(),
+    this.rowid = const Value.absent(),
   });
   CardPhotosCompanion.insert({
     required int cardId,
     required int photoId,
+    this.rowid = const Value.absent(),
   })  : cardId = Value(cardId),
         photoId = Value(photoId);
   static Insertable<CardPhoto> custom({
     Expression<int>? cardId,
     Expression<int>? photoId,
+    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (cardId != null) 'card_id': cardId,
       if (photoId != null) 'photo_id': photoId,
+      if (rowid != null) 'rowid': rowid,
     });
   }
 
-  CardPhotosCompanion copyWith({Value<int>? cardId, Value<int>? photoId}) {
+  CardPhotosCompanion copyWith(
+      {Value<int>? cardId, Value<int>? photoId, Value<int>? rowid}) {
     return CardPhotosCompanion(
       cardId: cardId ?? this.cardId,
       photoId: photoId ?? this.photoId,
+      rowid: rowid ?? this.rowid,
     );
   }
 
@@ -1407,6 +1436,9 @@ class CardPhotosCompanion extends UpdateCompanion<CardPhoto> {
     if (photoId.present) {
       map['photo_id'] = Variable<int>(photoId.value);
     }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
     return map;
   }
 
@@ -1414,7 +1446,8 @@ class CardPhotosCompanion extends UpdateCompanion<CardPhoto> {
   String toString() {
     return (StringBuffer('CardPhotosCompanion(')
           ..write('cardId: $cardId, ')
-          ..write('photoId: $photoId')
+          ..write('photoId: $photoId, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }

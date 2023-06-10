@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../domain/models/models.dart';
 import '../../../shared/providers.dart';
 import '../../../styles/styles.dart';
-import '../../routes/app_router.gr.dart';
+import '../../routes/app_router.dart';
 
 class DateButton extends ConsumerWidget {
   const DateButton({
@@ -37,9 +37,9 @@ class DateButton extends ConsumerWidget {
     return GestureDetector(
       onTap: () {
         if (story.id == null) {
-          context.router.push(AddStoryPageRoute(story: story));
+          context.router.push(AddStoryRoute(story: story));
         } else {
-          context.router.push(StoryPageRoute(story: story));
+          context.router.push(StoryRoute(story: story));
         }
       },
       child: Text(

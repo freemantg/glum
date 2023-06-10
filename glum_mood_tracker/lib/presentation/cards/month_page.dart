@@ -5,11 +5,12 @@ import 'package:glum_mood_tracker/styles/styles.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../domain/models/models.dart';
-import '../routes/app_router.gr.dart';
 import '../../shared/providers.dart';
+import '../routes/app_router.dart';
 import '../stats/widgets/styled_card.dart';
 import 'widgets/widgets.dart';
 
+@RoutePage()
 class MonthPage extends HookConsumerWidget {
   const MonthPage({
     Key? key,
@@ -38,7 +39,7 @@ class MonthPage extends HookConsumerWidget {
                             .read(storyNotifierProvider.notifier)
                             .deleteStory(story.id!),
                         onTap: () =>
-                            context.router.push(StoryPageRoute(story: story)),
+                            context.router.push(StoryRoute(story: story)),
                       );
                     },
                   ),

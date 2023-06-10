@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 
 import '../../../domain/models/models.dart';
 import '../../../styles/styles.dart';
-import '../../routes/app_router.gr.dart';
+import '../../routes/app_router.dart';
 import 'widgets.dart';
 
 class MonthCard extends ConsumerWidget {
@@ -26,7 +26,7 @@ class MonthCard extends ConsumerWidget {
     final cardState = ref.watch(cardFormNotifierProvider).card;
 
     return GestureDetector(
-      onTap: () => context.router.push(MonthPageRoute(monthYear: monthYear)),
+      onTap: () => context.router.push(MonthRoute(monthYear: monthYear)),
       child: Card(
         color: card?.color,
         elevation: 0,

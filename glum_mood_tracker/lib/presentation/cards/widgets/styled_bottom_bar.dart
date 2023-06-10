@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/models/models.dart';
 import '../../../styles/styles.dart';
-import '../../routes/app_router.gr.dart';
+import '../../routes/app_router.dart';
 
 class StyledBottomBar extends StatelessWidget {
   const StyledBottomBar({
@@ -55,7 +55,7 @@ class StyledBottomBar extends StatelessWidget {
                   IconButton(
                     icon: const Icon(Icons.more_horiz),
                     onPressed: () => context.router
-                        .push(AddStoryPageRoute(story: story))
+                        .push(AddStoryRoute(story: story))
                         .then((_) => context.popRoute()),
                   ),
                   const Spacer(),

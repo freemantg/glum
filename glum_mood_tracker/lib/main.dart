@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:glum_mood_tracker/styles/styles.dart';
 
-import 'presentation/routes/app_router.gr.dart';
+import 'presentation/routes/app_router.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,6 +42,7 @@ class AppWidget extends StatelessWidget {
   }
 }
 
+@RoutePage()
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -49,8 +50,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
       routes: const [
-        CardsRouter(),
-        StatsRouter(),
+        CardsRoute(),
+        StatsRoute(),
       ],
       bottomNavigationBuilder: (context, tabsRouter) {
         return BottomNavigationBar(
@@ -71,7 +72,7 @@ class HomePage extends StatelessWidget {
         );
       },
       floatingActionButton: FloatingActionButton.small(
-        onPressed: () => AutoRouter.of(context).push(AddStoryPageRoute()),
+        onPressed: () => AutoRouter.of(context).push(AddStoryRoute()),
         child: const Icon(Icons.edit),
       ),
       floatingActionButtonLocation:

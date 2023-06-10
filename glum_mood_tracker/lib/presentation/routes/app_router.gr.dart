@@ -1,306 +1,222 @@
-// **************************************************************************
-// AutoRouteGenerator
-// **************************************************************************
-
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// AutoRouteGenerator
+// AutoRouterGenerator
 // **************************************************************************
-//
+
 // ignore_for_file: type=lint
+// coverage:ignore-file
 
-// ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i8;
-import 'package:flutter/foundation.dart' as _i10;
-import 'package:flutter/material.dart' as _i9;
+part of 'app_router.dart';
 
-import '../../domain/models/models.dart' as _i11;
-import '../../main.dart' as _i1;
-import '../cards/add_story_page.dart' as _i3;
-import '../cards/cards_page.dart' as _i6;
-import '../cards/month_page.dart' as _i4;
-import '../cards/story_page.dart' as _i2;
-import '../stats/stats_page.dart' as _i7;
-import 'app_router.dart' as _i5;
-
-class AppRouter extends _i8.RootStackRouter {
-  AppRouter([_i9.GlobalKey<_i9.NavigatorState>? navigatorKey])
-      : super(navigatorKey);
+abstract class _$AppRouter extends RootStackRouter {
+  // ignore: unused_element
+  _$AppRouter({super.navigatorKey});
 
   @override
-  final Map<String, _i8.PageFactory> pagesMap = {
-    HomePageRoute.name: (routeData) {
-      return _i8.MaterialPageX<dynamic>(
+  final Map<String, PageFactory> pagesMap = {
+    HomeRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i1.HomePage(),
+        child: const HomePage(),
       );
     },
-    StoryPageRoute.name: (routeData) {
-      final args = routeData.argsAs<StoryPageRouteArgs>();
-      return _i8.MaterialPageX<dynamic>(
+    AddStoryRoute.name: (routeData) {
+      final args = routeData.argsAs<AddStoryRouteArgs>(
+          orElse: () => const AddStoryRouteArgs());
+      return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i2.StoryPage(
+        child: AddStoryPage(
           key: args.key,
           story: args.story,
         ),
       );
     },
-    AddStoryPageRoute.name: (routeData) {
-      final args = routeData.argsAs<AddStoryPageRouteArgs>(
-          orElse: () => const AddStoryPageRouteArgs());
-      return _i8.MaterialPageX<dynamic>(
+    CardsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i3.AddStoryPage(
-          key: args.key,
-          story: args.story,
-        ),
+        child: const CardsPage(),
       );
     },
-    MonthPageRoute.name: (routeData) {
-      final args = routeData.argsAs<MonthPageRouteArgs>();
-      return _i8.MaterialPageX<dynamic>(
+    MonthRoute.name: (routeData) {
+      final args = routeData.argsAs<MonthRouteArgs>();
+      return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i4.MonthPage(
+        child: MonthPage(
           key: args.key,
           monthYear: args.monthYear,
         ),
       );
     },
-    CardsRouter.name: (routeData) {
-      return _i8.MaterialPageX<dynamic>(
+    StoryRoute.name: (routeData) {
+      final args = routeData.argsAs<StoryRouteArgs>();
+      return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i5.EmptyRouterPage(),
+        child: StoryPage(
+          key: args.key,
+          story: args.story,
+        ),
       );
     },
-    StatsRouter.name: (routeData) {
-      return _i8.MaterialPageX<dynamic>(
+    StatsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i5.EmptyRouterPage(),
-      );
-    },
-    CardsPageRoute.name: (routeData) {
-      return _i8.MaterialPageX<dynamic>(
-        routeData: routeData,
-        child: const _i6.CardsPage(),
-      );
-    },
-    StatsPageRoute.name: (routeData) {
-      return _i8.MaterialPageX<dynamic>(
-        routeData: routeData,
-        child: const _i7.StatsPage(),
+        child: const StatsPage(),
       );
     },
   };
-
-  @override
-  List<_i8.RouteConfig> get routes => [
-        _i8.RouteConfig(
-          HomePageRoute.name,
-          path: '/',
-          children: [
-            _i8.RouteConfig(
-              CardsRouter.name,
-              path: 'card',
-              parent: HomePageRoute.name,
-              children: [
-                _i8.RouteConfig(
-                  CardsPageRoute.name,
-                  path: '',
-                  parent: CardsRouter.name,
-                )
-              ],
-            ),
-            _i8.RouteConfig(
-              StatsRouter.name,
-              path: 'stats',
-              parent: HomePageRoute.name,
-              children: [
-                _i8.RouteConfig(
-                  StatsPageRoute.name,
-                  path: '',
-                  parent: StatsRouter.name,
-                )
-              ],
-            ),
-          ],
-        ),
-        _i8.RouteConfig(
-          StoryPageRoute.name,
-          path: ':story',
-        ),
-        _i8.RouteConfig(
-          AddStoryPageRoute.name,
-          path: 'addStory',
-        ),
-        _i8.RouteConfig(
-          MonthPageRoute.name,
-          path: ':month',
-        ),
-      ];
 }
 
 /// generated route for
-/// [_i1.HomePage]
-class HomePageRoute extends _i8.PageRouteInfo<void> {
-  const HomePageRoute({List<_i8.PageRouteInfo>? children})
+/// [HomePage]
+class HomeRoute extends PageRouteInfo<void> {
+  const HomeRoute({List<PageRouteInfo>? children})
       : super(
-          HomePageRoute.name,
-          path: '/',
+          HomeRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'HomePageRoute';
+  static const String name = 'HomeRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i2.StoryPage]
-class StoryPageRoute extends _i8.PageRouteInfo<StoryPageRouteArgs> {
-  StoryPageRoute({
-    _i10.Key? key,
-    required _i11.StoryModel story,
+/// [AddStoryPage]
+class AddStoryRoute extends PageRouteInfo<AddStoryRouteArgs> {
+  AddStoryRoute({
+    Key? key,
+    StoryModel? story,
+    List<PageRouteInfo>? children,
   }) : super(
-          StoryPageRoute.name,
-          path: ':story',
-          args: StoryPageRouteArgs(
+          AddStoryRoute.name,
+          args: AddStoryRouteArgs(
             key: key,
             story: story,
           ),
+          initialChildren: children,
         );
 
-  static const String name = 'StoryPageRoute';
+  static const String name = 'AddStoryRoute';
+
+  static const PageInfo<AddStoryRouteArgs> page =
+      PageInfo<AddStoryRouteArgs>(name);
 }
 
-class StoryPageRouteArgs {
-  const StoryPageRouteArgs({
-    this.key,
-    required this.story,
-  });
-
-  final _i10.Key? key;
-
-  final _i11.StoryModel story;
-
-  @override
-  String toString() {
-    return 'StoryPageRouteArgs{key: $key, story: $story}';
-  }
-}
-
-/// generated route for
-/// [_i3.AddStoryPage]
-class AddStoryPageRoute extends _i8.PageRouteInfo<AddStoryPageRouteArgs> {
-  AddStoryPageRoute({
-    _i10.Key? key,
-    _i11.StoryModel? story,
-  }) : super(
-          AddStoryPageRoute.name,
-          path: 'addStory',
-          args: AddStoryPageRouteArgs(
-            key: key,
-            story: story,
-          ),
-        );
-
-  static const String name = 'AddStoryPageRoute';
-}
-
-class AddStoryPageRouteArgs {
-  const AddStoryPageRouteArgs({
+class AddStoryRouteArgs {
+  const AddStoryRouteArgs({
     this.key,
     this.story,
   });
 
-  final _i10.Key? key;
+  final Key? key;
 
-  final _i11.StoryModel? story;
+  final StoryModel? story;
 
   @override
   String toString() {
-    return 'AddStoryPageRouteArgs{key: $key, story: $story}';
+    return 'AddStoryRouteArgs{key: $key, story: $story}';
   }
 }
 
 /// generated route for
-/// [_i4.MonthPage]
-class MonthPageRoute extends _i8.PageRouteInfo<MonthPageRouteArgs> {
-  MonthPageRoute({
-    _i10.Key? key,
+/// [CardsPage]
+class CardsRoute extends PageRouteInfo<void> {
+  const CardsRoute({List<PageRouteInfo>? children})
+      : super(
+          CardsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CardsRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [MonthPage]
+class MonthRoute extends PageRouteInfo<MonthRouteArgs> {
+  MonthRoute({
+    Key? key,
     required DateTime monthYear,
+    List<PageRouteInfo>? children,
   }) : super(
-          MonthPageRoute.name,
-          path: ':month',
-          args: MonthPageRouteArgs(
+          MonthRoute.name,
+          args: MonthRouteArgs(
             key: key,
             monthYear: monthYear,
           ),
+          initialChildren: children,
         );
 
-  static const String name = 'MonthPageRoute';
+  static const String name = 'MonthRoute';
+
+  static const PageInfo<MonthRouteArgs> page = PageInfo<MonthRouteArgs>(name);
 }
 
-class MonthPageRouteArgs {
-  const MonthPageRouteArgs({
+class MonthRouteArgs {
+  const MonthRouteArgs({
     this.key,
     required this.monthYear,
   });
 
-  final _i10.Key? key;
+  final Key? key;
 
   final DateTime monthYear;
 
   @override
   String toString() {
-    return 'MonthPageRouteArgs{key: $key, monthYear: $monthYear}';
+    return 'MonthRouteArgs{key: $key, monthYear: $monthYear}';
   }
 }
 
 /// generated route for
-/// [_i5.EmptyRouterPage]
-class CardsRouter extends _i8.PageRouteInfo<void> {
-  const CardsRouter({List<_i8.PageRouteInfo>? children})
-      : super(
-          CardsRouter.name,
-          path: 'card',
+/// [StoryPage]
+class StoryRoute extends PageRouteInfo<StoryRouteArgs> {
+  StoryRoute({
+    Key? key,
+    required StoryModel story,
+    List<PageRouteInfo>? children,
+  }) : super(
+          StoryRoute.name,
+          args: StoryRouteArgs(
+            key: key,
+            story: story,
+          ),
           initialChildren: children,
         );
 
-  static const String name = 'CardsRouter';
+  static const String name = 'StoryRoute';
+
+  static const PageInfo<StoryRouteArgs> page = PageInfo<StoryRouteArgs>(name);
+}
+
+class StoryRouteArgs {
+  const StoryRouteArgs({
+    this.key,
+    required this.story,
+  });
+
+  final Key? key;
+
+  final StoryModel story;
+
+  @override
+  String toString() {
+    return 'StoryRouteArgs{key: $key, story: $story}';
+  }
 }
 
 /// generated route for
-/// [_i5.EmptyRouterPage]
-class StatsRouter extends _i8.PageRouteInfo<void> {
-  const StatsRouter({List<_i8.PageRouteInfo>? children})
+/// [StatsPage]
+class StatsRoute extends PageRouteInfo<void> {
+  const StatsRoute({List<PageRouteInfo>? children})
       : super(
-          StatsRouter.name,
-          path: 'stats',
+          StatsRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'StatsRouter';
-}
+  static const String name = 'StatsRoute';
 
-/// generated route for
-/// [_i6.CardsPage]
-class CardsPageRoute extends _i8.PageRouteInfo<void> {
-  const CardsPageRoute()
-      : super(
-          CardsPageRoute.name,
-          path: '',
-        );
-
-  static const String name = 'CardsPageRoute';
-}
-
-/// generated route for
-/// [_i7.StatsPage]
-class StatsPageRoute extends _i8.PageRouteInfo<void> {
-  const StatsPageRoute()
-      : super(
-          StatsPageRoute.name,
-          path: '',
-        );
-
-  static const String name = 'StatsPageRoute';
+  static const PageInfo<void> page = PageInfo<void>(name);
 }

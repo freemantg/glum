@@ -1,64 +1,30 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/foundation.dart';
-import 'package:glum_mood_tracker/main.dart';
-import 'package:glum_mood_tracker/presentation/cards/add_story_page.dart';
-import 'package:glum_mood_tracker/presentation/cards/cards_page.dart';
-import 'package:glum_mood_tracker/presentation/stats/stats_page.dart';
+import 'package:flutter/material.dart';
 
+import '../../domain/models/models.dart';
+import '../../main.dart';
+import '../cards/add_story_page.dart';
+import '../cards/cards_page.dart';
 import '../cards/month_page.dart';
 import '../cards/story_page.dart';
+import '../stats/stats_page.dart';
 
-@MaterialAutoRouter(
-  replaceInRouteName: 'Page',
-  routes: [
-    AutoRoute(
-      path: '/',
-      page: HomePage,
-      children: [
+part 'app_router.gr.dart';
+
+@AutoRouterConfig()
+class AppRouter extends _$AppRouter {
+  @override
+  List<AutoRoute> get routes => [
         AutoRoute(
-          path: 'card',
-          name: 'CardsRouter',
-          page: EmptyRouterPage,
+          path: '/',
+          page: HomeRoute.page,
           children: [
-            AutoRoute(
-              path: '',
-              page: CardsPage,
-            ),
+            AutoRoute(page: CardsRoute.page),
+            AutoRoute(page: StatsRoute.page),
           ],
         ),
-        AutoRoute(
-          path: 'stats',
-          name: 'StatsRouter',
-          page: EmptyRouterPage,
-          children: [
-            AutoRoute(
-              path: '',
-              page: StatsPage,
-            ),
-          ],
-        ),
-      ],
-    ),
-    AutoRoute(
-      path: ':story',
-      page: StoryPage,
-    ),
-    AutoRoute(
-      path: 'addStory',
-      page: AddStoryPage,
-    ),
-    AutoRoute(
-      path: ':month',
-      page: MonthPage,
-    ),
-  ],
-)
-class $AppRouter {}
-
-class EmptyRouterPage extends AutoRouter {
-  const EmptyRouterPage({Key? key}) : super(key: key);
-}
-
-class EmptyRouterScreen extends AutoRouter {
-  const EmptyRouterScreen({Key? key}) : super(key: key);
+        AutoRoute(page: StoryRoute.page),
+        AutoRoute(page: AddStoryRoute.page),
+        AutoRoute(page: MonthRoute.page),
+      ];
 }
