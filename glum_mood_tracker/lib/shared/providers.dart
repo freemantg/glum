@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:glum_mood_tracker/infrastructure/database/drift_database.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../application/notifiers.dart';
@@ -21,10 +22,12 @@ final photoRepositoryProvider = Provider(
   (ref) => PhotoRepository(
     imagePicker: ref.watch(imagePickerProvider),
     glumDatabase: ref.watch(databaseProvider),
+    imageCropper: ref.watch(imageCropperProvider),
   ),
 );
 final databaseProvider = Provider((ref) => GlumDatabase());
 final imagePickerProvider = Provider((ref) => ImagePicker());
+final imageCropperProvider = Provider((ref) => ImageCropper());
 
 final statsRepositoryProvider = Provider(
   (ref) => StatsRepository(database: ref.watch(databaseProvider)),

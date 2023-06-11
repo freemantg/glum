@@ -63,33 +63,35 @@ class StoryFormNotifier extends StateNotifier<StoryFormState> {
     );
   }
 
-  Future<void> titleChanged(String str) async =>
+  void titleChanged(String str) =>
       state = state.copyWith(story: state.story.copyWith(title: str));
 
-  Future<void> ratingChanged(int rating) async =>
+  void ratingChanged(int rating) =>
       state = state.copyWith(story: state.story.copyWith(glumRating: rating));
 
-  Future<void> descriptionChanged(String str) async =>
+  void descriptionChanged(String str) =>
       state = state.copyWith(story: state.story.copyWith(description: str));
 
-  Future<void> dateChanged(DateTime date) async =>
+  void dateChanged(DateTime date) =>
       state = state.copyWith(story: state.story.copyWith(date: date));
 
   Future<void> photoChanged() async {
-    final photo = await _photoRepository.pickPhoto();
-    if (photo != null) {
-      await _photoRepository.savePhoto(photo);
-      state = state.copyWith(story: state.story.copyWith(photos: [photo]));
-    }
+    final failureOrPhoto = await _photoRepository.pickAndCropPhoto();
+    failureOrPhoto.fold(
+      (failure) => state = state.copyWith(
+          failureOrSuccess: optionOf(left(const StoryFailure.unexpected()))),
+      (photo) async {
+        await _photoRepository.savePhoto(photo);
+        state = state.copyWith(story: state.story.copyWith(photos: [photo]));
+      },
+    );
   }
 
-  Future<void> toggleTag(TagModel tag) async {
-    List<TagModel> updatedTags = List.empty();
-    if (state.selectedTags.contains(tag)) {
-      updatedTags = List.from(state.selectedTags)..remove(tag);
-    } else {
-      updatedTags = List.from(state.selectedTags)..add(tag);
-    }
-    state = state.copyWith(selectedTags: updatedTags);
+  void toggleTag(TagModel tag) {
+    state = state.copyWith(
+      selectedTags: state.selectedTags.contains(tag)
+          ? state.selectedTags.where((t) => t != tag).toList()
+          : [...state.selectedTags, tag],
+    );
   }
 }

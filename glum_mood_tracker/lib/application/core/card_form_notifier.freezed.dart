@@ -19,6 +19,7 @@ mixin _$CardFormState {
   CardModel get card => throw _privateConstructorUsedError;
   bool get isEditing => throw _privateConstructorUsedError;
   bool get isSaving => throw _privateConstructorUsedError;
+  bool get isLoading => throw _privateConstructorUsedError;
   Option<Either<CardFailure, Unit>> get failureOrSuccess =>
       throw _privateConstructorUsedError;
 
@@ -37,6 +38,7 @@ abstract class $CardFormStateCopyWith<$Res> {
       {CardModel card,
       bool isEditing,
       bool isSaving,
+      bool isLoading,
       Option<Either<CardFailure, Unit>> failureOrSuccess});
 
   $CardModelCopyWith<$Res> get card;
@@ -58,6 +60,7 @@ class _$CardFormStateCopyWithImpl<$Res, $Val extends CardFormState>
     Object? card = null,
     Object? isEditing = null,
     Object? isSaving = null,
+    Object? isLoading = null,
     Object? failureOrSuccess = null,
   }) {
     return _then(_value.copyWith(
@@ -72,6 +75,10 @@ class _$CardFormStateCopyWithImpl<$Res, $Val extends CardFormState>
       isSaving: null == isSaving
           ? _value.isSaving
           : isSaving // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
       failureOrSuccess: null == failureOrSuccess
           ? _value.failureOrSuccess
@@ -101,6 +108,7 @@ abstract class _$$_CardFormStateCopyWith<$Res>
       {CardModel card,
       bool isEditing,
       bool isSaving,
+      bool isLoading,
       Option<Either<CardFailure, Unit>> failureOrSuccess});
 
   @override
@@ -121,6 +129,7 @@ class __$$_CardFormStateCopyWithImpl<$Res>
     Object? card = null,
     Object? isEditing = null,
     Object? isSaving = null,
+    Object? isLoading = null,
     Object? failureOrSuccess = null,
   }) {
     return _then(_$_CardFormState(
@@ -135,6 +144,10 @@ class __$$_CardFormStateCopyWithImpl<$Res>
       isSaving: null == isSaving
           ? _value.isSaving
           : isSaving // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
       failureOrSuccess: null == failureOrSuccess
           ? _value.failureOrSuccess
@@ -151,6 +164,7 @@ class _$_CardFormState extends _CardFormState {
       {required this.card,
       required this.isEditing,
       required this.isSaving,
+      required this.isLoading,
       required this.failureOrSuccess})
       : super._();
 
@@ -161,11 +175,13 @@ class _$_CardFormState extends _CardFormState {
   @override
   final bool isSaving;
   @override
+  final bool isLoading;
+  @override
   final Option<Either<CardFailure, Unit>> failureOrSuccess;
 
   @override
   String toString() {
-    return 'CardFormState(card: $card, isEditing: $isEditing, isSaving: $isSaving, failureOrSuccess: $failureOrSuccess)';
+    return 'CardFormState(card: $card, isEditing: $isEditing, isSaving: $isSaving, isLoading: $isLoading, failureOrSuccess: $failureOrSuccess)';
   }
 
   @override
@@ -178,13 +194,15 @@ class _$_CardFormState extends _CardFormState {
                 other.isEditing == isEditing) &&
             (identical(other.isSaving, isSaving) ||
                 other.isSaving == isSaving) &&
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading) &&
             (identical(other.failureOrSuccess, failureOrSuccess) ||
                 other.failureOrSuccess == failureOrSuccess));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, card, isEditing, isSaving, failureOrSuccess);
+  int get hashCode => Object.hash(
+      runtimeType, card, isEditing, isSaving, isLoading, failureOrSuccess);
 
   @JsonKey(ignore: true)
   @override
@@ -198,6 +216,7 @@ abstract class _CardFormState extends CardFormState {
           {required final CardModel card,
           required final bool isEditing,
           required final bool isSaving,
+          required final bool isLoading,
           required final Option<Either<CardFailure, Unit>> failureOrSuccess}) =
       _$_CardFormState;
   const _CardFormState._() : super._();
@@ -208,6 +227,8 @@ abstract class _CardFormState extends CardFormState {
   bool get isEditing;
   @override
   bool get isSaving;
+  @override
+  bool get isLoading;
   @override
   Option<Either<CardFailure, Unit>> get failureOrSuccess;
   @override

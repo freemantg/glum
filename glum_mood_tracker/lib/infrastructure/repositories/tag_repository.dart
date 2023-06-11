@@ -19,7 +19,7 @@ class TagRepository implements ITagRepository {
       await _db.tagDao.insertTag(TagDto.fromDomain(tag));
       return right(unit);
     } catch (e) {
-      return left(const TagFailure.unableToUpdate());
+      return left(const TagFailure.unexpected());
     }
   }
 

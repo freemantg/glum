@@ -18,39 +18,55 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$TagFailure {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(InvalidDataException exception) invalidTagData,
+    required TResult Function(DriftWrappedException exception)
+        tagDatabaseException,
+    required TResult Function(CouldNotRollBackException exception)
+        couldNotRollBackTag,
     required TResult Function() unexpected,
-    required TResult Function() unableToUpdate,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(InvalidDataException exception)? invalidTagData,
+    TResult? Function(DriftWrappedException exception)? tagDatabaseException,
+    TResult? Function(CouldNotRollBackException exception)? couldNotRollBackTag,
     TResult? Function()? unexpected,
-    TResult? Function()? unableToUpdate,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(InvalidDataException exception)? invalidTagData,
+    TResult Function(DriftWrappedException exception)? tagDatabaseException,
+    TResult Function(CouldNotRollBackException exception)? couldNotRollBackTag,
     TResult Function()? unexpected,
-    TResult Function()? unableToUpdate,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(InvalidTagDataFailure value) invalidTagData,
+    required TResult Function(TagDatabaseExceptionFailure value)
+        tagDatabaseException,
+    required TResult Function(CouldNotRollBackTagFailure value)
+        couldNotRollBackTag,
     required TResult Function(_Unexpected value) unexpected,
-    required TResult Function(_UnableToUpdate value) unableToUpdate,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(InvalidTagDataFailure value)? invalidTagData,
+    TResult? Function(TagDatabaseExceptionFailure value)? tagDatabaseException,
+    TResult? Function(CouldNotRollBackTagFailure value)? couldNotRollBackTag,
     TResult? Function(_Unexpected value)? unexpected,
-    TResult? Function(_UnableToUpdate value)? unableToUpdate,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(InvalidTagDataFailure value)? invalidTagData,
+    TResult Function(TagDatabaseExceptionFailure value)? tagDatabaseException,
+    TResult Function(CouldNotRollBackTagFailure value)? couldNotRollBackTag,
     TResult Function(_Unexpected value)? unexpected,
-    TResult Function(_UnableToUpdate value)? unableToUpdate,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -72,6 +88,460 @@ class _$TagFailureCopyWithImpl<$Res, $Val extends TagFailure>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+}
+
+/// @nodoc
+abstract class _$$InvalidTagDataFailureCopyWith<$Res> {
+  factory _$$InvalidTagDataFailureCopyWith(_$InvalidTagDataFailure value,
+          $Res Function(_$InvalidTagDataFailure) then) =
+      __$$InvalidTagDataFailureCopyWithImpl<$Res>;
+  @useResult
+  $Res call({InvalidDataException exception});
+}
+
+/// @nodoc
+class __$$InvalidTagDataFailureCopyWithImpl<$Res>
+    extends _$TagFailureCopyWithImpl<$Res, _$InvalidTagDataFailure>
+    implements _$$InvalidTagDataFailureCopyWith<$Res> {
+  __$$InvalidTagDataFailureCopyWithImpl(_$InvalidTagDataFailure _value,
+      $Res Function(_$InvalidTagDataFailure) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? exception = null,
+  }) {
+    return _then(_$InvalidTagDataFailure(
+      null == exception
+          ? _value.exception
+          : exception // ignore: cast_nullable_to_non_nullable
+              as InvalidDataException,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$InvalidTagDataFailure implements InvalidTagDataFailure {
+  const _$InvalidTagDataFailure(this.exception);
+
+  @override
+  final InvalidDataException exception;
+
+  @override
+  String toString() {
+    return 'TagFailure.invalidTagData(exception: $exception)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$InvalidTagDataFailure &&
+            (identical(other.exception, exception) ||
+                other.exception == exception));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, exception);
+
+  @override
+  @pragma('vm:prefer-inline')
+  _$$InvalidTagDataFailureCopyWith<_$InvalidTagDataFailure> get copyWith =>
+      __$$InvalidTagDataFailureCopyWithImpl<_$InvalidTagDataFailure>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(InvalidDataException exception) invalidTagData,
+    required TResult Function(DriftWrappedException exception)
+        tagDatabaseException,
+    required TResult Function(CouldNotRollBackException exception)
+        couldNotRollBackTag,
+    required TResult Function() unexpected,
+  }) {
+    return invalidTagData(exception);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(InvalidDataException exception)? invalidTagData,
+    TResult? Function(DriftWrappedException exception)? tagDatabaseException,
+    TResult? Function(CouldNotRollBackException exception)? couldNotRollBackTag,
+    TResult? Function()? unexpected,
+  }) {
+    return invalidTagData?.call(exception);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(InvalidDataException exception)? invalidTagData,
+    TResult Function(DriftWrappedException exception)? tagDatabaseException,
+    TResult Function(CouldNotRollBackException exception)? couldNotRollBackTag,
+    TResult Function()? unexpected,
+    required TResult orElse(),
+  }) {
+    if (invalidTagData != null) {
+      return invalidTagData(exception);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(InvalidTagDataFailure value) invalidTagData,
+    required TResult Function(TagDatabaseExceptionFailure value)
+        tagDatabaseException,
+    required TResult Function(CouldNotRollBackTagFailure value)
+        couldNotRollBackTag,
+    required TResult Function(_Unexpected value) unexpected,
+  }) {
+    return invalidTagData(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(InvalidTagDataFailure value)? invalidTagData,
+    TResult? Function(TagDatabaseExceptionFailure value)? tagDatabaseException,
+    TResult? Function(CouldNotRollBackTagFailure value)? couldNotRollBackTag,
+    TResult? Function(_Unexpected value)? unexpected,
+  }) {
+    return invalidTagData?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(InvalidTagDataFailure value)? invalidTagData,
+    TResult Function(TagDatabaseExceptionFailure value)? tagDatabaseException,
+    TResult Function(CouldNotRollBackTagFailure value)? couldNotRollBackTag,
+    TResult Function(_Unexpected value)? unexpected,
+    required TResult orElse(),
+  }) {
+    if (invalidTagData != null) {
+      return invalidTagData(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class InvalidTagDataFailure implements TagFailure {
+  const factory InvalidTagDataFailure(final InvalidDataException exception) =
+      _$InvalidTagDataFailure;
+
+  InvalidDataException get exception;
+  _$$InvalidTagDataFailureCopyWith<_$InvalidTagDataFailure> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$TagDatabaseExceptionFailureCopyWith<$Res> {
+  factory _$$TagDatabaseExceptionFailureCopyWith(
+          _$TagDatabaseExceptionFailure value,
+          $Res Function(_$TagDatabaseExceptionFailure) then) =
+      __$$TagDatabaseExceptionFailureCopyWithImpl<$Res>;
+  @useResult
+  $Res call({DriftWrappedException exception});
+}
+
+/// @nodoc
+class __$$TagDatabaseExceptionFailureCopyWithImpl<$Res>
+    extends _$TagFailureCopyWithImpl<$Res, _$TagDatabaseExceptionFailure>
+    implements _$$TagDatabaseExceptionFailureCopyWith<$Res> {
+  __$$TagDatabaseExceptionFailureCopyWithImpl(
+      _$TagDatabaseExceptionFailure _value,
+      $Res Function(_$TagDatabaseExceptionFailure) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? exception = null,
+  }) {
+    return _then(_$TagDatabaseExceptionFailure(
+      null == exception
+          ? _value.exception
+          : exception // ignore: cast_nullable_to_non_nullable
+              as DriftWrappedException,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$TagDatabaseExceptionFailure implements TagDatabaseExceptionFailure {
+  const _$TagDatabaseExceptionFailure(this.exception);
+
+  @override
+  final DriftWrappedException exception;
+
+  @override
+  String toString() {
+    return 'TagFailure.tagDatabaseException(exception: $exception)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TagDatabaseExceptionFailure &&
+            (identical(other.exception, exception) ||
+                other.exception == exception));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, exception);
+
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TagDatabaseExceptionFailureCopyWith<_$TagDatabaseExceptionFailure>
+      get copyWith => __$$TagDatabaseExceptionFailureCopyWithImpl<
+          _$TagDatabaseExceptionFailure>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(InvalidDataException exception) invalidTagData,
+    required TResult Function(DriftWrappedException exception)
+        tagDatabaseException,
+    required TResult Function(CouldNotRollBackException exception)
+        couldNotRollBackTag,
+    required TResult Function() unexpected,
+  }) {
+    return tagDatabaseException(exception);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(InvalidDataException exception)? invalidTagData,
+    TResult? Function(DriftWrappedException exception)? tagDatabaseException,
+    TResult? Function(CouldNotRollBackException exception)? couldNotRollBackTag,
+    TResult? Function()? unexpected,
+  }) {
+    return tagDatabaseException?.call(exception);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(InvalidDataException exception)? invalidTagData,
+    TResult Function(DriftWrappedException exception)? tagDatabaseException,
+    TResult Function(CouldNotRollBackException exception)? couldNotRollBackTag,
+    TResult Function()? unexpected,
+    required TResult orElse(),
+  }) {
+    if (tagDatabaseException != null) {
+      return tagDatabaseException(exception);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(InvalidTagDataFailure value) invalidTagData,
+    required TResult Function(TagDatabaseExceptionFailure value)
+        tagDatabaseException,
+    required TResult Function(CouldNotRollBackTagFailure value)
+        couldNotRollBackTag,
+    required TResult Function(_Unexpected value) unexpected,
+  }) {
+    return tagDatabaseException(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(InvalidTagDataFailure value)? invalidTagData,
+    TResult? Function(TagDatabaseExceptionFailure value)? tagDatabaseException,
+    TResult? Function(CouldNotRollBackTagFailure value)? couldNotRollBackTag,
+    TResult? Function(_Unexpected value)? unexpected,
+  }) {
+    return tagDatabaseException?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(InvalidTagDataFailure value)? invalidTagData,
+    TResult Function(TagDatabaseExceptionFailure value)? tagDatabaseException,
+    TResult Function(CouldNotRollBackTagFailure value)? couldNotRollBackTag,
+    TResult Function(_Unexpected value)? unexpected,
+    required TResult orElse(),
+  }) {
+    if (tagDatabaseException != null) {
+      return tagDatabaseException(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class TagDatabaseExceptionFailure implements TagFailure {
+  const factory TagDatabaseExceptionFailure(
+      final DriftWrappedException exception) = _$TagDatabaseExceptionFailure;
+
+  DriftWrappedException get exception;
+  _$$TagDatabaseExceptionFailureCopyWith<_$TagDatabaseExceptionFailure>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$CouldNotRollBackTagFailureCopyWith<$Res> {
+  factory _$$CouldNotRollBackTagFailureCopyWith(
+          _$CouldNotRollBackTagFailure value,
+          $Res Function(_$CouldNotRollBackTagFailure) then) =
+      __$$CouldNotRollBackTagFailureCopyWithImpl<$Res>;
+  @useResult
+  $Res call({CouldNotRollBackException exception});
+}
+
+/// @nodoc
+class __$$CouldNotRollBackTagFailureCopyWithImpl<$Res>
+    extends _$TagFailureCopyWithImpl<$Res, _$CouldNotRollBackTagFailure>
+    implements _$$CouldNotRollBackTagFailureCopyWith<$Res> {
+  __$$CouldNotRollBackTagFailureCopyWithImpl(
+      _$CouldNotRollBackTagFailure _value,
+      $Res Function(_$CouldNotRollBackTagFailure) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? exception = null,
+  }) {
+    return _then(_$CouldNotRollBackTagFailure(
+      null == exception
+          ? _value.exception
+          : exception // ignore: cast_nullable_to_non_nullable
+              as CouldNotRollBackException,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$CouldNotRollBackTagFailure implements CouldNotRollBackTagFailure {
+  const _$CouldNotRollBackTagFailure(this.exception);
+
+  @override
+  final CouldNotRollBackException exception;
+
+  @override
+  String toString() {
+    return 'TagFailure.couldNotRollBackTag(exception: $exception)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CouldNotRollBackTagFailure &&
+            (identical(other.exception, exception) ||
+                other.exception == exception));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, exception);
+
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CouldNotRollBackTagFailureCopyWith<_$CouldNotRollBackTagFailure>
+      get copyWith => __$$CouldNotRollBackTagFailureCopyWithImpl<
+          _$CouldNotRollBackTagFailure>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(InvalidDataException exception) invalidTagData,
+    required TResult Function(DriftWrappedException exception)
+        tagDatabaseException,
+    required TResult Function(CouldNotRollBackException exception)
+        couldNotRollBackTag,
+    required TResult Function() unexpected,
+  }) {
+    return couldNotRollBackTag(exception);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(InvalidDataException exception)? invalidTagData,
+    TResult? Function(DriftWrappedException exception)? tagDatabaseException,
+    TResult? Function(CouldNotRollBackException exception)? couldNotRollBackTag,
+    TResult? Function()? unexpected,
+  }) {
+    return couldNotRollBackTag?.call(exception);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(InvalidDataException exception)? invalidTagData,
+    TResult Function(DriftWrappedException exception)? tagDatabaseException,
+    TResult Function(CouldNotRollBackException exception)? couldNotRollBackTag,
+    TResult Function()? unexpected,
+    required TResult orElse(),
+  }) {
+    if (couldNotRollBackTag != null) {
+      return couldNotRollBackTag(exception);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(InvalidTagDataFailure value) invalidTagData,
+    required TResult Function(TagDatabaseExceptionFailure value)
+        tagDatabaseException,
+    required TResult Function(CouldNotRollBackTagFailure value)
+        couldNotRollBackTag,
+    required TResult Function(_Unexpected value) unexpected,
+  }) {
+    return couldNotRollBackTag(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(InvalidTagDataFailure value)? invalidTagData,
+    TResult? Function(TagDatabaseExceptionFailure value)? tagDatabaseException,
+    TResult? Function(CouldNotRollBackTagFailure value)? couldNotRollBackTag,
+    TResult? Function(_Unexpected value)? unexpected,
+  }) {
+    return couldNotRollBackTag?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(InvalidTagDataFailure value)? invalidTagData,
+    TResult Function(TagDatabaseExceptionFailure value)? tagDatabaseException,
+    TResult Function(CouldNotRollBackTagFailure value)? couldNotRollBackTag,
+    TResult Function(_Unexpected value)? unexpected,
+    required TResult orElse(),
+  }) {
+    if (couldNotRollBackTag != null) {
+      return couldNotRollBackTag(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class CouldNotRollBackTagFailure implements TagFailure {
+  const factory CouldNotRollBackTagFailure(
+      final CouldNotRollBackException exception) = _$CouldNotRollBackTagFailure;
+
+  CouldNotRollBackException get exception;
+  _$$CouldNotRollBackTagFailureCopyWith<_$CouldNotRollBackTagFailure>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -112,8 +582,12 @@ class _$_Unexpected implements _Unexpected {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(InvalidDataException exception) invalidTagData,
+    required TResult Function(DriftWrappedException exception)
+        tagDatabaseException,
+    required TResult Function(CouldNotRollBackException exception)
+        couldNotRollBackTag,
     required TResult Function() unexpected,
-    required TResult Function() unableToUpdate,
   }) {
     return unexpected();
   }
@@ -121,8 +595,10 @@ class _$_Unexpected implements _Unexpected {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(InvalidDataException exception)? invalidTagData,
+    TResult? Function(DriftWrappedException exception)? tagDatabaseException,
+    TResult? Function(CouldNotRollBackException exception)? couldNotRollBackTag,
     TResult? Function()? unexpected,
-    TResult? Function()? unableToUpdate,
   }) {
     return unexpected?.call();
   }
@@ -130,8 +606,10 @@ class _$_Unexpected implements _Unexpected {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(InvalidDataException exception)? invalidTagData,
+    TResult Function(DriftWrappedException exception)? tagDatabaseException,
+    TResult Function(CouldNotRollBackException exception)? couldNotRollBackTag,
     TResult Function()? unexpected,
-    TResult Function()? unableToUpdate,
     required TResult orElse(),
   }) {
     if (unexpected != null) {
@@ -143,8 +621,12 @@ class _$_Unexpected implements _Unexpected {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(InvalidTagDataFailure value) invalidTagData,
+    required TResult Function(TagDatabaseExceptionFailure value)
+        tagDatabaseException,
+    required TResult Function(CouldNotRollBackTagFailure value)
+        couldNotRollBackTag,
     required TResult Function(_Unexpected value) unexpected,
-    required TResult Function(_UnableToUpdate value) unableToUpdate,
   }) {
     return unexpected(this);
   }
@@ -152,8 +634,10 @@ class _$_Unexpected implements _Unexpected {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(InvalidTagDataFailure value)? invalidTagData,
+    TResult? Function(TagDatabaseExceptionFailure value)? tagDatabaseException,
+    TResult? Function(CouldNotRollBackTagFailure value)? couldNotRollBackTag,
     TResult? Function(_Unexpected value)? unexpected,
-    TResult? Function(_UnableToUpdate value)? unableToUpdate,
   }) {
     return unexpected?.call(this);
   }
@@ -161,8 +645,10 @@ class _$_Unexpected implements _Unexpected {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(InvalidTagDataFailure value)? invalidTagData,
+    TResult Function(TagDatabaseExceptionFailure value)? tagDatabaseException,
+    TResult Function(CouldNotRollBackTagFailure value)? couldNotRollBackTag,
     TResult Function(_Unexpected value)? unexpected,
-    TResult Function(_UnableToUpdate value)? unableToUpdate,
     required TResult orElse(),
   }) {
     if (unexpected != null) {
@@ -174,106 +660,4 @@ class _$_Unexpected implements _Unexpected {
 
 abstract class _Unexpected implements TagFailure {
   const factory _Unexpected() = _$_Unexpected;
-}
-
-/// @nodoc
-abstract class _$$_UnableToUpdateCopyWith<$Res> {
-  factory _$$_UnableToUpdateCopyWith(
-          _$_UnableToUpdate value, $Res Function(_$_UnableToUpdate) then) =
-      __$$_UnableToUpdateCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$_UnableToUpdateCopyWithImpl<$Res>
-    extends _$TagFailureCopyWithImpl<$Res, _$_UnableToUpdate>
-    implements _$$_UnableToUpdateCopyWith<$Res> {
-  __$$_UnableToUpdateCopyWithImpl(
-      _$_UnableToUpdate _value, $Res Function(_$_UnableToUpdate) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$_UnableToUpdate implements _UnableToUpdate {
-  const _$_UnableToUpdate();
-
-  @override
-  String toString() {
-    return 'TagFailure.unableToUpdate()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_UnableToUpdate);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() unexpected,
-    required TResult Function() unableToUpdate,
-  }) {
-    return unableToUpdate();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? unexpected,
-    TResult? Function()? unableToUpdate,
-  }) {
-    return unableToUpdate?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? unexpected,
-    TResult Function()? unableToUpdate,
-    required TResult orElse(),
-  }) {
-    if (unableToUpdate != null) {
-      return unableToUpdate();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Unexpected value) unexpected,
-    required TResult Function(_UnableToUpdate value) unableToUpdate,
-  }) {
-    return unableToUpdate(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Unexpected value)? unexpected,
-    TResult? Function(_UnableToUpdate value)? unableToUpdate,
-  }) {
-    return unableToUpdate?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Unexpected value)? unexpected,
-    TResult Function(_UnableToUpdate value)? unableToUpdate,
-    required TResult orElse(),
-  }) {
-    if (unableToUpdate != null) {
-      return unableToUpdate(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _UnableToUpdate implements TagFailure {
-  const factory _UnableToUpdate() = _$_UnableToUpdate;
 }

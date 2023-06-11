@@ -20,18 +20,24 @@ mixin _$PhotoFailure {
   TResult when<TResult extends Object?>({
     required TResult Function() unexpected,
     required TResult Function() unableToUpdate,
+    required TResult Function() permissionDenied,
+    required TResult Function() croppingFailed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? unexpected,
     TResult? Function()? unableToUpdate,
+    TResult? Function()? permissionDenied,
+    TResult? Function()? croppingFailed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? unexpected,
     TResult Function()? unableToUpdate,
+    TResult Function()? permissionDenied,
+    TResult Function()? croppingFailed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +45,24 @@ mixin _$PhotoFailure {
   TResult map<TResult extends Object?>({
     required TResult Function(_Unexpected value) unexpected,
     required TResult Function(_UnableToUpdate value) unableToUpdate,
+    required TResult Function(_PermissionDenied value) permissionDenied,
+    required TResult Function(_CroppingFailed value) croppingFailed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Unexpected value)? unexpected,
     TResult? Function(_UnableToUpdate value)? unableToUpdate,
+    TResult? Function(_PermissionDenied value)? permissionDenied,
+    TResult? Function(_CroppingFailed value)? croppingFailed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Unexpected value)? unexpected,
     TResult Function(_UnableToUpdate value)? unableToUpdate,
+    TResult Function(_PermissionDenied value)? permissionDenied,
+    TResult Function(_CroppingFailed value)? croppingFailed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -114,6 +126,8 @@ class _$_Unexpected implements _Unexpected {
   TResult when<TResult extends Object?>({
     required TResult Function() unexpected,
     required TResult Function() unableToUpdate,
+    required TResult Function() permissionDenied,
+    required TResult Function() croppingFailed,
   }) {
     return unexpected();
   }
@@ -123,6 +137,8 @@ class _$_Unexpected implements _Unexpected {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? unexpected,
     TResult? Function()? unableToUpdate,
+    TResult? Function()? permissionDenied,
+    TResult? Function()? croppingFailed,
   }) {
     return unexpected?.call();
   }
@@ -132,6 +148,8 @@ class _$_Unexpected implements _Unexpected {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? unexpected,
     TResult Function()? unableToUpdate,
+    TResult Function()? permissionDenied,
+    TResult Function()? croppingFailed,
     required TResult orElse(),
   }) {
     if (unexpected != null) {
@@ -145,6 +163,8 @@ class _$_Unexpected implements _Unexpected {
   TResult map<TResult extends Object?>({
     required TResult Function(_Unexpected value) unexpected,
     required TResult Function(_UnableToUpdate value) unableToUpdate,
+    required TResult Function(_PermissionDenied value) permissionDenied,
+    required TResult Function(_CroppingFailed value) croppingFailed,
   }) {
     return unexpected(this);
   }
@@ -154,6 +174,8 @@ class _$_Unexpected implements _Unexpected {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Unexpected value)? unexpected,
     TResult? Function(_UnableToUpdate value)? unableToUpdate,
+    TResult? Function(_PermissionDenied value)? permissionDenied,
+    TResult? Function(_CroppingFailed value)? croppingFailed,
   }) {
     return unexpected?.call(this);
   }
@@ -163,6 +185,8 @@ class _$_Unexpected implements _Unexpected {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Unexpected value)? unexpected,
     TResult Function(_UnableToUpdate value)? unableToUpdate,
+    TResult Function(_PermissionDenied value)? permissionDenied,
+    TResult Function(_CroppingFailed value)? croppingFailed,
     required TResult orElse(),
   }) {
     if (unexpected != null) {
@@ -216,6 +240,8 @@ class _$_UnableToUpdate implements _UnableToUpdate {
   TResult when<TResult extends Object?>({
     required TResult Function() unexpected,
     required TResult Function() unableToUpdate,
+    required TResult Function() permissionDenied,
+    required TResult Function() croppingFailed,
   }) {
     return unableToUpdate();
   }
@@ -225,6 +251,8 @@ class _$_UnableToUpdate implements _UnableToUpdate {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? unexpected,
     TResult? Function()? unableToUpdate,
+    TResult? Function()? permissionDenied,
+    TResult? Function()? croppingFailed,
   }) {
     return unableToUpdate?.call();
   }
@@ -234,6 +262,8 @@ class _$_UnableToUpdate implements _UnableToUpdate {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? unexpected,
     TResult Function()? unableToUpdate,
+    TResult Function()? permissionDenied,
+    TResult Function()? croppingFailed,
     required TResult orElse(),
   }) {
     if (unableToUpdate != null) {
@@ -247,6 +277,8 @@ class _$_UnableToUpdate implements _UnableToUpdate {
   TResult map<TResult extends Object?>({
     required TResult Function(_Unexpected value) unexpected,
     required TResult Function(_UnableToUpdate value) unableToUpdate,
+    required TResult Function(_PermissionDenied value) permissionDenied,
+    required TResult Function(_CroppingFailed value) croppingFailed,
   }) {
     return unableToUpdate(this);
   }
@@ -256,6 +288,8 @@ class _$_UnableToUpdate implements _UnableToUpdate {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Unexpected value)? unexpected,
     TResult? Function(_UnableToUpdate value)? unableToUpdate,
+    TResult? Function(_PermissionDenied value)? permissionDenied,
+    TResult? Function(_CroppingFailed value)? croppingFailed,
   }) {
     return unableToUpdate?.call(this);
   }
@@ -265,6 +299,8 @@ class _$_UnableToUpdate implements _UnableToUpdate {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Unexpected value)? unexpected,
     TResult Function(_UnableToUpdate value)? unableToUpdate,
+    TResult Function(_PermissionDenied value)? permissionDenied,
+    TResult Function(_CroppingFailed value)? croppingFailed,
     required TResult orElse(),
   }) {
     if (unableToUpdate != null) {
@@ -276,4 +312,232 @@ class _$_UnableToUpdate implements _UnableToUpdate {
 
 abstract class _UnableToUpdate implements PhotoFailure {
   const factory _UnableToUpdate() = _$_UnableToUpdate;
+}
+
+/// @nodoc
+abstract class _$$_PermissionDeniedCopyWith<$Res> {
+  factory _$$_PermissionDeniedCopyWith(
+          _$_PermissionDenied value, $Res Function(_$_PermissionDenied) then) =
+      __$$_PermissionDeniedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_PermissionDeniedCopyWithImpl<$Res>
+    extends _$PhotoFailureCopyWithImpl<$Res, _$_PermissionDenied>
+    implements _$$_PermissionDeniedCopyWith<$Res> {
+  __$$_PermissionDeniedCopyWithImpl(
+      _$_PermissionDenied _value, $Res Function(_$_PermissionDenied) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_PermissionDenied implements _PermissionDenied {
+  const _$_PermissionDenied();
+
+  @override
+  String toString() {
+    return 'PhotoFailure.permissionDenied()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_PermissionDenied);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() unexpected,
+    required TResult Function() unableToUpdate,
+    required TResult Function() permissionDenied,
+    required TResult Function() croppingFailed,
+  }) {
+    return permissionDenied();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? unexpected,
+    TResult? Function()? unableToUpdate,
+    TResult? Function()? permissionDenied,
+    TResult? Function()? croppingFailed,
+  }) {
+    return permissionDenied?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? unexpected,
+    TResult Function()? unableToUpdate,
+    TResult Function()? permissionDenied,
+    TResult Function()? croppingFailed,
+    required TResult orElse(),
+  }) {
+    if (permissionDenied != null) {
+      return permissionDenied();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Unexpected value) unexpected,
+    required TResult Function(_UnableToUpdate value) unableToUpdate,
+    required TResult Function(_PermissionDenied value) permissionDenied,
+    required TResult Function(_CroppingFailed value) croppingFailed,
+  }) {
+    return permissionDenied(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Unexpected value)? unexpected,
+    TResult? Function(_UnableToUpdate value)? unableToUpdate,
+    TResult? Function(_PermissionDenied value)? permissionDenied,
+    TResult? Function(_CroppingFailed value)? croppingFailed,
+  }) {
+    return permissionDenied?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Unexpected value)? unexpected,
+    TResult Function(_UnableToUpdate value)? unableToUpdate,
+    TResult Function(_PermissionDenied value)? permissionDenied,
+    TResult Function(_CroppingFailed value)? croppingFailed,
+    required TResult orElse(),
+  }) {
+    if (permissionDenied != null) {
+      return permissionDenied(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _PermissionDenied implements PhotoFailure {
+  const factory _PermissionDenied() = _$_PermissionDenied;
+}
+
+/// @nodoc
+abstract class _$$_CroppingFailedCopyWith<$Res> {
+  factory _$$_CroppingFailedCopyWith(
+          _$_CroppingFailed value, $Res Function(_$_CroppingFailed) then) =
+      __$$_CroppingFailedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_CroppingFailedCopyWithImpl<$Res>
+    extends _$PhotoFailureCopyWithImpl<$Res, _$_CroppingFailed>
+    implements _$$_CroppingFailedCopyWith<$Res> {
+  __$$_CroppingFailedCopyWithImpl(
+      _$_CroppingFailed _value, $Res Function(_$_CroppingFailed) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_CroppingFailed implements _CroppingFailed {
+  const _$_CroppingFailed();
+
+  @override
+  String toString() {
+    return 'PhotoFailure.croppingFailed()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_CroppingFailed);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() unexpected,
+    required TResult Function() unableToUpdate,
+    required TResult Function() permissionDenied,
+    required TResult Function() croppingFailed,
+  }) {
+    return croppingFailed();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? unexpected,
+    TResult? Function()? unableToUpdate,
+    TResult? Function()? permissionDenied,
+    TResult? Function()? croppingFailed,
+  }) {
+    return croppingFailed?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? unexpected,
+    TResult Function()? unableToUpdate,
+    TResult Function()? permissionDenied,
+    TResult Function()? croppingFailed,
+    required TResult orElse(),
+  }) {
+    if (croppingFailed != null) {
+      return croppingFailed();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Unexpected value) unexpected,
+    required TResult Function(_UnableToUpdate value) unableToUpdate,
+    required TResult Function(_PermissionDenied value) permissionDenied,
+    required TResult Function(_CroppingFailed value) croppingFailed,
+  }) {
+    return croppingFailed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Unexpected value)? unexpected,
+    TResult? Function(_UnableToUpdate value)? unableToUpdate,
+    TResult? Function(_PermissionDenied value)? permissionDenied,
+    TResult? Function(_CroppingFailed value)? croppingFailed,
+  }) {
+    return croppingFailed?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Unexpected value)? unexpected,
+    TResult Function(_UnableToUpdate value)? unableToUpdate,
+    TResult Function(_PermissionDenied value)? permissionDenied,
+    TResult Function(_CroppingFailed value)? croppingFailed,
+    required TResult orElse(),
+  }) {
+    if (croppingFailed != null) {
+      return croppingFailed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _CroppingFailed implements PhotoFailure {
+  const factory _CroppingFailed() = _$_CroppingFailed;
 }

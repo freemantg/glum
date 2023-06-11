@@ -1,12 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:drift/drift.dart';
-import 'package:glum_mood_tracker/domain/interfaces.dart';
-import 'package:glum_mood_tracker/infrastructure/database/drift_database.dart';
-import 'package:rxdart/rxdart.dart';
 
 import '../../domain/failures/failures.dart';
+import '../../domain/interfaces.dart';
 import '../../domain/models/models.dart';
 
+import '../database/drift_database.dart';
 import '../dtos/dtos.dart';
 import 'repositories.dart';
 
@@ -19,13 +18,18 @@ class StoryRepository implements IStoryRepository {
   @override
   Future<Either<StoryFailure, Unit>> addStory(StoryModel story) async {
     try {
-      Future.wait([
-        _db.storyDao.insertStoryWithTagsAndPhotos(StoryDto.fromDomain(story)),
-        _photoRepository.savePhoto(story.photos.first),
-      ]);
-
-
+      await _db.transaction(() async {
+        await _db.storyDao
+            .insertStoryWithTagsAndPhotos(StoryDto.fromDomain(story));
+        await _photoRepository.savePhoto(story.photos.first);
+      });
       return right(unit);
+    } on InvalidDataException catch (e) {
+      return left(StoryFailure.invalidStoryData(e));
+    } on DriftWrappedException catch (e) {
+      return left(StoryFailure.storyDatabaseException(e));
+    } on CouldNotRollBackException catch (e) {
+      return left(StoryFailure.couldNotRollBackStory(e));
     } catch (e) {
       return left(const StoryFailure.unexpected());
     }
@@ -36,6 +40,12 @@ class StoryRepository implements IStoryRepository {
     try {
       await _db.storyDao.deleteStory(storyId);
       return right(unit);
+    } on InvalidDataException catch (e) {
+      return left(StoryFailure.invalidStoryData(e));
+    } on DriftWrappedException catch (e) {
+      return left(StoryFailure.storyDatabaseException(e));
+    } on CouldNotRollBackException catch (e) {
+      return left(StoryFailure.couldNotRollBackStory(e));
     } catch (e) {
       return left(const StoryFailure.unexpected());
     }
@@ -48,6 +58,12 @@ class StoryRepository implements IStoryRepository {
           .updateStoryWithTagsAndPhotos(StoryDto.fromDomain(story));
 
       return right(unit);
+    } on InvalidDataException catch (e) {
+      return left(StoryFailure.invalidStoryData(e));
+    } on DriftWrappedException catch (e) {
+      return left(StoryFailure.storyDatabaseException(e));
+    } on CouldNotRollBackException catch (e) {
+      return left(StoryFailure.couldNotRollBackStory(e));
     } catch (e) {
       return left(const StoryFailure.unexpected());
     }
@@ -61,9 +77,17 @@ class StoryRepository implements IStoryRepository {
         .map((dtos) => right<StoryFailure, List<StoryModel>>(
               dtos.map((e) => e.toDomain()).toList(),
             ))
-        .onErrorReturnWith(
-          (error, stackTrace) => left(const StoryFailure.unexpected()),
-        );
+        .handleError((error, stackTrace) {
+      if (error is InvalidDataException) {
+        return left(StoryFailure.invalidStoryData(error));
+      } else if (error is DriftWrappedException) {
+        return left(StoryFailure.storyDatabaseException(error));
+      } else if (error is CouldNotRollBackException) {
+        return left(StoryFailure.couldNotRollBackStory(error));
+      } else {
+        return left(const StoryFailure.unexpected());
+      }
+    });
   }
 
   Future<Either<StoryFailure, int>> countStories() async {
@@ -72,8 +96,11 @@ class StoryRepository implements IStoryRepository {
       if (storiesCount != null) {
         return right(storiesCount);
       } else {
-        return left(const StoryFailure.unexpected());
+        return left(StoryFailure.invalidStoryData(
+            InvalidDataException("Story count is null")));
       }
+    } on DriftWrappedException catch (e) {
+      return left(StoryFailure.storyDatabaseException(e));
     } catch (e) {
       return left(const StoryFailure.unexpected());
     }

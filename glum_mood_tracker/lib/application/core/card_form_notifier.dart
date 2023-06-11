@@ -17,6 +17,7 @@ class CardFormState with _$CardFormState {
     required CardModel card,
     required bool isEditing,
     required bool isSaving,
+    required bool isLoading,
     required Option<Either<CardFailure, Unit>> failureOrSuccess,
   }) = _CardFormState;
 
@@ -25,6 +26,7 @@ class CardFormState with _$CardFormState {
       card: CardModel(monthYear: DateTime.now()),
       isEditing: false,
       isSaving: false,
+      isLoading: false,
       failureOrSuccess: none(),
     );
   }
@@ -50,18 +52,26 @@ class CardFormNotifier extends StateNotifier<CardFormState> {
     }
   }
 
-  Future<void> monthYearChanged(DateTime monthYear) async {
-    state = CardFormState.initial();
+  void monthYearChanged(DateTime monthYear) {
     state = state.copyWith(card: state.card.copyWith(monthYear: monthYear));
   }
 
   Future<void> photoChanged() async {
-    final photo = await _photoRepository.pickPhoto();
-    if (photo != null) {
-      await _photoRepository.savePhoto(photo);
-      state = state.copyWith(card: state.card.copyWith(photo: photo));
-      saved();
-    }
+    state = state.copyWith(isLoading: true);
+
+    final failureOrPhoto = await _photoRepository.pickAndCropPhoto();
+    failureOrPhoto.fold(
+      (failure) => state = state.copyWith(
+          failureOrSuccess: optionOf(
+        left(const CardFailure.unableToUpdate()),
+      )),
+      (photo) async {
+        await _photoRepository.savePhoto(photo);
+        state = state.copyWith(card: state.card.copyWith(photo: photo));
+        saved();
+      },
+    );
+    state = state.copyWith(isLoading: true);
   }
 
   Future<void> colorChanged(Color color) async {
@@ -76,7 +86,8 @@ class CardFormNotifier extends StateNotifier<CardFormState> {
           ? await _cardRepository.updateCard(state.card)
           : await _cardRepository.addCard(state.card);
     } catch (e) {
-      state = state;
+      state = state.copyWith(
+          failureOrSuccess: optionOf(left(const CardFailure.unableToUpdate())));
     }
     state = state.copyWith(isSaving: false);
   }
