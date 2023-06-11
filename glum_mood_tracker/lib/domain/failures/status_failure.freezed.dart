@@ -20,7 +20,7 @@ mixin _$StatusFailure {
   TResult when<TResult extends Object?>({
     required TResult Function(InvalidDataException exception) invalidStatusData,
     required TResult Function(DriftWrappedException exception)
-        storyDatabaseException,
+        statusDatabaseException,
     required TResult Function(CouldNotRollBackException exception)
         couldNotRollBackStory,
     required TResult Function() unexpected,
@@ -29,7 +29,7 @@ mixin _$StatusFailure {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(InvalidDataException exception)? invalidStatusData,
-    TResult? Function(DriftWrappedException exception)? storyDatabaseException,
+    TResult? Function(DriftWrappedException exception)? statusDatabaseException,
     TResult? Function(CouldNotRollBackException exception)?
         couldNotRollBackStory,
     TResult? Function()? unexpected,
@@ -38,7 +38,7 @@ mixin _$StatusFailure {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(InvalidDataException exception)? invalidStatusData,
-    TResult Function(DriftWrappedException exception)? storyDatabaseException,
+    TResult Function(DriftWrappedException exception)? statusDatabaseException,
     TResult Function(CouldNotRollBackException exception)?
         couldNotRollBackStory,
     TResult Function()? unexpected,
@@ -47,30 +47,31 @@ mixin _$StatusFailure {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(InvalidStatusFailure value) invalidStatusData,
-    required TResult Function(StoryDatabaseExceptionFailure value)
-        storyDatabaseException,
-    required TResult Function(CouldNotRollBackStoryFailure value)
+    required TResult Function(_InvalidStatusFailure value) invalidStatusData,
+    required TResult Function(_StatusDatabaseExceptionFailure value)
+        statusDatabaseException,
+    required TResult Function(_CouldNotRollBackStoryFailure value)
         couldNotRollBackStory,
     required TResult Function(_Unexpected value) unexpected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(InvalidStatusFailure value)? invalidStatusData,
-    TResult? Function(StoryDatabaseExceptionFailure value)?
-        storyDatabaseException,
-    TResult? Function(CouldNotRollBackStoryFailure value)?
+    TResult? Function(_InvalidStatusFailure value)? invalidStatusData,
+    TResult? Function(_StatusDatabaseExceptionFailure value)?
+        statusDatabaseException,
+    TResult? Function(_CouldNotRollBackStoryFailure value)?
         couldNotRollBackStory,
     TResult? Function(_Unexpected value)? unexpected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(InvalidStatusFailure value)? invalidStatusData,
-    TResult Function(StoryDatabaseExceptionFailure value)?
-        storyDatabaseException,
-    TResult Function(CouldNotRollBackStoryFailure value)? couldNotRollBackStory,
+    TResult Function(_InvalidStatusFailure value)? invalidStatusData,
+    TResult Function(_StatusDatabaseExceptionFailure value)?
+        statusDatabaseException,
+    TResult Function(_CouldNotRollBackStoryFailure value)?
+        couldNotRollBackStory,
     TResult Function(_Unexpected value)? unexpected,
     required TResult orElse(),
   }) =>
@@ -96,20 +97,20 @@ class _$StatusFailureCopyWithImpl<$Res, $Val extends StatusFailure>
 }
 
 /// @nodoc
-abstract class _$$InvalidStatusFailureCopyWith<$Res> {
-  factory _$$InvalidStatusFailureCopyWith(_$InvalidStatusFailure value,
-          $Res Function(_$InvalidStatusFailure) then) =
-      __$$InvalidStatusFailureCopyWithImpl<$Res>;
+abstract class _$$_InvalidStatusFailureCopyWith<$Res> {
+  factory _$$_InvalidStatusFailureCopyWith(_$_InvalidStatusFailure value,
+          $Res Function(_$_InvalidStatusFailure) then) =
+      __$$_InvalidStatusFailureCopyWithImpl<$Res>;
   @useResult
   $Res call({InvalidDataException exception});
 }
 
 /// @nodoc
-class __$$InvalidStatusFailureCopyWithImpl<$Res>
-    extends _$StatusFailureCopyWithImpl<$Res, _$InvalidStatusFailure>
-    implements _$$InvalidStatusFailureCopyWith<$Res> {
-  __$$InvalidStatusFailureCopyWithImpl(_$InvalidStatusFailure _value,
-      $Res Function(_$InvalidStatusFailure) _then)
+class __$$_InvalidStatusFailureCopyWithImpl<$Res>
+    extends _$StatusFailureCopyWithImpl<$Res, _$_InvalidStatusFailure>
+    implements _$$_InvalidStatusFailureCopyWith<$Res> {
+  __$$_InvalidStatusFailureCopyWithImpl(_$_InvalidStatusFailure _value,
+      $Res Function(_$_InvalidStatusFailure) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -117,7 +118,7 @@ class __$$InvalidStatusFailureCopyWithImpl<$Res>
   $Res call({
     Object? exception = null,
   }) {
-    return _then(_$InvalidStatusFailure(
+    return _then(_$_InvalidStatusFailure(
       null == exception
           ? _value.exception
           : exception // ignore: cast_nullable_to_non_nullable
@@ -128,8 +129,8 @@ class __$$InvalidStatusFailureCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$InvalidStatusFailure implements InvalidStatusFailure {
-  const _$InvalidStatusFailure(this.exception);
+class _$_InvalidStatusFailure implements _InvalidStatusFailure {
+  const _$_InvalidStatusFailure(this.exception);
 
   @override
   final InvalidDataException exception;
@@ -143,7 +144,7 @@ class _$InvalidStatusFailure implements InvalidStatusFailure {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$InvalidStatusFailure &&
+            other is _$_InvalidStatusFailure &&
             (identical(other.exception, exception) ||
                 other.exception == exception));
   }
@@ -153,8 +154,8 @@ class _$InvalidStatusFailure implements InvalidStatusFailure {
 
   @override
   @pragma('vm:prefer-inline')
-  _$$InvalidStatusFailureCopyWith<_$InvalidStatusFailure> get copyWith =>
-      __$$InvalidStatusFailureCopyWithImpl<_$InvalidStatusFailure>(
+  _$$_InvalidStatusFailureCopyWith<_$_InvalidStatusFailure> get copyWith =>
+      __$$_InvalidStatusFailureCopyWithImpl<_$_InvalidStatusFailure>(
           this, _$identity);
 
   @override
@@ -162,7 +163,7 @@ class _$InvalidStatusFailure implements InvalidStatusFailure {
   TResult when<TResult extends Object?>({
     required TResult Function(InvalidDataException exception) invalidStatusData,
     required TResult Function(DriftWrappedException exception)
-        storyDatabaseException,
+        statusDatabaseException,
     required TResult Function(CouldNotRollBackException exception)
         couldNotRollBackStory,
     required TResult Function() unexpected,
@@ -174,7 +175,7 @@ class _$InvalidStatusFailure implements InvalidStatusFailure {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(InvalidDataException exception)? invalidStatusData,
-    TResult? Function(DriftWrappedException exception)? storyDatabaseException,
+    TResult? Function(DriftWrappedException exception)? statusDatabaseException,
     TResult? Function(CouldNotRollBackException exception)?
         couldNotRollBackStory,
     TResult? Function()? unexpected,
@@ -186,7 +187,7 @@ class _$InvalidStatusFailure implements InvalidStatusFailure {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(InvalidDataException exception)? invalidStatusData,
-    TResult Function(DriftWrappedException exception)? storyDatabaseException,
+    TResult Function(DriftWrappedException exception)? statusDatabaseException,
     TResult Function(CouldNotRollBackException exception)?
         couldNotRollBackStory,
     TResult Function()? unexpected,
@@ -201,10 +202,10 @@ class _$InvalidStatusFailure implements InvalidStatusFailure {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(InvalidStatusFailure value) invalidStatusData,
-    required TResult Function(StoryDatabaseExceptionFailure value)
-        storyDatabaseException,
-    required TResult Function(CouldNotRollBackStoryFailure value)
+    required TResult Function(_InvalidStatusFailure value) invalidStatusData,
+    required TResult Function(_StatusDatabaseExceptionFailure value)
+        statusDatabaseException,
+    required TResult Function(_CouldNotRollBackStoryFailure value)
         couldNotRollBackStory,
     required TResult Function(_Unexpected value) unexpected,
   }) {
@@ -214,10 +215,10 @@ class _$InvalidStatusFailure implements InvalidStatusFailure {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(InvalidStatusFailure value)? invalidStatusData,
-    TResult? Function(StoryDatabaseExceptionFailure value)?
-        storyDatabaseException,
-    TResult? Function(CouldNotRollBackStoryFailure value)?
+    TResult? Function(_InvalidStatusFailure value)? invalidStatusData,
+    TResult? Function(_StatusDatabaseExceptionFailure value)?
+        statusDatabaseException,
+    TResult? Function(_CouldNotRollBackStoryFailure value)?
         couldNotRollBackStory,
     TResult? Function(_Unexpected value)? unexpected,
   }) {
@@ -227,10 +228,11 @@ class _$InvalidStatusFailure implements InvalidStatusFailure {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(InvalidStatusFailure value)? invalidStatusData,
-    TResult Function(StoryDatabaseExceptionFailure value)?
-        storyDatabaseException,
-    TResult Function(CouldNotRollBackStoryFailure value)? couldNotRollBackStory,
+    TResult Function(_InvalidStatusFailure value)? invalidStatusData,
+    TResult Function(_StatusDatabaseExceptionFailure value)?
+        statusDatabaseException,
+    TResult Function(_CouldNotRollBackStoryFailure value)?
+        couldNotRollBackStory,
     TResult Function(_Unexpected value)? unexpected,
     required TResult orElse(),
   }) {
@@ -241,32 +243,32 @@ class _$InvalidStatusFailure implements InvalidStatusFailure {
   }
 }
 
-abstract class InvalidStatusFailure implements StatusFailure {
-  const factory InvalidStatusFailure(final InvalidDataException exception) =
-      _$InvalidStatusFailure;
+abstract class _InvalidStatusFailure implements StatusFailure {
+  const factory _InvalidStatusFailure(final InvalidDataException exception) =
+      _$_InvalidStatusFailure;
 
   InvalidDataException get exception;
-  _$$InvalidStatusFailureCopyWith<_$InvalidStatusFailure> get copyWith =>
+  _$$_InvalidStatusFailureCopyWith<_$_InvalidStatusFailure> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$StoryDatabaseExceptionFailureCopyWith<$Res> {
-  factory _$$StoryDatabaseExceptionFailureCopyWith(
-          _$StoryDatabaseExceptionFailure value,
-          $Res Function(_$StoryDatabaseExceptionFailure) then) =
-      __$$StoryDatabaseExceptionFailureCopyWithImpl<$Res>;
+abstract class _$$_StatusDatabaseExceptionFailureCopyWith<$Res> {
+  factory _$$_StatusDatabaseExceptionFailureCopyWith(
+          _$_StatusDatabaseExceptionFailure value,
+          $Res Function(_$_StatusDatabaseExceptionFailure) then) =
+      __$$_StatusDatabaseExceptionFailureCopyWithImpl<$Res>;
   @useResult
   $Res call({DriftWrappedException exception});
 }
 
 /// @nodoc
-class __$$StoryDatabaseExceptionFailureCopyWithImpl<$Res>
-    extends _$StatusFailureCopyWithImpl<$Res, _$StoryDatabaseExceptionFailure>
-    implements _$$StoryDatabaseExceptionFailureCopyWith<$Res> {
-  __$$StoryDatabaseExceptionFailureCopyWithImpl(
-      _$StoryDatabaseExceptionFailure _value,
-      $Res Function(_$StoryDatabaseExceptionFailure) _then)
+class __$$_StatusDatabaseExceptionFailureCopyWithImpl<$Res>
+    extends _$StatusFailureCopyWithImpl<$Res, _$_StatusDatabaseExceptionFailure>
+    implements _$$_StatusDatabaseExceptionFailureCopyWith<$Res> {
+  __$$_StatusDatabaseExceptionFailureCopyWithImpl(
+      _$_StatusDatabaseExceptionFailure _value,
+      $Res Function(_$_StatusDatabaseExceptionFailure) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -274,7 +276,7 @@ class __$$StoryDatabaseExceptionFailureCopyWithImpl<$Res>
   $Res call({
     Object? exception = null,
   }) {
-    return _then(_$StoryDatabaseExceptionFailure(
+    return _then(_$_StatusDatabaseExceptionFailure(
       null == exception
           ? _value.exception
           : exception // ignore: cast_nullable_to_non_nullable
@@ -285,22 +287,23 @@ class __$$StoryDatabaseExceptionFailureCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$StoryDatabaseExceptionFailure implements StoryDatabaseExceptionFailure {
-  const _$StoryDatabaseExceptionFailure(this.exception);
+class _$_StatusDatabaseExceptionFailure
+    implements _StatusDatabaseExceptionFailure {
+  const _$_StatusDatabaseExceptionFailure(this.exception);
 
   @override
   final DriftWrappedException exception;
 
   @override
   String toString() {
-    return 'StatusFailure.storyDatabaseException(exception: $exception)';
+    return 'StatusFailure.statusDatabaseException(exception: $exception)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$StoryDatabaseExceptionFailure &&
+            other is _$_StatusDatabaseExceptionFailure &&
             (identical(other.exception, exception) ||
                 other.exception == exception));
   }
@@ -310,47 +313,47 @@ class _$StoryDatabaseExceptionFailure implements StoryDatabaseExceptionFailure {
 
   @override
   @pragma('vm:prefer-inline')
-  _$$StoryDatabaseExceptionFailureCopyWith<_$StoryDatabaseExceptionFailure>
-      get copyWith => __$$StoryDatabaseExceptionFailureCopyWithImpl<
-          _$StoryDatabaseExceptionFailure>(this, _$identity);
+  _$$_StatusDatabaseExceptionFailureCopyWith<_$_StatusDatabaseExceptionFailure>
+      get copyWith => __$$_StatusDatabaseExceptionFailureCopyWithImpl<
+          _$_StatusDatabaseExceptionFailure>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(InvalidDataException exception) invalidStatusData,
     required TResult Function(DriftWrappedException exception)
-        storyDatabaseException,
+        statusDatabaseException,
     required TResult Function(CouldNotRollBackException exception)
         couldNotRollBackStory,
     required TResult Function() unexpected,
   }) {
-    return storyDatabaseException(exception);
+    return statusDatabaseException(exception);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(InvalidDataException exception)? invalidStatusData,
-    TResult? Function(DriftWrappedException exception)? storyDatabaseException,
+    TResult? Function(DriftWrappedException exception)? statusDatabaseException,
     TResult? Function(CouldNotRollBackException exception)?
         couldNotRollBackStory,
     TResult? Function()? unexpected,
   }) {
-    return storyDatabaseException?.call(exception);
+    return statusDatabaseException?.call(exception);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(InvalidDataException exception)? invalidStatusData,
-    TResult Function(DriftWrappedException exception)? storyDatabaseException,
+    TResult Function(DriftWrappedException exception)? statusDatabaseException,
     TResult Function(CouldNotRollBackException exception)?
         couldNotRollBackStory,
     TResult Function()? unexpected,
     required TResult orElse(),
   }) {
-    if (storyDatabaseException != null) {
-      return storyDatabaseException(exception);
+    if (statusDatabaseException != null) {
+      return statusDatabaseException(exception);
     }
     return orElse();
   }
@@ -358,72 +361,74 @@ class _$StoryDatabaseExceptionFailure implements StoryDatabaseExceptionFailure {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(InvalidStatusFailure value) invalidStatusData,
-    required TResult Function(StoryDatabaseExceptionFailure value)
-        storyDatabaseException,
-    required TResult Function(CouldNotRollBackStoryFailure value)
+    required TResult Function(_InvalidStatusFailure value) invalidStatusData,
+    required TResult Function(_StatusDatabaseExceptionFailure value)
+        statusDatabaseException,
+    required TResult Function(_CouldNotRollBackStoryFailure value)
         couldNotRollBackStory,
     required TResult Function(_Unexpected value) unexpected,
   }) {
-    return storyDatabaseException(this);
+    return statusDatabaseException(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(InvalidStatusFailure value)? invalidStatusData,
-    TResult? Function(StoryDatabaseExceptionFailure value)?
-        storyDatabaseException,
-    TResult? Function(CouldNotRollBackStoryFailure value)?
+    TResult? Function(_InvalidStatusFailure value)? invalidStatusData,
+    TResult? Function(_StatusDatabaseExceptionFailure value)?
+        statusDatabaseException,
+    TResult? Function(_CouldNotRollBackStoryFailure value)?
         couldNotRollBackStory,
     TResult? Function(_Unexpected value)? unexpected,
   }) {
-    return storyDatabaseException?.call(this);
+    return statusDatabaseException?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(InvalidStatusFailure value)? invalidStatusData,
-    TResult Function(StoryDatabaseExceptionFailure value)?
-        storyDatabaseException,
-    TResult Function(CouldNotRollBackStoryFailure value)? couldNotRollBackStory,
+    TResult Function(_InvalidStatusFailure value)? invalidStatusData,
+    TResult Function(_StatusDatabaseExceptionFailure value)?
+        statusDatabaseException,
+    TResult Function(_CouldNotRollBackStoryFailure value)?
+        couldNotRollBackStory,
     TResult Function(_Unexpected value)? unexpected,
     required TResult orElse(),
   }) {
-    if (storyDatabaseException != null) {
-      return storyDatabaseException(this);
+    if (statusDatabaseException != null) {
+      return statusDatabaseException(this);
     }
     return orElse();
   }
 }
 
-abstract class StoryDatabaseExceptionFailure implements StatusFailure {
-  const factory StoryDatabaseExceptionFailure(
-      final DriftWrappedException exception) = _$StoryDatabaseExceptionFailure;
+abstract class _StatusDatabaseExceptionFailure implements StatusFailure {
+  const factory _StatusDatabaseExceptionFailure(
+          final DriftWrappedException exception) =
+      _$_StatusDatabaseExceptionFailure;
 
   DriftWrappedException get exception;
-  _$$StoryDatabaseExceptionFailureCopyWith<_$StoryDatabaseExceptionFailure>
+  _$$_StatusDatabaseExceptionFailureCopyWith<_$_StatusDatabaseExceptionFailure>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$CouldNotRollBackStoryFailureCopyWith<$Res> {
-  factory _$$CouldNotRollBackStoryFailureCopyWith(
-          _$CouldNotRollBackStoryFailure value,
-          $Res Function(_$CouldNotRollBackStoryFailure) then) =
-      __$$CouldNotRollBackStoryFailureCopyWithImpl<$Res>;
+abstract class _$$_CouldNotRollBackStoryFailureCopyWith<$Res> {
+  factory _$$_CouldNotRollBackStoryFailureCopyWith(
+          _$_CouldNotRollBackStoryFailure value,
+          $Res Function(_$_CouldNotRollBackStoryFailure) then) =
+      __$$_CouldNotRollBackStoryFailureCopyWithImpl<$Res>;
   @useResult
   $Res call({CouldNotRollBackException exception});
 }
 
 /// @nodoc
-class __$$CouldNotRollBackStoryFailureCopyWithImpl<$Res>
-    extends _$StatusFailureCopyWithImpl<$Res, _$CouldNotRollBackStoryFailure>
-    implements _$$CouldNotRollBackStoryFailureCopyWith<$Res> {
-  __$$CouldNotRollBackStoryFailureCopyWithImpl(
-      _$CouldNotRollBackStoryFailure _value,
-      $Res Function(_$CouldNotRollBackStoryFailure) _then)
+class __$$_CouldNotRollBackStoryFailureCopyWithImpl<$Res>
+    extends _$StatusFailureCopyWithImpl<$Res, _$_CouldNotRollBackStoryFailure>
+    implements _$$_CouldNotRollBackStoryFailureCopyWith<$Res> {
+  __$$_CouldNotRollBackStoryFailureCopyWithImpl(
+      _$_CouldNotRollBackStoryFailure _value,
+      $Res Function(_$_CouldNotRollBackStoryFailure) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -431,7 +436,7 @@ class __$$CouldNotRollBackStoryFailureCopyWithImpl<$Res>
   $Res call({
     Object? exception = null,
   }) {
-    return _then(_$CouldNotRollBackStoryFailure(
+    return _then(_$_CouldNotRollBackStoryFailure(
       null == exception
           ? _value.exception
           : exception // ignore: cast_nullable_to_non_nullable
@@ -442,8 +447,8 @@ class __$$CouldNotRollBackStoryFailureCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CouldNotRollBackStoryFailure implements CouldNotRollBackStoryFailure {
-  const _$CouldNotRollBackStoryFailure(this.exception);
+class _$_CouldNotRollBackStoryFailure implements _CouldNotRollBackStoryFailure {
+  const _$_CouldNotRollBackStoryFailure(this.exception);
 
   @override
   final CouldNotRollBackException exception;
@@ -457,7 +462,7 @@ class _$CouldNotRollBackStoryFailure implements CouldNotRollBackStoryFailure {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CouldNotRollBackStoryFailure &&
+            other is _$_CouldNotRollBackStoryFailure &&
             (identical(other.exception, exception) ||
                 other.exception == exception));
   }
@@ -467,16 +472,16 @@ class _$CouldNotRollBackStoryFailure implements CouldNotRollBackStoryFailure {
 
   @override
   @pragma('vm:prefer-inline')
-  _$$CouldNotRollBackStoryFailureCopyWith<_$CouldNotRollBackStoryFailure>
-      get copyWith => __$$CouldNotRollBackStoryFailureCopyWithImpl<
-          _$CouldNotRollBackStoryFailure>(this, _$identity);
+  _$$_CouldNotRollBackStoryFailureCopyWith<_$_CouldNotRollBackStoryFailure>
+      get copyWith => __$$_CouldNotRollBackStoryFailureCopyWithImpl<
+          _$_CouldNotRollBackStoryFailure>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(InvalidDataException exception) invalidStatusData,
     required TResult Function(DriftWrappedException exception)
-        storyDatabaseException,
+        statusDatabaseException,
     required TResult Function(CouldNotRollBackException exception)
         couldNotRollBackStory,
     required TResult Function() unexpected,
@@ -488,7 +493,7 @@ class _$CouldNotRollBackStoryFailure implements CouldNotRollBackStoryFailure {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(InvalidDataException exception)? invalidStatusData,
-    TResult? Function(DriftWrappedException exception)? storyDatabaseException,
+    TResult? Function(DriftWrappedException exception)? statusDatabaseException,
     TResult? Function(CouldNotRollBackException exception)?
         couldNotRollBackStory,
     TResult? Function()? unexpected,
@@ -500,7 +505,7 @@ class _$CouldNotRollBackStoryFailure implements CouldNotRollBackStoryFailure {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(InvalidDataException exception)? invalidStatusData,
-    TResult Function(DriftWrappedException exception)? storyDatabaseException,
+    TResult Function(DriftWrappedException exception)? statusDatabaseException,
     TResult Function(CouldNotRollBackException exception)?
         couldNotRollBackStory,
     TResult Function()? unexpected,
@@ -515,10 +520,10 @@ class _$CouldNotRollBackStoryFailure implements CouldNotRollBackStoryFailure {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(InvalidStatusFailure value) invalidStatusData,
-    required TResult Function(StoryDatabaseExceptionFailure value)
-        storyDatabaseException,
-    required TResult Function(CouldNotRollBackStoryFailure value)
+    required TResult Function(_InvalidStatusFailure value) invalidStatusData,
+    required TResult Function(_StatusDatabaseExceptionFailure value)
+        statusDatabaseException,
+    required TResult Function(_CouldNotRollBackStoryFailure value)
         couldNotRollBackStory,
     required TResult Function(_Unexpected value) unexpected,
   }) {
@@ -528,10 +533,10 @@ class _$CouldNotRollBackStoryFailure implements CouldNotRollBackStoryFailure {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(InvalidStatusFailure value)? invalidStatusData,
-    TResult? Function(StoryDatabaseExceptionFailure value)?
-        storyDatabaseException,
-    TResult? Function(CouldNotRollBackStoryFailure value)?
+    TResult? Function(_InvalidStatusFailure value)? invalidStatusData,
+    TResult? Function(_StatusDatabaseExceptionFailure value)?
+        statusDatabaseException,
+    TResult? Function(_CouldNotRollBackStoryFailure value)?
         couldNotRollBackStory,
     TResult? Function(_Unexpected value)? unexpected,
   }) {
@@ -541,10 +546,11 @@ class _$CouldNotRollBackStoryFailure implements CouldNotRollBackStoryFailure {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(InvalidStatusFailure value)? invalidStatusData,
-    TResult Function(StoryDatabaseExceptionFailure value)?
-        storyDatabaseException,
-    TResult Function(CouldNotRollBackStoryFailure value)? couldNotRollBackStory,
+    TResult Function(_InvalidStatusFailure value)? invalidStatusData,
+    TResult Function(_StatusDatabaseExceptionFailure value)?
+        statusDatabaseException,
+    TResult Function(_CouldNotRollBackStoryFailure value)?
+        couldNotRollBackStory,
     TResult Function(_Unexpected value)? unexpected,
     required TResult orElse(),
   }) {
@@ -555,13 +561,13 @@ class _$CouldNotRollBackStoryFailure implements CouldNotRollBackStoryFailure {
   }
 }
 
-abstract class CouldNotRollBackStoryFailure implements StatusFailure {
-  const factory CouldNotRollBackStoryFailure(
+abstract class _CouldNotRollBackStoryFailure implements StatusFailure {
+  const factory _CouldNotRollBackStoryFailure(
           final CouldNotRollBackException exception) =
-      _$CouldNotRollBackStoryFailure;
+      _$_CouldNotRollBackStoryFailure;
 
   CouldNotRollBackException get exception;
-  _$$CouldNotRollBackStoryFailureCopyWith<_$CouldNotRollBackStoryFailure>
+  _$$_CouldNotRollBackStoryFailureCopyWith<_$_CouldNotRollBackStoryFailure>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -605,7 +611,7 @@ class _$_Unexpected implements _Unexpected {
   TResult when<TResult extends Object?>({
     required TResult Function(InvalidDataException exception) invalidStatusData,
     required TResult Function(DriftWrappedException exception)
-        storyDatabaseException,
+        statusDatabaseException,
     required TResult Function(CouldNotRollBackException exception)
         couldNotRollBackStory,
     required TResult Function() unexpected,
@@ -617,7 +623,7 @@ class _$_Unexpected implements _Unexpected {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(InvalidDataException exception)? invalidStatusData,
-    TResult? Function(DriftWrappedException exception)? storyDatabaseException,
+    TResult? Function(DriftWrappedException exception)? statusDatabaseException,
     TResult? Function(CouldNotRollBackException exception)?
         couldNotRollBackStory,
     TResult? Function()? unexpected,
@@ -629,7 +635,7 @@ class _$_Unexpected implements _Unexpected {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(InvalidDataException exception)? invalidStatusData,
-    TResult Function(DriftWrappedException exception)? storyDatabaseException,
+    TResult Function(DriftWrappedException exception)? statusDatabaseException,
     TResult Function(CouldNotRollBackException exception)?
         couldNotRollBackStory,
     TResult Function()? unexpected,
@@ -644,10 +650,10 @@ class _$_Unexpected implements _Unexpected {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(InvalidStatusFailure value) invalidStatusData,
-    required TResult Function(StoryDatabaseExceptionFailure value)
-        storyDatabaseException,
-    required TResult Function(CouldNotRollBackStoryFailure value)
+    required TResult Function(_InvalidStatusFailure value) invalidStatusData,
+    required TResult Function(_StatusDatabaseExceptionFailure value)
+        statusDatabaseException,
+    required TResult Function(_CouldNotRollBackStoryFailure value)
         couldNotRollBackStory,
     required TResult Function(_Unexpected value) unexpected,
   }) {
@@ -657,10 +663,10 @@ class _$_Unexpected implements _Unexpected {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(InvalidStatusFailure value)? invalidStatusData,
-    TResult? Function(StoryDatabaseExceptionFailure value)?
-        storyDatabaseException,
-    TResult? Function(CouldNotRollBackStoryFailure value)?
+    TResult? Function(_InvalidStatusFailure value)? invalidStatusData,
+    TResult? Function(_StatusDatabaseExceptionFailure value)?
+        statusDatabaseException,
+    TResult? Function(_CouldNotRollBackStoryFailure value)?
         couldNotRollBackStory,
     TResult? Function(_Unexpected value)? unexpected,
   }) {
@@ -670,10 +676,11 @@ class _$_Unexpected implements _Unexpected {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(InvalidStatusFailure value)? invalidStatusData,
-    TResult Function(StoryDatabaseExceptionFailure value)?
-        storyDatabaseException,
-    TResult Function(CouldNotRollBackStoryFailure value)? couldNotRollBackStory,
+    TResult Function(_InvalidStatusFailure value)? invalidStatusData,
+    TResult Function(_StatusDatabaseExceptionFailure value)?
+        statusDatabaseException,
+    TResult Function(_CouldNotRollBackStoryFailure value)?
+        couldNotRollBackStory,
     TResult Function(_Unexpected value)? unexpected,
     required TResult orElse(),
   }) {

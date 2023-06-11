@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 
 import 'failures/failures.dart';
+import 'failures/status_failure.dart';
 import 'models/models.dart';
 
 abstract class IStoryRepository {
@@ -9,6 +10,7 @@ abstract class IStoryRepository {
   Future<Either<StoryFailure, Unit>> addStory(StoryModel story);
   Future<Either<StoryFailure, Unit>> updateStory(StoryModel story);
   Future<Either<StoryFailure, Unit>> deleteStory(int storyId);
+  Future<Either<StoryFailure, int>> countStories();
 }
 
 abstract class ICardRepository {
@@ -24,12 +26,12 @@ abstract class ITagRepository {
 }
 
 abstract class IStatsRepository {
-  Future<Either<StoryFailure, int>> countAllStories();
-  Future<Either<StoryFailure, double>> glumAverage();
-  Future<Either<StoryFailure, Map<DateTime, int>>> averageWeek();
-  Future<Either<StoryFailure, Map<int, int>>> glumDistribution();
-  Future<Either<StoryFailure, Map<DateTime, int>>> yearInGlums();
-  Stream<Either<StoryFailure, Map<TagModel, int>>> tagsByMoodsOrGlums(
+  Future<Either<StatusFailure, int>> countAllStories();
+  Future<Either<StatusFailure, double>> glumAverage();
+  Future<Either<StatusFailure, Map<DateTime, int>>> averageWeek();
+  Future<Either<StatusFailure, Map<int, int>>> glumDistribution();
+  Future<Either<StatusFailure, Map<DateTime, int>>> yearInGlums();
+  Stream<Either<StatusFailure, Map<TagModel, int>>> tagsByMoodsOrGlums(
       bool filterByMoods);
-  Stream<Either<StoryFailure, Map<TagModel, int>>> trendingTags();
+  Stream<Either<StatusFailure, Map<TagModel, int>>> trendingTags();
 }

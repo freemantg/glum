@@ -6,10 +6,10 @@ part 'status_failure.freezed.dart';
 @freezed
 class StatusFailure with _$StatusFailure {
   const factory StatusFailure.invalidStatusData(
-      InvalidDataException exception) = InvalidStatusFailure;
-  const factory StatusFailure.storyDatabaseException(
-      DriftWrappedException exception) = StoryDatabaseExceptionFailure;
+      InvalidDataException exception) = _InvalidStatusFailure;
+  const factory StatusFailure.statusDatabaseException(
+      DriftWrappedException exception) = _StatusDatabaseExceptionFailure;
   const factory StatusFailure.couldNotRollBackStory(
-      CouldNotRollBackException exception) = CouldNotRollBackStoryFailure;
+      CouldNotRollBackException exception) = _CouldNotRollBackStoryFailure;
   const factory StatusFailure.unexpected() = _Unexpected;
 }

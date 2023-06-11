@@ -1,104 +1,86 @@
 import 'package:dartz/dartz.dart';
+import 'package:drift/drift.dart';
 import 'package:glum_mood_tracker/domain/interfaces.dart';
 import 'package:glum_mood_tracker/infrastructure/database/drift_database.dart';
-import 'package:rxdart/rxdart.dart';
 
 import '../../domain/failures/failures.dart';
 import '../../domain/models/models.dart';
+import '../dtos/dtos.dart';
 
 class StatsRepository implements IStatsRepository {
   final GlumDatabase _db;
 
   StatsRepository({required GlumDatabase database}) : _db = database;
 
-  @override
-  Future<Either<StoryFailure, int>> countAllStories() async {
+  Future<Either<StatusFailure, T>> _getFromDb<T>(
+      Future<T?> Function() dbOperation) async {
     try {
-      final allStoriesCount = await _db.storyDao.countStories();
-      if (allStoriesCount != null) {
-        return right(allStoriesCount);
+      final result = await dbOperation();
+      if (result != null) {
+        return right(result);
       } else {
-        return left(const StoryFailure.unexpected());
+        return left(StatusFailure.invalidStatusData(InvalidDataException('')));
       }
+    } on InvalidDataException catch (e) {
+      return left(StatusFailure.invalidStatusData(e));
+    } on DriftWrappedException catch (e) {
+      return left(StatusFailure.statusDatabaseException(e));
+    } on CouldNotRollBackException catch (e) {
+      return left(StatusFailure.couldNotRollBackStory(e));
     } catch (e) {
-      return left(const StoryFailure.unexpected());
+      return left(const StatusFailure.unexpected());
     }
   }
 
-  @override
-  Future<Either<StoryFailure, double>> glumAverage() async {
+  Stream<Either<StatusFailure, Map<TagModel, int>>> _streamFromDb(
+      Stream<Map<TagDto, int>> Function() dbOperation) async* {
     try {
-      final averageGlum = await _db.storyDao.glumAverage();
-      if (averageGlum != null) {
-        return right(averageGlum);
-      } else {
-        return left(const StoryFailure.unexpected());
-      }
+      final stream = dbOperation();
+      yield* stream.map((tagDtosAndCountMap) {
+        final tagsAndCountMap = <TagModel, int>{};
+        tagDtosAndCountMap.forEach(
+          (dto, count) => tagsAndCountMap[dto.toDomain()] = count,
+        );
+        return right<StatusFailure, Map<TagModel, int>>(tagsAndCountMap);
+      });
+    } on InvalidDataException catch (e) {
+      yield left(StatusFailure.invalidStatusData(e));
+    } on DriftWrappedException catch (e) {
+      yield left(StatusFailure.statusDatabaseException(e));
+    } on CouldNotRollBackException catch (e) {
+      yield left(StatusFailure.couldNotRollBackStory(e));
     } catch (e) {
-      return left(const StoryFailure.unexpected());
+      yield left(const StatusFailure.unexpected());
     }
   }
 
   @override
-  Future<Either<StoryFailure, Map<int, int>>> glumDistribution() async {
-    try {
-      final glumDistribution = await _db.storyDao.glumDistribution();
-      return right(glumDistribution);
-    } catch (e) {
-      return left(const StoryFailure.unexpected());
-    }
-  }
+  Future<Either<StatusFailure, int>> countAllStories() =>
+      _getFromDb(() => _db.storyDao.countStories());
 
   @override
-  Future<Either<StoryFailure, Map<DateTime, int>>> averageWeek() async {
-    try {
-      final averageWeek = await _db.storyDao.averageWeek();
-      return right(averageWeek);
-    } catch (e) {
-      return left(const StoryFailure.unexpected());
-    }
-  }
+  Future<Either<StatusFailure, double>> glumAverage() =>
+      _getFromDb(() => _db.storyDao.glumAverage());
 
   @override
-  Future<Either<StoryFailure, Map<DateTime, int>>> yearInGlums() async {
-    try {
-      final yearInGlums = await _db.storyDao.yearInGlums();
-      return right(yearInGlums);
-    } catch (e) {
-      return left(const StoryFailure.unexpected());
-    }
-  }
+  Future<Either<StatusFailure, Map<int, int>>> glumDistribution() =>
+      _getFromDb(() => _db.storyDao.glumDistribution());
 
   @override
-  Stream<Either<StoryFailure, Map<TagModel, int>>> trendingTags() async* {
-    final stream = _db.tagDao.watchTrendingTags();
-    yield* stream.map((tagDtosAndCountMap) {
-      final tagsAndCountMap = <TagModel, int>{};
-      tagDtosAndCountMap.forEach(
-        (dto, count) => tagsAndCountMap[dto.toDomain()] = count,
-      );
-      return right<StoryFailure, Map<TagModel, int>>(tagsAndCountMap);
-    }).onErrorReturnWith(
-      (error, stackTrace) {
-        return left(const StoryFailure.unexpected());
-      },
-    );
-  }
+  Future<Either<StatusFailure, Map<DateTime, int>>> averageWeek() =>
+      _getFromDb(() => _db.storyDao.averageWeek());
 
   @override
-  Stream<Either<StoryFailure, Map<TagModel, int>>> tagsByMoodsOrGlums(
-      bool filterByMoods) async* {
-    final stream = _db.tagDao.watchTagsFilteredByMoodsOrGlums(filterByMoods);
-    yield* stream.map((tagDtosAndCountMap) {
-      final tagsAndCountMap = <TagModel, int>{};
-      tagDtosAndCountMap.forEach(
-        (dto, count) => tagsAndCountMap[dto.toDomain()] = count,
-      );
-      return right<StoryFailure, Map<TagModel, int>>(tagsAndCountMap);
-    }).onErrorReturnWith(
-      (error, stackTrace) {
-        return left(const StoryFailure.unexpected());
-      },
-    );
-  }
+  Future<Either<StatusFailure, Map<DateTime, int>>> yearInGlums() =>
+      _getFromDb(() => _db.storyDao.yearInGlums());
+
+  @override
+  Stream<Either<StatusFailure, Map<TagModel, int>>> trendingTags() =>
+      _streamFromDb(() => _db.tagDao.watchTrendingTags());
+
+  @override
+  Stream<Either<StatusFailure, Map<TagModel, int>>> tagsByMoodsOrGlums(
+          bool filterByMoods) =>
+      _streamFromDb(
+          () => _db.tagDao.watchTagsFilteredByMoodsOrGlums(filterByMoods));
 }
