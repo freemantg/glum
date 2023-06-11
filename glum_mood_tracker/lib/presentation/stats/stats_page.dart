@@ -1,42 +1,38 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-import 'package:glum_mood_tracker/styles/styles.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../shared/providers.dart';
+import '../../styles/styles.dart';
 import 'widgets/widgets.dart';
 
 @RoutePage()
-class StatsPage extends ConsumerStatefulWidget {
+class StatsPage extends HookConsumerWidget {
   const StatsPage({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<StatsPage> createState() => _StatsPageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    useEffect(() {
+      _fetchData(ref);
+      return null;
+    }, []);
 
-class _StatsPageState extends ConsumerState<StatsPage> {
-  @override
-  void initState() {
-    super.initState();
-    _fetchData();
-  }
-
-  void _fetchData() {
-    Future.wait(
-      [
-        ref.watch(statsNotifierProvider.notifier).fetchStats(),
-        ref.watch(photosStateNotifierProvider.notifier).getAllPhotos(),
-      ],
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
       body: _buildStatsList(),
     );
+  }
+
+  void _fetchData(WidgetRef ref) async {
+    final statsNotifier = ref.read(statsNotifierProvider.notifier);
+    final photosStateNotifier = ref.read(photosStateNotifierProvider.notifier);
+
+    await Future.wait([
+      statsNotifier.fetchStats(),
+      photosStateNotifier.getAllPhotos(),
+    ]);
   }
 
   AppBar _buildAppBar() {

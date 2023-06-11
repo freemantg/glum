@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -8,7 +9,6 @@ part 'stats_notifier.freezed.dart';
 
 @freezed
 class StatsState with _$StatsState {
-  const StatsState._();
   const factory StatsState({
     required int allStoriesCount,
     required double glumAverage,
@@ -18,7 +18,8 @@ class StatsState with _$StatsState {
     required Map<TagModel, int> trendingMoodsOrGlums,
     required Map<DateTime, int> yearInGlums,
     required bool isLoading,
-    required bool showErrorMessage,
+    required Option<String>
+        errorMessage, // Replace bool with an optional string
   }) = _StatsState;
 
   factory StatsState.initial() => const StatsState(
@@ -30,7 +31,7 @@ class StatsState with _$StatsState {
         trendingMoodsOrGlums: {},
         yearInGlums: {},
         isLoading: false,
-        showErrorMessage: false,
+        errorMessage: None(),
       );
 }
 
@@ -42,7 +43,7 @@ class StatsNotifier extends StateNotifier<StatsState> {
 
   Future<void> fetchStats() async {
     state = state.copyWith(isLoading: true);
-    Future.wait([
+    await Future.wait([
       countAllStories(),
       glumAverage(),
       glumDistribution(),
@@ -57,7 +58,7 @@ class StatsNotifier extends StateNotifier<StatsState> {
   Future<void> countAllStories() async {
     final failureOrAllStoriesCount = await _repository.countAllStories();
     state = failureOrAllStoriesCount.fold(
-      (failure) => state.copyWith(showErrorMessage: true),
+      (failure) => state.copyWith(errorMessage: Some(failure.toString())),
       (count) => state.copyWith(allStoriesCount: count),
     );
   }
@@ -65,7 +66,7 @@ class StatsNotifier extends StateNotifier<StatsState> {
   Future<void> glumAverage() async {
     final failureOrGlumAverage = await _repository.glumAverage();
     state = failureOrGlumAverage.fold(
-      (failure) => state.copyWith(showErrorMessage: true),
+      (failure) => state.copyWith(errorMessage: Some(failure.toString())),
       (average) => state.copyWith(glumAverage: average),
     );
   }
@@ -73,7 +74,7 @@ class StatsNotifier extends StateNotifier<StatsState> {
   Future<void> glumDistribution() async {
     final failureOrGlumAverage = await _repository.glumDistribution();
     state = failureOrGlumAverage.fold(
-      (failure) => state.copyWith(showErrorMessage: true),
+      (failure) => state.copyWith(errorMessage: Some(failure.toString())),
       (distribution) => state.copyWith(glumDistribution: distribution),
     );
   }
@@ -81,7 +82,7 @@ class StatsNotifier extends StateNotifier<StatsState> {
   Future<void> averageWeek() async {
     final failureOrAverageWeek = await _repository.averageWeek();
     state = failureOrAverageWeek.fold(
-      (failure) => state.copyWith(showErrorMessage: true),
+      (failure) => state.copyWith(errorMessage: Some(failure.toString())),
       (averageWeek) => state.copyWith(weeklyGlum: averageWeek),
     );
   }
@@ -89,7 +90,7 @@ class StatsNotifier extends StateNotifier<StatsState> {
   Future<void> yearInGlums() async {
     final failureOrAverageWeek = await _repository.yearInGlums();
     state = failureOrAverageWeek.fold(
-      (failure) => state.copyWith(showErrorMessage: true),
+      (failure) => state.copyWith(errorMessage: Some(failure.toString())),
       (yearInGlums) => state.copyWith(yearInGlums: yearInGlums),
     );
   }
@@ -99,7 +100,8 @@ class StatsNotifier extends StateNotifier<StatsState> {
     stream.listen(
       (failureOrTrendingTags) {
         failureOrTrendingTags.fold(
-          (failure) => state = state.copyWith(showErrorMessage: true),
+          (failure) =>
+              state = state.copyWith(errorMessage: Some(failure.toString())),
           (trendingTags) {
             state = state.copyWith(trendingTags: trendingTags);
           },
@@ -113,7 +115,8 @@ class StatsNotifier extends StateNotifier<StatsState> {
     stream.listen(
       (failureOrTrendingTags) {
         failureOrTrendingTags.fold(
-          (failure) => state = state.copyWith(showErrorMessage: true),
+          (failure) =>
+              state = state.copyWith(errorMessage: Some(failure.toString())),
           (trendingTags) {
             state = state.copyWith(trendingMoodsOrGlums: trendingTags);
           },

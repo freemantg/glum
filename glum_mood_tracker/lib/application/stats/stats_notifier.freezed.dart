@@ -25,7 +25,7 @@ mixin _$StatsState {
       throw _privateConstructorUsedError;
   Map<DateTime, int> get yearInGlums => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
-  bool get showErrorMessage => throw _privateConstructorUsedError;
+  Option<String> get errorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $StatsStateCopyWith<StatsState> get copyWith =>
@@ -47,7 +47,7 @@ abstract class $StatsStateCopyWith<$Res> {
       Map<TagModel, int> trendingMoodsOrGlums,
       Map<DateTime, int> yearInGlums,
       bool isLoading,
-      bool showErrorMessage});
+      Option<String> errorMessage});
 }
 
 /// @nodoc
@@ -71,7 +71,7 @@ class _$StatsStateCopyWithImpl<$Res, $Val extends StatsState>
     Object? trendingMoodsOrGlums = null,
     Object? yearInGlums = null,
     Object? isLoading = null,
-    Object? showErrorMessage = null,
+    Object? errorMessage = null,
   }) {
     return _then(_value.copyWith(
       allStoriesCount: null == allStoriesCount
@@ -106,10 +106,10 @@ class _$StatsStateCopyWithImpl<$Res, $Val extends StatsState>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      showErrorMessage: null == showErrorMessage
-          ? _value.showErrorMessage
-          : showErrorMessage // ignore: cast_nullable_to_non_nullable
-              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as Option<String>,
     ) as $Val);
   }
 }
@@ -131,7 +131,7 @@ abstract class _$$_StatsStateCopyWith<$Res>
       Map<TagModel, int> trendingMoodsOrGlums,
       Map<DateTime, int> yearInGlums,
       bool isLoading,
-      bool showErrorMessage});
+      Option<String> errorMessage});
 }
 
 /// @nodoc
@@ -153,7 +153,7 @@ class __$$_StatsStateCopyWithImpl<$Res>
     Object? trendingMoodsOrGlums = null,
     Object? yearInGlums = null,
     Object? isLoading = null,
-    Object? showErrorMessage = null,
+    Object? errorMessage = null,
   }) {
     return _then(_$_StatsState(
       allStoriesCount: null == allStoriesCount
@@ -188,17 +188,17 @@ class __$$_StatsStateCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      showErrorMessage: null == showErrorMessage
-          ? _value.showErrorMessage
-          : showErrorMessage // ignore: cast_nullable_to_non_nullable
-              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as Option<String>,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_StatsState extends _StatsState {
+class _$_StatsState implements _StatsState {
   const _$_StatsState(
       {required this.allStoriesCount,
       required this.glumAverage,
@@ -208,13 +208,12 @@ class _$_StatsState extends _StatsState {
       required final Map<TagModel, int> trendingMoodsOrGlums,
       required final Map<DateTime, int> yearInGlums,
       required this.isLoading,
-      required this.showErrorMessage})
+      required this.errorMessage})
       : _glumDistribution = glumDistribution,
         _weeklyGlum = weeklyGlum,
         _trendingTags = trendingTags,
         _trendingMoodsOrGlums = trendingMoodsOrGlums,
-        _yearInGlums = yearInGlums,
-        super._();
+        _yearInGlums = yearInGlums;
 
   @override
   final int allStoriesCount;
@@ -264,11 +263,11 @@ class _$_StatsState extends _StatsState {
   @override
   final bool isLoading;
   @override
-  final bool showErrorMessage;
+  final Option<String> errorMessage;
 
   @override
   String toString() {
-    return 'StatsState(allStoriesCount: $allStoriesCount, glumAverage: $glumAverage, glumDistribution: $glumDistribution, weeklyGlum: $weeklyGlum, trendingTags: $trendingTags, trendingMoodsOrGlums: $trendingMoodsOrGlums, yearInGlums: $yearInGlums, isLoading: $isLoading, showErrorMessage: $showErrorMessage)';
+    return 'StatsState(allStoriesCount: $allStoriesCount, glumAverage: $glumAverage, glumDistribution: $glumDistribution, weeklyGlum: $weeklyGlum, trendingTags: $trendingTags, trendingMoodsOrGlums: $trendingMoodsOrGlums, yearInGlums: $yearInGlums, isLoading: $isLoading, errorMessage: $errorMessage)';
   }
 
   @override
@@ -292,8 +291,8 @@ class _$_StatsState extends _StatsState {
                 .equals(other._yearInGlums, _yearInGlums) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
-            (identical(other.showErrorMessage, showErrorMessage) ||
-                other.showErrorMessage == showErrorMessage));
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage));
   }
 
   @override
@@ -307,7 +306,7 @@ class _$_StatsState extends _StatsState {
       const DeepCollectionEquality().hash(_trendingMoodsOrGlums),
       const DeepCollectionEquality().hash(_yearInGlums),
       isLoading,
-      showErrorMessage);
+      errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -316,7 +315,7 @@ class _$_StatsState extends _StatsState {
       __$$_StatsStateCopyWithImpl<_$_StatsState>(this, _$identity);
 }
 
-abstract class _StatsState extends StatsState {
+abstract class _StatsState implements StatsState {
   const factory _StatsState(
       {required final int allStoriesCount,
       required final double glumAverage,
@@ -326,8 +325,7 @@ abstract class _StatsState extends StatsState {
       required final Map<TagModel, int> trendingMoodsOrGlums,
       required final Map<DateTime, int> yearInGlums,
       required final bool isLoading,
-      required final bool showErrorMessage}) = _$_StatsState;
-  const _StatsState._() : super._();
+      required final Option<String> errorMessage}) = _$_StatsState;
 
   @override
   int get allStoriesCount;
@@ -346,7 +344,7 @@ abstract class _StatsState extends StatsState {
   @override
   bool get isLoading;
   @override
-  bool get showErrorMessage;
+  Option<String> get errorMessage;
   @override
   @JsonKey(ignore: true)
   _$$_StatsStateCopyWith<_$_StatsState> get copyWith =>

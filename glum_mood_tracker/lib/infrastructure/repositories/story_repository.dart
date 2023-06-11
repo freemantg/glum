@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:drift/drift.dart';
 import 'package:glum_mood_tracker/domain/interfaces.dart';
 import 'package:glum_mood_tracker/infrastructure/database/drift_database.dart';
 import 'package:rxdart/rxdart.dart';
@@ -22,6 +23,7 @@ class StoryRepository implements IStoryRepository {
         _db.storyDao.insertStoryWithTagsAndPhotos(StoryDto.fromDomain(story)),
         _photoRepository.savePhoto(story.photos.first),
       ]);
+
 
       return right(unit);
     } catch (e) {
