@@ -44,18 +44,16 @@ class YearInGlumsCard extends StatelessWidget {
     return TableRow(
       children: [
         const Text(''),
-        ...monthInitials
-            .map(
-              (e) => TableCell(
-                verticalAlignment: TableCellVerticalAlignment.middle,
-                child: Text(
-                  e,
-                  textAlign: TextAlign.center,
-                  style: $styles.text.caption,
-                ),
-              ),
-            )
-            .toList()
+        ...monthInitials.map(
+          (e) => TableCell(
+            verticalAlignment: TableCellVerticalAlignment.middle,
+            child: Text(
+              e,
+              textAlign: TextAlign.center,
+              style: $styles.text.caption,
+            ),
+          ),
+        )
       ],
     );
   }
@@ -85,14 +83,8 @@ class YearInGlumsCard extends StatelessWidget {
     return Consumer(
       builder: (context, ref, child) {
         final yearInGlumsMap = ref.watch(statsNotifierProvider).yearInGlums;
-        int? glumRating;
-
-        for (var key in yearInGlumsMap.keys) {
-          if (DateUtils.isSameDay(
-              key, DateTime(DateTime.now().year, month, day))) {
-            glumRating = yearInGlumsMap[key];
-          }
-        }
+        final currentYear = DateTime.now().year;
+        final glumRating = yearInGlumsMap[DateTime(currentYear, month, day)];
         return _buildGlumRatingBox(glumRating);
       },
     );

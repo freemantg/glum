@@ -37,9 +37,13 @@ class StatsPage extends HookConsumerWidget {
 
   AppBar _buildAppBar() {
     return AppBar(
-      leading: const Icon(Icons.search),
-      actions: const [Icon(Icons.settings)],
+      leading: _buildIconButton(Icons.search),
+      actions: [_buildIconButton(Icons.settings)],
     );
+  }
+
+  Widget _buildIconButton(IconData iconData) {
+    return Icon(iconData);
   }
 
   Widget _buildStatsList() {

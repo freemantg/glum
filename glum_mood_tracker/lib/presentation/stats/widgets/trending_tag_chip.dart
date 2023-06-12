@@ -5,22 +5,26 @@ import '../../../styles/styles.dart';
 
 class TrendingTagChip extends StatelessWidget {
   const TrendingTagChip({
-    super.key,
+    Key? key,
     required this.tag,
     required this.count,
-  });
+  }) : super(key: key);
 
   final TagModel tag;
   final int count;
 
   @override
   Widget build(BuildContext context) {
+    final insets = $styles.insets;
+
     return Chip(
       side: BorderSide.none,
       labelPadding: EdgeInsets.zero,
       visualDensity: VisualDensity.compact,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular($styles.corners.md)),
+        borderRadius: BorderRadius.all(
+          Radius.circular($styles.corners.md),
+        ),
       ),
       label: Row(
         mainAxisSize: MainAxisSize.min,
@@ -32,14 +36,14 @@ class TrendingTagChip extends StatelessWidget {
               size: 12.0,
             ),
           ),
-          SizedBox(width: $styles.insets.xs),
+          SizedBox(width: insets.xs),
           Text(
             tag.title,
             style: $styles.text.caption.copyWith(
               height: 0,
             ),
           ),
-          SizedBox(width: $styles.insets.xs),
+          SizedBox(width: insets.xs),
           Text(
             count.toString(),
             style: $styles.text.caption.copyWith(
