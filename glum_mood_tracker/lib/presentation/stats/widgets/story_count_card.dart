@@ -7,11 +7,14 @@ import 'widgets.dart';
 
 class StoryCountCard extends ConsumerWidget {
   const StoryCountCard({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final stats = ref.watch(statsNotifierProvider).storyStats;
+    final insets = $styles.insets; // Extracted for reuse
+
     return StyledCard(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -19,43 +22,37 @@ class StoryCountCard extends ConsumerWidget {
           Column(
             children: [
               Text(
-                ref
-                    .watch(statsNotifierProvider)
-                    .storyStats
-                    .allStoriesCount
-                    .toString(),
+                stats.allStoriesCount.toString(),
                 style: $styles.text.bodyBold.copyWith(
                   height: 0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: $styles.insets.xxs),
+              SizedBox(height: insets.xxs),
               Text(
                 'All Stories',
-                style: $styles.text.caption
-                    .copyWith(color: Theme.of(context).disabledColor),
+                style: $styles.text.caption.copyWith(
+                  color: Theme.of(context).disabledColor,
+                ),
               ),
             ],
           ),
           Column(
             children: [
               Text(
-                ref
-                    .watch(statsNotifierProvider)
-                    .storyStats
-                    .glumAverage
-                    .toStringAsFixed(2),
+                stats.glumAverage.toStringAsFixed(2),
                 style: $styles.text.bodyBold.copyWith(
                   height: 0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: $styles.insets.xxs),
+              SizedBox(height: insets.xxs),
               Text(
                 'Glum Average',
-                style: $styles.text.caption
-                    .copyWith(color: Theme.of(context).disabledColor),
-              )
+                style: $styles.text.caption.copyWith(
+                  color: Theme.of(context).disabledColor,
+                ),
+              ),
             ],
           ),
         ],
