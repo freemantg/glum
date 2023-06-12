@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'widgets.dart';
 
 class AddTagWidget extends StatelessWidget {
-  const AddTagWidget({super.key});
+  const AddTagWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

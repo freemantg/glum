@@ -24,7 +24,6 @@ class CalendarToggleButton extends HookWidget {
         ),
         child: Icon(
           showCalendar ? Icons.undo : Icons.calendar_month_outlined,
-          // style: $styles.text.caption.copyWith(height: 0),
         ),
       ),
     );
