@@ -7,18 +7,17 @@ class ImageViewer extends StatelessWidget {
   final List<PhotoModel> photos;
 
   const ImageViewer({
-    super.key,
+    Key? key,
     required this.photos,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final double screenWidth =
         MediaQuery.of(context).size.width - $styles.insets.xs;
     final double firstImageWidth = screenWidth / 2;
-    final double remainingImageWidth = (screenWidth - firstImageWidth) / 2;
 
-    return (photos.isEmpty)
+    return photos.isEmpty
         ? const CircularProgressIndicator()
         : SizedBox(
             child: Stack(
@@ -35,6 +34,7 @@ class ImageViewer extends StatelessWidget {
                 Positioned.fill(
                   left: firstImageWidth - 15,
                   child: GridView.builder(
+                    key: const Key('imageGridView'),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
