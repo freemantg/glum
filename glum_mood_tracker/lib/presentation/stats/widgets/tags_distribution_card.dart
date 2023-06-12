@@ -12,22 +12,25 @@ class TagsDistributionCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final trendingTags = ref.watch(statsNotifierProvider).trendingStats.trendingMoodsOrGlums;
+    final trendingTags =
+        ref.watch(statsNotifierProvider).trendingStats.trendingMoodsOrGlums;
+    final insets = $styles.insets; // Extracted for reuse
+
     return StyledCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const ToggleTagsFilterButton(),
-          SizedBox(height: $styles.insets.sm),
+          SizedBox(height: insets.sm),
           Wrap(
-            spacing: $styles.insets.xs,
+            spacing: insets.xs,
             children: trendingTags.entries
                 .map((e) => TrendingTagChip(
                       tag: e.key,
                       count: e.value,
                     ))
                 .toList(),
-          )
+          ),
         ],
       ),
     );
