@@ -12,7 +12,7 @@ class TrendingTagsCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final trendingTags = ref.watch(statsNotifierProvider).trendingTags;
+    final trendingTags = ref.watch(statsNotifierProvider).trendingStats.trendingTags;
 
     return StyledCard(
       child: Column(

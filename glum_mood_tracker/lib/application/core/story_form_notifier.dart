@@ -42,56 +42,68 @@ class StoryFormNotifier extends StateNotifier<StoryFormState> {
   Future<void> initialiseStory(StoryModel? story) async {
     if (story == null) return;
     state = state.copyWith(
-      isEditing: true,
       story: story,
       selectedTags: story.tags,
+      isEditing: true,
     );
   }
 
   Future<void> save() async {
-    state = state.copyWith(isSaving: true);
-    final failureOrSuccess = state.isEditing
-        ? await _storyRepository.updateStory(
-            state.story.copyWith(tags: state.selectedTags),
-          )
-        : await _storyRepository.addStory(
-            state.story.copyWith(tags: state.selectedTags),
-          );
-    state = state.copyWith(
-      isSaving: false,
-      failureOrSuccess: optionOf(failureOrSuccess),
-    );
+    _updateStorySaving(true);
+    final failureOrSuccess = await _saveStory();
+    _updateFailureOrSuccess(optionOf(failureOrSuccess));
+    _updateStorySaving(false);
   }
 
   void titleChanged(String str) =>
-      state = state.copyWith(story: state.story.copyWith(title: str));
+      _updateStory(state.story.copyWith(title: str));
 
   void ratingChanged(int rating) =>
-      state = state.copyWith(story: state.story.copyWith(glumRating: rating));
+      _updateStory(state.story.copyWith(glumRating: rating));
 
   void descriptionChanged(String str) =>
-      state = state.copyWith(story: state.story.copyWith(description: str));
+      _updateStory(state.story.copyWith(description: str));
 
   void dateChanged(DateTime date) =>
-      state = state.copyWith(story: state.story.copyWith(date: date));
+      _updateStory(state.story.copyWith(date: date));
 
   Future<void> photoChanged() async {
     final failureOrPhoto = await _photoRepository.pickAndCropPhoto();
     failureOrPhoto.fold(
-      (failure) => state = state.copyWith(
-          failureOrSuccess: optionOf(left(const StoryFailure.unexpected()))),
+      (failure) {
+        _updateFailureOrSuccess(
+            optionOf(left(const StoryFailure.unexpected())));
+      },
       (photo) async {
         await _photoRepository.savePhoto(photo);
-        state = state.copyWith(story: state.story.copyWith(photos: [photo]));
+        _updateStory(state.story.copyWith(photos: [photo]));
       },
     );
   }
 
   void toggleTag(TagModel tag) {
-    state = state.copyWith(
-      selectedTags: state.selectedTags.contains(tag)
+    _updateSelectedTags(
+      state.selectedTags.contains(tag)
           ? state.selectedTags.where((t) => t != tag).toList()
           : [...state.selectedTags, tag],
     );
   }
+
+  Future<Either<StoryFailure, Unit>> _saveStory() => state.isEditing
+      ? _storyRepository
+          .updateStory(state.story.copyWith(tags: state.selectedTags))
+      : _storyRepository
+          .addStory(state.story.copyWith(tags: state.selectedTags));
+
+  void _updateStory(StoryModel story) => state = state.copyWith(story: story);
+
+  void _updateStorySaving(bool isSaving) =>
+      state = state.copyWith(isSaving: isSaving);
+
+  void _updateFailureOrSuccess(
+          Option<Either<StoryFailure, Unit>> failureOrSuccess) =>
+      state = state.copyWith(failureOrSuccess: failureOrSuccess);
+
+  void _updateSelectedTags(List<TagModel> selectedTags) =>
+      state = state.copyWith(selectedTags: selectedTags);
 }

@@ -42,7 +42,7 @@ class ToggleTagsFilterButton extends HookConsumerWidget {
           const Spacer(),
           Text(
             ref
-                .watch(statsNotifierProvider)
+                .watch(statsNotifierProvider).trendingStats
                 .trendingMoodsOrGlums
                 .keys
                 .length

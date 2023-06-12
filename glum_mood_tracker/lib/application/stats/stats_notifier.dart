@@ -8,27 +8,45 @@ import '../../infrastructure/repositories/repositories.dart';
 part 'stats_notifier.freezed.dart';
 
 @freezed
-class StatsState with _$StatsState {
-  const factory StatsState({
+@freezed
+class StoryStats with _$StoryStats {
+  const factory StoryStats({
     required int allStoriesCount,
     required double glumAverage,
     required Map<int, int> glumDistribution,
     required Map<DateTime, int> weeklyGlum,
+  }) = _StoryStats;
+}
+
+@freezed
+class TrendingStats with _$TrendingStats {
+  const factory TrendingStats({
     required Map<TagModel, int> trendingTags,
     required Map<TagModel, int> trendingMoodsOrGlums,
+  }) = _TrendingStats;
+}
+
+@freezed
+class StatsState with _$StatsState {
+  const factory StatsState({
+    required StoryStats storyStats,
+    required TrendingStats trendingStats,
     required Map<DateTime, int> yearInGlums,
     required bool isLoading,
-    required Option<String>
-        errorMessage, // Replace bool with an optional string
+    required Option<String> errorMessage,
   }) = _StatsState;
 
   factory StatsState.initial() => const StatsState(
-        allStoriesCount: 0,
-        glumAverage: 0.0,
-        glumDistribution: {},
-        weeklyGlum: {},
-        trendingTags: {},
-        trendingMoodsOrGlums: {},
+        storyStats: StoryStats(
+          allStoriesCount: 0,
+          glumAverage: 0.0,
+          glumDistribution: {},
+          weeklyGlum: {},
+        ),
+        trendingStats: TrendingStats(
+          trendingTags: {},
+          trendingMoodsOrGlums: {},
+        ),
         yearInGlums: {},
         isLoading: false,
         errorMessage: None(),
@@ -59,7 +77,8 @@ class StatsNotifier extends StateNotifier<StatsState> {
     final failureOrAllStoriesCount = await _repository.countAllStories();
     state = failureOrAllStoriesCount.fold(
       (failure) => state.copyWith(errorMessage: Some(failure.toString())),
-      (count) => state.copyWith(allStoriesCount: count),
+      (count) => state.copyWith(
+          storyStats: state.storyStats.copyWith(allStoriesCount: count)),
     );
   }
 
@@ -67,7 +86,8 @@ class StatsNotifier extends StateNotifier<StatsState> {
     final failureOrGlumAverage = await _repository.glumAverage();
     state = failureOrGlumAverage.fold(
       (failure) => state.copyWith(errorMessage: Some(failure.toString())),
-      (average) => state.copyWith(glumAverage: average),
+      (average) => state.copyWith(
+          storyStats: state.storyStats.copyWith(glumAverage: average)),
     );
   }
 
@@ -75,7 +95,9 @@ class StatsNotifier extends StateNotifier<StatsState> {
     final failureOrGlumAverage = await _repository.glumDistribution();
     state = failureOrGlumAverage.fold(
       (failure) => state.copyWith(errorMessage: Some(failure.toString())),
-      (distribution) => state.copyWith(glumDistribution: distribution),
+      (distribution) => state.copyWith(
+          storyStats:
+              state.storyStats.copyWith(glumDistribution: distribution)),
     );
   }
 
@@ -83,7 +105,8 @@ class StatsNotifier extends StateNotifier<StatsState> {
     final failureOrAverageWeek = await _repository.averageWeek();
     state = failureOrAverageWeek.fold(
       (failure) => state.copyWith(errorMessage: Some(failure.toString())),
-      (averageWeek) => state.copyWith(weeklyGlum: averageWeek),
+      (averageWeek) => state.copyWith(
+          storyStats: state.storyStats.copyWith(weeklyGlum: averageWeek)),
     );
   }
 
@@ -103,7 +126,9 @@ class StatsNotifier extends StateNotifier<StatsState> {
           (failure) =>
               state = state.copyWith(errorMessage: Some(failure.toString())),
           (trendingTags) {
-            state = state.copyWith(trendingTags: trendingTags);
+            state = state.copyWith(
+                trendingStats:
+                    state.trendingStats.copyWith(trendingTags: trendingTags));
           },
         );
       },
@@ -118,7 +143,9 @@ class StatsNotifier extends StateNotifier<StatsState> {
           (failure) =>
               state = state.copyWith(errorMessage: Some(failure.toString())),
           (trendingTags) {
-            state = state.copyWith(trendingMoodsOrGlums: trendingTags);
+            state = state.copyWith(
+                trendingStats: state.trendingStats
+                    .copyWith(trendingMoodsOrGlums: trendingTags));
           },
         );
       },

@@ -5,7 +5,6 @@ import '../../domain/failures/failures.dart';
 import '../../domain/models/models.dart';
 import '../../infrastructure/repositories/repositories.dart';
 
-
 part 'photos_notifier.freezed.dart';
 
 @freezed
@@ -31,10 +30,11 @@ class PhotosStateNotifier extends StateNotifier<PhotosState> {
   final PhotoRepository _repository;
 
   Future<void> getAllPhotos() async {
-    state = PhotosState.loadInProgress(photos: state.photos);
+    final oldPhotos = state.photos;
     final successOrFailure = await _repository.getAllPhotos();
+
     state = successOrFailure.fold(
-      (failure) => PhotosState.failure(failure, photos: state.photos),
+      (failure) => PhotosState.failure(failure, photos: oldPhotos),
       (photos) => PhotosState.loadSuccess(photos: photos),
     );
   }

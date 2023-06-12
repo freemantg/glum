@@ -1,10 +1,12 @@
+import 'dart:async';
+
+import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../domain/failures/failures.dart';
 import '../../domain/models/models.dart';
 import '../../infrastructure/repositories/repositories.dart';
-
 
 part 'cards_notifier.freezed.dart';
 
@@ -23,25 +25,33 @@ class CardsState with _$CardsState {
 class CardsStateNotifier extends StateNotifier<CardsState> {
   CardsStateNotifier({required CardRepository repository})
       : _repository = repository,
-        super(const CardsState.initial(cards: []));
+        super(const CardsState.loadInProgress(cards: [])) {
+    _watchAllCards();
+  }
 
   final CardRepository _repository;
+  StreamSubscription<Either<CardFailure, List<CardModel>>>?
+      _cardStreamSubscription;
 
-  Future<void> watchAllCards() async {
-    state = CardsState.loadInProgress(cards: state.cards);
-    final cardsStream = _repository.watchAllCards();
-    cardsStream.listen(
+  Future<void> _watchAllCards() async {
+    _cardStreamSubscription?.cancel();
+    _cardStreamSubscription = _repository.watchAllCards().listen(
       (successOrFailure) {
         successOrFailure.fold(
           (failure) {
             state = CardsState.failure(failure, cards: state.cards);
           },
           (cards) {
-            final cardsss = cards.map((e) => e).toList();
-            state = CardsState.loadSuccess(cards: cardsss);
+            state = CardsState.loadSuccess(cards: cards);
           },
         );
       },
     );
+  }
+
+  @override
+  void dispose() {
+    _cardStreamSubscription?.cancel();
+    super.dispose();
   }
 }

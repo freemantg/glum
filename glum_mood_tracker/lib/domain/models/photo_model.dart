@@ -13,9 +13,11 @@ class PhotoModel with _$PhotoModel {
     required String filePath,
   }) = _PhotoModel;
 
-  factory PhotoModel.empty() => const PhotoModel(
-        file: null,
-        fileName: '',
-        filePath: '',
-      );
+  factory PhotoModel.empty() {
+    return const PhotoModel(
+      file: null,
+      fileName: '',
+      filePath: '',
+    );
+  }
 }

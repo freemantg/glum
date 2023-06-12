@@ -12,7 +12,8 @@ class GlumDistributionCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final glumDistribution = ref.watch(statsNotifierProvider).glumDistribution;
+    final glumDistribution =
+        ref.watch(statsNotifierProvider).storyStats.glumDistribution;
     final totalGlumCount = glumDistribution.values.fold(0, (x, y) => x + (y));
 
     const heightFactor = 0.5;

@@ -19,7 +19,11 @@ class StoryCountCard extends ConsumerWidget {
           Column(
             children: [
               Text(
-                ref.watch(statsNotifierProvider).allStoriesCount.toString(),
+                ref
+                    .watch(statsNotifierProvider)
+                    .storyStats
+                    .allStoriesCount
+                    .toString(),
                 style: $styles.text.bodyBold.copyWith(
                   height: 0,
                   fontWeight: FontWeight.bold,
@@ -36,7 +40,11 @@ class StoryCountCard extends ConsumerWidget {
           Column(
             children: [
               Text(
-                ref.watch(statsNotifierProvider).glumAverage.toStringAsFixed(2),
+                ref
+                    .watch(statsNotifierProvider)
+                    .storyStats
+                    .glumAverage
+                    .toStringAsFixed(2),
                 style: $styles.text.bodyBold.copyWith(
                   height: 0,
                   fontWeight: FontWeight.bold,

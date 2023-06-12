@@ -21,13 +21,6 @@ class _CardsPageState extends ConsumerState<CardsPage> {
   @override
   void initState() {
     super.initState();
-    _watchAllCards();
-  }
-
-  void _watchAllCards() {
-    Future.microtask(() {
-      ref.watch(cardsStateNotifierProvider.notifier).watchAllCards();
-    });
   }
 
   @override

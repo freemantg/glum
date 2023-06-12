@@ -12,7 +12,7 @@ class TagsDistributionCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final trendingTags = ref.watch(statsNotifierProvider).trendingMoodsOrGlums;
+    final trendingTags = ref.watch(statsNotifierProvider).trendingStats.trendingMoodsOrGlums;
     return StyledCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -33,7 +33,7 @@ class WeekDistributionCard extends ConsumerWidget {
   Widget _buildGlumDistributionRow(WidgetRef ref) {
     return Row(
       children: List.generate(
-        ref.watch(statsNotifierProvider).weeklyGlum.keys.length,
+        ref.watch(statsNotifierProvider).storyStats.weeklyGlum.keys.length,
         (index) => _buildGlumDistributionColumn(index, ref),
       ),
     );
@@ -41,8 +41,8 @@ class WeekDistributionCard extends ConsumerWidget {
 
   Widget _buildGlumDistributionColumn(int index, WidgetRef ref) {
     final storyDate =
-        ref.watch(statsNotifierProvider).weeklyGlum.keys.toList()[index];
-    final glumRating = ref.watch(statsNotifierProvider).weeklyGlum[storyDate]!;
+        ref.watch(statsNotifierProvider).storyStats.weeklyGlum.keys.toList()[index];
+    final glumRating = ref.watch(statsNotifierProvider).storyStats.weeklyGlum[storyDate]!;
 
     return Expanded(
       child: Container(
