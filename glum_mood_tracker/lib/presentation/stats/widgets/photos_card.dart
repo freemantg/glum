@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,12 +8,13 @@ import 'widgets.dart';
 
 class PhotosCard extends ConsumerWidget {
   const PhotosCard({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final photos = ref.watch(photosStateNotifierProvider).photos;
+    final insets = $styles.insets;
 
     return StyledCard(
       customPadding: true,
@@ -22,27 +22,23 @@ class PhotosCard extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.all($styles.insets.sm),
-            child: Column(
+            padding: EdgeInsets.all(insets.sm),
+            child: Row(
               children: [
-                Row(
-                  children: [
-                    Text('Photos', style: $styles.text.bodySmallBold),
-                    const Spacer(),
-                    Text(
-                      photos.length.toString(),
-                      style: $styles.text.bodySmallBold.copyWith(height: 0),
-                    ),
-                    GestureDetector(
-                      child: const Icon(Icons.keyboard_arrow_right),
-                      onTap: () => showTagModalBottomSheet(context),
-                    )
-                  ],
+                Text('Photos', style: $styles.text.bodySmallBold),
+                const Spacer(),
+                Text(
+                  photos.length.toString(),
+                  style: $styles.text.bodySmallBold,
+                ),
+                GestureDetector(
+                  child: const Icon(Icons.keyboard_arrow_right),
+                  onTap: () => showTagModalBottomSheet(context),
                 ),
               ],
             ),
           ),
-          ImageViewer(photos: photos)
+          ImageViewer(photos: photos),
         ],
       ),
     );
