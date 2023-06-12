@@ -17,8 +17,8 @@ class GlumCountPercentageBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final insets = $styles.insets; // Extracted for reuse
-    final corners = $styles.corners; // Extracted for reuse
+    final insets = $styles.insets;
+    final corners = $styles.corners;
 
     return Padding(
       padding: EdgeInsets.symmetric(

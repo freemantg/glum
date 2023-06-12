@@ -7,14 +7,17 @@ import 'widgets.dart';
 
 class GlumDistributionCard extends ConsumerWidget {
   const GlumDistributionCard({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final glumDistribution =
         ref.watch(statsNotifierProvider).storyStats.glumDistribution;
-    final totalGlumCount = glumDistribution.values.fold(0, (x, y) => x + (y));
+    final totalGlumCount =
+        glumDistribution.values.fold<int>(0, (x, y) => x + y);
+
+    final insets = $styles.insets;
 
     const heightFactor = 0.5;
     const doughnutChartHeight = 250.0;
@@ -22,7 +25,7 @@ class GlumDistributionCard extends ConsumerWidget {
     return StyledCard(
       customPadding: true,
       child: Padding(
-        padding: EdgeInsets.all($styles.insets.sm),
+        padding: EdgeInsets.all(insets.sm),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -34,7 +37,7 @@ class GlumDistributionCard extends ConsumerWidget {
                 alignment: Alignment.center,
                 children: [
                   DoughnutChart(
-                    data: glumDistribution.values.map((e) => e).toList(),
+                    data: glumDistribution.values.toList(),
                     width: doughnutChartHeight,
                     height: doughnutChartHeight,
                   ),
@@ -50,16 +53,14 @@ class GlumDistributionCard extends ConsumerWidget {
                 ],
               ),
             ),
-            SizedBox(height: $styles.insets.md),
-            ...glumDistribution.entries
-                .map(
-                  (e) => GlumCountPercentageBar(
-                    glumRating: e.key,
-                    count: e.value,
-                    totalGlums: totalGlumCount,
-                  ),
-                )
-                .toList()
+            SizedBox(height: insets.md),
+            ...glumDistribution.entries.map(
+              (e) => GlumCountPercentageBar(
+                glumRating: e.key,
+                count: e.value,
+                totalGlums: totalGlumCount,
+              ),
+            ),
           ],
         ),
       ),
