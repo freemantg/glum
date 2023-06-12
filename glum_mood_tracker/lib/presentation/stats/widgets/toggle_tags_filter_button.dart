@@ -7,11 +7,13 @@ import '../../../styles/styles.dart';
 import '../../cards/widgets/tag_bottom_modal_sheet.dart';
 
 class ToggleTagsFilterButton extends HookConsumerWidget {
-  const ToggleTagsFilterButton({super.key});
+  const ToggleTagsFilterButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var isMoodsFilter = useState(true);
+    final isMoodsFilter = useState(true);
+    final trendingStats = ref.watch(statsNotifierProvider).trendingStats;
+    final insets = $styles.insets; // Extracted for reuse
 
     return GestureDetector(
       onTap: () {
@@ -30,7 +32,7 @@ class ToggleTagsFilterButton extends HookConsumerWidget {
                   : Theme.of(context).disabledColor,
             ),
           ),
-          SizedBox(width: $styles.insets.xs),
+          SizedBox(width: insets.xs),
           Text(
             'Glums',
             style: $styles.text.bodySmallBold.copyWith(
@@ -41,18 +43,13 @@ class ToggleTagsFilterButton extends HookConsumerWidget {
           ),
           const Spacer(),
           Text(
-            ref
-                .watch(statsNotifierProvider).trendingStats
-                .trendingMoodsOrGlums
-                .keys
-                .length
-                .toString(),
+            trendingStats.trendingMoodsOrGlums.keys.length.toString(),
             style: $styles.text.bodySmallBold.copyWith(height: 0),
           ),
           GestureDetector(
             child: const Icon(Icons.keyboard_arrow_right),
             onTap: () => showTagModalBottomSheet(context),
-          )
+          ),
         ],
       ),
     );

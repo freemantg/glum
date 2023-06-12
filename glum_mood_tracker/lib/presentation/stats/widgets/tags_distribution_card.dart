@@ -14,7 +14,7 @@ class TagsDistributionCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final trendingTags =
         ref.watch(statsNotifierProvider).trendingStats.trendingMoodsOrGlums;
-    final insets = $styles.insets; // Extracted for reuse
+    final insets = $styles.insets;
 
     return StyledCard(
       child: Column(
