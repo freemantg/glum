@@ -5,9 +5,9 @@ import 'widgets.dart';
 
 class StyledMonthViewCalendar extends StatelessWidget {
   const StyledMonthViewCalendar({
-    super.key,
+    Key? key,
     required this.monthYear,
-  });
+  }) : super(key: key);
 
   final DateTime monthYear;
 
@@ -15,7 +15,6 @@ class StyledMonthViewCalendar extends StatelessWidget {
   Widget build(BuildContext context) {
     final daysInMonth =
         DateUtils.getDaysInMonth(monthYear.year, monthYear.month);
-
     final firstDayOfMonthOffset = DateUtils.firstDayOffset(
       monthYear.year,
       monthYear.month,

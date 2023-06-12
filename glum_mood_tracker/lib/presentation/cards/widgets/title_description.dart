@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../domain/models/models.dart';
@@ -6,9 +5,9 @@ import '../../../styles/styles.dart';
 
 class TitleAndDescriptionWidget extends StatelessWidget {
   const TitleAndDescriptionWidget({
-    super.key,
+    Key? key,
     required this.story,
-  });
+  }) : super(key: key);
 
   final StoryModel story;
 
@@ -52,9 +51,7 @@ class TitleAndDescriptionWidget extends StatelessWidget {
 }
 
 class QuotationDecal extends StatelessWidget {
-  const QuotationDecal({
-    super.key,
-  });
+  const QuotationDecal({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

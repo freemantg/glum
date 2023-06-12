@@ -21,25 +21,16 @@ Future<T?> showTagModalBottomSheet<T>(BuildContext context) {
   );
 }
 
-class TagModalBottomSheet extends ConsumerStatefulWidget {
-  const TagModalBottomSheet({
-    super.key,
-  });
+class TagModalBottomSheet extends ConsumerWidget {
+  const TagModalBottomSheet({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<TagModalBottomSheet> createState() =>
-      _TagModalBottomSheetState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    useEffect(() {
+      ref.read(tagNotifierProvider.notifier).watchTags();
+      return null;
+    }, []);
 
-class _TagModalBottomSheetState extends ConsumerState<TagModalBottomSheet> {
-  @override
-  void initState() {
-    super.initState();
-    Future.microtask(() => ref.read(tagNotifierProvider.notifier).watchTags());
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -69,7 +60,6 @@ class _TagModalBottomSheetState extends ConsumerState<TagModalBottomSheet> {
               itemCount: tags.length,
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                final storyFormState = ref.watch(storyFormNotifierProvider);
                 final tag = tags[index];
                 return CheckboxListTile(
                   activeColor: $styles.primaryThemeColor,
@@ -78,7 +68,8 @@ class _TagModalBottomSheetState extends ConsumerState<TagModalBottomSheet> {
                   onChanged: (_) {
                     ref.read(storyFormNotifierProvider.notifier).toggleTag(tag);
                   },
-                  value: storyFormState.selectedTags.contains(tag),
+                  value: ref.watch(storyFormNotifierProvider
+                      .select((value) => value.selectedTags.contains(tag))),
                   title: Row(
                     children: [
                       Text(tag.title),
@@ -101,7 +92,7 @@ class _TagModalBottomSheetState extends ConsumerState<TagModalBottomSheet> {
 }
 
 class TagActionAlertDialog extends HookConsumerWidget {
-  const TagActionAlertDialog({super.key});
+  const TagActionAlertDialog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -38,7 +38,7 @@ class StyledBottomBar extends StatelessWidget {
                       ),
                       SizedBox(width: $styles.insets.xs),
                       Text(
-                        story.tags.map((e) => e.title).toList().join(', '),
+                        story.tags.map((e) => e.title).join(', '),
                         style: $styles.text.bodySmall.copyWith(
                           color: Colors.white.withOpacity(0.45),
                           fontSize: 12.0,

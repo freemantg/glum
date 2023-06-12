@@ -7,9 +7,9 @@ import '../../../styles/styles.dart';
 
 class DescriptionTextField extends HookConsumerWidget {
   const DescriptionTextField({
-    super.key,
+    Key? key,
     this.description,
-  });
+  }) : super(key: key);
 
   final String? description;
 

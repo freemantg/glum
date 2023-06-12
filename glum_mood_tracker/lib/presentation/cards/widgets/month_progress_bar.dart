@@ -8,9 +8,9 @@ import 'widgets.dart';
 class MonthProgressBar extends ConsumerWidget {
   final DateTime monthYear;
   const MonthProgressBar({
-    super.key,
+    Key? key,
     required this.monthYear,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -18,11 +18,9 @@ class MonthProgressBar extends ConsumerWidget {
         DateUtils.getDaysInMonth(monthYear.year, monthYear.month);
 
     final stories = ref.watch(storyNotifierProvider).maybeWhen(
-          loadSuccess: (stories) {
-            return stories
-                .where((story) => DateUtils.isSameMonth(story.date, monthYear))
-                .length;
-          },
+          loadSuccess: (stories) => stories
+              .where((story) => DateUtils.isSameMonth(story.date, monthYear))
+              .length,
           orElse: () => 0,
         );
 

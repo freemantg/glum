@@ -45,13 +45,12 @@ class DateButton extends ConsumerWidget {
       child: Text(
         buttonDay.toString(),
         textAlign: TextAlign.center,
-        style: (story.id == null)
-            ? $styles.text.bodySmall
-                .copyWith(color: Theme.of(context).disabledColor)
-            : $styles.text.bodySmall.copyWith(
-                color: Colors.pink,
-                fontWeight: FontWeight.bold,
-              ),
+        style: TextStyle(
+          color:
+              story.id == null ? Theme.of(context).disabledColor : Colors.pink,
+          fontWeight: story.id == null ? FontWeight.normal : FontWeight.bold,
+          fontSize: $styles.text.bodySmall.fontSize,
+        ),
       ),
     );
   }

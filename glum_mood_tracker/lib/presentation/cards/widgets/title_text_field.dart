@@ -17,18 +17,14 @@ class TitleTextField extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final titleController = useTextEditingController(text: title);
 
-    return Column(
-      children: [
-        TextField(
-          controller: titleController,
-          textAlign: TextAlign.center,
-          style: $styles.text.h3.copyWith(fontSize: 18.0),
-          decoration: const InputDecoration(
-              border: InputBorder.none, hintText: "Title"),
-          onChanged: (value) =>
-              ref.read(storyFormNotifierProvider.notifier).titleChanged(value),
-        ),
-      ],
+    return TextField(
+      controller: titleController,
+      textAlign: TextAlign.center,
+      style: $styles.text.h3.copyWith(fontSize: 18.0),
+      decoration:
+          const InputDecoration(border: InputBorder.none, hintText: "Title"),
+      onChanged: (value) =>
+          ref.read(storyFormNotifierProvider.notifier).titleChanged(value),
     );
   }
 }
