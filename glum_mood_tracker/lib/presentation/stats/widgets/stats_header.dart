@@ -5,15 +5,17 @@ import 'widgets.dart';
 
 class StatsHeader extends StatelessWidget {
   const StatsHeader({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final insets = $styles.insets; // Extracted for reuse
+
     return Stack(
       children: [
         Container(
-          margin: EdgeInsets.only(top: $styles.insets.lg),
+          margin: EdgeInsets.only(top: insets.lg),
           child: StyledCard(
             child: Column(
               children: [
@@ -24,13 +26,14 @@ class StatsHeader extends StatelessWidget {
                     size: 12,
                   ),
                 ),
-                SizedBox(height: $styles.insets.xxs),
+                SizedBox(height: insets.xxs),
                 Text('Stories', style: $styles.text.bodyBold),
-                SizedBox(height: $styles.insets.xxs),
+                SizedBox(height: insets.xxs),
                 Text(
                   'What matters is the interior',
-                  style: $styles.text.caption
-                      .copyWith(color: Theme.of(context).disabledColor),
+                  style: $styles.text.caption.copyWith(
+                    color: Theme.of(context).disabledColor,
+                  ),
                 ),
               ],
             ),
@@ -43,7 +46,7 @@ class StatsHeader extends StatelessWidget {
             ),
             color: $styles.primaryThemeColor,
             child: Padding(
-              padding: EdgeInsets.all($styles.insets.xs),
+              padding: EdgeInsets.all(insets.xs),
               child: Text('🍚', style: $styles.text.h3),
             ),
           ),
