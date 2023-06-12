@@ -16,8 +16,8 @@ class StyledCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: $styles.colors.cardColor,
-      surfaceTintColor: $styles.colors.cardColor,
+      color: $styles.cardColor,
+      surfaceTintColor: $styles.cardColor,
       clipBehavior: Clip.hardEdge,
       shape: RoundedRectangleBorder(
         borderRadius:

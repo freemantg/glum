@@ -58,7 +58,7 @@ class DoughnutChartPainter extends CustomPainter {
       currentAngle -= sweepAngle;
     }
 
-    final centerCirclePaint = Paint()..color = $styles.colors.cardColor;
+    final centerCirclePaint = Paint()..color = $styles.cardColor;
     canvas.drawCircle(
       Offset(size.width / 2, size.height / 2),
       size.width / 2 * 0.6,

@@ -72,7 +72,7 @@ class _TagModalBottomSheetState extends ConsumerState<TagModalBottomSheet> {
                 final storyFormState = ref.watch(storyFormNotifierProvider);
                 final tag = tags[index];
                 return CheckboxListTile(
-                  activeColor: $styles.colors.primaryThemeColor,
+                  activeColor: $styles.primaryThemeColor,
                   checkboxShape: const CircleBorder(),
                   controlAffinity: ListTileControlAffinity.leading,
                   onChanged: (_) {

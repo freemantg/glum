@@ -4,57 +4,67 @@ import 'package:google_fonts/google_fonts.dart';
 final $styles = AppStyle();
 
 class AppStyle {
-  late final _Corners corners = _Corners();
-  late final _Insets insets = _Insets();
-  late final _Text text = _Text();
-  late final _Colors colors = _Colors();
+  final Insets insets = Insets();
+  final Corners corners = Corners();
+  final TextStyles text = TextStyles();
+
+  final Color primaryThemeColor = const Color(0xFFE0445D);
+  final Color cardColor = const Color(0xFF393939);
+
 }
 
-class _Colors {
-  late final primaryThemeColor = const Color(0xFFE0445D);
-  late final cardColor = const Color(0xFF393939);
+class Corners {
+  final double sm = 4;
+  final double md = 8;
+  final double lg = 32;
 }
 
-@immutable
-class _Text {
+class Insets {
+  final double xxs = 4;
+  final double xs = 8;
+  final double sm = 16;
+  final double md = 24;
+  final double lg = 32;
+  final double xl = 48;
+  final double xxl = 56;
+  final double offset = 80;
+}
+
+class TextStyles {
   TextStyle get titleFont => GoogleFonts.roboto();
   TextStyle get titleFontCondensed => const TextStyle(fontFamily: "clem");
 
-  late final TextStyle h1 = copy(titleFont, sizePx: 64);
-  late final TextStyle h2 = copy(titleFont, sizePx: 32, heightPx: 46);
-  late final TextStyle h2Condensed = copy(titleFontCondensed, sizePx: 32);
+  TextStyle get h1 => copy(titleFont, sizePx: 64);
+  TextStyle get h2 => copy(titleFont, sizePx: 32, heightPx: 46);
+  TextStyle get h2Condensed => copy(titleFontCondensed, sizePx: 32);
 
-  late final TextStyle h3 =
+  TextStyle get h3 =>
       copy(titleFont, sizePx: 24, heightPx: 36, weight: FontWeight.w600);
-  late final TextStyle h3Condensed =
+  TextStyle get h3Condensed =>
       copy(titleFontCondensed, sizePx: 24, heightPx: 36);
 
-  late final TextStyle h4 = copy(titleFont,
+  TextStyle get h4 => copy(titleFont,
       sizePx: 14, heightPx: 23, spacingPc: 5, weight: FontWeight.w600);
 
-  late final TextStyle title1 =
+  TextStyle get title1 =>
       copy(titleFont, sizePx: 16, heightPx: 26, spacingPc: 5);
-  late final TextStyle title2 = copy(titleFont, sizePx: 14, heightPx: 16.38);
+  TextStyle get title2 => copy(titleFont, sizePx: 14, heightPx: 16.38);
 
-  late final TextStyle body = copy(titleFont, sizePx: 16, heightPx: 27);
-  late final TextStyle bodyBold = copy(
-    titleFont,
-    sizePx: 16,
-    heightPx: 26,
-    weight: FontWeight.w600,
-  );
-  late final TextStyle bodySmall = copy(titleFont, sizePx: 14, heightPx: 23);
-  late final TextStyle bodySmallBold =
+  TextStyle get body => copy(titleFont, sizePx: 16, heightPx: 27);
+  TextStyle get bodyBold =>
+      copy(titleFont, sizePx: 16, heightPx: 26, weight: FontWeight.w600);
+  TextStyle get bodySmall => copy(titleFont, sizePx: 14, heightPx: 23);
+  TextStyle get bodySmallBold =>
       copy(titleFont, sizePx: 14, heightPx: 23, weight: FontWeight.w600);
 
-  late final TextStyle quote1 = copy(titleFont,
+  TextStyle get quote1 => copy(titleFont,
       sizePx: 32, heightPx: 40, weight: FontWeight.w600, spacingPc: -3);
-  late final TextStyle quote2 =
+  TextStyle get quote2 =>
       copy(titleFont, sizePx: 21, heightPx: 32, weight: FontWeight.w400);
-  late final TextStyle quote2Sub =
+  TextStyle get quote2Sub =>
       copy(body, sizePx: 16, heightPx: 40, weight: FontWeight.w400);
 
-  late final TextStyle caption =
+  TextStyle get caption =>
       copy(titleFont, sizePx: 10, heightPx: 0, weight: FontWeight.w500);
 
   TextStyle copy(
@@ -72,23 +82,4 @@ class _Text {
       fontWeight: weight,
     );
   }
-}
-
-@immutable
-class _Corners {
-  late final double sm = 4;
-  late final double md = 8;
-  late final double lg = 32;
-}
-
-@immutable
-class _Insets {
-  late final double xxs = 4;
-  late final double xs = 8;
-  late final double sm = 16;
-  late final double md = 24;
-  late final double lg = 32;
-  late final double xl = 48;
-  late final double xxl = 56;
-  late final double offset = 80;
 }

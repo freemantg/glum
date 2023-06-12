@@ -5,11 +5,11 @@ import '../../../styles/styles.dart';
 
 class GlumCountPercentageBar extends StatelessWidget {
   const GlumCountPercentageBar({
-    super.key,
+    Key? key,
     required this.glumRating,
     required this.count,
     required this.totalGlums,
-  });
+  }) : super(key: key);
 
   final int glumRating;
   final int count;
@@ -17,30 +17,33 @@ class GlumCountPercentageBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final insets = $styles.insets; // Extracted for reuse
+    final corners = $styles.corners; // Extracted for reuse
+
     return Padding(
       padding: EdgeInsets.symmetric(
-        vertical: $styles.insets.xs,
-        horizontal: $styles.insets.xxs,
+        vertical: insets.xs,
+        horizontal: insets.xxs,
       ),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxHeight: 24.0),
+      child: SizedBox(
+        height: 24.0,
         child: Row(
           children: [
             AspectRatio(
               aspectRatio: 1,
               child: Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.all($styles.insets.xxs),
+                padding: EdgeInsets.all(insets.xxs),
                 decoration: BoxDecoration(
                   color: glumRating.ratingToColor(),
                   borderRadius: BorderRadius.all(
-                    Radius.circular($styles.corners.sm),
+                    Radius.circular(corners.sm),
                   ),
                 ),
                 child: Text(glumRating.toString()),
               ),
             ),
-            SizedBox(width: $styles.insets.sm),
+            SizedBox(width: insets.sm),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -66,7 +69,7 @@ class GlumCountPercentageBar extends StatelessWidget {
                       ),
                       const Spacer(),
                       Text(
-                        '$count / ${((count / totalGlums) * 100).toInt()}%',
+                        '$count / ${(count / totalGlums * 100).toInt()}%',
                         style: $styles.text.caption.copyWith(
                           fontWeight: FontWeight.bold,
                         ),

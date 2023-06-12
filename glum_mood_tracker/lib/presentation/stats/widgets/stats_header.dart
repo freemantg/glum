@@ -41,7 +41,7 @@ class StatsHeader extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular($styles.corners.md),
             ),
-            color: $styles.colors.primaryThemeColor,
+            color: $styles.primaryThemeColor,
             child: Padding(
               padding: EdgeInsets.all($styles.insets.xs),
               child: Text('🍚', style: $styles.text.h3),

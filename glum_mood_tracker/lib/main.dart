@@ -23,7 +23,7 @@ class AppWidget extends StatelessWidget {
         theme: ThemeData.dark().copyWith(
           useMaterial3: true,
           floatingActionButtonTheme: FloatingActionButtonThemeData(
-            backgroundColor: $styles.colors.primaryThemeColor,
+            backgroundColor: $styles.primaryThemeColor,
           ),
           appBarTheme: const AppBarTheme(
             color: Colors.transparent,
