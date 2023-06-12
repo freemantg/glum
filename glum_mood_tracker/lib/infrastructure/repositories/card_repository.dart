@@ -1,38 +1,42 @@
 import 'package:dartz/dartz.dart';
+import 'package:drift/drift.dart';
 import 'package:glum_mood_tracker/domain/interfaces.dart';
-import 'package:rxdart/rxdart.dart';
 
 import '../../domain/failures/failures.dart';
 import '../../domain/models/models.dart';
 import '../database/drift_database.dart';
 import '../dtos/dtos.dart';
 
-
-
 class CardRepository extends ICardRepository {
   final GlumDatabase _db;
 
   CardRepository({required GlumDatabase database}) : _db = database;
 
-  @override
-  Future<Either<CardFailure, Unit>> addCard(CardModel card) async {
+  Future<Either<CardFailure, Unit>> _executeDbOperation(
+      Future Function() dbOperation) async {
     try {
-      await _db.cardDao.insertCard(CardDto.fromDomain(card));
+      await dbOperation();
       return right(unit);
+    } on InvalidDataException catch (e) {
+      return left(CardFailure.invalidStatusData(e));
+    } on DriftWrappedException catch (e) {
+      return left(CardFailure.statusDatabaseException(e));
+    } on CouldNotRollBackException catch (e) {
+      return left(CardFailure.couldNotRollBackStory(e));
     } catch (e) {
       return left(const CardFailure.unexpected());
     }
   }
 
   @override
-  Future<Either<CardFailure, Unit>> updateCard(CardModel card) async {
-    try {
-      await _db.cardDao.updateCard(CardDto.fromDomain(card));
-      return right(unit);
-    } catch (e) {
-      return left(const CardFailure.unableToUpdate());
-    }
-  }
+  Future<Either<CardFailure, Unit>> addCard(CardModel card) =>
+      _executeDbOperation(
+          () => _db.cardDao.insertCard(CardDto.fromDomain(card)));
+
+  @override
+  Future<Either<CardFailure, Unit>> updateCard(CardModel card) =>
+      _executeDbOperation(
+          () => _db.cardDao.updateCard(CardDto.fromDomain(card)));
 
   @override
   Stream<Either<CardFailure, List<CardModel>>> watchAllCards() async* {
@@ -42,9 +46,17 @@ class CardRepository extends ICardRepository {
         final cards = dtos.map((e) => e.toDomain()).toList();
         return right<CardFailure, List<CardModel>>(cards);
       },
-    ).onErrorReturnWith(
-      (error, stackTrace) {
-        return left(const CardFailure.unexpected());
+    ).handleError(
+      (error) {
+        if (error is InvalidDataException) {
+          return left(CardFailure.invalidStatusData(error));
+        } else if (error is DriftWrappedException) {
+          return left(CardFailure.statusDatabaseException(error));
+        } else if (error is CouldNotRollBackException) {
+          return left(CardFailure.couldNotRollBackStory(error));
+        } else {
+          return left(const CardFailure.unexpected());
+        }
       },
     );
   }

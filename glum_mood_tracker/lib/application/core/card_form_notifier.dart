@@ -63,7 +63,7 @@ class CardFormNotifier extends StateNotifier<CardFormState> {
     failureOrPhoto.fold(
       (failure) => state = state.copyWith(
           failureOrSuccess: optionOf(
-        left(const CardFailure.unableToUpdate()),
+        left(const CardFailure.unexpected()),
       )),
       (photo) async {
         await _photoRepository.savePhoto(photo);
@@ -87,7 +87,7 @@ class CardFormNotifier extends StateNotifier<CardFormState> {
           : await _cardRepository.addCard(state.card);
     } catch (e) {
       state = state.copyWith(
-          failureOrSuccess: optionOf(left(const CardFailure.unableToUpdate())));
+          failureOrSuccess: optionOf(left(const CardFailure.unexpected())));
     }
     state = state.copyWith(isSaving: false);
   }
