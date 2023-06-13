@@ -16,20 +16,29 @@ import 'package:mockito/mockito.dart';
 
 import 'photo_repository_test.mocks.dart';
 
-@GenerateMocks(
-    [ImagePicker, ImageCropper, GlumDatabase, PhotoDao, CroppedFile, File])
+@GenerateMocks([
+  ImagePicker,
+  ImageCropper,
+  GlumDatabase,
+  PhotoDao,
+  CroppedFile,
+  File,
+  Directory
+])
 void main() {
   late PhotoRepository photoRepository;
   late MockImagePicker imagePicker;
   late MockImageCropper imageCropper;
   late MockGlumDatabase glumDatabase;
   late MockFile mockFile;
+  late MockDirectory mockDirectory;
 
   setUp(() {
     imagePicker = MockImagePicker();
     imageCropper = MockImageCropper();
     glumDatabase = MockGlumDatabase();
     mockFile = MockFile();
+    mockDirectory = MockDirectory();
     when(glumDatabase.photoDao).thenReturn(MockPhotoDao());
     photoRepository = PhotoRepository(
       imagePicker: imagePicker,
@@ -166,23 +175,34 @@ void main() {
       test(
         'should successfully save the photo',
         () async {
-          // arrange
-          when(mockFile.readAsBytes())
-              .thenAnswer((_) async => Uint8List.fromList([1, 2, 3]));
-          when(mockFile.writeAsBytes(any)).thenAnswer((_) async => mockFile);
-
+          // Arrange
           final mockPhotoModel = PhotoModel(
             file: mockFile,
             fileName: 'photo.jpg',
             filePath: 'path/to/photo.jpg',
           );
 
-          // act
+          // Stub the parent property of the mockFile
+          when(mockFile.parent).thenReturn(mockDirectory);
+
+          // Stub the create method of the mockDirectory
+          when(mockDirectory.create(recursive: true))
+              .thenAnswer((_) async => mockDirectory);
+
+          // Mock the behavior of File methods
+          final mockBytes = Uint8List.fromList([1, 2, 3]);
+          when(mockFile.readAsBytes()).thenAnswer((_) async {
+            // Manually invoke the readAsBytes method
+            return mockBytes;
+          });
+          when(mockFile.writeAsBytes(any)).thenAnswer((_) async => mockFile);
+
+          // Act
           final result = await photoRepository.savePhoto(mockPhotoModel);
 
-          // assert
+          // Assert
           verify(mockFile.readAsBytes()).called(1);
-          verify(mockFile.writeAsBytes(any)).called(1);
+          verify(mockFile.writeAsBytes(mockBytes)).called(1);
           expect(result, equals(mockFile));
         },
       );
