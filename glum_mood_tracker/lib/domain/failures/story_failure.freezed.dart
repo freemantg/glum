@@ -129,8 +129,8 @@ class __$$_InvalidStoryDataFailureCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_InvalidStoryDataFailure implements _InvalidStoryDataFailure {
-  const _$_InvalidStoryDataFailure(this.exception);
+class _$_InvalidStoryDataFailure extends _InvalidStoryDataFailure {
+  const _$_InvalidStoryDataFailure(this.exception) : super._();
 
   @override
   final InvalidDataException exception;
@@ -152,6 +152,7 @@ class _$_InvalidStoryDataFailure implements _InvalidStoryDataFailure {
   @override
   int get hashCode => Object.hash(runtimeType, exception);
 
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$_InvalidStoryDataFailureCopyWith<_$_InvalidStoryDataFailure>
@@ -244,11 +245,13 @@ class _$_InvalidStoryDataFailure implements _InvalidStoryDataFailure {
   }
 }
 
-abstract class _InvalidStoryDataFailure implements StoryFailure {
+abstract class _InvalidStoryDataFailure extends StoryFailure {
   const factory _InvalidStoryDataFailure(final InvalidDataException exception) =
       _$_InvalidStoryDataFailure;
+  const _InvalidStoryDataFailure._() : super._();
 
   InvalidDataException get exception;
+  @JsonKey(ignore: true)
   _$$_InvalidStoryDataFailureCopyWith<_$_InvalidStoryDataFailure>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -288,9 +291,8 @@ class __$$_StoryDatabaseExceptionFailureCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_StoryDatabaseExceptionFailure
-    implements _StoryDatabaseExceptionFailure {
-  const _$_StoryDatabaseExceptionFailure(this.exception);
+class _$_StoryDatabaseExceptionFailure extends _StoryDatabaseExceptionFailure {
+  const _$_StoryDatabaseExceptionFailure(this.exception) : super._();
 
   @override
   final DriftWrappedException exception;
@@ -312,6 +314,7 @@ class _$_StoryDatabaseExceptionFailure
   @override
   int get hashCode => Object.hash(runtimeType, exception);
 
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$_StoryDatabaseExceptionFailureCopyWith<_$_StoryDatabaseExceptionFailure>
@@ -403,11 +406,13 @@ class _$_StoryDatabaseExceptionFailure
   }
 }
 
-abstract class _StoryDatabaseExceptionFailure implements StoryFailure {
+abstract class _StoryDatabaseExceptionFailure extends StoryFailure {
   const factory _StoryDatabaseExceptionFailure(
       final DriftWrappedException exception) = _$_StoryDatabaseExceptionFailure;
+  const _StoryDatabaseExceptionFailure._() : super._();
 
   DriftWrappedException get exception;
+  @JsonKey(ignore: true)
   _$$_StoryDatabaseExceptionFailureCopyWith<_$_StoryDatabaseExceptionFailure>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -447,8 +452,8 @@ class __$$_CouldNotRollBackStoryFailureCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CouldNotRollBackStoryFailure implements _CouldNotRollBackStoryFailure {
-  const _$_CouldNotRollBackStoryFailure(this.exception);
+class _$_CouldNotRollBackStoryFailure extends _CouldNotRollBackStoryFailure {
+  const _$_CouldNotRollBackStoryFailure(this.exception) : super._();
 
   @override
   final CouldNotRollBackException exception;
@@ -470,6 +475,7 @@ class _$_CouldNotRollBackStoryFailure implements _CouldNotRollBackStoryFailure {
   @override
   int get hashCode => Object.hash(runtimeType, exception);
 
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$_CouldNotRollBackStoryFailureCopyWith<_$_CouldNotRollBackStoryFailure>
@@ -561,12 +567,14 @@ class _$_CouldNotRollBackStoryFailure implements _CouldNotRollBackStoryFailure {
   }
 }
 
-abstract class _CouldNotRollBackStoryFailure implements StoryFailure {
+abstract class _CouldNotRollBackStoryFailure extends StoryFailure {
   const factory _CouldNotRollBackStoryFailure(
           final CouldNotRollBackException exception) =
       _$_CouldNotRollBackStoryFailure;
+  const _CouldNotRollBackStoryFailure._() : super._();
 
   CouldNotRollBackException get exception;
+  @JsonKey(ignore: true)
   _$$_CouldNotRollBackStoryFailureCopyWith<_$_CouldNotRollBackStoryFailure>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -589,8 +597,8 @@ class __$$_UnexpectedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Unexpected implements _Unexpected {
-  const _$_Unexpected();
+class _$_Unexpected extends _Unexpected {
+  const _$_Unexpected() : super._();
 
   @override
   String toString() {
@@ -691,6 +699,7 @@ class _$_Unexpected implements _Unexpected {
   }
 }
 
-abstract class _Unexpected implements StoryFailure {
+abstract class _Unexpected extends StoryFailure {
   const factory _Unexpected() = _$_Unexpected;
+  const _Unexpected._() : super._();
 }

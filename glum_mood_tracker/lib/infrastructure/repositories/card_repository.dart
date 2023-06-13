@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:drift/drift.dart';
 import 'package:glum_mood_tracker/domain/interfaces.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../../domain/failures/failures.dart';
 import '../../domain/models/models.dart';
@@ -18,9 +19,9 @@ class CardRepository extends ICardRepository {
       await dbOperation();
       return right(unit);
     } on InvalidDataException catch (e) {
-      return left(CardFailure.invalidStatusData(e));
+      return left(CardFailure.invalidCardData(e));
     } on DriftWrappedException catch (e) {
-      return left(CardFailure.statusDatabaseException(e));
+      return left(CardFailure.cardDatabaseException(e));
     } on CouldNotRollBackException catch (e) {
       return left(CardFailure.couldNotRollBackStory(e));
     } catch (e) {
@@ -39,19 +40,18 @@ class CardRepository extends ICardRepository {
           () => _db.cardDao.updateCard(CardDto.fromDomain(card)));
 
   @override
-  Stream<Either<CardFailure, List<CardModel>>> watchAllCards() async* {
-    final stream = _db.cardDao.watchAllCards();
-    yield* stream.map(
+  Stream<Either<CardFailure, List<CardModel>>> watchAllCards() {
+    final stream = _db.cardDao.watchAllCards().map(
       (dtos) {
         final cards = dtos.map((e) => e.toDomain()).toList();
         return right<CardFailure, List<CardModel>>(cards);
       },
-    ).handleError(
-      (error) {
+    ).onErrorReturnWith(
+      (error, stackTrace) {
         if (error is InvalidDataException) {
-          return left(CardFailure.invalidStatusData(error));
+          return left(CardFailure.invalidCardData(error));
         } else if (error is DriftWrappedException) {
-          return left(CardFailure.statusDatabaseException(error));
+          return left(CardFailure.cardDatabaseException(error));
         } else if (error is CouldNotRollBackException) {
           return left(CardFailure.couldNotRollBackStory(error));
         } else {
@@ -59,5 +59,6 @@ class CardRepository extends ICardRepository {
         }
       },
     );
+    return stream;
   }
 }

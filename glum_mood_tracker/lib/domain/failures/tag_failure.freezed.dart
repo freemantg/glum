@@ -123,8 +123,8 @@ class __$$InvalidTagDataFailureCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$InvalidTagDataFailure implements InvalidTagDataFailure {
-  const _$InvalidTagDataFailure(this.exception);
+class _$InvalidTagDataFailure extends InvalidTagDataFailure {
+  const _$InvalidTagDataFailure(this.exception) : super._();
 
   @override
   final InvalidDataException exception;
@@ -146,6 +146,7 @@ class _$InvalidTagDataFailure implements InvalidTagDataFailure {
   @override
   int get hashCode => Object.hash(runtimeType, exception);
 
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$InvalidTagDataFailureCopyWith<_$InvalidTagDataFailure> get copyWith =>
@@ -231,11 +232,13 @@ class _$InvalidTagDataFailure implements InvalidTagDataFailure {
   }
 }
 
-abstract class InvalidTagDataFailure implements TagFailure {
+abstract class InvalidTagDataFailure extends TagFailure {
   const factory InvalidTagDataFailure(final InvalidDataException exception) =
       _$InvalidTagDataFailure;
+  const InvalidTagDataFailure._() : super._();
 
   InvalidDataException get exception;
+  @JsonKey(ignore: true)
   _$$InvalidTagDataFailureCopyWith<_$InvalidTagDataFailure> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -275,8 +278,8 @@ class __$$TagDatabaseExceptionFailureCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$TagDatabaseExceptionFailure implements TagDatabaseExceptionFailure {
-  const _$TagDatabaseExceptionFailure(this.exception);
+class _$TagDatabaseExceptionFailure extends TagDatabaseExceptionFailure {
+  const _$TagDatabaseExceptionFailure(this.exception) : super._();
 
   @override
   final DriftWrappedException exception;
@@ -298,6 +301,7 @@ class _$TagDatabaseExceptionFailure implements TagDatabaseExceptionFailure {
   @override
   int get hashCode => Object.hash(runtimeType, exception);
 
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$TagDatabaseExceptionFailureCopyWith<_$TagDatabaseExceptionFailure>
@@ -383,11 +387,13 @@ class _$TagDatabaseExceptionFailure implements TagDatabaseExceptionFailure {
   }
 }
 
-abstract class TagDatabaseExceptionFailure implements TagFailure {
+abstract class TagDatabaseExceptionFailure extends TagFailure {
   const factory TagDatabaseExceptionFailure(
       final DriftWrappedException exception) = _$TagDatabaseExceptionFailure;
+  const TagDatabaseExceptionFailure._() : super._();
 
   DriftWrappedException get exception;
+  @JsonKey(ignore: true)
   _$$TagDatabaseExceptionFailureCopyWith<_$TagDatabaseExceptionFailure>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -427,8 +433,8 @@ class __$$CouldNotRollBackTagFailureCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CouldNotRollBackTagFailure implements CouldNotRollBackTagFailure {
-  const _$CouldNotRollBackTagFailure(this.exception);
+class _$CouldNotRollBackTagFailure extends CouldNotRollBackTagFailure {
+  const _$CouldNotRollBackTagFailure(this.exception) : super._();
 
   @override
   final CouldNotRollBackException exception;
@@ -450,6 +456,7 @@ class _$CouldNotRollBackTagFailure implements CouldNotRollBackTagFailure {
   @override
   int get hashCode => Object.hash(runtimeType, exception);
 
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$CouldNotRollBackTagFailureCopyWith<_$CouldNotRollBackTagFailure>
@@ -535,11 +542,13 @@ class _$CouldNotRollBackTagFailure implements CouldNotRollBackTagFailure {
   }
 }
 
-abstract class CouldNotRollBackTagFailure implements TagFailure {
+abstract class CouldNotRollBackTagFailure extends TagFailure {
   const factory CouldNotRollBackTagFailure(
       final CouldNotRollBackException exception) = _$CouldNotRollBackTagFailure;
+  const CouldNotRollBackTagFailure._() : super._();
 
   CouldNotRollBackException get exception;
+  @JsonKey(ignore: true)
   _$$CouldNotRollBackTagFailureCopyWith<_$CouldNotRollBackTagFailure>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -562,8 +571,8 @@ class __$$_UnexpectedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Unexpected implements _Unexpected {
-  const _$_Unexpected();
+class _$_Unexpected extends _Unexpected {
+  const _$_Unexpected() : super._();
 
   @override
   String toString() {
@@ -658,6 +667,7 @@ class _$_Unexpected implements _Unexpected {
   }
 }
 
-abstract class _Unexpected implements TagFailure {
+abstract class _Unexpected extends TagFailure {
   const factory _Unexpected() = _$_Unexpected;
+  const _Unexpected._() : super._();
 }

@@ -18,9 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$CardFailure {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(InvalidDataException exception) invalidStatusData,
+    required TResult Function(InvalidDataException exception) invalidCardData,
     required TResult Function(DriftWrappedException exception)
-        statusDatabaseException,
+        cardDatabaseException,
     required TResult Function(CouldNotRollBackException exception)
         couldNotRollBackStory,
     required TResult Function() unexpected,
@@ -28,8 +28,8 @@ mixin _$CardFailure {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(InvalidDataException exception)? invalidStatusData,
-    TResult? Function(DriftWrappedException exception)? statusDatabaseException,
+    TResult? Function(InvalidDataException exception)? invalidCardData,
+    TResult? Function(DriftWrappedException exception)? cardDatabaseException,
     TResult? Function(CouldNotRollBackException exception)?
         couldNotRollBackStory,
     TResult? Function()? unexpected,
@@ -37,8 +37,8 @@ mixin _$CardFailure {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(InvalidDataException exception)? invalidStatusData,
-    TResult Function(DriftWrappedException exception)? statusDatabaseException,
+    TResult Function(InvalidDataException exception)? invalidCardData,
+    TResult Function(DriftWrappedException exception)? cardDatabaseException,
     TResult Function(CouldNotRollBackException exception)?
         couldNotRollBackStory,
     TResult Function()? unexpected,
@@ -47,9 +47,9 @@ mixin _$CardFailure {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_InvalidCardFailure value) invalidStatusData,
+    required TResult Function(_InvalidCardFailure value) invalidCardData,
     required TResult Function(_CardDatabaseExceptionFailure value)
-        statusDatabaseException,
+        cardDatabaseException,
     required TResult Function(_CouldNotRollBackCardFailure value)
         couldNotRollBackStory,
     required TResult Function(_Unexpected value) unexpected,
@@ -57,9 +57,9 @@ mixin _$CardFailure {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_InvalidCardFailure value)? invalidStatusData,
+    TResult? Function(_InvalidCardFailure value)? invalidCardData,
     TResult? Function(_CardDatabaseExceptionFailure value)?
-        statusDatabaseException,
+        cardDatabaseException,
     TResult? Function(_CouldNotRollBackCardFailure value)?
         couldNotRollBackStory,
     TResult? Function(_Unexpected value)? unexpected,
@@ -67,9 +67,9 @@ mixin _$CardFailure {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_InvalidCardFailure value)? invalidStatusData,
+    TResult Function(_InvalidCardFailure value)? invalidCardData,
     TResult Function(_CardDatabaseExceptionFailure value)?
-        statusDatabaseException,
+        cardDatabaseException,
     TResult Function(_CouldNotRollBackCardFailure value)? couldNotRollBackStory,
     TResult Function(_Unexpected value)? unexpected,
     required TResult orElse(),
@@ -128,15 +128,15 @@ class __$$_InvalidCardFailureCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_InvalidCardFailure implements _InvalidCardFailure {
-  const _$_InvalidCardFailure(this.exception);
+class _$_InvalidCardFailure extends _InvalidCardFailure {
+  const _$_InvalidCardFailure(this.exception) : super._();
 
   @override
   final InvalidDataException exception;
 
   @override
   String toString() {
-    return 'CardFailure.invalidStatusData(exception: $exception)';
+    return 'CardFailure.invalidCardData(exception: $exception)';
   }
 
   @override
@@ -151,6 +151,7 @@ class _$_InvalidCardFailure implements _InvalidCardFailure {
   @override
   int get hashCode => Object.hash(runtimeType, exception);
 
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$_InvalidCardFailureCopyWith<_$_InvalidCardFailure> get copyWith =>
@@ -160,40 +161,40 @@ class _$_InvalidCardFailure implements _InvalidCardFailure {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(InvalidDataException exception) invalidStatusData,
+    required TResult Function(InvalidDataException exception) invalidCardData,
     required TResult Function(DriftWrappedException exception)
-        statusDatabaseException,
+        cardDatabaseException,
     required TResult Function(CouldNotRollBackException exception)
         couldNotRollBackStory,
     required TResult Function() unexpected,
   }) {
-    return invalidStatusData(exception);
+    return invalidCardData(exception);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(InvalidDataException exception)? invalidStatusData,
-    TResult? Function(DriftWrappedException exception)? statusDatabaseException,
+    TResult? Function(InvalidDataException exception)? invalidCardData,
+    TResult? Function(DriftWrappedException exception)? cardDatabaseException,
     TResult? Function(CouldNotRollBackException exception)?
         couldNotRollBackStory,
     TResult? Function()? unexpected,
   }) {
-    return invalidStatusData?.call(exception);
+    return invalidCardData?.call(exception);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(InvalidDataException exception)? invalidStatusData,
-    TResult Function(DriftWrappedException exception)? statusDatabaseException,
+    TResult Function(InvalidDataException exception)? invalidCardData,
+    TResult Function(DriftWrappedException exception)? cardDatabaseException,
     TResult Function(CouldNotRollBackException exception)?
         couldNotRollBackStory,
     TResult Function()? unexpected,
     required TResult orElse(),
   }) {
-    if (invalidStatusData != null) {
-      return invalidStatusData(exception);
+    if (invalidCardData != null) {
+      return invalidCardData(exception);
     }
     return orElse();
   }
@@ -201,51 +202,53 @@ class _$_InvalidCardFailure implements _InvalidCardFailure {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_InvalidCardFailure value) invalidStatusData,
+    required TResult Function(_InvalidCardFailure value) invalidCardData,
     required TResult Function(_CardDatabaseExceptionFailure value)
-        statusDatabaseException,
+        cardDatabaseException,
     required TResult Function(_CouldNotRollBackCardFailure value)
         couldNotRollBackStory,
     required TResult Function(_Unexpected value) unexpected,
   }) {
-    return invalidStatusData(this);
+    return invalidCardData(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_InvalidCardFailure value)? invalidStatusData,
+    TResult? Function(_InvalidCardFailure value)? invalidCardData,
     TResult? Function(_CardDatabaseExceptionFailure value)?
-        statusDatabaseException,
+        cardDatabaseException,
     TResult? Function(_CouldNotRollBackCardFailure value)?
         couldNotRollBackStory,
     TResult? Function(_Unexpected value)? unexpected,
   }) {
-    return invalidStatusData?.call(this);
+    return invalidCardData?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_InvalidCardFailure value)? invalidStatusData,
+    TResult Function(_InvalidCardFailure value)? invalidCardData,
     TResult Function(_CardDatabaseExceptionFailure value)?
-        statusDatabaseException,
+        cardDatabaseException,
     TResult Function(_CouldNotRollBackCardFailure value)? couldNotRollBackStory,
     TResult Function(_Unexpected value)? unexpected,
     required TResult orElse(),
   }) {
-    if (invalidStatusData != null) {
-      return invalidStatusData(this);
+    if (invalidCardData != null) {
+      return invalidCardData(this);
     }
     return orElse();
   }
 }
 
-abstract class _InvalidCardFailure implements CardFailure {
+abstract class _InvalidCardFailure extends CardFailure {
   const factory _InvalidCardFailure(final InvalidDataException exception) =
       _$_InvalidCardFailure;
+  const _InvalidCardFailure._() : super._();
 
   InvalidDataException get exception;
+  @JsonKey(ignore: true)
   _$$_InvalidCardFailureCopyWith<_$_InvalidCardFailure> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -285,15 +288,15 @@ class __$$_CardDatabaseExceptionFailureCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CardDatabaseExceptionFailure implements _CardDatabaseExceptionFailure {
-  const _$_CardDatabaseExceptionFailure(this.exception);
+class _$_CardDatabaseExceptionFailure extends _CardDatabaseExceptionFailure {
+  const _$_CardDatabaseExceptionFailure(this.exception) : super._();
 
   @override
   final DriftWrappedException exception;
 
   @override
   String toString() {
-    return 'CardFailure.statusDatabaseException(exception: $exception)';
+    return 'CardFailure.cardDatabaseException(exception: $exception)';
   }
 
   @override
@@ -308,6 +311,7 @@ class _$_CardDatabaseExceptionFailure implements _CardDatabaseExceptionFailure {
   @override
   int get hashCode => Object.hash(runtimeType, exception);
 
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$_CardDatabaseExceptionFailureCopyWith<_$_CardDatabaseExceptionFailure>
@@ -317,40 +321,40 @@ class _$_CardDatabaseExceptionFailure implements _CardDatabaseExceptionFailure {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(InvalidDataException exception) invalidStatusData,
+    required TResult Function(InvalidDataException exception) invalidCardData,
     required TResult Function(DriftWrappedException exception)
-        statusDatabaseException,
+        cardDatabaseException,
     required TResult Function(CouldNotRollBackException exception)
         couldNotRollBackStory,
     required TResult Function() unexpected,
   }) {
-    return statusDatabaseException(exception);
+    return cardDatabaseException(exception);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(InvalidDataException exception)? invalidStatusData,
-    TResult? Function(DriftWrappedException exception)? statusDatabaseException,
+    TResult? Function(InvalidDataException exception)? invalidCardData,
+    TResult? Function(DriftWrappedException exception)? cardDatabaseException,
     TResult? Function(CouldNotRollBackException exception)?
         couldNotRollBackStory,
     TResult? Function()? unexpected,
   }) {
-    return statusDatabaseException?.call(exception);
+    return cardDatabaseException?.call(exception);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(InvalidDataException exception)? invalidStatusData,
-    TResult Function(DriftWrappedException exception)? statusDatabaseException,
+    TResult Function(InvalidDataException exception)? invalidCardData,
+    TResult Function(DriftWrappedException exception)? cardDatabaseException,
     TResult Function(CouldNotRollBackException exception)?
         couldNotRollBackStory,
     TResult Function()? unexpected,
     required TResult orElse(),
   }) {
-    if (statusDatabaseException != null) {
-      return statusDatabaseException(exception);
+    if (cardDatabaseException != null) {
+      return cardDatabaseException(exception);
     }
     return orElse();
   }
@@ -358,51 +362,53 @@ class _$_CardDatabaseExceptionFailure implements _CardDatabaseExceptionFailure {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_InvalidCardFailure value) invalidStatusData,
+    required TResult Function(_InvalidCardFailure value) invalidCardData,
     required TResult Function(_CardDatabaseExceptionFailure value)
-        statusDatabaseException,
+        cardDatabaseException,
     required TResult Function(_CouldNotRollBackCardFailure value)
         couldNotRollBackStory,
     required TResult Function(_Unexpected value) unexpected,
   }) {
-    return statusDatabaseException(this);
+    return cardDatabaseException(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_InvalidCardFailure value)? invalidStatusData,
+    TResult? Function(_InvalidCardFailure value)? invalidCardData,
     TResult? Function(_CardDatabaseExceptionFailure value)?
-        statusDatabaseException,
+        cardDatabaseException,
     TResult? Function(_CouldNotRollBackCardFailure value)?
         couldNotRollBackStory,
     TResult? Function(_Unexpected value)? unexpected,
   }) {
-    return statusDatabaseException?.call(this);
+    return cardDatabaseException?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_InvalidCardFailure value)? invalidStatusData,
+    TResult Function(_InvalidCardFailure value)? invalidCardData,
     TResult Function(_CardDatabaseExceptionFailure value)?
-        statusDatabaseException,
+        cardDatabaseException,
     TResult Function(_CouldNotRollBackCardFailure value)? couldNotRollBackStory,
     TResult Function(_Unexpected value)? unexpected,
     required TResult orElse(),
   }) {
-    if (statusDatabaseException != null) {
-      return statusDatabaseException(this);
+    if (cardDatabaseException != null) {
+      return cardDatabaseException(this);
     }
     return orElse();
   }
 }
 
-abstract class _CardDatabaseExceptionFailure implements CardFailure {
+abstract class _CardDatabaseExceptionFailure extends CardFailure {
   const factory _CardDatabaseExceptionFailure(
       final DriftWrappedException exception) = _$_CardDatabaseExceptionFailure;
+  const _CardDatabaseExceptionFailure._() : super._();
 
   DriftWrappedException get exception;
+  @JsonKey(ignore: true)
   _$$_CardDatabaseExceptionFailureCopyWith<_$_CardDatabaseExceptionFailure>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -442,8 +448,8 @@ class __$$_CouldNotRollBackCardFailureCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CouldNotRollBackCardFailure implements _CouldNotRollBackCardFailure {
-  const _$_CouldNotRollBackCardFailure(this.exception);
+class _$_CouldNotRollBackCardFailure extends _CouldNotRollBackCardFailure {
+  const _$_CouldNotRollBackCardFailure(this.exception) : super._();
 
   @override
   final CouldNotRollBackException exception;
@@ -465,6 +471,7 @@ class _$_CouldNotRollBackCardFailure implements _CouldNotRollBackCardFailure {
   @override
   int get hashCode => Object.hash(runtimeType, exception);
 
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$_CouldNotRollBackCardFailureCopyWith<_$_CouldNotRollBackCardFailure>
@@ -474,9 +481,9 @@ class _$_CouldNotRollBackCardFailure implements _CouldNotRollBackCardFailure {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(InvalidDataException exception) invalidStatusData,
+    required TResult Function(InvalidDataException exception) invalidCardData,
     required TResult Function(DriftWrappedException exception)
-        statusDatabaseException,
+        cardDatabaseException,
     required TResult Function(CouldNotRollBackException exception)
         couldNotRollBackStory,
     required TResult Function() unexpected,
@@ -487,8 +494,8 @@ class _$_CouldNotRollBackCardFailure implements _CouldNotRollBackCardFailure {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(InvalidDataException exception)? invalidStatusData,
-    TResult? Function(DriftWrappedException exception)? statusDatabaseException,
+    TResult? Function(InvalidDataException exception)? invalidCardData,
+    TResult? Function(DriftWrappedException exception)? cardDatabaseException,
     TResult? Function(CouldNotRollBackException exception)?
         couldNotRollBackStory,
     TResult? Function()? unexpected,
@@ -499,8 +506,8 @@ class _$_CouldNotRollBackCardFailure implements _CouldNotRollBackCardFailure {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(InvalidDataException exception)? invalidStatusData,
-    TResult Function(DriftWrappedException exception)? statusDatabaseException,
+    TResult Function(InvalidDataException exception)? invalidCardData,
+    TResult Function(DriftWrappedException exception)? cardDatabaseException,
     TResult Function(CouldNotRollBackException exception)?
         couldNotRollBackStory,
     TResult Function()? unexpected,
@@ -515,9 +522,9 @@ class _$_CouldNotRollBackCardFailure implements _CouldNotRollBackCardFailure {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_InvalidCardFailure value) invalidStatusData,
+    required TResult Function(_InvalidCardFailure value) invalidCardData,
     required TResult Function(_CardDatabaseExceptionFailure value)
-        statusDatabaseException,
+        cardDatabaseException,
     required TResult Function(_CouldNotRollBackCardFailure value)
         couldNotRollBackStory,
     required TResult Function(_Unexpected value) unexpected,
@@ -528,9 +535,9 @@ class _$_CouldNotRollBackCardFailure implements _CouldNotRollBackCardFailure {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_InvalidCardFailure value)? invalidStatusData,
+    TResult? Function(_InvalidCardFailure value)? invalidCardData,
     TResult? Function(_CardDatabaseExceptionFailure value)?
-        statusDatabaseException,
+        cardDatabaseException,
     TResult? Function(_CouldNotRollBackCardFailure value)?
         couldNotRollBackStory,
     TResult? Function(_Unexpected value)? unexpected,
@@ -541,9 +548,9 @@ class _$_CouldNotRollBackCardFailure implements _CouldNotRollBackCardFailure {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_InvalidCardFailure value)? invalidStatusData,
+    TResult Function(_InvalidCardFailure value)? invalidCardData,
     TResult Function(_CardDatabaseExceptionFailure value)?
-        statusDatabaseException,
+        cardDatabaseException,
     TResult Function(_CouldNotRollBackCardFailure value)? couldNotRollBackStory,
     TResult Function(_Unexpected value)? unexpected,
     required TResult orElse(),
@@ -555,12 +562,14 @@ class _$_CouldNotRollBackCardFailure implements _CouldNotRollBackCardFailure {
   }
 }
 
-abstract class _CouldNotRollBackCardFailure implements CardFailure {
+abstract class _CouldNotRollBackCardFailure extends CardFailure {
   const factory _CouldNotRollBackCardFailure(
           final CouldNotRollBackException exception) =
       _$_CouldNotRollBackCardFailure;
+  const _CouldNotRollBackCardFailure._() : super._();
 
   CouldNotRollBackException get exception;
+  @JsonKey(ignore: true)
   _$$_CouldNotRollBackCardFailureCopyWith<_$_CouldNotRollBackCardFailure>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -583,8 +592,8 @@ class __$$_UnexpectedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Unexpected implements _Unexpected {
-  const _$_Unexpected();
+class _$_Unexpected extends _Unexpected {
+  const _$_Unexpected() : super._();
 
   @override
   String toString() {
@@ -603,9 +612,9 @@ class _$_Unexpected implements _Unexpected {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(InvalidDataException exception) invalidStatusData,
+    required TResult Function(InvalidDataException exception) invalidCardData,
     required TResult Function(DriftWrappedException exception)
-        statusDatabaseException,
+        cardDatabaseException,
     required TResult Function(CouldNotRollBackException exception)
         couldNotRollBackStory,
     required TResult Function() unexpected,
@@ -616,8 +625,8 @@ class _$_Unexpected implements _Unexpected {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(InvalidDataException exception)? invalidStatusData,
-    TResult? Function(DriftWrappedException exception)? statusDatabaseException,
+    TResult? Function(InvalidDataException exception)? invalidCardData,
+    TResult? Function(DriftWrappedException exception)? cardDatabaseException,
     TResult? Function(CouldNotRollBackException exception)?
         couldNotRollBackStory,
     TResult? Function()? unexpected,
@@ -628,8 +637,8 @@ class _$_Unexpected implements _Unexpected {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(InvalidDataException exception)? invalidStatusData,
-    TResult Function(DriftWrappedException exception)? statusDatabaseException,
+    TResult Function(InvalidDataException exception)? invalidCardData,
+    TResult Function(DriftWrappedException exception)? cardDatabaseException,
     TResult Function(CouldNotRollBackException exception)?
         couldNotRollBackStory,
     TResult Function()? unexpected,
@@ -644,9 +653,9 @@ class _$_Unexpected implements _Unexpected {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_InvalidCardFailure value) invalidStatusData,
+    required TResult Function(_InvalidCardFailure value) invalidCardData,
     required TResult Function(_CardDatabaseExceptionFailure value)
-        statusDatabaseException,
+        cardDatabaseException,
     required TResult Function(_CouldNotRollBackCardFailure value)
         couldNotRollBackStory,
     required TResult Function(_Unexpected value) unexpected,
@@ -657,9 +666,9 @@ class _$_Unexpected implements _Unexpected {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_InvalidCardFailure value)? invalidStatusData,
+    TResult? Function(_InvalidCardFailure value)? invalidCardData,
     TResult? Function(_CardDatabaseExceptionFailure value)?
-        statusDatabaseException,
+        cardDatabaseException,
     TResult? Function(_CouldNotRollBackCardFailure value)?
         couldNotRollBackStory,
     TResult? Function(_Unexpected value)? unexpected,
@@ -670,9 +679,9 @@ class _$_Unexpected implements _Unexpected {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_InvalidCardFailure value)? invalidStatusData,
+    TResult Function(_InvalidCardFailure value)? invalidCardData,
     TResult Function(_CardDatabaseExceptionFailure value)?
-        statusDatabaseException,
+        cardDatabaseException,
     TResult Function(_CouldNotRollBackCardFailure value)? couldNotRollBackStory,
     TResult Function(_Unexpected value)? unexpected,
     required TResult orElse(),
@@ -684,6 +693,7 @@ class _$_Unexpected implements _Unexpected {
   }
 }
 
-abstract class _Unexpected implements CardFailure {
+abstract class _Unexpected extends CardFailure {
   const factory _Unexpected() = _$_Unexpected;
+  const _Unexpected._() : super._();
 }

@@ -1,10 +1,11 @@
-import 'package:drift/drift.dart';
+import 'package:drift/drift.dart' hide JsonKey;
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'tag_failure.freezed.dart';
 
 @freezed
 class TagFailure with _$TagFailure {
+  const TagFailure._();
   const factory TagFailure.invalidTagData(InvalidDataException exception) =
       InvalidTagDataFailure;
   const factory TagFailure.tagDatabaseException(
@@ -12,4 +13,13 @@ class TagFailure with _$TagFailure {
   const factory TagFailure.couldNotRollBackTag(
       CouldNotRollBackException exception) = CouldNotRollBackTagFailure;
   const factory TagFailure.unexpected() = _Unexpected;
+
+  String get type {
+    return when(
+      invalidTagData: (_) => 'InvalidTagData',
+      tagDatabaseException: (_) => 'TagDatabaseException',
+      couldNotRollBackTag: (_) => 'CouldNotRollBackTag',
+      unexpected: () => 'Unexpected',
+    );
+  }
 }

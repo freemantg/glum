@@ -104,8 +104,8 @@ class __$$_UnexpectedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Unexpected implements _Unexpected {
-  const _$_Unexpected();
+class _$_Unexpected extends _Unexpected {
+  const _$_Unexpected() : super._();
 
   @override
   String toString() {
@@ -196,8 +196,9 @@ class _$_Unexpected implements _Unexpected {
   }
 }
 
-abstract class _Unexpected implements PhotoFailure {
+abstract class _Unexpected extends PhotoFailure {
   const factory _Unexpected() = _$_Unexpected;
+  const _Unexpected._() : super._();
 }
 
 /// @nodoc
@@ -218,8 +219,8 @@ class __$$_UnableToUpdateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_UnableToUpdate implements _UnableToUpdate {
-  const _$_UnableToUpdate();
+class _$_UnableToUpdate extends _UnableToUpdate {
+  const _$_UnableToUpdate() : super._();
 
   @override
   String toString() {
@@ -310,8 +311,9 @@ class _$_UnableToUpdate implements _UnableToUpdate {
   }
 }
 
-abstract class _UnableToUpdate implements PhotoFailure {
+abstract class _UnableToUpdate extends PhotoFailure {
   const factory _UnableToUpdate() = _$_UnableToUpdate;
+  const _UnableToUpdate._() : super._();
 }
 
 /// @nodoc
@@ -332,8 +334,8 @@ class __$$_PermissionDeniedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_PermissionDenied implements _PermissionDenied {
-  const _$_PermissionDenied();
+class _$_PermissionDenied extends _PermissionDenied {
+  const _$_PermissionDenied() : super._();
 
   @override
   String toString() {
@@ -424,8 +426,9 @@ class _$_PermissionDenied implements _PermissionDenied {
   }
 }
 
-abstract class _PermissionDenied implements PhotoFailure {
+abstract class _PermissionDenied extends PhotoFailure {
   const factory _PermissionDenied() = _$_PermissionDenied;
+  const _PermissionDenied._() : super._();
 }
 
 /// @nodoc
@@ -446,8 +449,8 @@ class __$$_CroppingFailedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CroppingFailed implements _CroppingFailed {
-  const _$_CroppingFailed();
+class _$_CroppingFailed extends _CroppingFailed {
+  const _$_CroppingFailed() : super._();
 
   @override
   String toString() {
@@ -538,6 +541,7 @@ class _$_CroppingFailed implements _CroppingFailed {
   }
 }
 
-abstract class _CroppingFailed implements PhotoFailure {
+abstract class _CroppingFailed extends PhotoFailure {
   const factory _CroppingFailed() = _$_CroppingFailed;
+  const _CroppingFailed._() : super._();
 }

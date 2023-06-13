@@ -129,8 +129,8 @@ class __$$_InvalidStatusFailureCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_InvalidStatusFailure implements _InvalidStatusFailure {
-  const _$_InvalidStatusFailure(this.exception);
+class _$_InvalidStatusFailure extends _InvalidStatusFailure {
+  const _$_InvalidStatusFailure(this.exception) : super._();
 
   @override
   final InvalidDataException exception;
@@ -152,6 +152,7 @@ class _$_InvalidStatusFailure implements _InvalidStatusFailure {
   @override
   int get hashCode => Object.hash(runtimeType, exception);
 
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$_InvalidStatusFailureCopyWith<_$_InvalidStatusFailure> get copyWith =>
@@ -243,11 +244,13 @@ class _$_InvalidStatusFailure implements _InvalidStatusFailure {
   }
 }
 
-abstract class _InvalidStatusFailure implements StatusFailure {
+abstract class _InvalidStatusFailure extends StatusFailure {
   const factory _InvalidStatusFailure(final InvalidDataException exception) =
       _$_InvalidStatusFailure;
+  const _InvalidStatusFailure._() : super._();
 
   InvalidDataException get exception;
+  @JsonKey(ignore: true)
   _$$_InvalidStatusFailureCopyWith<_$_InvalidStatusFailure> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -288,8 +291,8 @@ class __$$_StatusDatabaseExceptionFailureCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_StatusDatabaseExceptionFailure
-    implements _StatusDatabaseExceptionFailure {
-  const _$_StatusDatabaseExceptionFailure(this.exception);
+    extends _StatusDatabaseExceptionFailure {
+  const _$_StatusDatabaseExceptionFailure(this.exception) : super._();
 
   @override
   final DriftWrappedException exception;
@@ -311,6 +314,7 @@ class _$_StatusDatabaseExceptionFailure
   @override
   int get hashCode => Object.hash(runtimeType, exception);
 
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$_StatusDatabaseExceptionFailureCopyWith<_$_StatusDatabaseExceptionFailure>
@@ -402,12 +406,14 @@ class _$_StatusDatabaseExceptionFailure
   }
 }
 
-abstract class _StatusDatabaseExceptionFailure implements StatusFailure {
+abstract class _StatusDatabaseExceptionFailure extends StatusFailure {
   const factory _StatusDatabaseExceptionFailure(
           final DriftWrappedException exception) =
       _$_StatusDatabaseExceptionFailure;
+  const _StatusDatabaseExceptionFailure._() : super._();
 
   DriftWrappedException get exception;
+  @JsonKey(ignore: true)
   _$$_StatusDatabaseExceptionFailureCopyWith<_$_StatusDatabaseExceptionFailure>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -447,8 +453,8 @@ class __$$_CouldNotRollBackStoryFailureCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CouldNotRollBackStoryFailure implements _CouldNotRollBackStoryFailure {
-  const _$_CouldNotRollBackStoryFailure(this.exception);
+class _$_CouldNotRollBackStoryFailure extends _CouldNotRollBackStoryFailure {
+  const _$_CouldNotRollBackStoryFailure(this.exception) : super._();
 
   @override
   final CouldNotRollBackException exception;
@@ -470,6 +476,7 @@ class _$_CouldNotRollBackStoryFailure implements _CouldNotRollBackStoryFailure {
   @override
   int get hashCode => Object.hash(runtimeType, exception);
 
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$_CouldNotRollBackStoryFailureCopyWith<_$_CouldNotRollBackStoryFailure>
@@ -561,12 +568,14 @@ class _$_CouldNotRollBackStoryFailure implements _CouldNotRollBackStoryFailure {
   }
 }
 
-abstract class _CouldNotRollBackStoryFailure implements StatusFailure {
+abstract class _CouldNotRollBackStoryFailure extends StatusFailure {
   const factory _CouldNotRollBackStoryFailure(
           final CouldNotRollBackException exception) =
       _$_CouldNotRollBackStoryFailure;
+  const _CouldNotRollBackStoryFailure._() : super._();
 
   CouldNotRollBackException get exception;
+  @JsonKey(ignore: true)
   _$$_CouldNotRollBackStoryFailureCopyWith<_$_CouldNotRollBackStoryFailure>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -589,8 +598,8 @@ class __$$_UnexpectedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Unexpected implements _Unexpected {
-  const _$_Unexpected();
+class _$_Unexpected extends _Unexpected {
+  const _$_Unexpected() : super._();
 
   @override
   String toString() {
@@ -691,6 +700,7 @@ class _$_Unexpected implements _Unexpected {
   }
 }
 
-abstract class _Unexpected implements StatusFailure {
+abstract class _Unexpected extends StatusFailure {
   const factory _Unexpected() = _$_Unexpected;
+  const _Unexpected._() : super._();
 }
