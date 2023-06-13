@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:drift/drift.dart';
 import 'package:glum_mood_tracker/domain/interfaces.dart';
 import 'package:glum_mood_tracker/infrastructure/database/drift_database.dart'
     hide Tag;
@@ -19,6 +20,13 @@ class TagRepository implements ITagRepository {
       await _db.tagDao.insertTag(TagDto.fromDomain(tag));
       return right(unit);
     } catch (e) {
+      if (e is InvalidDataException) {
+        return left(TagFailure.invalidTagData(e));
+      } else if (e is DriftWrappedException) {
+        return left(TagFailure.tagDatabaseException(e));
+      } else if (e is CouldNotRollBackException) {
+        return left(TagFailure.couldNotRollBackTag(e));
+      }
       return left(const TagFailure.unexpected());
     }
   }
@@ -29,6 +37,9 @@ class TagRepository implements ITagRepository {
       await _db.tagDao.deleteTag(TagDto.fromDomain(tag).id!);
       return right(unit);
     } catch (e) {
+      if (e is DriftWrappedException) {
+        return left(TagFailure.tagDatabaseException(e));
+      }
       return left(const TagFailure.unexpected());
     }
   }
@@ -40,10 +51,11 @@ class TagRepository implements ITagRepository {
         .map((dtos) => right<TagFailure, List<TagModel>>(
               dtos.map((e) => e.toDomain()).toList(),
             ))
-        .onErrorReturnWith(
-      (error, stackTrace) {
-        return left(const TagFailure.unexpected());
-      },
-    );
+        .onErrorReturnWith((error, stackTrace) {
+      if (error is DriftWrappedException) {
+        return left(TagFailure.tagDatabaseException(error));
+      }
+      return left(const TagFailure.unexpected());
+    });
   }
 }
