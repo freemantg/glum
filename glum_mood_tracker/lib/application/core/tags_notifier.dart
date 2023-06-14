@@ -30,16 +30,29 @@ class TagNotifier extends StateNotifier<TagsState> {
   }
 
   Future<void> watchTags() async {
-    state = TagsState.loadInProgress(tags: state.tags);
-    final tagStream = _repository.watchAllTags();
-    tagStream.listen(
-      (successOrFailure) {
-        state = successOrFailure.fold(
-          (failure) => TagsState.failure(failure, tags: state.tags),
-          (tags) => TagsState.loadSuccess(tags: tags),
-        );
-      },
-    );
+    try {
+      state = TagsState.loadInProgress(tags: state.tags);
+      final tagStream = _repository.watchAllTags();
+      tagStream.listen(
+        (successOrFailure) {
+          successOrFailure.fold(
+            (failure) {
+              state = TagsState.failure(failure, tags: state.tags);
+            },
+            (tags) {
+              state = TagsState.loadSuccess(tags: tags);
+            },
+          );
+        },
+        onError: (error) {
+          state = TagsState.failure(const TagFailure.unexpected(),
+              tags: state.tags);
+        },
+      );
+    } catch (e) {
+      state =
+          TagsState.failure(const TagFailure.unexpected(), tags: state.tags);
+    }
   }
 
   Future<void> deleteTag(tag) async => await _repository.deleteTag(tag);
