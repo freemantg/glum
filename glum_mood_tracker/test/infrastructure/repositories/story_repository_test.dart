@@ -218,7 +218,8 @@ void main() {
     test('emits a failure when an error occurs', () {
       final monthYear = DateTime(2023, 1);
       final error = DriftWrappedException(message: 'Test exception');
-      when(mockStoryDao.watchStoriesByMonthAndYear(monthYear)).thenAnswer((_) => Stream.error(error));
+      when(mockStoryDao.watchStoriesByMonthAndYear(monthYear))
+          .thenAnswer((_) => Stream.error(error));
 
       final result = storyRepository.watchStoriesByMonthYear(monthYear);
 
@@ -228,7 +229,7 @@ void main() {
             isA<Left<StoryFailure, List<StoryModel>>>().having(
               (l) => l.value,
               'value',
-               StoryFailure.storyDatabaseException(error),
+              StoryFailure.storyDatabaseException(error),
             ),
           ]));
     });

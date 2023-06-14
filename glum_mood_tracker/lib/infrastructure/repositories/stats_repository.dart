@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:drift/drift.dart';
 import 'package:glum_mood_tracker/domain/interfaces.dart';
 import 'package:glum_mood_tracker/infrastructure/database/drift_database.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../../domain/failures/failures.dart';
 import '../../domain/models/models.dart';
@@ -34,24 +35,24 @@ class StatsRepository implements IStatsRepository {
 
   Stream<Either<StatusFailure, Map<TagModel, int>>> _streamFromDb(
       Stream<Map<TagDto, int>> Function() dbOperation) async* {
-    try {
-      final stream = dbOperation();
-      yield* stream.map((tagDtosAndCountMap) {
-        final tagsAndCountMap = <TagModel, int>{};
-        tagDtosAndCountMap.forEach(
-          (dto, count) => tagsAndCountMap[dto.toDomain()] = count,
-        );
-        return right<StatusFailure, Map<TagModel, int>>(tagsAndCountMap);
-      });
-    } on InvalidDataException catch (e) {
-      yield left(StatusFailure.invalidStatusData(e));
-    } on DriftWrappedException catch (e) {
-      yield left(StatusFailure.statusDatabaseException(e));
-    } on CouldNotRollBackException catch (e) {
-      yield left(StatusFailure.couldNotRollBackStory(e));
-    } catch (e) {
-      yield left(const StatusFailure.unexpected());
-    }
+    final stream = dbOperation();
+    yield* stream.map((tagDtosAndCountMap) {
+      final tagsAndCountMap = <TagModel, int>{};
+      tagDtosAndCountMap.forEach(
+        (dto, count) => tagsAndCountMap[dto.toDomain()] = count,
+      );
+      return right<StatusFailure, Map<TagModel, int>>(tagsAndCountMap);
+    }).onErrorReturnWith((error, stackTrace) {
+      if (error is InvalidDataException) {
+        return left(StatusFailure.invalidStatusData(error));
+      } else if (error is DriftWrappedException) {
+        return left(StatusFailure.statusDatabaseException(error));
+      } else if (error is CouldNotRollBackException) {
+        return left(StatusFailure.couldNotRollBackStory(error));
+      } else {
+        return left(const StatusFailure.unexpected());
+      }
+    });
   }
 
   @override
