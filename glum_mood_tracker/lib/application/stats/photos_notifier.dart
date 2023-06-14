@@ -30,6 +30,7 @@ class PhotosStateNotifier extends StateNotifier<PhotosState> {
   final PhotoRepository _repository;
 
   Future<void> getAllPhotos() async {
+    state = PhotosState.loadInProgress(photos: state.photos);
     final oldPhotos = state.photos;
     final successOrFailure = await _repository.getAllPhotos();
 
