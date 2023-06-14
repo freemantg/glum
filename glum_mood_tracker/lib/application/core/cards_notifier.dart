@@ -26,16 +26,15 @@ class CardsStateNotifier extends StateNotifier<CardsState> {
   CardsStateNotifier({required CardRepository repository})
       : _repository = repository,
         super(const CardsState.loadInProgress(cards: [])) {
-    _watchAllCards();
+    _subscription = watchAllCards();
   }
 
   final CardRepository _repository;
-  StreamSubscription<Either<CardFailure, List<CardModel>>>?
-      _cardStreamSubscription;
+  StreamSubscription<Either<CardFailure, List<CardModel>>>? _subscription;
 
-  Future<void> _watchAllCards() async {
-    _cardStreamSubscription?.cancel();
-    _cardStreamSubscription = _repository.watchAllCards().listen(
+  StreamSubscription<Either<CardFailure, List<CardModel>>> watchAllCards() {
+    final cardStream = _repository.watchAllCards();
+    return cardStream.listen(
       (successOrFailure) {
         successOrFailure.fold(
           (failure) {
@@ -51,7 +50,7 @@ class CardsStateNotifier extends StateNotifier<CardsState> {
 
   @override
   void dispose() {
-    _cardStreamSubscription?.cancel();
+    _subscription?.cancel();
     super.dispose();
   }
 }
