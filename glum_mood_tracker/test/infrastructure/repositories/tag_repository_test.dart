@@ -169,16 +169,19 @@ void main() {
     });
 
     test('emits TagFailure.tagDatabaseException on DriftWrappedException', () {
-      when(mockTagDao.watchTags()).thenAnswer((_) =>
-          Stream.error(DriftWrappedException(message: 'Test exception')));
+      final error = DriftWrappedException(message: 'Test exception');
+      when(mockTagDao.watchTags()).thenAnswer((_) => Stream.error(error));
 
       final result = tagRepository.watchAllTags();
 
       expectLater(
         result,
         emitsInOrder([
-          isA<Left<TagFailure, List<TagModel>>>()
-              .having((l) => l.value.type, 'type', 'TagDatabaseException'),
+          isA<Left<TagFailure, List<TagModel>>>().having(
+            (l) => l.value,
+            'DriftWrappedException',
+            TagFailure.tagDatabaseException(error),
+          ),
           emitsDone
         ]),
       );
@@ -190,9 +193,12 @@ void main() {
       final result = tagRepository.watchAllTags();
 
       expect(
-          result,
-          emits(equals(left<TagFailure, List<TagModel>>(
-              const TagFailure.unexpected()))));
+        result,
+        emits(
+          equals(
+              left<TagFailure, List<TagModel>>(const TagFailure.unexpected())),
+        ),
+      );
     });
   });
 }

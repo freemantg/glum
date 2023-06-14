@@ -13,15 +13,5 @@ class CardFailure with _$CardFailure {
   const factory CardFailure.couldNotRollBackStory(
       CouldNotRollBackException exception) = _CouldNotRollBackCardFailure;
   const factory CardFailure.unexpected() = _Unexpected;
-
-  String get type {
-    return when(
-      invalidCardData: (_) => 'InvalidCardData',
-      cardDatabaseException: (_) => 'CardDatabaseException',
-      couldNotRollBackStory: (_) => 'CouldNotRollBackStory',
-      unexpected: () => 'Unexpected',
-    );
-  }
-
   
 }

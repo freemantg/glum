@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:drift/drift.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../../domain/failures/failures.dart';
 import '../../domain/interfaces.dart';
@@ -73,7 +74,6 @@ class StoryRepository implements IStoryRepository {
         await _db.storyDao
             .updateStoryWithTagsAndPhotos(StoryDto.fromDomain(story));
       });
-
   @override
   Stream<Either<StoryFailure, List<StoryModel>>> watchStoriesByMonthYear(
       DateTime monthYear) async* {
@@ -82,7 +82,7 @@ class StoryRepository implements IStoryRepository {
         .map((dtos) => right<StoryFailure, List<StoryModel>>(
               dtos.map((e) => e.toDomain()).toList(),
             ))
-        .handleError((error, stackTrace) {
+        .onErrorReturnWith((error, stackTrace) {
       if (error is InvalidDataException) {
         return left(StoryFailure.invalidStoryData(error));
       } else if (error is DriftWrappedException) {

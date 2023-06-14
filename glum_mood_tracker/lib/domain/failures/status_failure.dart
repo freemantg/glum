@@ -13,13 +13,4 @@ class StatusFailure with _$StatusFailure {
   const factory StatusFailure.couldNotRollBackStory(
       CouldNotRollBackException exception) = _CouldNotRollBackStoryFailure;
   const factory StatusFailure.unexpected() = _Unexpected;
-
-   String get type {
-    return when(
-      invalidStatusData: (_) => 'InvalidStatusData',
-      statusDatabaseException: (_) => 'StatusDatabaseException',
-      couldNotRollBackStory: (_) => 'CouldNotRollBackStory',
-      unexpected: () => 'Unexpected',
-    );
-  }
 }

@@ -45,38 +45,54 @@ void main() {
 
     test('returns CardFailure.cardDatabaseException on DriftWrappedException',
         () async {
-      when(mockCardDao.insertCard(any))
-          .thenThrow(DriftWrappedException(message: 'Test exception'));
+      final error = DriftWrappedException(message: 'Test exception');
+
+      when(mockCardDao.insertCard(any)).thenThrow(error);
 
       final result =
           await cardRepository.addCard(CardModel(monthYear: DateTime(2023, 1)));
 
       expect(result.isLeft(), true);
-      expect(result.fold((l) => l.type, (r) => ''), 'CardDatabaseException');
+      expect(
+        result.fold((failure) => failure, (r) => null),
+        CardFailure.cardDatabaseException(error),
+      );
     });
 
     test('returns CardFailure.invalidCardData on InvalidDataException',
         () async {
-      when(mockCardDao.insertCard(any))
-          .thenThrow(InvalidDataException("Test exception"));
+      final error = InvalidDataException('Test exception');
+
+      when(mockCardDao.insertCard(any)).thenThrow(error);
 
       final result =
           await cardRepository.addCard(CardModel(monthYear: DateTime(2023, 1)));
 
       expect(result.isLeft(), true);
-      expect(result.fold((l) => l.type, (r) => ''), 'InvalidCardData');
+      expect(
+        result.fold((failure) => failure, (r) => null),
+        CardFailure.invalidCardData(error),
+      );
     });
 
     test(
         'returns CardFailure.couldNotRollBackStory on CouldNotRollBackException',
         () async {
-      when(mockCardDao.insertCard(any)).thenThrow(
-          CouldNotRollBackException("Test exception", StackTrace.empty, ''));
+      final error = CouldNotRollBackException(
+        'Test exception',
+        StackTrace.empty,
+        '',
+      );
+
+      when(mockCardDao.insertCard(any)).thenThrow(error);
 
       final result =
           await cardRepository.addCard(CardModel(monthYear: DateTime(2023, 1)));
       expect(result.isLeft(), true);
-      expect(result.fold((l) => l.type, (r) => ''), 'CouldNotRollBackStory');
+      expect(
+        result.fold((failure) => failure, (r) => null),
+        CardFailure.couldNotRollBackStory(error),
+      );
     });
 
     group('updateCard', () {
@@ -93,26 +109,34 @@ void main() {
       test(
           'returns CardFailure.couldNotRollBackStory on CouldNotRollBackException',
           () async {
-        when(mockCardDao.updateCard(any)).thenThrow(
-            CouldNotRollBackException("Test exception", StackTrace.empty, ''));
+        final error = CouldNotRollBackException(
+          'Test exception',
+          StackTrace.empty,
+          '',
+        );
+
+        when(mockCardDao.updateCard(any)).thenThrow(error);
 
         final result = await cardRepository
             .updateCard(CardModel(monthYear: DateTime(2023, 1)));
 
         expect(result.isLeft(), true);
-        expect(result.fold((l) => l.type, (r) => ''), 'CouldNotRollBackStory');
+        expect(
+          result.fold((failure) => failure, (r) => null),
+          CardFailure.couldNotRollBackStory(error),
+        );
       });
 
       test('returns CardFailure.invalidCardData on InvalidDataException',
           () async {
-        when(mockCardDao.updateCard(any))
-            .thenThrow(InvalidDataException("Test exception"));
+        final error = InvalidDataException('Test exception');
+        when(mockCardDao.updateCard(any)).thenThrow(error);
 
         final result = await cardRepository
             .updateCard(CardModel(monthYear: DateTime(2023, 1)));
 
         expect(result.isLeft(), true);
-        expect(result.fold((l) => l.type, (r) => ''), 'InvalidCardData');
+        expect(result.fold((failure) => failure, (r) => null), error);
       });
 
       test('returns CardFailure.unexpected on any other Exception', () async {
@@ -122,7 +146,10 @@ void main() {
             .updateCard(CardModel(monthYear: DateTime(2023, 1)));
 
         expect(result.isLeft(), true);
-        expect(result.fold((l) => l.type, (r) => ''), 'Unexpected');
+        expect(
+          result.fold((failure) => failure, (r) => null),
+          const CardFailure.unexpected(),
+        );
       });
     });
 
@@ -149,7 +176,7 @@ void main() {
               emitsInOrder([
                 isA<Right<CardFailure, List<CardModel>>>().having(
                   (r) => r.value,
-                  'value',
+                  'CardModelList',
                   cardModelList,
                 ),
               ]));
@@ -158,8 +185,9 @@ void main() {
         test(
           'returns CardFailure.cardDatabaseException on DriftWrappedException',
           () async {
-            when(mockCardDao.watchAllCards()).thenAnswer((_) =>
-                Stream.error(DriftWrappedException(message: "Test exception")));
+            final error = DriftWrappedException(message: "Test exception");
+            when(mockCardDao.watchAllCards())
+                .thenAnswer((_) => Stream.error(error));
 
             final result = cardRepository.watchAllCards();
 
@@ -167,16 +195,20 @@ void main() {
                 result,
                 emitsInOrder([
                   isA<Left<CardFailure, List<CardModel>>>().having(
-                      (l) => l.value.type, 'type', 'CardDatabaseException'),
-                  emitsDone
+                    (failure) => failure.value,
+                    'CardFailure.cardDatabaseException',
+                    CardFailure.cardDatabaseException(error),
+                  ),
                 ]));
           },
         );
 
         test('returns CardFailure.invalidCardData on InvalidDataException',
             () async {
-          when(mockCardDao.watchAllCards()).thenAnswer((_) =>
-              Stream.error(InvalidDataException("Test exception")));
+          final error = InvalidDataException("Test exception");
+
+          when(mockCardDao.watchAllCards())
+              .thenAnswer((_) => Stream.error(error));
 
           final result = cardRepository.watchAllCards();
 
@@ -184,10 +216,9 @@ void main() {
               result,
               emitsInOrder([
                 isA<Left<CardFailure, List<CardModel>>>().having(
-                  (l) => l.value.type,
-                  'type',
-                  'InvalidCardData',
-                ),
+                    (failure) => failure.value,
+                    'CardFailure.invalidCardData',
+                    CardFailure.invalidCardData(error)),
                 emitsDone,
               ]));
         });
@@ -195,9 +226,13 @@ void main() {
         test(
             'returns CardFailure.couldNotRollBackStory on CouldNotRollBackException',
             () async {
+          final error = CouldNotRollBackException(
+            'Test exception',
+            StackTrace.empty,
+            '',
+          );
           when(mockCardDao.watchAllCards()).thenAnswer(
-            (_) => Stream.error(CouldNotRollBackException(
-                "Test exception", StackTrace.empty, '')),
+            (_) => Stream.error(error),
           );
 
           final result = cardRepository.watchAllCards();
@@ -206,17 +241,18 @@ void main() {
               result,
               emitsInOrder([
                 isA<Left<CardFailure, List<CardModel>>>().having(
-                  (l) => l.value.type,
-                  'type',
-                  'CouldNotRollBackStory',
+                  (l) => l.value,
+                  'CardFailure.couldNotRollBackStory',
+                  CardFailure.couldNotRollBackStory(error),
                 ),
                 emitsDone,
               ]));
         });
 
         test('returns CardFailure.unexpected on any other Exception', () async {
+          final error = Exception("Test exception");
           when(mockCardDao.watchAllCards())
-              .thenAnswer((_) => Stream.error(Exception("Test exception")));
+              .thenAnswer((_) => Stream.error(error));
 
           final result = cardRepository.watchAllCards();
 
@@ -224,9 +260,9 @@ void main() {
               result,
               emitsInOrder([
                 isA<Left<CardFailure, List<CardModel>>>().having(
-                  (l) => l.value.type,
+                  (failure) => failure.value,
                   'type',
-                  'Unexpected',
+                  const CardFailure.unexpected(),
                 ),
                 emitsDone,
               ]));

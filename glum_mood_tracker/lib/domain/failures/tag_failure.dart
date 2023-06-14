@@ -13,13 +13,4 @@ class TagFailure with _$TagFailure {
   const factory TagFailure.couldNotRollBackTag(
       CouldNotRollBackException exception) = CouldNotRollBackTagFailure;
   const factory TagFailure.unexpected() = _Unexpected;
-
-  String get type {
-    return when(
-      invalidTagData: (_) => 'InvalidTagData',
-      tagDatabaseException: (_) => 'TagDatabaseException',
-      couldNotRollBackTag: (_) => 'CouldNotRollBackTag',
-      unexpected: () => 'Unexpected',
-    );
-  }
 }

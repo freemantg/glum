@@ -13,13 +13,4 @@ class StoryFailure with _$StoryFailure {
   const factory StoryFailure.couldNotRollBackStory(
       CouldNotRollBackException exception) = _CouldNotRollBackStoryFailure;
   const factory StoryFailure.unexpected() = _Unexpected;
-
-  String get type {
-    return when(
-      invalidStoryData: (_) => 'InvalidStoryData',
-      storyDatabaseException: (_) => 'StoryDatabaseException',
-      couldNotRollBackStory: (_) => 'CouldNotRollBackStory',
-      unexpected: () => 'Unexpected',
-    );
-  }
 }

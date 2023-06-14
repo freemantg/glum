@@ -10,12 +10,4 @@ const PhotoFailure._();
   const factory PhotoFailure.permissionDenied() = _PermissionDenied;
   const factory PhotoFailure.croppingFailed() = _CroppingFailed;
 
-  String get type {
-    return when(
-      unexpected: () => 'Unexpected',
-      unableToUpdate: () => 'UnableToUpdate',
-      permissionDenied: () => 'PermissionDenied',
-      croppingFailed: () => 'CroppingFailed',
-    );
-  }
 }
