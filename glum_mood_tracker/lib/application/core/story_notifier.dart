@@ -29,16 +29,25 @@ class StoryNotifier extends StateNotifier<StoryState> {
 
   Future<void> watchStoriesByMonthYear(DateTime monthYear) async {
     state = StoryState.loadInProgress(stories: state.stories);
-    final storyStream = _storyRepository.watchStoriesByMonthYear(monthYear);
-    storyStream.listen(
-      (successOrFailure) {
-        successOrFailure.fold(
-          (failure) =>
-              state = StoryState.failure(failure, stories: state.stories),
-          (stories) => state = StoryState.loadSuccess(stories: stories),
-        );
-      },
-    );
+    try {
+      final storyStream = _storyRepository.watchStoriesByMonthYear(monthYear);
+      storyStream.listen(
+        (successOrFailure) {
+          successOrFailure.fold(
+            (failure) =>
+                state = StoryState.failure(failure, stories: state.stories),
+            (stories) => state = StoryState.loadSuccess(stories: stories),
+          );
+        },
+        onError: (error) {
+          const failure = StoryFailure.unexpected();
+          state = StoryState.failure(failure, stories: state.stories);
+        },
+      );
+    } catch (error) {
+      const failure = StoryFailure.unexpected();
+      state = StoryState.failure(failure, stories: state.stories);
+    }
   }
 
   Future<void> deleteStory(int storyId) async {
