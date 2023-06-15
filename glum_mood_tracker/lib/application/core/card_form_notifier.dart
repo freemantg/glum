@@ -21,9 +21,9 @@ class CardFormState with _$CardFormState {
     required Option<Either<CardFailure, Unit>> failureOrSuccess,
   }) = _CardFormState;
 
-  factory CardFormState.initial() {
+  factory CardFormState.initial({required DateTime now}) {
     return CardFormState(
-      card: CardModel(monthYear: DateTime.now()),
+      card: CardModel(monthYear: now),
       isEditing: false,
       isSaving: false,
       isLoading: false,
@@ -33,12 +33,13 @@ class CardFormState with _$CardFormState {
 }
 
 class CardFormNotifier extends StateNotifier<CardFormState> {
-  CardFormNotifier({
-    required CardRepository cardRepository,
-    required PhotoRepository photoRepository,
-  })  : _cardRepository = cardRepository,
+  CardFormNotifier(
+      {required CardRepository cardRepository,
+      required PhotoRepository photoRepository,
+      DateTime? now})
+      : _cardRepository = cardRepository,
         _photoRepository = photoRepository,
-        super(CardFormState.initial());
+        super(CardFormState.initial(now: now ?? DateTime.now()));
 
   final CardRepository _cardRepository;
   final PhotoRepository _photoRepository;
