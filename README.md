@@ -53,12 +53,11 @@ Glum casts its gloomy light using the following technology stack:
 - **Auto Route:** An easy yet powerful routing solution, allowing for complex route patterns and transitions.
 
 ### Backend:
-
-- **Freezed:** A code generator for unions/pattern-m
-
-atching/copy in Dart.
-- **SQLite:** A C library that implements an SQL database engine.
-- **Other Libraries:** Drift, Dartz, Image Cropper, Image Picker, JSON Annotation, JSON Serializable, Mockito, and more.
+- **Freezed:** A code generator for unions/pattern-matching/copy in Dart.
+-  **SQLite with Drift:** SQLite provides a robust, transactional SQL database engine. With the addition of the Drift package, Glum offers smooth and reactive persistence operations, turning SQLite into a high-level, easy-to-use Flutter database solution.
+- **Dartz:** Functional programming library in Dart, introduces the Either type used for error handling, enhancing app stability and reliability.
+- **Mockito:** Dart library for creating mock objects during testing, enables error simulation to verify the robustness of Glum's error handling mechanisms.
+- **Other Libraries:** Image Cropper, Image Picker, JSON Annotation, JSON Serializable, and more.
 
 ## 🚀 Getting Started
 
