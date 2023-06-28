@@ -1,6 +1,6 @@
 # 🌚 Glum - Mood Tracker
 
-Glum is a mood tracking application, conceptualized and crafted in Flutter. Its unique and dark-themed design lets you express and monitor your emotions through a moody and gloom-tinged interface. Whether it's a simple line of text or an image that defines your mood, Glum encourages you to embrace the somber and tranquil moments of your day.
+Glum is a mood-tracking application, conceptualized and crafted in Flutter. Its unique and dark-themed design lets you express and monitor your emotions through a moody and gloom-tinged interface. Whether it's a simple line of text or an image that defines your mood, Glum encourages you to embrace the sombre and tranquil moments of your day.
 
 ## Table of Contents
 
@@ -14,11 +14,11 @@ Glum is a mood tracking application, conceptualized and crafted in Flutter. Its 
 
 ## 🌟 Features
 
-In the somber world of Glum, we provide a collection of features, designed to illuminate your path to self-awareness:
+In the sombre world of Glum, we provide a collection of features, designed to illuminate your path to self-awareness:
 
 - **Card-Based Mood Entries:** Transform your emotions into a unique card, either using text or a picture to encapsulate your feelings.
 - **Multiple Entries per Day:** Mood fluctuations are a part of life; Glum allows you to record multiple mood entries per day.
-- **Customizable Card Design:** Add a personal touch to each mood card using photos or from a selection of dark-hued colors.
+- **Customizable Card Design:** Add a personal touch to each mood card using photos or from a selection of dark-hued colours.
 - **Calendar View:** A beautifully gloomy calendar view of your mood entries.
 - **Rich Media Support:** Accompany your mood entries with photos and videos for a deeper emotional context.
 - **Emotion and Weather Tags:** Add an extra layer of depth to your entries with emotion and weather tags, capturing the environment of your sentiments.
@@ -35,7 +35,7 @@ In the somber world of Glum, we provide a collection of features, designed to il
 ![5](assets/screenshots/glum_4.png)
 ![6](assets/screenshots/glum_5.png)
 ![7](assets/screenshots/glum_6.png)
-![8](assets/screenshots/glum_8.png)
+![8](assets/screenshots/glum_7.png)
 
 ## 🏗️ Architecture
 
@@ -55,7 +55,7 @@ Glum casts its gloomy light using the following technology stack:
 - **Flutter:** A UI toolkit from Google for building natively compiled applications for mobile, web, and desktop from a single codebase.
 - **Flutter Hooks:** A collection of utilities for managing state and other aspects of Flutter applications.
 - **Riverpod:** A pragmatic state management library.
-- **Auto Route:** An easy yet powerful routing solution, allowing for complex route patterns and transitions.
+- **Auto Route:** An easy yet powerful routing solution, that allows for complex route patterns and transitions.
 
 ### Backend:
 - **Freezed:** A code generator for unions/pattern-matching/copy in Dart.
