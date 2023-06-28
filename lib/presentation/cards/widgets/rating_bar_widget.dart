@@ -64,7 +64,7 @@ class ColorRatingBar extends HookWidget {
     bool isFilled,
     int rating,
   ) {
-    final color = isFilled ? colors[rating] : Colors.grey.shade300;
+    final color = isFilled ? colors[rating - 1] : Colors.grey.shade300;
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: $styles.insets.xxs),

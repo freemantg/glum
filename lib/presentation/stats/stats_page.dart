@@ -15,7 +15,7 @@ class StatsPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     useEffect(() {
-      _fetchData(ref);
+      Future.microtask(() => _fetchData(ref));
       return null;
     }, []);
 

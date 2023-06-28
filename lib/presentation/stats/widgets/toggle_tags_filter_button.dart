@@ -28,7 +28,7 @@ class ToggleTagsFilterButton extends HookConsumerWidget {
             'Moods',
             style: $styles.text.bodySmallBold.copyWith(
               color: isMoodsFilter.value
-                  ? const Color(0xFFD76A66)
+                  ? const Color(0xFFEB5124)
                   : Theme.of(context).disabledColor,
             ),
           ),
@@ -37,7 +37,7 @@ class ToggleTagsFilterButton extends HookConsumerWidget {
             'Glums',
             style: $styles.text.bodySmallBold.copyWith(
               color: !isMoodsFilter.value
-                  ? const Color(0xFFD76A66)
+                  ? const Color(0xFFEB5124)
                   : Theme.of(context).disabledColor,
             ),
           ),

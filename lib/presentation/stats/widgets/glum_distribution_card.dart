@@ -42,7 +42,7 @@ class GlumDistributionCard extends ConsumerWidget {
                     height: doughnutChartHeight,
                   ),
                   Positioned(
-                    bottom: doughnutChartHeight / 2,
+                    bottom: doughnutChartHeight * heightFactor,
                     child: Column(
                       children: [
                         Text(totalGlumCount.toString(), style: $styles.text.h2),

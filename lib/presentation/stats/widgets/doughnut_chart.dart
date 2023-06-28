@@ -53,7 +53,7 @@ class DoughnutChartPainter extends CustomPainter {
           false,
         )
         ..close();
-      final paint = Paint()..color = colors[i + 1];
+      final paint = Paint()..color = colors[i];
       canvas.drawPath(path, paint);
       currentAngle -= sweepAngle;
     }

@@ -8,9 +8,8 @@ class AppStyle {
   final Corners corners = Corners();
   final TextStyles text = TextStyles();
 
-  final Color primaryThemeColor = const Color(0xFFE0445D);
+  final Color primaryThemeColor = const Color(0xFFEB5124);
   final Color cardColor = const Color(0xFF393939);
-
 }
 
 class Corners {
@@ -32,7 +31,8 @@ class Insets {
 
 class TextStyles {
   TextStyle get titleFont => GoogleFonts.roboto();
-  TextStyle get titleFontCondensed => const TextStyle(fontFamily: "clem");
+  TextStyle get titleFontCondensed =>
+      const TextStyle(fontFamily: "AllotropeCond");
 
   TextStyle get h1 => copy(titleFont, sizePx: 64);
   TextStyle get h2 => copy(titleFont, sizePx: 32, heightPx: 46);
@@ -54,8 +54,8 @@ class TextStyles {
   TextStyle get bodyBold =>
       copy(titleFont, sizePx: 16, heightPx: 26, weight: FontWeight.w600);
   TextStyle get bodySmall => copy(titleFont, sizePx: 14, heightPx: 23);
-  TextStyle get bodySmallBold =>
-      copy(titleFont, sizePx: 14, heightPx: 23, weight: FontWeight.w600);
+  TextStyle get bodySmallBold => copy(titleFontCondensed,
+      sizePx: 14, heightPx: 23, weight: FontWeight.w600);
 
   TextStyle get quote1 => copy(titleFont,
       sizePx: 32, heightPx: 40, weight: FontWeight.w600, spacingPc: -3);

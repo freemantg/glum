@@ -27,7 +27,10 @@ class StatsHeader extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: insets.xxs),
-                Text('Stories', style: $styles.text.bodyBold),
+                Text(
+                  'Stories',
+                  style: $styles.text.bodySmallBold.copyWith(fontSize: 16),
+                ),
                 SizedBox(height: insets.xxs),
                 Text(
                   'What matters is the interior',

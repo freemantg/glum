@@ -56,3 +56,9 @@ flutter:
           weight: 400
         - asset: assets/fonts/clem-italic.otf
           style: italic
+    - family: AllotropeCond
+      fonts:
+        - asset: assets/fonts/allotropecond-black.otf
+          weight: 900
+        - asset: assets/fonts/allotropecond-bold.otf
+          weight: 700
