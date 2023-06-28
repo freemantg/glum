@@ -28,9 +28,14 @@ In the somber world of Glum, we provide a collection of features, designed to il
 - **Timestamps and Dividers:** Organize your entries neatly with timestamps and dividers.
 - **Dark Mode:** For your late-night reflections, Glum's dark theme provides the perfect setting.
 
-![1](assets/screenshots/glum_1.png)
-![2](assets/screenshots/glum_2.png)
-![3](assets/screenshots/glum_3.png)
+![1](assets/screenshots/glum_0.png)
+![2](assets/screenshots/glum_1.png)
+![3](assets/screenshots/glum_2.png)
+![4](assets/screenshots/glum_3.png)
+![5](assets/screenshots/glum_4.png)
+![6](assets/screenshots/glum_5.png)
+![7](assets/screenshots/glum_6.png)
+![8](assets/screenshots/glum_8.png)
 
 ## 🏗️ Architecture
 
